@@ -1,0 +1,103 @@
+> move.b 123(a0,d0),d3 
+# Instruction { size: 1, operation: MOVE, operands: [ ARDISP(A0, dr_disp(D0, 123)), DR(D3) ] }
+
+> move.w 123(a0,d0),d3 
+# Instruction { size: 2, operation: MOVE, operands: [ ARDISP(A0, dr_disp(D0, 123)), DR(D3) ] }
+
+> move.l 123(a0,d0),d3 
+# Instruction { size: 4, operation: MOVE, operands: [ ARDISP(A0, dr_disp(D0, 123)), DR(D3) ] }
+
+> move.l 123(a0,d0),a1 
+# Instruction { size: 4, operation: MOVEA, operands: [ ARDISP(A0, dr_disp(D0, 123)), AR(A1) ] }
+
+> move.w 123(a0,d0),a1 
+# Instruction { size: 2, operation: MOVEA, operands: [ ARDISP(A0, dr_disp(D0, 123)), AR(A1) ] }
+
+> move.b #$12,d7 
+# Instruction { size: 1, operation: MOVE, operands: [ IMM8(0x12), DR(D7) ] }
+
+> move.w #$1234,d7 
+# Instruction { size: 2, operation: MOVE, operands: [ IMM16(0x1234), DR(D7) ] }
+
+> move.l #$12345678,d7 
+# Instruction { size: 4, operation: MOVE, operands: [ IMM32(0x12345678), DR(D7) ] }
+
+> move.l D1,-(A2)
+# Instruction { size: 4, operation: MOVE, operands: [ DR(D1), ARDEC(A2) ] }
+
+> move.l D1,(A2)+
+# Instruction { size: 4, operation: MOVE, operands: [ DR(D1), ARINC(A2) ] }
+
+> move.l -(A4),(A2)+
+# Instruction { size: 4, operation: MOVE, operands: [ ARDEC(A4), ARINC(A2) ] }
+
+> move.l 4.w,A0
+# Instruction { size: 4, operation: MOVEA, operands: [ ABS16(4), AR(A0) ], }
+
+> move.l $11223344,A0
+# Instruction { size: 4, operation: MOVEA, operands: [ ABS32(0x11223344), AR(A0) ], }
+
+> move.w #$1234,123(d0)
+# Instruction {
+#   size: 2, operation: MOVE, operands: [ 
+#     IMM16(0x1234),
+#     DISP(Displacement {
+#       base_displacement: 123,
+#       outer_displacement: 0,
+#       indexer: Indexer::DR(D0, 0),
+#       indirection: NoIndirection,
+#      })
+#    ]
+#  }
+
+> move.w -8(pc),d3
+# Instruction {
+#   size: 2, operation: MOVE, operands: [ 
+#     PCDISP(Displacement {
+#       base_displacement: -8,
+#       outer_displacement: 0,
+#       indexer: Indexer::NoIndexer,
+#       indirection: NoIndirection,
+#     }),
+#     DR(D3),
+#   ]
+# }
+
+> move.w -8(pc,d2*8),d3
+# Instruction {
+#   size: 2, operation: MOVE, operands: [ 
+#     PCDISP(Displacement {
+#       base_displacement: -8,
+#       outer_displacement: 0,
+#       indexer: Indexer::DR(D2, 3),
+#       indirection: NoIndirection,
+#     }),
+#     DR(D3),
+#   ],
+# }
+
+> move.w 123(a1,d2*4),9876(a2,d3*2)
+# Instruction {
+#   size: 2,
+#   operation: MOVE,
+#   operands: [
+#     ARDISP(A1, dr_disp_scale(D2, 123, 2)),
+#     ARDISP(A2, dr_disp_scale(D3, 9876, 1))
+#   ]
+# }
+
+> move.w d0,12345(a0,a1*2)
+# Instruction {
+#   size: 2,
+#   operation: MOVE,
+#   operands: [
+#     DR(D0),
+#     ARDISP(A0, Displacement {
+#       base_displacement: 12345,
+#       outer_displacement: 0,
+#       indexer: Indexer::AR(A1, 1),
+#       indirection: NoIndirection,
+#     })
+#   ]
+# }
+

@@ -160,34 +160,16 @@ mod tests {
             ],
         });
     }
-    /*
     #[test]
     fn test_move_w_memi_memi() {
         do_test(&[0x35, 0xb1, 0x24, 0x7b, 0x33, 0x20, 0x26, 0x94], Instruction {
             size: 2,
             operation: MOVE,
             operands: [
-                Memory(MemoryOperand {
-                    base_register: A1,
-                    base_displacement: 123,
-                    indexer: D2,
-                    outer_displacement: 0,
-                    scale_log2: 2,
-                    incdec: 0,
-                    indirection: NoIndirection,
-                }),
-                Memory(MemoryOperand {
-                    base_register: A2,
-                    base_displacement: 9876,
-                    indexer: D3,
-                    outer_displacement: 0,
-                    scale_log2: 1,
-                    incdec: 0,
-                    indirection: NoIndirection,
-                })
+                ARDISP(A1, dr_disp_scale(D2, 123, 2)),
+                ARDISP(A2, dr_disp_scale(D3, 9876, 1)),
             ],
         });
     }
-    */
 }
 

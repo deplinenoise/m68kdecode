@@ -160,6 +160,8 @@ fn decode_extended_ea(src_reg: Option<AddressRegister>, offset: &mut usize, exte
     let idx = get_bits(ext, 12, 14);
     let idx_is_a = get_bits(ext, 15, 15) == 1;
 
+    println!("decode_extended_ea: {:?}", idx);
+
     if 0 != (ext & (1 << 8)) {
         // Handle full extension word.
         let bd = get_bits(ext, 4, 5);
@@ -215,6 +217,7 @@ fn decode_extended_ea(src_reg: Option<AddressRegister>, offset: &mut usize, exte
                 Indexer::DR(data_reg(idx).unwrap(), scale)
             },
         };
+        println!("indexer: {:?}", indexer);
 
         if suppress_base {
             Ok(DISP(Displacement {
@@ -242,20 +245,23 @@ fn decode_extended_ea(src_reg: Option<AddressRegister>, offset: &mut usize, exte
     } else {
         // Handle brief extension word
         let disp = ((ext & 0xff) as i8) as i32;
+        println!("  brief disp {} src_reg {:?}", disp, src_reg);
         let indexer =  if idx_is_a {
             Indexer::AR(address_reg(idx).unwrap(), scale)
         } else {
             Indexer::DR(data_reg(idx).unwrap(), scale)
         };
 
+        let displacement = Displacement { 
+            base_displacement: disp,
+            outer_displacement: 0,
+            indexer: indexer,
+            indirection: NoIndirection,
+        };
+
         match src_reg {
-            None => Ok(PCDISP(simple_disp(disp))),
-            Some(r) => Ok(ARDISP(r, Displacement { 
-                base_displacement: disp,
-                outer_displacement: 0,
-                indexer: indexer,
-                indirection: NoIndirection,
-            })),
+            None => Ok(PCDISP(displacement)),
+            Some(r) => Ok(ARDISP(r, displacement)),
         }
     }
 }

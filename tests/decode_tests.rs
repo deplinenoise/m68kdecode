@@ -600,4 +600,28 @@ mod tests {
             },
         );
     }
+    //  addi.l #$12345678,-(a0)
+    #[test]
+    fn test_decode_47() {
+        do_test(
+            &[0x06, 0xa0, 0x12, 0x34, 0x56, 0x78],
+            Instruction {
+                size: 4,
+                operation: ADDI,
+                operands: [IMM32(0x12345678), ARDEC(A0)],
+            },
+        );
+    }
+    //  subi.l #$12345678,-(a0)
+    #[test]
+    fn test_decode_48() {
+        do_test(
+            &[0x04, 0xa0, 0x12, 0x34, 0x56, 0x78],
+            Instruction {
+                size: 4,
+                operation: SUBI,
+                operands: [IMM32(0x12345678), ARDEC(A0)],
+            },
+        );
+    }
 }

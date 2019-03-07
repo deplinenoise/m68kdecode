@@ -185,3 +185,8 @@
 > eori.l #$12345678,-(a0)
 # Instruction { size: 4, operation: EORI, operands: [ IMM32(0x12345678), ARDEC(A0) ] }
 
+> addi.l #$12345678,-(a0)
+# Instruction { size: 4, operation: ADDI, operands: [ IMM32(0x12345678), ARDEC(A0) ] }
+
+> subi.l #$12345678,-(a0)
+# Instruction { size: 4, operation: SUBI, operands: [ IMM32(0x12345678), ARDEC(A0) ] }

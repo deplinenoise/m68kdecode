@@ -90,6 +90,8 @@ pub enum Operation {
     EORITOCCR,
     EORITOSR,
     EORI,
+    ADDI,
+    SUBI,
     LEA,
     MOVE,
     MOVEA,
@@ -392,6 +394,8 @@ fn decode_bitmap(opword: u16, extensions: &[u8]) -> Result<DecodedInstruction, D
         0b0000_0000_0000_0000 => decode_alu_imm(ORI, opword, extensions),
         0b0000_0010_0000_0000 => decode_alu_imm(ANDI, opword, extensions),
         0b0000_1010_0000_0000 => decode_alu_imm(EORI, opword, extensions),
+        0b0000_0100_0000_0000 => decode_alu_imm(SUBI, opword, extensions),
+        0b0000_0110_0000_0000 => decode_alu_imm(ADDI, opword, extensions),
         _ => Err(NotImplemented)
     }
 }

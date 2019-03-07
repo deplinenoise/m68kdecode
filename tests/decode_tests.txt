@@ -149,3 +149,39 @@
 > ori.l #$12345678,-(a0)
 # Instruction { size: 4, operation: ORI, operands: [ IMM32(0x12345678), ARDEC(A0) ] }
 
+> andi #17,ccr
+# Instruction { size: 1, operation: ANDITOCCR, operands: [ IMM8(17), Implied ] }
+
+> andi #$1234,sr
+# Instruction { size: 2, operation: ANDITOSR, operands: [ IMM16(0x1234), Implied ] }
+
+> andi.w #$1234,d0
+# Instruction { size: 2, operation: ANDI, operands: [ IMM16(0x1234), DR(D0) ] }
+
+> andi.b #$12,d2
+# Instruction { size: 1, operation: ANDI, operands: [ IMM8(0x12), DR(D2) ] }
+
+> andi.w #$1234,123(a0,d0)
+# Instruction { size: 2, operation: ANDI, operands: [ IMM16(0x1234), ARDISP(A0, dr_disp(D0, 123)) ] }
+
+> andi.l #$12345678,-(a0)
+# Instruction { size: 4, operation: ANDI, operands: [ IMM32(0x12345678), ARDEC(A0) ] }
+
+> eori #17,ccr
+# Instruction { size: 1, operation: EORITOCCR, operands: [ IMM8(17), Implied ] }
+
+> eori #$1234,sr
+# Instruction { size: 2, operation: EORITOSR, operands: [ IMM16(0x1234), Implied ] }
+
+> eori.w #$1234,d0
+# Instruction { size: 2, operation: EORI, operands: [ IMM16(0x1234), DR(D0) ] }
+
+> eori.b #$12,d2
+# Instruction { size: 1, operation: EORI, operands: [ IMM8(0x12), DR(D2) ] }
+
+> eori.w #$1234,123(a0,d0)
+# Instruction { size: 2, operation: EORI, operands: [ IMM16(0x1234), ARDISP(A0, dr_disp(D0, 123)) ] }
+
+> eori.l #$12345678,-(a0)
+# Instruction { size: 4, operation: EORI, operands: [ IMM32(0x12345678), ARDEC(A0) ] }
+

@@ -84,6 +84,12 @@ pub enum Operation {
     ORITOCCR,
     ORITOSR,
     ORI,
+    ANDITOCCR,
+    ANDITOSR,
+    ANDI,
+    EORITOCCR,
+    EORITOSR,
+    EORI,
     LEA,
     MOVE,
     MOVEA,
@@ -323,70 +329,70 @@ fn decode_move(opword: u16, extensions: &[u8], size: i32) -> Result<DecodedInstr
     })
 }
 
-fn decode_bitmap(opword: u16, extensions: &[u8]) -> Result<DecodedInstruction, DecodingError> {
+fn decode_ccr_sr_immediate_op(op: Operation, size: i32, extensions: &[u8]) -> Result<DecodedInstruction, DecodingError> {
+    let mut offset = 0usize;
+    Ok(DecodedInstruction {
+        bytes_used: 4,
+        instruction: Instruction {
+            size: size,
+            operation: op,
+            operands: [
+                match size {
+                    1 => IMM8(pull_16(extensions, &mut offset)? as u8),
+                    2 => IMM16(pull_16(extensions, &mut offset)?),
+                    _ => return Err(NotImplemented),
+                },
+                Implied
+            ],
+        },
+    })
+}
+
+fn decode_alu_imm(op: Operation, opword: u16, extensions: &[u8]) -> Result<DecodedInstruction, DecodingError> {
+    let sz = get_bits(opword, 6, 7);
     let mut offset = 0usize;
 
+    let imm = match sz {
+        0b00 => IMM8(pull_16(extensions, &mut offset)? as u8),
+        0b01 => IMM16(pull_16(extensions, &mut offset)?),
+        0b10 => IMM32(pull_32(extensions, &mut offset)?),
+        _ => return Err(BadSize)
+    };
+
+    let dst_reg = get_bits(opword, 0, 2);
+    let dst_mod = get_bits(opword, 3, 5);
+    let dst_op = decode_ea(dst_reg, dst_mod, &mut offset, extensions, 1 << sz)?;
+
+    Ok(DecodedInstruction {
+        bytes_used: 2 + offset as u32,
+        instruction: Instruction {
+            size: 1 << sz,
+            operation: op,
+            operands: [
+                imm,
+                dst_op,
+            ],
+        },
+    })
+}
+
+fn decode_bitmap(opword: u16, extensions: &[u8]) -> Result<DecodedInstruction, DecodingError> {
     // Handle 1:1 matches first
     match opword {
-        0b0000_0000_0011_1100 => {
-            return Ok(DecodedInstruction {
-                bytes_used: 4,
-                instruction: Instruction {
-                    size: 1,
-                    operation: ORITOCCR,
-                    operands: [
-                        IMM8(pull_16(extensions, &mut offset)? as u8),
-                        Implied
-                    ],
-                },
-            });
-        },
-
-        0b0000_0000_0111_1100 => {
-            return Ok(DecodedInstruction {
-                bytes_used: 4,
-                instruction: Instruction {
-                    size: 2,
-                    operation: ORITOSR,
-                    operands: [
-                        IMM16(pull_16(extensions, &mut offset)?),
-                        Implied
-                    ],
-                }
-            });
-        },
-
+        0b0000_0000_0011_1100 => return decode_ccr_sr_immediate_op(ORITOCCR, 1, extensions),
+        0b0000_0000_0111_1100 => return decode_ccr_sr_immediate_op(ORITOSR, 2, extensions),
+        0b0000_0010_0011_1100 => return decode_ccr_sr_immediate_op(ANDITOCCR, 1, extensions),
+        0b0000_0010_0111_1100 => return decode_ccr_sr_immediate_op(ANDITOSR, 2, extensions),
+        0b0000_1010_0011_1100 => return decode_ccr_sr_immediate_op(EORITOCCR, 1, extensions),
+        0b0000_1010_0111_1100 => return decode_ccr_sr_immediate_op(EORITOSR, 2, extensions),
         _ => 0,
     };
 
-    if (opword & 0b1111_1111_0000_0000) == 0b0000_0000_0000_0000 {
-        // Handle ORI
-        let sz = get_bits(opword, 6, 7);
-
-        let imm = match sz {
-            0b00 => IMM8(pull_16(extensions, &mut offset)? as u8),
-            0b01 => IMM16(pull_16(extensions, &mut offset)?),
-            0b10 => IMM32(pull_32(extensions, &mut offset)?),
-            _ => return Err(BadSize)
-        };
-
-        let dst_reg = get_bits(opword, 0, 2);
-        let dst_mod = get_bits(opword, 3, 5);
-        let dst_op = decode_ea(dst_reg, dst_mod, &mut offset, extensions, 1 << sz)?;
-
-        return Ok(DecodedInstruction {
-            bytes_used: 2 + offset as u32,
-            instruction: Instruction {
-                size: 1 << sz,
-                operation: ORI,
-                operands: [
-                    imm,
-                    dst_op,
-                ],
-            },
-        })
-    } else {
-        return Err(NotImplemented)
+    match opword & 0b1111_1111_0000_0000 {
+        0b0000_0000_0000_0000 => decode_alu_imm(ORI, opword, extensions),
+        0b0000_0010_0000_0000 => decode_alu_imm(ANDI, opword, extensions),
+        0b0000_1010_0000_0000 => decode_alu_imm(EORI, opword, extensions),
+        _ => Err(NotImplemented)
     }
 }
 

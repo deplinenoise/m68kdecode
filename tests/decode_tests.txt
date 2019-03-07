@@ -130,3 +130,22 @@
 
 > lea 8(a0),a1
 # Instruction { size: 4, operation: LEA, operands: [ ARDISP(A0, simple_disp(8)), AR(A1) ] }
+
+> ori #17,ccr
+# Instruction { size: 1, operation: ORITOCCR, operands: [ IMM8(17), Implied ] }
+
+> ori #$1234,sr
+# Instruction { size: 2, operation: ORITOSR, operands: [ IMM16(0x1234), Implied ] }
+
+> ori.w #$1234,d0
+# Instruction { size: 2, operation: ORI, operands: [ IMM16(0x1234), DR(D0) ] }
+
+> ori.b #$12,d2
+# Instruction { size: 1, operation: ORI, operands: [ IMM8(0x12), DR(D2) ] }
+
+> ori.w #$1234,123(a0,d0)
+# Instruction { size: 2, operation: ORI, operands: [ IMM16(0x1234), ARDISP(A0, dr_disp(D0, 123)) ] }
+
+> ori.l #$12345678,-(a0)
+# Instruction { size: 4, operation: ORI, operands: [ IMM32(0x12345678), ARDEC(A0) ] }
+

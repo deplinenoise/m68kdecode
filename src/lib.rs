@@ -81,6 +81,9 @@ pub enum Operand {
 
 #[derive(Debug, PartialEq)]
 pub enum Operation {
+    ORITOCCR,
+    ORITOSR,
+    ORI,
     LEA,
     MOVE,
     MOVEA,
@@ -320,11 +323,79 @@ fn decode_move(opword: u16, extensions: &[u8], size: i32) -> Result<DecodedInstr
     })
 }
 
+fn decode_bitmap(opword: u16, extensions: &[u8]) -> Result<DecodedInstruction, DecodingError> {
+    let mut offset = 0usize;
+
+    // Handle 1:1 matches first
+    match opword {
+        0b0000_0000_0011_1100 => {
+            return Ok(DecodedInstruction {
+                bytes_used: 4,
+                instruction: Instruction {
+                    size: 1,
+                    operation: ORITOCCR,
+                    operands: [
+                        IMM8(pull_16(extensions, &mut offset)? as u8),
+                        Implied
+                    ],
+                },
+            });
+        },
+
+        0b0000_0000_0111_1100 => {
+            return Ok(DecodedInstruction {
+                bytes_used: 4,
+                instruction: Instruction {
+                    size: 2,
+                    operation: ORITOSR,
+                    operands: [
+                        IMM16(pull_16(extensions, &mut offset)?),
+                        Implied
+                    ],
+                }
+            });
+        },
+
+        _ => 0,
+    };
+
+    if (opword & 0b1111_1111_0000_0000) == 0b0000_0000_0000_0000 {
+        // Handle ORI
+        let sz = get_bits(opword, 6, 7);
+
+        let imm = match sz {
+            0b00 => IMM8(pull_16(extensions, &mut offset)? as u8),
+            0b01 => IMM16(pull_16(extensions, &mut offset)?),
+            0b10 => IMM32(pull_32(extensions, &mut offset)?),
+            _ => return Err(BadSize)
+        };
+
+        let dst_reg = get_bits(opword, 0, 2);
+        let dst_mod = get_bits(opword, 3, 5);
+        let dst_op = decode_ea(dst_reg, dst_mod, &mut offset, extensions, 1 << sz)?;
+
+        return Ok(DecodedInstruction {
+            bytes_used: 2 + offset as u32,
+            instruction: Instruction {
+                size: 1 << sz,
+                operation: ORI,
+                operands: [
+                    imm,
+                    dst_op,
+                ],
+            },
+        })
+    } else {
+        return Err(NotImplemented)
+    }
+}
+
+
 fn decode_misc(opword: u16, extensions: &[u8]) -> Result<DecodedInstruction, DecodingError> {
 
     let mut offset = 0usize;
 
-    if (opword & 0b0100_0001_1100_0000) != 0 {
+    if (opword & 0b0100_0001_1100_0000) == 0b0100_0001_1100_0000 {
         // Handle LEA
 
         let src_reg = get_bits(opword, 0, 2);
@@ -357,6 +428,7 @@ pub fn decode_instruction(code_bytes: &[u8]) -> Result<DecodedInstruction, Decod
     let opword = pull_16(code_bytes, &mut offset)?;
 
     match opword >> 12 {
+        0b0000 => decode_bitmap(opword, &code_bytes[2..]),
         0b0001 => decode_move(opword, &code_bytes[2..], 1),
         0b0010 => decode_move(opword, &code_bytes[2..], 4),
         0b0011 => decode_move(opword, &code_bytes[2..], 2),

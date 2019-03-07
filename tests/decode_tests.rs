@@ -384,4 +384,76 @@ mod tests {
             },
         );
     }
+    //  ori #17,ccr
+    #[test]
+    fn test_decode_29() {
+        do_test(
+            &[0x00, 0x3c, 0x00, 0x11],
+            Instruction {
+                size: 1,
+                operation: ORITOCCR,
+                operands: [IMM8(17), Implied],
+            },
+        );
+    }
+    //  ori #$1234,sr
+    #[test]
+    fn test_decode_30() {
+        do_test(
+            &[0x00, 0x7c, 0x12, 0x34],
+            Instruction {
+                size: 2,
+                operation: ORITOSR,
+                operands: [IMM16(0x1234), Implied],
+            },
+        );
+    }
+    //  ori.w #$1234,d0
+    #[test]
+    fn test_decode_31() {
+        do_test(
+            &[0x00, 0x40, 0x12, 0x34],
+            Instruction {
+                size: 2,
+                operation: ORI,
+                operands: [IMM16(0x1234), DR(D0)],
+            },
+        );
+    }
+    //  ori.b #$12,d2
+    #[test]
+    fn test_decode_32() {
+        do_test(
+            &[0x00, 0x02, 0x00, 0x12],
+            Instruction {
+                size: 1,
+                operation: ORI,
+                operands: [IMM8(0x12), DR(D2)],
+            },
+        );
+    }
+    //  ori.w #$1234,123(a0,d0)
+    #[test]
+    fn test_decode_33() {
+        do_test(
+            &[0x00, 0x70, 0x12, 0x34, 0x00, 0x7b],
+            Instruction {
+                size: 2,
+                operation: ORI,
+                operands: [IMM16(0x1234), ARDISP(A0, dr_disp(D0, 123))],
+            },
+        );
+    }
+    //  ori.l #$12345678,-(a0)
+    #[test]
+    fn test_decode_34() {
+        do_test(
+            &[0x00, 0xa0, 0x12, 0x34, 0x56, 0x78],
+            Instruction {
+                size: 4,
+                operation: ORI,
+                operands: [IMM32(0x12345678), ARDEC(A0)],
+            },
+        );
+    }
 }

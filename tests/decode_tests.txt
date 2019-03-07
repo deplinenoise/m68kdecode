@@ -1,3 +1,27 @@
+> move.b d0,d1
+# Instruction { size: 1, operation: MOVE, operands: [ DR(D0), DR(D1) ] }
+
+> move.b d2,d3
+# Instruction { size: 1, operation: MOVE, operands: [ DR(D2), DR(D3) ] }
+
+> move.b d4,d5
+# Instruction { size: 1, operation: MOVE, operands: [ DR(D4), DR(D5) ] }
+
+> move.b d6,d7
+# Instruction { size: 1, operation: MOVE, operands: [ DR(D6), DR(D7) ] }
+
+> move.w a0,a1
+# Instruction { size: 2, operation: MOVEA, operands: [ AR(A0), AR(A1) ] }
+
+> move.w a2,a3
+# Instruction { size: 2, operation: MOVEA, operands: [ AR(A2), AR(A3) ] }
+
+> move.w a4,a5
+# Instruction { size: 2, operation: MOVEA, operands: [ AR(A4), AR(A5) ] }
+
+> move.w a6,a7
+# Instruction { size: 2, operation: MOVEA, operands: [ AR(A6), AR(A7) ] }
+
 > move.b 123(a0,d0),d3 
 # Instruction { size: 1, operation: MOVE, operands: [ ARDISP(A0, dr_disp(D0, 123)), DR(D3) ] }
 
@@ -101,3 +125,8 @@
 #   ]
 # }
 
+> lea (a0),a1
+# Instruction { size: 4, operation: LEA, operands: [ ARIND(A0), AR(A1) ] }
+
+> lea 8(a0),a1
+# Instruction { size: 4, operation: LEA, operands: [ ARDISP(A0, simple_disp(8)), AR(A1) ] }

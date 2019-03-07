@@ -10,9 +10,105 @@ mod tests {
             assert!(false);
         }
     }
-    //  move.b 123(a0,d0),d3
+    //  move.b d0,d1
     #[test]
     fn test_decode_1() {
+        do_test(
+            &[0x12, 0x00],
+            Instruction {
+                size: 1,
+                operation: MOVE,
+                operands: [DR(D0), DR(D1)],
+            },
+        );
+    }
+    //  move.b d2,d3
+    #[test]
+    fn test_decode_2() {
+        do_test(
+            &[0x16, 0x02],
+            Instruction {
+                size: 1,
+                operation: MOVE,
+                operands: [DR(D2), DR(D3)],
+            },
+        );
+    }
+    //  move.b d4,d5
+    #[test]
+    fn test_decode_3() {
+        do_test(
+            &[0x1a, 0x04],
+            Instruction {
+                size: 1,
+                operation: MOVE,
+                operands: [DR(D4), DR(D5)],
+            },
+        );
+    }
+    //  move.b d6,d7
+    #[test]
+    fn test_decode_4() {
+        do_test(
+            &[0x1e, 0x06],
+            Instruction {
+                size: 1,
+                operation: MOVE,
+                operands: [DR(D6), DR(D7)],
+            },
+        );
+    }
+    //  move.w a0,a1
+    #[test]
+    fn test_decode_5() {
+        do_test(
+            &[0x32, 0x48],
+            Instruction {
+                size: 2,
+                operation: MOVEA,
+                operands: [AR(A0), AR(A1)],
+            },
+        );
+    }
+    //  move.w a2,a3
+    #[test]
+    fn test_decode_6() {
+        do_test(
+            &[0x36, 0x4a],
+            Instruction {
+                size: 2,
+                operation: MOVEA,
+                operands: [AR(A2), AR(A3)],
+            },
+        );
+    }
+    //  move.w a4,a5
+    #[test]
+    fn test_decode_7() {
+        do_test(
+            &[0x3a, 0x4c],
+            Instruction {
+                size: 2,
+                operation: MOVEA,
+                operands: [AR(A4), AR(A5)],
+            },
+        );
+    }
+    //  move.w a6,a7
+    #[test]
+    fn test_decode_8() {
+        do_test(
+            &[0x3e, 0x4e],
+            Instruction {
+                size: 2,
+                operation: MOVEA,
+                operands: [AR(A6), AR(A7)],
+            },
+        );
+    }
+    //  move.b 123(a0,d0),d3
+    #[test]
+    fn test_decode_9() {
         do_test(
             &[0x16, 0x30, 0x00, 0x7b],
             Instruction {
@@ -24,7 +120,7 @@ mod tests {
     }
     //  move.w 123(a0,d0),d3
     #[test]
-    fn test_decode_2() {
+    fn test_decode_10() {
         do_test(
             &[0x36, 0x30, 0x00, 0x7b],
             Instruction {
@@ -36,7 +132,7 @@ mod tests {
     }
     //  move.l 123(a0,d0),d3
     #[test]
-    fn test_decode_3() {
+    fn test_decode_11() {
         do_test(
             &[0x26, 0x30, 0x00, 0x7b],
             Instruction {
@@ -48,7 +144,7 @@ mod tests {
     }
     //  move.l 123(a0,d0),a1
     #[test]
-    fn test_decode_4() {
+    fn test_decode_12() {
         do_test(
             &[0x22, 0x70, 0x00, 0x7b],
             Instruction {
@@ -60,7 +156,7 @@ mod tests {
     }
     //  move.w 123(a0,d0),a1
     #[test]
-    fn test_decode_5() {
+    fn test_decode_13() {
         do_test(
             &[0x32, 0x70, 0x00, 0x7b],
             Instruction {
@@ -72,7 +168,7 @@ mod tests {
     }
     //  move.b #$12,d7
     #[test]
-    fn test_decode_6() {
+    fn test_decode_14() {
         do_test(
             &[0x1e, 0x3c, 0x00, 0x12],
             Instruction {
@@ -84,7 +180,7 @@ mod tests {
     }
     //  move.w #$1234,d7
     #[test]
-    fn test_decode_7() {
+    fn test_decode_15() {
         do_test(
             &[0x3e, 0x3c, 0x12, 0x34],
             Instruction {
@@ -96,7 +192,7 @@ mod tests {
     }
     //  move.l #$12345678,d7
     #[test]
-    fn test_decode_8() {
+    fn test_decode_16() {
         do_test(
             &[0x2e, 0x3c, 0x12, 0x34, 0x56, 0x78],
             Instruction {
@@ -108,7 +204,7 @@ mod tests {
     }
     //  move.l D1,-(A2)
     #[test]
-    fn test_decode_9() {
+    fn test_decode_17() {
         do_test(
             &[0x25, 0x01],
             Instruction {
@@ -120,7 +216,7 @@ mod tests {
     }
     //  move.l D1,(A2)+
     #[test]
-    fn test_decode_10() {
+    fn test_decode_18() {
         do_test(
             &[0x24, 0xc1],
             Instruction {
@@ -132,7 +228,7 @@ mod tests {
     }
     //  move.l -(A4),(A2)+
     #[test]
-    fn test_decode_11() {
+    fn test_decode_19() {
         do_test(
             &[0x24, 0xe4],
             Instruction {
@@ -144,7 +240,7 @@ mod tests {
     }
     //  move.l 4.w,A0
     #[test]
-    fn test_decode_12() {
+    fn test_decode_20() {
         do_test(
             &[0x20, 0x78, 0x00, 0x04],
             Instruction {
@@ -156,7 +252,7 @@ mod tests {
     }
     //  move.l $11223344,A0
     #[test]
-    fn test_decode_13() {
+    fn test_decode_21() {
         do_test(
             &[0x20, 0x79, 0x11, 0x22, 0x33, 0x44],
             Instruction {
@@ -168,7 +264,7 @@ mod tests {
     }
     //  move.w #$1234,123(d0)
     #[test]
-    fn test_decode_14() {
+    fn test_decode_22() {
         do_test(
             &[0x31, 0xbc, 0x12, 0x34, 0x01, 0xa0, 0x00, 0x7b],
             Instruction {
@@ -188,7 +284,7 @@ mod tests {
     }
     //  move.w -8(pc),d3
     #[test]
-    fn test_decode_15() {
+    fn test_decode_23() {
         do_test(
             &[0x36, 0x3a, 0xff, 0xf8],
             Instruction {
@@ -208,7 +304,7 @@ mod tests {
     }
     //  move.w -8(pc,d2*8),d3
     #[test]
-    fn test_decode_16() {
+    fn test_decode_24() {
         do_test(
             &[0x36, 0x3b, 0x26, 0xf8],
             Instruction {
@@ -228,7 +324,7 @@ mod tests {
     }
     //  move.w 123(a1,d2*4),9876(a2,d3*2)
     #[test]
-    fn test_decode_17() {
+    fn test_decode_25() {
         do_test(
             &[0x35, 0xb1, 0x24, 0x7b, 0x33, 0x20, 0x26, 0x94],
             Instruction {
@@ -243,7 +339,7 @@ mod tests {
     }
     //  move.w d0,12345(a0,a1*2)
     #[test]
-    fn test_decode_18() {
+    fn test_decode_26() {
         do_test(
             &[0x31, 0x80, 0x93, 0x20, 0x30, 0x39],
             Instruction {
@@ -261,6 +357,30 @@ mod tests {
                         },
                     ),
                 ],
+            },
+        );
+    }
+    //  lea (a0),a1
+    #[test]
+    fn test_decode_27() {
+        do_test(
+            &[0x43, 0xd0],
+            Instruction {
+                size: 4,
+                operation: LEA,
+                operands: [ARIND(A0), AR(A1)],
+            },
+        );
+    }
+    //  lea 8(a0),a1
+    #[test]
+    fn test_decode_28() {
+        do_test(
+            &[0x43, 0xe8, 0x00, 0x08],
+            Instruction {
+                size: 4,
+                operation: LEA,
+                operands: [ARDISP(A0, simple_disp(8)), AR(A1)],
             },
         );
     }

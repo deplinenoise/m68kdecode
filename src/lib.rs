@@ -320,6 +320,36 @@ fn decode_move(opword: u16, extensions: &[u8], size: i32) -> Result<DecodedInstr
     })
 }
 
+fn decode_misc(opword: u16, extensions: &[u8]) -> Result<DecodedInstruction, DecodingError> {
+
+    let mut offset = 0usize;
+
+    if (opword & 0b0100_0001_1100_0000) != 0 {
+        // Handle LEA
+
+        let src_reg = get_bits(opword, 0, 2);
+        let src_mod = get_bits(opword, 3, 5);
+        let src_op = decode_ea(src_reg, src_mod, &mut offset, extensions, 4)?;
+
+        let dst_reg = get_bits(opword, 9, 11);
+
+        Ok(DecodedInstruction {
+            bytes_used: 2 + offset as u32,
+            instruction: Instruction {
+                size: 4,
+                operation: LEA,
+                operands: [
+                    src_op,
+                    AR(address_reg(dst_reg)?),
+                ],
+            },
+        })
+    }
+    else {
+        Err(NotImplemented)
+    }
+}
+
 pub fn decode_instruction(code_bytes: &[u8]) -> Result<DecodedInstruction, DecodingError> {
 
     let mut offset = 0usize;
@@ -330,6 +360,7 @@ pub fn decode_instruction(code_bytes: &[u8]) -> Result<DecodedInstruction, Decod
         0b0001 => decode_move(opword, &code_bytes[2..], 1),
         0b0010 => decode_move(opword, &code_bytes[2..], 4),
         0b0011 => decode_move(opword, &code_bytes[2..], 2),
+        0b0100 => decode_misc(opword, &code_bytes[2..]),
         _ => Err(NotImplemented),
     }
 }

@@ -63,6 +63,7 @@ pub fn dr_disp(dr: DataRegister, disp: i32) -> Displacement {
 
 #[derive(Debug, PartialEq)]
 pub enum Operand {
+    NoOperand,
     Implied,
     IMM8(u8),
     IMM16(u16),
@@ -95,6 +96,7 @@ pub enum Operation {
     LEA,
     MOVE,
     MOVEA,
+    RTM,
 }
 
 #[derive(Debug, PartialEq)]
@@ -387,17 +389,37 @@ fn decode_bitmap(opword: u16, extensions: &[u8]) -> Result<DecodedInstruction, D
         0b0000_0010_0111_1100 => return decode_ccr_sr_immediate_op(ANDITOSR, 2, extensions),
         0b0000_1010_0011_1100 => return decode_ccr_sr_immediate_op(EORITOCCR, 1, extensions),
         0b0000_1010_0111_1100 => return decode_ccr_sr_immediate_op(EORITOSR, 2, extensions),
-        _ => 0,
+        _ => (),
     };
 
-    match opword & 0b1111_1111_0000_0000 {
-        0b0000_0000_0000_0000 => decode_alu_imm(ORI, opword, extensions),
-        0b0000_0010_0000_0000 => decode_alu_imm(ANDI, opword, extensions),
-        0b0000_1010_0000_0000 => decode_alu_imm(EORI, opword, extensions),
-        0b0000_0100_0000_0000 => decode_alu_imm(SUBI, opword, extensions),
-        0b0000_0110_0000_0000 => decode_alu_imm(ADDI, opword, extensions),
-        _ => Err(NotImplemented)
+    // RTM uses illegal size of following instructions, so check it first
+    if (opword & 0b1111_1111_1111_0000) == 0b0000_0110_1100_0000 {
+        let da = opword & (1 << 3);
+        let reg = get_bits(opword, 0, 2);
+        return Ok(DecodedInstruction {
+            bytes_used: 2,
+            instruction: Instruction {
+                size: 0,
+                operation: RTM,
+                operands: [
+                    if da != 0 { AR(address_reg(reg)?) } else { DR(data_reg(reg)?) },
+                    NoOperand,
+                ],
+            }
+        });
     }
+
+    match opword & 0b1111_1111_0000_0000 {
+        0b0000_0000_0000_0000 => return decode_alu_imm(ORI, opword, extensions),
+        0b0000_0010_0000_0000 => return decode_alu_imm(ANDI, opword, extensions),
+        0b0000_1010_0000_0000 => return decode_alu_imm(EORI, opword, extensions),
+        0b0000_0100_0000_0000 => return decode_alu_imm(SUBI, opword, extensions),
+        0b0000_0110_0000_0000 => return decode_alu_imm(ADDI, opword, extensions),
+        _ => (),
+    };
+
+
+    Err(NotImplemented)
 }
 
 

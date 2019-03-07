@@ -190,3 +190,9 @@
 
 > subi.l #$12345678,-(a0)
 # Instruction { size: 4, operation: SUBI, operands: [ IMM32(0x12345678), ARDEC(A0) ] }
+
+> rtm d3
+# Instruction { size: 0, operation: RTM, operands: [ DR(D3), NoOperand ] }
+
+> rtm a1
+# Instruction { size: 0, operation: RTM, operands: [ AR(A1), NoOperand ] }

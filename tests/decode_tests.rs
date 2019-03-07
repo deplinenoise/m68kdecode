@@ -624,4 +624,28 @@ mod tests {
             },
         );
     }
+    //  rtm d3
+    #[test]
+    fn test_decode_49() {
+        do_test(
+            &[0x06, 0xc3],
+            Instruction {
+                size: 0,
+                operation: RTM,
+                operands: [DR(D3), NoOperand],
+            },
+        );
+    }
+    //  rtm a1
+    #[test]
+    fn test_decode_50() {
+        do_test(
+            &[0x06, 0xc9],
+            Instruction {
+                size: 0,
+                operation: RTM,
+                operands: [AR(A1), NoOperand],
+            },
+        );
+    }
 }

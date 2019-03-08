@@ -395,42 +395,38 @@ fn decode_bitmap(opword: u16, extensions: &[u8]) -> Result<DecodedInstruction, D
 
     // RTM uses illegal size of following instructions, so check it first
     if (opword & 0b1111_1111_1100_0000) == 0b0000_0110_1100_0000 {
-        let mode = get_bits(opword, 3, 5);
-        match mode {
-            0b000 => { // RTM
-                let da = opword & (1 << 3);
-                let reg = get_bits(opword, 0, 2);
-                return Ok(DecodedInstruction {
-                    bytes_used: 2,
-                    instruction: Instruction {
-                        size: 0,
-                        operation: RTM,
-                        operands: [
-                            if da != 0 { AR(address_reg(reg)?) } else { DR(data_reg(reg)?) },
-                            NoOperand,
-                        ],
-                    }
-                });
-            },
-            0b010 | 0b101 | 0b110 | 0b111 => { // CALLM
-                let mut offset = 0usize;
-                let byte_count = pull_16(extensions, &mut offset)? as u8;
-                let dst_reg = get_bits(opword, 0, 2);
-                let dst_mod = get_bits(opword, 3, 5);
-                let dst_op = decode_ea(dst_reg, dst_mod, &mut offset, extensions, 0)?;
-                return Ok(DecodedInstruction {
-                    bytes_used: 2 + offset as u32,
-                    instruction: Instruction {
-                        size: 0,
-                        operation: CALLM,
-                        operands: [
-                            IMM8(byte_count),
-                            dst_op,
-                        ],
-                    }
-                });
-            },
-            _ => return Err(NotImplemented),
+        if get_bits(opword, 4, 5) == 0b00 {
+            let da = opword & (1 << 3);
+            let reg = get_bits(opword, 0, 2);
+            return Ok(DecodedInstruction {
+                bytes_used: 2,
+                instruction: Instruction {
+                    size: 0,
+                    operation: RTM,
+                    operands: [
+                        if da != 0 { AR(address_reg(reg)?) } else { DR(data_reg(reg)?) },
+                        NoOperand,
+                    ],
+                }
+            });
+        } else {
+            // CALLM
+            let mut offset = 0usize;
+            let byte_count = pull_16(extensions, &mut offset)? as u8;
+            let dst_reg = get_bits(opword, 0, 2);
+            let dst_mod = get_bits(opword, 3, 5);
+            let dst_op = decode_ea(dst_reg, dst_mod, &mut offset, extensions, 0)?;
+            return Ok(DecodedInstruction {
+                bytes_used: 2 + offset as u32,
+                instruction: Instruction {
+                    size: 0,
+                    operation: CALLM,
+                    operands: [
+                        IMM8(byte_count),
+                        dst_op,
+                    ],
+                }
+            });
         }
     }
 

@@ -672,4 +672,16 @@ mod tests {
             },
         );
     }
+    //  chk2 90(a0,d2),a6
+    #[test]
+    fn test_decode_53() {
+        do_test(
+            &[0x02, 0xf0, 0xe8, 0x00, 0x20, 0x5a],
+            Instruction {
+                size: 0,
+                operation: CHK2,
+                operands: [ARDISP(A0, dr_disp(D2, 90)), AR(A6)],
+            },
+        );
+    }
 }

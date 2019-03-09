@@ -99,6 +99,7 @@ pub enum Operation {
     RTM,
     CALLM,
     CMP2,
+    CHK2,
 }
 
 #[derive(Debug, PartialEq)]
@@ -451,7 +452,7 @@ fn decode_bitmap(opword: u16, extensions: &[u8]) -> Result<DecodedInstruction, D
             bytes_used: 2 + offset as u32,
             instruction: Instruction {
                 size: 0,
-                operation: CMP2,
+                operation: if get_bits(ext, 11, 11) != 0 { CHK2 } else { CMP2 },
                 operands: [
                     src_op,
                     decode_da_reg_op(ext, 12),

@@ -648,4 +648,28 @@ mod tests {
             },
         );
     }
+    //  cmp2 (a0),d3
+    #[test]
+    fn test_decode_51() {
+        do_test(
+            &[0x02, 0xd0, 0x30, 0x00],
+            Instruction {
+                size: 0,
+                operation: CMP2,
+                operands: [ARIND(A0), DR(D3)],
+            },
+        );
+    }
+    //  cmp2 90(a0,d2),a6
+    #[test]
+    fn test_decode_52() {
+        do_test(
+            &[0x02, 0xf0, 0xe0, 0x00, 0x20, 0x5a],
+            Instruction {
+                size: 0,
+                operation: CMP2,
+                operands: [ARDISP(A0, dr_disp(D2, 90)), AR(A6)],
+            },
+        );
+    }
 }

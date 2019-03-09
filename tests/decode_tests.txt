@@ -196,3 +196,9 @@
 
 > rtm a1
 # Instruction { size: 0, operation: RTM, operands: [ AR(A1), NoOperand ] }
+
+> cmp2 (a0),d3
+# Instruction { size: 0, operation: CMP2, operands: [ ARIND(A0), DR(D3) ] }
+
+> cmp2 90(a0,d2),a6
+# Instruction { size: 0, operation: CMP2, operands: [ ARDISP(A0, dr_disp(D2, 90)), AR(A6) ] }

@@ -98,6 +98,7 @@ pub enum Operation {
     MOVEA,
     RTM,
     CALLM,
+    CMP2,
 }
 
 #[derive(Debug, PartialEq)]
@@ -381,6 +382,16 @@ fn decode_alu_imm(op: Operation, opword: u16, extensions: &[u8]) -> Result<Decod
     })
 }
 
+fn decode_da_reg_op(w: u16, start_bit: i32) -> Operand {
+    let da = get_bits(w, start_bit + 3, start_bit + 3);
+    let regno = get_bits(w, start_bit, start_bit + 2);
+    if da != 0 {
+        AR(address_reg(regno).unwrap())
+    } else {
+        DR(data_reg(regno).unwrap())
+    }
+}
+
 fn decode_bitmap(opword: u16, extensions: &[u8]) -> Result<DecodedInstruction, DecodingError> {
     // Handle 1:1 matches first
     match opword {
@@ -393,18 +404,16 @@ fn decode_bitmap(opword: u16, extensions: &[u8]) -> Result<DecodedInstruction, D
         _ => (),
     };
 
-    // RTM uses illegal size of following instructions, so check it first
+    // RTM/CALLM
     if (opword & 0b1111_1111_1100_0000) == 0b0000_0110_1100_0000 {
         if get_bits(opword, 4, 5) == 0b00 {
-            let da = opword & (1 << 3);
-            let reg = get_bits(opword, 0, 2);
             return Ok(DecodedInstruction {
                 bytes_used: 2,
                 instruction: Instruction {
                     size: 0,
                     operation: RTM,
                     operands: [
-                        if da != 0 { AR(address_reg(reg)?) } else { DR(data_reg(reg)?) },
+                        decode_da_reg_op(opword, 0),
                         NoOperand,
                     ],
                 }
@@ -430,6 +439,29 @@ fn decode_bitmap(opword: u16, extensions: &[u8]) -> Result<DecodedInstruction, D
         }
     }
 
+
+    // CMP2
+    if (opword & 0b1111_1001_1100_0000) == 0b0000_0000_1100_0000 {
+        let mut offset = 0usize;
+        let ext = pull_16(extensions, &mut offset)?;
+        let src_reg = get_bits(opword, 0, 2);
+        let src_mod = get_bits(opword, 3, 5);
+        let src_op = decode_ea(src_reg, src_mod, &mut offset, extensions, 1 << get_bits(opword, 9, 10))?;
+        return Ok(DecodedInstruction {
+            bytes_used: 2 + offset as u32,
+            instruction: Instruction {
+                size: 0,
+                operation: CMP2,
+                operands: [
+                    src_op,
+                    decode_da_reg_op(ext, 12),
+                ],
+            }
+        });
+
+    }
+
+    // RTM uses illegal size of following instructions, so check it first
     match opword & 0b1111_1111_0000_0000 {
         0b0000_0000_0000_0000 => return decode_alu_imm(ORI, opword, extensions),
         0b0000_0010_0000_0000 => return decode_alu_imm(ANDI, opword, extensions),

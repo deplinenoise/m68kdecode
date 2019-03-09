@@ -214,3 +214,9 @@
 
 > cmpi.l #$12345678,90(a0,d2*4)
 # Instruction { size: 4, operation: CMPI, operands: [ IMM32(0x12345678), ARDISP(A0, dr_disp_scale(D2, 90, 2)) ] }
+
+> btst #18,d0
+# Instruction { size: 0, operation: BTST, operands: [ IMM8(18), DR(D0) ] }
+
+> btst #18,(a0)+
+# Instruction { size: 0, operation: BTST, operands: [ IMM8(18), ARINC(A0) ] }

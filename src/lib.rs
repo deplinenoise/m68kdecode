@@ -101,6 +101,7 @@ pub enum Operation {
     CMP2,
     CHK2,
     CMPI,
+    BTST,
 }
 
 #[derive(Debug, PartialEq)]
@@ -484,6 +485,29 @@ fn decode_bitmap(opword: u16, extensions: &[u8]) -> Result<DecodedInstruction, D
                 operation: CMPI,
                 operands: [
                     src_op?,
+                    dst_op,
+                ],
+            }
+        });
+    }
+
+    // BTST, static bit number
+    if (opword & 0b1111_1111_1100_0000) == 0b0000_1000_0000_0000 {
+        let mut offset = 0usize;
+        let ext = pull_16(extensions, &mut offset)?;
+        let dst_reg = get_bits(opword, 0, 2);
+        let dst_mod = get_bits(opword, 3, 5);
+        if dst_mod == 0b001 {
+            return Err(NotImplemented);
+        }
+        let dst_op = decode_ea(dst_reg, dst_mod, &mut offset, extensions, 0)?;
+        return Ok(DecodedInstruction {
+            bytes_used: 2 + offset as u32,
+            instruction: Instruction {
+                operation: BTST,
+                size: 0,
+                operands: [
+                    IMM8(ext as u8),
                     dst_op,
                 ],
             }

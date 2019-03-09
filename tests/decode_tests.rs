@@ -720,4 +720,28 @@ mod tests {
             },
         );
     }
+    //  btst #18,d0
+    #[test]
+    fn test_decode_57() {
+        do_test(
+            &[0x08, 0x00, 0x00, 0x12],
+            Instruction {
+                size: 0,
+                operation: BTST,
+                operands: [IMM8(18), DR(D0)],
+            },
+        );
+    }
+    //  btst #18,(a0)+
+    #[test]
+    fn test_decode_58() {
+        do_test(
+            &[0x08, 0x18, 0x00, 0x12],
+            Instruction {
+                size: 0,
+                operation: BTST,
+                operands: [IMM8(18), ARINC(A0)],
+            },
+        );
+    }
 }

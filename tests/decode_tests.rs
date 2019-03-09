@@ -648,39 +648,75 @@ mod tests {
             },
         );
     }
-    //  cmp2 (a0),d3
+    //  cmp2.l (a0),d3
     #[test]
     fn test_decode_51() {
         do_test(
-            &[0x02, 0xd0, 0x30, 0x00],
+            &[0x04, 0xd0, 0x30, 0x00],
             Instruction {
-                size: 0,
+                size: 4,
                 operation: CMP2,
                 operands: [ARIND(A0), DR(D3)],
             },
         );
     }
-    //  cmp2 90(a0,d2),a6
+    //  cmp2.b 90(a0,d2),a6
     #[test]
     fn test_decode_52() {
         do_test(
-            &[0x02, 0xf0, 0xe0, 0x00, 0x20, 0x5a],
+            &[0x00, 0xf0, 0xe0, 0x00, 0x20, 0x5a],
             Instruction {
-                size: 0,
+                size: 1,
                 operation: CMP2,
                 operands: [ARDISP(A0, dr_disp(D2, 90)), AR(A6)],
             },
         );
     }
-    //  chk2 90(a0,d2),a6
+    //  chk2.w 90(a0,d2),a6
     #[test]
     fn test_decode_53() {
         do_test(
             &[0x02, 0xf0, 0xe8, 0x00, 0x20, 0x5a],
             Instruction {
-                size: 0,
+                size: 2,
                 operation: CHK2,
                 operands: [ARDISP(A0, dr_disp(D2, 90)), AR(A6)],
+            },
+        );
+    }
+    //  cmpi.b #$a5,90(a0,d2*4)
+    #[test]
+    fn test_decode_54() {
+        do_test(
+            &[0x0c, 0x30, 0x00, 0xa5, 0x24, 0x5a],
+            Instruction {
+                size: 1,
+                operation: CMPI,
+                operands: [IMM8(0xa5), ARDISP(A0, dr_disp_scale(D2, 90, 2))],
+            },
+        );
+    }
+    //  cmpi.w #$a512,90(a0,d2*4)
+    #[test]
+    fn test_decode_55() {
+        do_test(
+            &[0x0c, 0x70, 0xa5, 0x12, 0x24, 0x5a],
+            Instruction {
+                size: 2,
+                operation: CMPI,
+                operands: [IMM16(0xa512), ARDISP(A0, dr_disp_scale(D2, 90, 2))],
+            },
+        );
+    }
+    //  cmpi.l #$12345678,90(a0,d2*4)
+    #[test]
+    fn test_decode_56() {
+        do_test(
+            &[0x0c, 0xb0, 0x12, 0x34, 0x56, 0x78, 0x24, 0x5a],
+            Instruction {
+                size: 4,
+                operation: CMPI,
+                operands: [IMM32(0x12345678), ARDISP(A0, dr_disp_scale(D2, 90, 2))],
             },
         );
     }

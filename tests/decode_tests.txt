@@ -197,11 +197,20 @@
 > rtm a1
 # Instruction { size: 0, operation: RTM, operands: [ AR(A1), NoOperand ] }
 
-> cmp2 (a0),d3
-# Instruction { size: 0, operation: CMP2, operands: [ ARIND(A0), DR(D3) ] }
+> cmp2.l (a0),d3
+# Instruction { size: 4, operation: CMP2, operands: [ ARIND(A0), DR(D3) ] }
 
-> cmp2 90(a0,d2),a6
-# Instruction { size: 0, operation: CMP2, operands: [ ARDISP(A0, dr_disp(D2, 90)), AR(A6) ] }
+> cmp2.b 90(a0,d2),a6
+# Instruction { size: 1, operation: CMP2, operands: [ ARDISP(A0, dr_disp(D2, 90)), AR(A6) ] }
 
-> chk2 90(a0,d2),a6
-# Instruction { size: 0, operation: CHK2, operands: [ ARDISP(A0, dr_disp(D2, 90)), AR(A6) ] }
+> chk2.w 90(a0,d2),a6
+# Instruction { size: 2, operation: CHK2, operands: [ ARDISP(A0, dr_disp(D2, 90)), AR(A6) ] }
+
+> cmpi.b #$a5,90(a0,d2*4)
+# Instruction { size: 1, operation: CMPI, operands: [ IMM8(0xa5), ARDISP(A0, dr_disp_scale(D2, 90, 2)) ] }
+
+> cmpi.w #$a512,90(a0,d2*4)
+# Instruction { size: 2, operation: CMPI, operands: [ IMM16(0xa512), ARDISP(A0, dr_disp_scale(D2, 90, 2)) ] }
+
+> cmpi.l #$12345678,90(a0,d2*4)
+# Instruction { size: 4, operation: CMPI, operands: [ IMM32(0x12345678), ARDISP(A0, dr_disp_scale(D2, 90, 2)) ] }

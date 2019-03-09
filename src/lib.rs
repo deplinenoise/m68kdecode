@@ -100,6 +100,7 @@ pub enum Operation {
     CALLM,
     CMP2,
     CHK2,
+    CMPI,
 }
 
 #[derive(Debug, PartialEq)]
@@ -447,15 +448,43 @@ fn decode_bitmap(opword: u16, extensions: &[u8]) -> Result<DecodedInstruction, D
         let ext = pull_16(extensions, &mut offset)?;
         let src_reg = get_bits(opword, 0, 2);
         let src_mod = get_bits(opword, 3, 5);
-        let src_op = decode_ea(src_reg, src_mod, &mut offset, extensions, 1 << get_bits(opword, 9, 10))?;
+        let sz = 1 << get_bits(opword, 9, 10);
+        let src_op = decode_ea(src_reg, src_mod, &mut offset, extensions, sz)?;
         return Ok(DecodedInstruction {
             bytes_used: 2 + offset as u32,
             instruction: Instruction {
-                size: 0,
+                size: sz,
                 operation: if get_bits(ext, 11, 11) != 0 { CHK2 } else { CMP2 },
                 operands: [
                     src_op,
                     decode_da_reg_op(ext, 12),
+                ],
+            }
+        });
+
+    }
+
+    // CMPI
+    if (opword & 0b1111_1100_0000_0000) == 0b0000_1100_0000_0000 {
+        let mut offset = 0usize;
+        let sz = 1 << get_bits(opword, 6, 7);
+        let src_op = match sz {
+            1 => Ok(IMM8(pull_16(extensions, &mut offset)? as u8)),
+            2 => Ok(IMM16(pull_16(extensions, &mut offset)?)),
+            4 => Ok(IMM32(pull_32(extensions, &mut offset)?)),
+            _ => Err(BadSize),
+        };
+        let dst_reg = get_bits(opword, 0, 2);
+        let dst_mod = get_bits(opword, 3, 5);
+        let dst_op = decode_ea(dst_reg, dst_mod, &mut offset, extensions, sz)?;
+        return Ok(DecodedInstruction {
+            bytes_used: 2 + offset as u32,
+            instruction: Instruction {
+                size: sz,
+                operation: CMPI,
+                operands: [
+                    src_op?,
+                    dst_op,
                 ],
             }
         });

@@ -744,4 +744,40 @@ mod tests {
             },
         );
     }
+    //  bclr #18,(a0)+
+    #[test]
+    fn test_decode_59() {
+        do_test(
+            &[0x08, 0x98, 0x00, 0x12],
+            Instruction {
+                size: 0,
+                operation: BCLR,
+                operands: [IMM8(18), ARINC(A0)],
+            },
+        );
+    }
+    //  bchg #18,(a0)+
+    #[test]
+    fn test_decode_60() {
+        do_test(
+            &[0x08, 0x58, 0x00, 0x12],
+            Instruction {
+                size: 0,
+                operation: BCHG,
+                operands: [IMM8(18), ARINC(A0)],
+            },
+        );
+    }
+    //  bset #18,(a0)+
+    #[test]
+    fn test_decode_61() {
+        do_test(
+            &[0x08, 0xd8, 0x00, 0x12],
+            Instruction {
+                size: 0,
+                operation: BSET,
+                operands: [IMM8(18), ARINC(A0)],
+            },
+        );
+    }
 }

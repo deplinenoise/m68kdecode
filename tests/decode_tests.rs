@@ -780,4 +780,28 @@ mod tests {
             },
         );
     }
+    //  moves.l a0,(a1)
+    #[test]
+    fn test_decode_62() {
+        do_test(
+            &[0x0e, 0x91, 0x88, 0x00],
+            Instruction {
+                size: 4,
+                operation: MOVES,
+                operands: [AR(A0), ARIND(A1)],
+            },
+        );
+    }
+    //  moves.b d0,(a1)
+    #[test]
+    fn test_decode_63() {
+        do_test(
+            &[0x0e, 0x11, 0x08, 0x00],
+            Instruction {
+                size: 1,
+                operation: MOVES,
+                operands: [DR(D0), ARIND(A1)],
+            },
+        );
+    }
 }

@@ -105,6 +105,7 @@ pub enum Operation {
     BCHG,
     BCLR,
     BSET,
+    MOVES,
 }
 
 #[derive(Debug, PartialEq)]
@@ -398,6 +399,19 @@ fn decode_da_reg_op(w: u16, start_bit: i32) -> Operand {
     }
 }
 
+fn decode_standard_sized(w: u16, reg_bit: i32, mod_bit: i32, sz_bit: i32, offset: &mut usize, extensions: &[u8]) -> Result<(Operand, i32), DecodingError> {
+    let rg = get_bits(w, reg_bit, reg_bit + 2);
+    let md = get_bits(w, mod_bit, mod_bit + 2);
+    let sz = 1 << get_bits(w, sz_bit, sz_bit + 1);
+    Ok((decode_ea(rg, md, offset, extensions, sz)?, sz))
+}
+
+fn decode_standard_unsized(w: u16, reg_bit: i32, mod_bit: i32, offset: &mut usize, extensions: &[u8]) -> Result<Operand, DecodingError> {
+    let rg = get_bits(w, reg_bit, reg_bit + 2);
+    let md = get_bits(w, mod_bit, mod_bit + 2);
+    decode_ea(rg, md, offset, extensions, 0)
+}
+
 fn decode_bitmap(opword: u16, extensions: &[u8]) -> Result<DecodedInstruction, DecodingError> {
     // Handle 1:1 matches first
     match opword {
@@ -428,9 +442,7 @@ fn decode_bitmap(opword: u16, extensions: &[u8]) -> Result<DecodedInstruction, D
             // CALLM
             let mut offset = 0usize;
             let byte_count = pull_16(extensions, &mut offset)? as u8;
-            let dst_reg = get_bits(opword, 0, 2);
-            let dst_mod = get_bits(opword, 3, 5);
-            let dst_op = decode_ea(dst_reg, dst_mod, &mut offset, extensions, 0)?;
+            let dst_op = decode_standard_unsized(opword, 0, 3, &mut offset, extensions)?;
             return Ok(DecodedInstruction {
                 bytes_used: 2 + offset as u32,
                 instruction: Instruction {
@@ -443,6 +455,25 @@ fn decode_bitmap(opword: u16, extensions: &[u8]) -> Result<DecodedInstruction, D
                 }
             });
         }
+    }
+
+    // MOVES
+    if (opword & 0b1111_1111_0000_0000) == 0b0000_1110_0000_0000 {
+        let mut offset = 0usize;
+        let ext = pull_16(extensions, &mut offset)?;
+        let op1 = decode_da_reg_op(ext, 12);
+        let (op2, size) = decode_standard_sized(opword, 0, 3, 6, &mut offset, extensions)?;
+        return Ok(DecodedInstruction {
+            bytes_used: 2 + offset as u32,
+            instruction: Instruction {
+                size: size,
+                operation: MOVES,
+                operands: match get_bits(ext, 11, 11) {
+                    0 => [ op2, op1 ],
+                    _ => [ op1, op2 ],
+                },
+            }
+        });
     }
 
 

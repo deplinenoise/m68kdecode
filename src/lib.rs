@@ -548,7 +548,6 @@ fn decode_bitmap(opword: u16, extensions: &[u8]) -> Result<DecodedInstruction, D
                 ],
             }
         });
-
     }
 
     match opword & 0b1111_1111_0000_0000 {

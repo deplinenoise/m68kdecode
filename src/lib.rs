@@ -481,10 +481,7 @@ fn decode_bitmap(opword: u16, extensions: &[u8]) -> Result<DecodedInstruction, D
     if (opword & 0b1111_1001_1100_0000) == 0b0000_0000_1100_0000 {
         let mut offset = 0usize;
         let ext = pull_16(extensions, &mut offset)?;
-        let src_reg = get_bits(opword, 0, 2);
-        let src_mod = get_bits(opword, 3, 5);
-        let sz = 1 << get_bits(opword, 9, 10);
-        let src_op = decode_ea(src_reg, src_mod, &mut offset, extensions, sz)?;
+        let (src_op, sz) = decode_standard_sized(opword, 0, 3, 9, &mut offset, extensions)?;
         return Ok(DecodedInstruction {
             bytes_used: 2 + offset as u32,
             instruction: Instruction {

@@ -494,7 +494,7 @@ fn decode_bitmap(opword: u16, extensions: &[u8]) -> Result<DecodedInstruction, D
         });
     }
 
-    // BTST, static bit number
+    // BTST/BCHG/BCLR/BSET with static bit number
     if (opword & 0b1111_1111_0000_0000) == 0b0000_1000_0000_0000 {
         let mut offset = 0usize;
         let ext = pull_16(extensions, &mut offset)?;
@@ -523,7 +523,6 @@ fn decode_bitmap(opword: u16, extensions: &[u8]) -> Result<DecodedInstruction, D
 
     }
 
-    // RTM uses illegal size of following instructions, so check it first
     match opword & 0b1111_1111_0000_0000 {
         0b0000_0000_0000_0000 => return decode_alu_imm(ORI, opword, extensions),
         0b0000_0010_0000_0000 => return decode_alu_imm(ANDI, opword, extensions),

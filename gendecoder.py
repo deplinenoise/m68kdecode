@@ -18,6 +18,7 @@ class Capture(object):
         self.length = length
 
     def make_longer(self):
+        self.bit = self.bit - 1
         self.length = self.length + 1
 
     def __repr__(self):

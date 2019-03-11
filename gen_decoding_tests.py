@@ -52,15 +52,6 @@ with open(outfilename, "w") as of:
     of.write('// auto-generated from decoding_tests.txt by gen_decoding_tests.py\n')
     of.write('mod tests {\n')
     of.write('  use m68kdecode::*;\n')
-    of.write(' fn do_test(bytes: &[u8], expected: Instruction) {\n')
-    of.write('    let r = decode_instruction(&bytes).unwrap();\n')
-    of.write('    assert!(r.bytes_used == bytes.len() as u32);\n')
-    of.write('    if r.instruction != expected {\n')
-    of.write('        println!("Expected: {:?}", expected);\n')
-    of.write('        println!("Got: {:?}", r.instruction);\n')
-    of.write('        assert!(false);\n')
-    of.write('    }\n')
-    of.write('}\n')
 
     testnum = 1
     for t in tests:
@@ -71,12 +62,19 @@ with open(outfilename, "w") as of:
             of.write('// {}\n'.format(al))
         of.write('#[test]\n')
         of.write('fn test_decode_{}() {{\n'.format(testnum))
-        of.write('do_test(&[')
+        if result_lines[0].find('Instruction {') == -1:
+            of.write('test_decoding_result_err(&[')
+        else:
+            of.write('test_decoding_result_ok(&[')
         of.write(', '.join(['0x{0:02x}'.format(byt) for byt in code_bytes]))
         of.write('], ')
         for l in result_lines:
             of.write(l)
             of.write('\n')
+        of.write(', &[')
+        for al in asm_lines:
+            of.write('"{}",\n'.format(al))
+        of.write(']')
         of.write(');}\n')
 
         testnum = testnum + 1

@@ -235,3 +235,9 @@
 
 > moves.b d0,(a1)
 # Instruction { size: 1, operation: MOVES, operands: [ DR(D0), ARIND(A1) ] }
+
+> cas d0,d1,(a0)
+# NotImplemented
+
+> cas2 d0:d1,d2:d3,(a0):(a1)
+# NotImplemented

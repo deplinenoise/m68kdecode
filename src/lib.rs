@@ -118,12 +118,13 @@ pub struct Instruction {
 pub use Operation::*;
 pub use Operand::*;
 
+#[derive(Debug,PartialEq)]
 pub struct DecodedInstruction {
     pub bytes_used: u32,
     pub instruction: Instruction,
 }
 
-#[derive(Debug)]
+#[derive(Debug,PartialEq,Copy,Clone)]
 pub enum DecodingError {
     NotImplemented,
     OutOfSpace,
@@ -425,36 +426,36 @@ fn decode_bitmap(opword: u16, extensions: &[u8]) -> Result<DecodedInstruction, D
     };
 
     // RTM/CALLM
+    if (opword & 0b1111_1111_1111_0000) == 0b0000_0110_1100_0000 {
+        return Ok(DecodedInstruction {
+            bytes_used: 2,
+            instruction: Instruction {
+                size: 0,
+                operation: RTM,
+                operands: [
+                    decode_da_reg_op(opword, 0),
+                    NoOperand,
+                ],
+            }
+        });
+    }
+
     if (opword & 0b1111_1111_1100_0000) == 0b0000_0110_1100_0000 {
-        if get_bits(opword, 4, 5) == 0b00 {
-            return Ok(DecodedInstruction {
-                bytes_used: 2,
-                instruction: Instruction {
-                    size: 0,
-                    operation: RTM,
-                    operands: [
-                        decode_da_reg_op(opword, 0),
-                        NoOperand,
-                    ],
-                }
-            });
-        } else {
-            // CALLM
-            let mut offset = 0usize;
-            let byte_count = pull_16(extensions, &mut offset)? as u8;
-            let dst_op = decode_standard_unsized(opword, 0, 3, &mut offset, extensions)?;
-            return Ok(DecodedInstruction {
-                bytes_used: 2 + offset as u32,
-                instruction: Instruction {
-                    size: 0,
-                    operation: CALLM,
-                    operands: [
-                        IMM8(byte_count),
-                        dst_op,
-                    ],
-                }
-            });
-        }
+        // CALLM
+        let mut offset = 0usize;
+        let byte_count = pull_16(extensions, &mut offset)? as u8;
+        let dst_op = decode_standard_unsized(opword, 0, 3, &mut offset, extensions)?;
+        return Ok(DecodedInstruction {
+            bytes_used: 2 + offset as u32,
+            instruction: Instruction {
+                size: 0,
+                operation: CALLM,
+                operands: [
+                    IMM8(byte_count),
+                    dst_op,
+                ],
+            }
+        });
     }
 
     // MOVES
@@ -550,6 +551,12 @@ fn decode_bitmap(opword: u16, extensions: &[u8]) -> Result<DecodedInstruction, D
         });
     }
 
+    // CAS/CAS2 - Not yet implemented
+    if (opword & 0b1111_1000_1100_0000) == 0b0000_1000_1100_0000 {
+        return Err(NotImplemented)
+    }
+
+
     match opword & 0b1111_1111_0000_0000 {
         0b0000_0000_0000_0000 => return decode_alu_imm(ORI, opword, extensions),
         0b0000_0010_0000_0000 => return decode_alu_imm(ANDI, opword, extensions),
@@ -610,3 +617,46 @@ pub fn decode_instruction(code_bytes: &[u8]) -> Result<DecodedInstruction, Decod
     }
 }
 
+// Test support functions
+pub fn test_decoding_result_ok(bytes: &[u8], expected: Instruction, asm: &[&str]) {
+    let r = decode_instruction(&bytes);
+
+    match r {
+        Err(e) => {
+            println!("Expected: {:?}", expected);
+            println!("Got: {:?}", e);
+            for l in asm {
+                println!("{}", l);
+            }
+            assert!(false);
+        },
+        Ok(DecodedInstruction { bytes_used, instruction }) => {
+            assert!(bytes_used == bytes.len() as u32);
+            if instruction != expected {
+                println!("Expected: {:?}", expected);
+                println!("Got: {:?}", instruction);
+                for l in asm {
+                    println!("{}", l);
+                }
+                assert!(false);
+            }
+        },
+    }
+}
+
+pub fn test_decoding_result_err(bytes: &[u8], expected: DecodingError, asm: &[&str]) {
+    let r = decode_instruction(&bytes);
+    match r {
+        Err(e) => {
+            if e == expected { return; }
+        }
+        _ => (),
+    };
+
+    println!("Expected: {:?}", expected);
+    println!("Got: {:?}", r);
+    for l in asm {
+        println!("{}", l);
+    }
+    assert!(false);
+}

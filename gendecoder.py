@@ -110,22 +110,30 @@ with open(infile, "r") as inf:
         #print(i)
     
 with open(outfile, "w") as of:
-    of.write('fn decode_insn(data: &[u16]) -> Result<Instruction, DecodingError> {\n')
+    of.write('fn decode_insn(code: &[u8]) -> Result<Instruction, DecodingError> {\n')
+    of.write('  let mut offset = 0usize;\n')
+    of.write('  let mut peek_word = |i| -> u16 { let dummy = offset + 2 * i; pull_16(&code[2..], &mut dummy)? };\n')
+    of.write('  let mut next_word = || pull_16(&code[2..], &mut offset)?;\n');
+    of.write('  let mut EA = |md, rg, sz| decode_ea(rd, md, &mut offset, &code[2..], si)?;\n');
+
+    of.write('  let w0 = next_word();\n')
     for i in instructions:
         of.write('if (w0 & 0b{:016b}) == 0b{:016b} {{\n'.format(i.masks[0], i.instruction_patterns[0]))
         for n in range(1, len(i.masks)):
-            of.write('let w{} = pull16();\n'.format(n))
+            of.write('let w{0} = peek_word({0});\n'.format(n))
 
         if len(i.masks) > 1:
             of.write('if {} {{\n'.format(' && '.join([i.match_expr(n) for n in range(1, len(i.masks))])))
 
-            #for n in range(1, len(i.masks)):
+        of.write('word_index += {};\n'.format(len(i.masks)))
 
         for c in i.captures:
             of.write('let {} = get_bits(w{}, {}, {});\n'.format(c.name, c.wordindex, c.bit, c.length))
 
         of.write(i.result + '\n')
-        of.write('return Instruction {{ op: {}, sz: sz, src: src, dst: dst }};\n'.format(i.name))
+
+        if i.result.find('return') == -1:
+            of.write('return Instruction {{ op: {}, sz: sz, src: src, dst: dst }};\n'.format(i.name))
 
         if len(i.masks) > 1:
             of.write('}\n')

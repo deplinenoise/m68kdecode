@@ -9,6 +9,7 @@ R_LINEFMT = re.compile('^([A-Z][A-Z0-9]+)\s+((?:(?:(?:[01A-Za-z]{4}_){3}[01A-Za-
 
 lineno = 0
 infile = sys.argv[1]
+outfile = sys.argv[2]
 
 class Capture(object):
     def __init__(self, name, bit, length):
@@ -26,22 +27,30 @@ class Capture(object):
         return "{}({}/{}:{})".format(self.name, self.wordindex, self.bit, self.length)
 
 class Instruction(object):
-    def __init__(self, name):
+    def __init__(self, name, result):
         object.__init__(self)
         self.name = name
         self.masks = []
+        self.instruction_patterns = []
         self.captures = []
+        self.result = result
 
-    def add_mask(self, mask, captures):
+    def add_mask(self, mask, instruction_pattern, captures):
         self.masks.append(mask)
+        self.instruction_patterns.append(instruction_pattern)
         for c in captures:
             c.wordindex = len(self.masks) - 1
             self.captures.append(c)
+
+    def match_expr(self, n):
+        return '(w{} & 0b{:016b}) == 0b{:016b}'.format(n, self.masks[n], self.instruction_patterns[n])
 
     def __repr__(self):
         return "{}:\n".format(self.name) +  \
                 "masks:\n    " + \
                 ' '.join(["{:016b}".format(m) for m in self.masks]) + \
+                "patterns:\n    " + \
+                ' '.join(["{:016b}".format(p) for p in self.instruction_patterns]) + \
                 "\ncaptures:\n    " + \
                 ' '.join([str(c) for c in self.captures]);
 
@@ -49,6 +58,7 @@ def analyze_mask(mask):
     assert len(mask) == 16
 
     out_mask = 0
+    out_insn = 0
 
     prev_capture = None
     bit = 16
@@ -57,8 +67,10 @@ def analyze_mask(mask):
     for ch in mask:
         bit = bit - 1
         if ch == '0':
+            out_mask = out_mask | (1 << bit)
             prev_capture = None
         elif ch == '1':
+            out_insn = out_insn | (1 << bit)
             out_mask = out_mask | (1 << bit)
             prev_capture = None
         elif ch == prev_capture:
@@ -67,7 +79,7 @@ def analyze_mask(mask):
             prev_capture = ch
             captures.append(Capture(ch, bit, 1))
             
-    return (out_mask, captures)
+    return (out_mask, out_insn, captures)
 
 instructions = []
 
@@ -87,12 +99,36 @@ with open(infile, "r") as inf:
 
         name, bits, result = m.groups()
 
-        i = Instruction(name)
+        i = Instruction(name, result)
 
         bits = bits.strip()
         for mask in bits.replace('_', '').split():
-            am, ac = analyze_mask(mask)
-            i.add_mask(am, ac)
+            am, ai, ac = analyze_mask(mask)
+            i.add_mask(am, ai, ac)
 
-        print(i)
+        instructions.append(i)
+        #print(i)
     
+with open(outfile, "w") as of:
+    of.write('fn decode_insn(data: &[u16]) -> Result<Instruction, DecodingError> {\n')
+    for i in instructions:
+        of.write('if (w0 & 0b{:016b}) == 0b{:016b} {{\n'.format(i.masks[0], i.instruction_patterns[0]))
+        for n in range(1, len(i.masks)):
+            of.write('let w{} = pull16();\n'.format(n))
+
+        if len(i.masks) > 1:
+            of.write('if {} {{\n'.format(' && '.join([i.match_expr(n) for n in range(1, len(i.masks))])))
+
+            #for n in range(1, len(i.masks)):
+
+        for c in i.captures:
+            of.write('let {} = get_bits(w{}, {}, {});\n'.format(c.name, c.wordindex, c.bit, c.length))
+
+        of.write(i.result + '\n')
+        of.write('return Instruction {{ op: {}, sz: sz, src: src, dst: dst }};\n'.format(i.name))
+
+        if len(i.masks) > 1:
+            of.write('}\n')
+
+        of.write('}\n')
+    of.write('}\n')

@@ -1,33 +1,33 @@
-ANDITOCCR       0000_0010_0011_1100 sz=1, src=IMM8, dst=Implied
-ANDIROSR        0000_0010_0111_1100 sz=2, src=IMM16, dst=Implied
-EORITOCCR       0000_1010_0011_1100 sz=1, src=IMM8, dst=Implied
-EORITOSR        0000_1010_0111_1100 sz=2, src=IMM16, dst=Implied
-ORITOCCR        0000_0000_0011_1100 sz=1, src=IMM8, dst=Implied
-ORITOSR         0000_0000_0111_1100 sz=2, src=IMM16, dst=Implied
+ANDITOCCR       0000_0010_0011_1100 sz=1; src=IMM8(); dst=Implied;
+ANDIROSR        0000_0010_0111_1100 sz=2; src=IMM16(); dst=Implied;
+EORITOCCR       0000_1010_0011_1100 sz=1; src=IMM8(); dst=Implied;
+EORITOSR        0000_1010_0111_1100 sz=2; src=IMM16(); dst=Implied;
+ORITOCCR        0000_0000_0011_1100 sz=1; src=IMM8(); dst=Implied;
+ORITOSR         0000_0000_0111_1100 sz=2; src=IMM16(); dst=Implied;
 
-RTM             0000_0110_1100_Drrr sz=0, src=DAR(D,r) dst=NoOperand
+RTM             0000_0110_1100_Drrr sz=0; src=DAR(D,r); dst=NoOperand;
 
 # Note: bit eight being 1 here allows these to be check before all else 
 # Note: for movep bits 5-3, specify a mode An, which all the other
 # bit 8 set commands do not, so have check first.
 
-MOVEP           0000_ddd1_0s00_1aaa sz=(1<<(s+1)), src=ARIND(a), dst=DR(d)
-MOVEP           0000_ddd1_0s10_1aaa sz=(1<<(s+1)), src=DR(d), dst=ARIND(a)
+MOVEP           0000_ddd1_0s00_1aaa sz=(1<<(s+1)); src=ARIND(a); dst=DR(d);
+MOVEP           0000_ddd1_0s10_1aaa sz=(1<<(s+1)); src=DR(d); dst=ARIND(a);
 
-BTST            0000_ddd1_00mm_mrrr sz=4, [ DR(d), EA(m, r, 4) ]
-BCHG            0000_ddd1_01mm_mrrr sz=4, [ DR(d), EA(m, r, 4) ]
-BCLR            0000_ddd1_10mm_mrrr sz=4, [ DR(d), EA(m, r, 4) ]
-BSET            0000_ddd1_11mm_mrrr sz=4, [ DR(d), EA(m, r, 4) ]
+BTST            0000_ddd1_00mm_mrrr sz=4; src=DR(d); dst=EA(m, r, 4);
+BCHG            0000_ddd1_01mm_mrrr sz=4; src=DR(d); dst=EA(m, r, 4);
+BCLR            0000_ddd1_10mm_mrrr sz=4; src=DR(d); dst=EA(m, r, 4);
+BSET            0000_ddd1_11mm_mrrr sz=4; src=DR(d); dst=EA(m, r, 4);
 
-BTST            0000_1000_00mm_mrrr 0000_000n_nnnn_nnnn sz=1, [ IMM16(n), EA(m, r, 1) ]
-BCHG            0000_1000_01mm_mrrr 0000_000n_nnnn_nnnn sz=1, [ IMM16(n), EA(m, r, 1) ]
-BCLR            0000_1000_10mm_mrrr 0000_000n_nnnn_nnnn sz=1, [ IMM16(n), EA(m, r, 1) ]
-BSET            0000_1000_11mm_mrrr 0000_000n_nnnn_nnnn sz=1, [ IMM16(n), EA(m, r, 1) ]
+BTST            0000_1000_00mm_mrrr 0000_000n_nnnn_nnnn sz=1; src=IMM16(n); dst=EA(m, r, 1);
+BCHG            0000_1000_01mm_mrrr 0000_000n_nnnn_nnnn sz=1; src=IMM16(n); dst=EA(m, r, 1);
+BCLR            0000_1000_10mm_mrrr 0000_000n_nnnn_nnnn sz=1; src=IMM16(n); dst=EA(m, r, 1);
+BSET            0000_1000_11mm_mrrr 0000_000n_nnnn_nnnn sz=1; src=IMM16(n); dst=EA(m, r, 1);
 
 #define CAS2_MASK ENCW(1,1,1,1, 1,1,0,1, 1,1,1,1, 1,1,1,1)
 #define CAS2_INST ENCW(0,0,0,0, 1,1,0,0, 1,1,1,1, 1,1,0,0)
 
-CAS2            0000_11s0_1111_1100 Aaaa_000b_bb00_0ccc Dddd_000e_ee00_0fff special_cas2(s << 1, A, a, b, c, D, d, e, f)
+CAS2            0000_11s0_1111_1100 Aaaa_000b_bb00_0ccc Dddd_000e_ee00_0fff return special_cas2(s << 1, A, a, b, c, D, d, e, f);
 
 #define CAS_MASK  ENCW(1,1,1,1, 1,0,0,1, 1,1,0,0, 0,0,0,0)
 #define CHK2_MASK ENCW(1,1,1,1, 1,0,0,1, 1,1,0,0, 0,0,0,0)

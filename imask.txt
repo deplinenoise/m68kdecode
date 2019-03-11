@@ -1,18 +1,18 @@
-ANDITOCCR       0000_0010_0011_1100 sz=1, [ IMM8, Implied ]
-ANDIROSR        0000_0010_0111_1100 sz=2, [ IMM16, Implied ]
-EORITOCCR       0000_1010_0011_1100 sz=1, [ IMM8, Implied ]
-EORITOSR        0000_1010_0111_1100 sz=2, [ IMM16, Implied ]
-ORITOCCR        0000_0000_0011_1100 sz=1, [ IMM8, Implied ]
-ORITOSR         0000_0000_0111_1100 sz=2, [ IMM16, Implied ]
+ANDITOCCR       0000_0010_0011_1100 sz=1, src=IMM8, dst=Implied
+ANDIROSR        0000_0010_0111_1100 sz=2, src=IMM16, dst=Implied
+EORITOCCR       0000_1010_0011_1100 sz=1, src=IMM8, dst=Implied
+EORITOSR        0000_1010_0111_1100 sz=2, src=IMM16, dst=Implied
+ORITOCCR        0000_0000_0011_1100 sz=1, src=IMM8, dst=Implied
+ORITOSR         0000_0000_0111_1100 sz=2, src=IMM16, dst=Implied
 
-RTM             0000_0110_1100_Drrr sz=0, [ DAR(D, r), NoOperand ]
+RTM             0000_0110_1100_Drrr sz=0, src=DAR(D,r) dst=NoOperand
 
 # Note: bit eight being 1 here allows these to be check before all else 
 # Note: for movep bits 5-3, specify a mode An, which all the other
 # bit 8 set commands do not, so have check first.
 
-MOVEP           0000_ddd1_0s00_1aaa sz=(1<<(s+1)), [ ARIND(a), DR(d) ]
-MOVEP           0000_ddd1_0s10_1aaa sz=(1<<(s+1)), [ DR(d), ARIND(a) ]
+MOVEP           0000_ddd1_0s00_1aaa sz=(1<<(s+1)), src=ARIND(a), dst=DR(d)
+MOVEP           0000_ddd1_0s10_1aaa sz=(1<<(s+1)), src=DR(d), dst=ARIND(a)
 
 BTST            0000_ddd1_00mm_mrrr sz=4, [ DR(d), EA(m, r, 4) ]
 BCHG            0000_ddd1_01mm_mrrr sz=4, [ DR(d), EA(m, r, 4) ]

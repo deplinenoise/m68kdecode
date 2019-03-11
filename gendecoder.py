@@ -16,13 +16,34 @@ class Capture(object):
         self.name = name
         self.bit = bit
         self.length = length
+        self.wordindex = 0
 
     def make_longer(self):
         self.bit = self.bit - 1
         self.length = self.length + 1
 
     def __repr__(self):
-        return "{}({}:{})".format(self.name, self.bit, self.length)
+        return "{}({}/{}:{})".format(self.name, self.wordindex, self.bit, self.length)
+
+class Instruction(object):
+    def __init__(self, name):
+        object.__init__(self)
+        self.name = name
+        self.masks = []
+        self.captures = []
+
+    def add_mask(self, mask, captures):
+        self.masks.append(mask)
+        for c in captures:
+            c.wordindex = len(self.masks) - 1
+            self.captures.append(c)
+
+    def __repr__(self):
+        return "{}:\n".format(self.name) +  \
+                "masks:\n    " + \
+                ' '.join(["{:016b}".format(m) for m in self.masks]) + \
+                "\ncaptures:\n    " + \
+                ' '.join([str(c) for c in self.captures]);
 
 def analyze_mask(mask):
     assert len(mask) == 16
@@ -48,6 +69,7 @@ def analyze_mask(mask):
             
     return (out_mask, captures)
 
+instructions = []
 
 with open(infile, "r") as inf:
     for line in inf:
@@ -62,12 +84,15 @@ with open(infile, "r") as inf:
         if not m:
             sys.stderr.write('{}({}): bad line\n'.format(infile, lineno))
             continue
-        insn, bits, result = m.groups()
-        #print(insn, bits, result)
+
+        name, bits, result = m.groups()
+
+        i = Instruction(name)
+
         bits = bits.strip()
-        masks = bits.replace('_', '').split()
+        for mask in bits.replace('_', '').split():
+            am, ac = analyze_mask(mask)
+            i.add_mask(am, ac)
 
-        am, ac = analyze_mask(masks[0])
-
-        print("{:016b} {}".format(am, ac))
+        print(i)
     

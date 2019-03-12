@@ -110,11 +110,12 @@ with open(infile, "r") as inf:
         #print(i)
     
 with open(outfile, "w") as of:
-    of.write('fn decode_insn(code: &[u8]) -> Result<Instruction, DecodingError> {\n')
+    of.write('fn decode_insn(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {\n')
     of.write('  let mut offset = 0usize;\n')
     of.write('  let mut peek_word = |i| -> u16 { let dummy = offset + 2 * i; pull_16(&code[2..], &mut dummy)? };\n')
-    of.write('  let mut next_word = || pull_16(&code[2..], &mut offset)?;\n');
+    of.write('  let mut next_word = || pull_16(code, &mut offset)?;\n');
     of.write('  let mut EA = |md, rg, sz| decode_ea(rd, md, &mut offset, &code[2..], si)?;\n');
+    of.write('  let mut p_imm8() = || pull_16(code, &mut offset);\n');
 
     of.write('  let w0 = next_word();\n')
     for i in instructions:
@@ -133,7 +134,7 @@ with open(outfile, "w") as of:
         of.write(i.result + '\n')
 
         if i.result.find('return') == -1:
-            of.write('return Instruction {{ op: {}, sz: sz, src: src, dst: dst }};\n'.format(i.name))
+            of.write('return Ok(DecodedInstruction {{ bytes_used: offset as u32, instruction: Instruction {{ size: sz, operation: {}, operands: [ src, dst ] }} }});\n'.format(i.name))
 
         if len(i.masks) > 1:
             of.write('}\n')

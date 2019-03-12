@@ -320,7 +320,7 @@ fn decode_ea(src_reg: u16, src_mod: u16, offset: &mut usize, extensions: &[u8], 
 
 fn decode_move(opword: u16, extensions: &[u8], size: i32) -> Result<DecodedInstruction, DecodingError> {
 
-    let mut offset = 0usize;
+    let mut offset = 2usize;
 
     let src_reg = get_bits(opword, 0, 2);
     let src_mod = get_bits(opword, 3, 5);
@@ -344,7 +344,7 @@ fn decode_move(opword: u16, extensions: &[u8], size: i32) -> Result<DecodedInstr
 }
 
 fn decode_ccr_sr_immediate_op(op: Operation, size: i32, extensions: &[u8]) -> Result<DecodedInstruction, DecodingError> {
-    let mut offset = 0usize;
+    let mut offset = 2usize;
     Ok(DecodedInstruction {
         bytes_used: 4,
         instruction: Instruction {
@@ -364,7 +364,7 @@ fn decode_ccr_sr_immediate_op(op: Operation, size: i32, extensions: &[u8]) -> Re
 
 fn decode_alu_imm(op: Operation, opword: u16, extensions: &[u8]) -> Result<DecodedInstruction, DecodingError> {
     let sz = get_bits(opword, 6, 7);
-    let mut offset = 0usize;
+    let mut offset = 2usize;
 
     let imm = match sz {
         0b00 => IMM8(pull_16(extensions, &mut offset)? as u8),
@@ -442,7 +442,7 @@ fn decode_bitmap(opword: u16, extensions: &[u8]) -> Result<DecodedInstruction, D
 
     if (opword & 0b1111_1111_1100_0000) == 0b0000_0110_1100_0000 {
         // CALLM
-        let mut offset = 0usize;
+        let mut offset = 2usize;
         let byte_count = pull_16(extensions, &mut offset)? as u8;
         let dst_op = decode_standard_unsized(opword, 0, 3, &mut offset, extensions)?;
         return Ok(DecodedInstruction {
@@ -460,7 +460,7 @@ fn decode_bitmap(opword: u16, extensions: &[u8]) -> Result<DecodedInstruction, D
 
     // MOVES
     if (opword & 0b1111_1111_0000_0000) == 0b0000_1110_0000_0000 {
-        let mut offset = 0usize;
+        let mut offset = 2usize;
         let ext = pull_16(extensions, &mut offset)?;
         let op1 = decode_da_reg_op(ext, 12);
         let (op2, size) = decode_standard_sized(opword, 0, 3, 6, &mut offset, extensions)?;
@@ -480,7 +480,7 @@ fn decode_bitmap(opword: u16, extensions: &[u8]) -> Result<DecodedInstruction, D
 
     // CMP2
     if (opword & 0b1111_1001_1100_0000) == 0b0000_0000_1100_0000 {
-        let mut offset = 0usize;
+        let mut offset = 2usize;
         let ext = pull_16(extensions, &mut offset)?;
         let (src_op, sz) = decode_standard_sized(opword, 0, 3, 9, &mut offset, extensions)?;
         return Ok(DecodedInstruction {
@@ -499,7 +499,7 @@ fn decode_bitmap(opword: u16, extensions: &[u8]) -> Result<DecodedInstruction, D
 
     // CMPI
     if (opword & 0b1111_1100_0000_0000) == 0b0000_1100_0000_0000 {
-        let mut offset = 0usize;
+        let mut offset = 2usize;
         let sz = 1 << get_bits(opword, 6, 7);
         let src_op = match sz {
             1 => Ok(IMM8(pull_16(extensions, &mut offset)? as u8)),
@@ -525,7 +525,7 @@ fn decode_bitmap(opword: u16, extensions: &[u8]) -> Result<DecodedInstruction, D
 
     // BTST/BCHG/BCLR/BSET with static bit number
     if (opword & 0b1111_1111_0000_0000) == 0b0000_1000_0000_0000 {
-        let mut offset = 0usize;
+        let mut offset = 2usize;
         let ext = pull_16(extensions, &mut offset)?;
         let dst_reg = get_bits(opword, 0, 2);
         let dst_mod = get_bits(opword, 3, 5);
@@ -573,7 +573,7 @@ fn decode_bitmap(opword: u16, extensions: &[u8]) -> Result<DecodedInstruction, D
 
 fn decode_misc(opword: u16, extensions: &[u8]) -> Result<DecodedInstruction, DecodingError> {
 
-    let mut offset = 0usize;
+    let mut offset = 2usize;
 
     if (opword & 0b0100_0001_1100_0000) == 0b0100_0001_1100_0000 {
         // Handle LEA
@@ -608,11 +608,11 @@ pub fn decode_instruction(code_bytes: &[u8]) -> Result<DecodedInstruction, Decod
     let opword = pull_16(code_bytes, &mut offset)?;
 
     match opword >> 12 {
-        0b0000 => decode_bitmap(opword, &code_bytes[2..]),
-        0b0001 => decode_move(opword, &code_bytes[2..], 1),
-        0b0010 => decode_move(opword, &code_bytes[2..], 4),
-        0b0011 => decode_move(opword, &code_bytes[2..], 2),
-        0b0100 => decode_misc(opword, &code_bytes[2..]),
+        0b0000 => decode_bitmap(opword, code_bytes),
+        0b0001 => decode_move(opword, code_bytes, 1),
+        0b0010 => decode_move(opword, code_bytes, 4),
+        0b0011 => decode_move(opword, code_bytes, 2),
+        0b0100 => decode_misc(opword, code_bytes),
         _ => Err(NotImplemented),
     }
 }

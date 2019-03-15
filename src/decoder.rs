@@ -27,6 +27,16 @@ pub enum Operation {
     CMPI,
     MOVES,
     LEA,
+    BGND,
+    ILLEGAL,
+    NOP,
+    RESET,
+    RTD,
+    RTE,
+    RTR,
+    RTS,
+    STOP,
+    TRAPV,
 }
 #[allow(non_snake_case)]
 pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {
@@ -717,6 +727,106 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
         return cs.check_overflow(Instruction {
             size: sz,
             operation: LEA,
+            operands: [src, dst],
+        });
+    }
+    if (w0 & 0b1111111111111111) == 0b0100101011111010 {
+        sz = 0;
+        src = NoOperand;
+        dst = NoOperand;
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: BGND,
+            operands: [src, dst],
+        });
+    }
+    if (w0 & 0b1111111111111111) == 0b0100101011111100 {
+        sz = 0;
+        src = NoOperand;
+        dst = NoOperand;
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: ILLEGAL,
+            operands: [src, dst],
+        });
+    }
+    if (w0 & 0b1111111111111111) == 0b0100111001110001 {
+        sz = 0;
+        src = NoOperand;
+        dst = NoOperand;
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: NOP,
+            operands: [src, dst],
+        });
+    }
+    if (w0 & 0b1111111111111111) == 0b0100111001110000 {
+        sz = 0;
+        src = NoOperand;
+        dst = NoOperand;
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: RESET,
+            operands: [src, dst],
+        });
+    }
+    if (w0 & 0b1111111111111111) == 0b0100111001110100 {
+        sz = 0;
+        src = cs.imm16();
+        dst = NoOperand;
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: RTD,
+            operands: [src, dst],
+        });
+    }
+    if (w0 & 0b1111111111111111) == 0b0100111001110011 {
+        sz = 0;
+        src = NoOperand;
+        dst = NoOperand;
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: RTE,
+            operands: [src, dst],
+        });
+    }
+    if (w0 & 0b1111111111111111) == 0b0100111001110111 {
+        sz = 0;
+        src = NoOperand;
+        dst = NoOperand;
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: RTR,
+            operands: [src, dst],
+        });
+    }
+    if (w0 & 0b1111111111111111) == 0b0100111001110101 {
+        sz = 0;
+        src = NoOperand;
+        dst = NoOperand;
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: RTS,
+            operands: [src, dst],
+        });
+    }
+    if (w0 & 0b1111111111111111) == 0b0100111001110010 {
+        sz = 0;
+        src = cs.imm16();
+        dst = NoOperand;
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: STOP,
+            operands: [src, dst],
+        });
+    }
+    if (w0 & 0b1111111111111111) == 0b0100111001110110 {
+        sz = 0;
+        src = NoOperand;
+        dst = NoOperand;
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: TRAPV,
             operands: [src, dst],
         });
     }

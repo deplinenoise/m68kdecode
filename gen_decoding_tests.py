@@ -25,7 +25,7 @@ with open(infilename, 'r') as f:
                 eof = True
                 break
             l = l.strip()
-            if len(l) == 0:
+            if len(l) == 0 or l.startswith('//'):
                 break
             if l.startswith('> '):
                 asm_lines.append(l[1:])

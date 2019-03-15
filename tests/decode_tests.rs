@@ -902,4 +902,121 @@ mod tests {
             &[" cas2 d0:d1,d2:d3,(a0):(a1)"],
         );
     }
+    //  illegal
+    #[test]
+    fn test_decode_0068_illegal() {
+        test_decoding_result_ok(
+            &[0x4a, 0xfc],
+            Instruction {
+                size: 0,
+                operation: ILLEGAL,
+                operands: [NoOperand, NoOperand],
+            },
+            &[" illegal"],
+        );
+    }
+    //  nop
+    #[test]
+    fn test_decode_0069_nop() {
+        test_decoding_result_ok(
+            &[0x4e, 0x71],
+            Instruction {
+                size: 0,
+                operation: NOP,
+                operands: [NoOperand, NoOperand],
+            },
+            &[" nop"],
+        );
+    }
+    //  reset
+    #[test]
+    fn test_decode_0070_reset() {
+        test_decoding_result_ok(
+            &[0x4e, 0x70],
+            Instruction {
+                size: 0,
+                operation: RESET,
+                operands: [NoOperand, NoOperand],
+            },
+            &[" reset"],
+        );
+    }
+    //  rtd #578
+    #[test]
+    fn test_decode_0071_rtd_578() {
+        test_decoding_result_ok(
+            &[0x4e, 0x74, 0x02, 0x42],
+            Instruction {
+                size: 0,
+                operation: RTD,
+                operands: [IMM16(578), NoOperand],
+            },
+            &[" rtd #578"],
+        );
+    }
+    //  rte
+    #[test]
+    fn test_decode_0072_rte() {
+        test_decoding_result_ok(
+            &[0x4e, 0x73],
+            Instruction {
+                size: 0,
+                operation: RTE,
+                operands: [NoOperand, NoOperand],
+            },
+            &[" rte"],
+        );
+    }
+    //  rtr
+    #[test]
+    fn test_decode_0073_rtr() {
+        test_decoding_result_ok(
+            &[0x4e, 0x77],
+            Instruction {
+                size: 0,
+                operation: RTR,
+                operands: [NoOperand, NoOperand],
+            },
+            &[" rtr"],
+        );
+    }
+    //  rts
+    #[test]
+    fn test_decode_0074_rts() {
+        test_decoding_result_ok(
+            &[0x4e, 0x75],
+            Instruction {
+                size: 0,
+                operation: RTS,
+                operands: [NoOperand, NoOperand],
+            },
+            &[" rts"],
+        );
+    }
+    //  stop #123
+    #[test]
+    fn test_decode_0075_stop_123() {
+        test_decoding_result_ok(
+            &[0x4e, 0x72, 0x00, 0x7b],
+            Instruction {
+                size: 0,
+                operation: STOP,
+                operands: [IMM16(123), NoOperand],
+            },
+            &[" stop #123"],
+        );
+    }
+    //  trapv
+    #[test]
+    fn test_decode_0076_trapv() {
+        test_decoding_result_ok(
+            &[0x4e, 0x76],
+            Instruction {
+                size: 0,
+                operation: TRAPV,
+                operands: [NoOperand, NoOperand],
+            },
+            &[" trapv"],
+        );
+    }
 }

@@ -75,38 +75,24 @@ MOVES           0000_1110_10mm_mrrr addd_1000_0000_0000 sz=4; src=cs.dar(a, d); 
 
 #CAS2            0000_11s0_1111_1100 Aaaa_000b_bb00_0ccc Dddd_000e_ee00_0fff return special_cas2(s << 1, A, a, b, c, D, d, e, f)
 
-LEA             0100_nnn1_11mm_mrrr sz=4; src=cs.ea(r, m, 4); dst=cs.address_reg_op(n);
-
-#define CAS_MASK  ENCW(1,1,1,1, 1,0,0,1, 1,1,0,0, 0,0,0,0)
-#define CHK2_MASK ENCW(1,1,1,1, 1,0,0,1, 1,1,0,0, 0,0,0,0)
-#define CMP2_MASK ENCW(1,1,1,1, 1,0,0,1, 1,1,0,0, 0,0,0,0)
-#define CAS_INST  ENCW(0,0,0,0, 1,0,0,0, 1,1,0,0, 0,0,0,0)
-#define CHK2_INST ENCW(0,0,0,0, 0,0,0,0, 1,1,0,0, 0,0,0,0)
-#define CMP2_INST ENCW(0,0,0,0, 0,0,0,0, 1,1,0,0, 0,0,0,0)
-
-#/* close ties with Bxxx but bit eight here is 0 and there 1 */
-#/* also above (cas,chk2,cmp2) bits 7-6 here are size and never 11 */
-#define ADDI_MASK ENCW(1,1,1,1, 1,1,1,1, 0,0,0,0, 0,0,0,0)
-#define ANDI_MASK ENCW(1,1,1,1, 1,1,1,1, 0,0,0,0, 0,0,0,0)
-#define CMPI_MASK ENCW(1,1,1,1, 1,1,1,1, 0,0,0,0, 0,0,0,0)
-#define EORI_MASK ENCW(1,1,1,1, 1,1,1,1, 0,0,0,0, 0,0,0,0)
-#define MOVES_MASK  ENCW(1,1,1,1, 1,1,1,1, 0,0,0,0, 0,0,0,0)
-#define ORI_MASK  ENCW(1,1,1,1, 1,1,1,1, 0,0,0,0, 0,0,0,0)
-#define SUBI_MASK ENCW(1,1,1,1, 1,1,1,1, 0,0,0,0, 0,0,0,0)
-#define CALLM_MASK ENCW(1,1,1,1, 1,1,1,1, 1,1,0,0, 0,0,0,0)
-#define ADDI_INST ENCW(0,0,0,0, 0,1,1,0, 0,0,0,0, 0,0,0,0)
-#define ANDI_INST ENCW(0,0,0,0, 0,0,1,0, 0,0,0,0, 0,0,0,0)
-#define CMPI_INST ENCW(0,0,0,0, 1,1,0,0, 0,0,0,0, 0,0,0,0)
-#define EORI_INST ENCW(0,0,0,0, 1,0,1,0, 0,0,0,0, 0,0,0,0)
-#define MOVES_INST  ENCW(0,0,0,0, 1,1,1,0, 0,0,0,0, 0,0,0,0)
-#define ORI_INST  ENCW(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0)
-#define SUBI_INST ENCW(0,0,0,0, 0,1,0,0, 0,0,0,0, 0,0,0,0)
-#define CALLM_INST ENCW(0,0,0,0, 0,1,1,0, 1,1,0,0, 0,0,0,0)
-
 #/*
 # * Group misc. (0100)
 # */     
-#define BGND_MASK 0xffff
+
+LEA             0100_nnn1_11mm_mrrr sz=4; src=cs.ea(r, m, 4); dst=cs.address_reg_op(n);
+
+BGND            0100_1010_1111_1010 sz=0; src=NoOperand; dst=NoOperand;
+ILLEGAL         0100_1010_1111_1100 sz=0; src=NoOperand; dst=NoOperand;
+
+NOP             0100_1110_0111_0001 sz=0; src=NoOperand; dst=NoOperand;
+RESET           0100_1110_0111_0000 sz=0; src=NoOperand; dst=NoOperand;
+RTD             0100_1110_0111_0100 sz=0; src=cs.imm16(); dst=NoOperand;
+RTE             0100_1110_0111_0011 sz=0; src=NoOperand; dst=NoOperand;
+RTR             0100_1110_0111_0111 sz=0; src=NoOperand; dst=NoOperand;
+RTS             0100_1110_0111_0101 sz=0; src=NoOperand; dst=NoOperand;
+STOP            0100_1110_0111_0010 sz=0; src=cs.imm16(); dst=NoOperand;
+TRAPV           0100_1110_0111_0110 sz=0; src=NoOperand; dst=NoOperand;
+
 #define ILLEGAL_MASK  0xffff
 #define MOVEFRC_MASK  0xffff
 #define MOVETOC_MASK  0xffff
@@ -118,18 +104,6 @@ LEA             0100_nnn1_11mm_mrrr sz=4; src=cs.ea(r, m, 4); dst=cs.address_reg
 #define RTS_MASK  0xffff
 #define STOP_MASK 0xffff
 #define TRAPV_MASK  0xffff
-#define BGND_INST ENCW(0,1,0,0, 1,0,1,0, 1,1,1,1, 1,0,1,0)
-#define ILLEGAL_INST  ENCW(0,1,0,0, 1,0,1,0, 1,1,1,1, 1,1,0,0)
-#define MOVEFRC_INST  ENCW(0,1,0,0, 1,1,1,0, 0,1,1,1, 1,0,1,0)
-#define MOVETOC_INST  ENCW(0,1,0,0, 1,1,1,0, 0,1,1,1, 1,0,1,1)
-#define NOP_INST  ENCW(0,1,0,0, 1,1,1,0, 0,1,1,1, 0,0,0,1)
-#define RESET_INST  ENCW(0,1,0,0, 1,1,1,0, 0,1,1,1, 0,0,0,0)
-#define RTD_INST  ENCW(0,1,0,0, 1,1,1,0, 0,1,1,1, 0,1,0,0)
-#define RTE_INST  ENCW(0,1,0,0, 1,1,1,0, 0,1,1,1, 0,0,1,1)
-#define RTR_INST  ENCW(0,1,0,0, 1,1,1,0, 0,1,1,1, 0,1,1,1)
-#define RTS_INST  ENCW(0,1,0,0, 1,1,1,0, 0,1,1,1, 0,1,0,1)
-#define STOP_INST ENCW(0,1,0,0, 1,1,1,0, 0,1,1,1, 0,0,1,0)
-#define TRAPV_INST  ENCW(0,1,0,0, 1,1,1,0, 0,1,1,1, 0,1,1,0)
 #define SWAP_MASK ENCW(1,1,1,1, 1,1,1,1, 1,1,1,1, 1,0,0,0)
 #define SWAP_INST ENCW(0,1,0,0, 1,0,0,0, 0,1,0,0, 0,0,0,0)
 

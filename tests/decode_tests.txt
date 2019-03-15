@@ -247,3 +247,34 @@
 
 > cas2 d0:d1,d2:d3,(a0):(a1)
 # NotImplemented
+
+// doesn't work on all CPUs, assembler freaks out
+// > bgnd
+// # Instruction { size: 0, operation: BGND, operands: [ NoOperand, NoOperand ] }
+
+> illegal
+# Instruction { size: 0, operation: ILLEGAL, operands: [ NoOperand, NoOperand ] }
+
+> nop
+# Instruction { size: 0, operation: NOP, operands: [ NoOperand, NoOperand ] }
+
+> reset
+# Instruction { size: 0, operation: RESET, operands: [ NoOperand, NoOperand ] }
+
+> rtd #578
+# Instruction { size: 0, operation: RTD, operands: [ IMM16(578), NoOperand ] }
+
+> rte
+# Instruction { size: 0, operation: RTE, operands: [ NoOperand, NoOperand ] }
+
+> rtr
+# Instruction { size: 0, operation: RTR, operands: [ NoOperand, NoOperand ] }
+
+> rts
+# Instruction { size: 0, operation: RTS, operands: [ NoOperand, NoOperand ] }
+
+> stop #123
+# Instruction { size: 0, operation: STOP, operands: [ IMM16(123), NoOperand ] }
+
+> trapv
+# Instruction { size: 0, operation: TRAPV, operands: [ NoOperand, NoOperand ] }

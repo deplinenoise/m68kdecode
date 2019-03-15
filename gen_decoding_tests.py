@@ -2,7 +2,10 @@
 
 import sys
 import os
+import re
 import subprocess
+
+R_NSYMCHAR = re.compile('[^a-zA-Z0-9_]+')
 
 vasm = sys.argv[1]
 infilename = sys.argv[2]
@@ -47,6 +50,8 @@ with open(infilename, 'r') as f:
                 with open('test.out', 'rb') as bf:
                     code_bytes = bytearray(bf.read())
                     tests.append((code_bytes, result_lines, asm_lines))
+
+
     
 with open(outfilename, "w") as of:
     of.write('// auto-generated from decoding_tests.txt by gen_decoding_tests.py\n')
@@ -60,8 +65,9 @@ with open(outfilename, "w") as of:
         asm_lines = t[2]
         for al in asm_lines:
             of.write('// {}\n'.format(al))
+        name = re.sub(R_NSYMCHAR, '_', asm_lines[0].strip())
         of.write('#[test]\n')
-        of.write('fn test_decode_{}() {{\n'.format(testnum))
+        of.write('fn test_decode_{}_{}() {{\n'.format(testnum, name))
         if result_lines[0].find('Instruction {') == -1:
             of.write('test_decoding_result_err(&[')
         else:

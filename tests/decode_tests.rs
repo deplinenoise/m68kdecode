@@ -3,7 +3,7 @@ mod tests {
     use m68kdecode::*;
     //  move.b d0,d1
     #[test]
-    fn test_decode_1() {
+    fn test_decode_1_move_b_d0_d1() {
         test_decoding_result_ok(
             &[0x12, 0x00],
             Instruction {
@@ -16,7 +16,7 @@ mod tests {
     }
     //  move.b d2,d3
     #[test]
-    fn test_decode_2() {
+    fn test_decode_2_move_b_d2_d3() {
         test_decoding_result_ok(
             &[0x16, 0x02],
             Instruction {
@@ -29,7 +29,7 @@ mod tests {
     }
     //  move.b d4,d5
     #[test]
-    fn test_decode_3() {
+    fn test_decode_3_move_b_d4_d5() {
         test_decoding_result_ok(
             &[0x1a, 0x04],
             Instruction {
@@ -42,7 +42,7 @@ mod tests {
     }
     //  move.b d6,d7
     #[test]
-    fn test_decode_4() {
+    fn test_decode_4_move_b_d6_d7() {
         test_decoding_result_ok(
             &[0x1e, 0x06],
             Instruction {
@@ -55,7 +55,7 @@ mod tests {
     }
     //  move.w a0,a1
     #[test]
-    fn test_decode_5() {
+    fn test_decode_5_move_w_a0_a1() {
         test_decoding_result_ok(
             &[0x32, 0x48],
             Instruction {
@@ -68,7 +68,7 @@ mod tests {
     }
     //  move.w a2,a3
     #[test]
-    fn test_decode_6() {
+    fn test_decode_6_move_w_a2_a3() {
         test_decoding_result_ok(
             &[0x36, 0x4a],
             Instruction {
@@ -81,7 +81,7 @@ mod tests {
     }
     //  move.w a4,a5
     #[test]
-    fn test_decode_7() {
+    fn test_decode_7_move_w_a4_a5() {
         test_decoding_result_ok(
             &[0x3a, 0x4c],
             Instruction {
@@ -94,7 +94,7 @@ mod tests {
     }
     //  move.w a6,a7
     #[test]
-    fn test_decode_8() {
+    fn test_decode_8_move_w_a6_a7() {
         test_decoding_result_ok(
             &[0x3e, 0x4e],
             Instruction {
@@ -107,7 +107,7 @@ mod tests {
     }
     //  move.b 123(a0,d0),d3
     #[test]
-    fn test_decode_9() {
+    fn test_decode_9_move_b_123_a0_d0_d3() {
         test_decoding_result_ok(
             &[0x16, 0x30, 0x00, 0x7b],
             Instruction {
@@ -120,7 +120,7 @@ mod tests {
     }
     //  move.w 123(a0,d0),d3
     #[test]
-    fn test_decode_10() {
+    fn test_decode_10_move_w_123_a0_d0_d3() {
         test_decoding_result_ok(
             &[0x36, 0x30, 0x00, 0x7b],
             Instruction {
@@ -133,7 +133,7 @@ mod tests {
     }
     //  move.l 123(a0,d0),d3
     #[test]
-    fn test_decode_11() {
+    fn test_decode_11_move_l_123_a0_d0_d3() {
         test_decoding_result_ok(
             &[0x26, 0x30, 0x00, 0x7b],
             Instruction {
@@ -146,7 +146,7 @@ mod tests {
     }
     //  move.l 123(a0,d0),a1
     #[test]
-    fn test_decode_12() {
+    fn test_decode_12_move_l_123_a0_d0_a1() {
         test_decoding_result_ok(
             &[0x22, 0x70, 0x00, 0x7b],
             Instruction {
@@ -159,7 +159,7 @@ mod tests {
     }
     //  move.w 123(a0,d0),a1
     #[test]
-    fn test_decode_13() {
+    fn test_decode_13_move_w_123_a0_d0_a1() {
         test_decoding_result_ok(
             &[0x32, 0x70, 0x00, 0x7b],
             Instruction {
@@ -172,7 +172,7 @@ mod tests {
     }
     //  move.b #$12,d7
     #[test]
-    fn test_decode_14() {
+    fn test_decode_14_move_b_12_d7() {
         test_decoding_result_ok(
             &[0x1e, 0x3c, 0x00, 0x12],
             Instruction {
@@ -185,7 +185,7 @@ mod tests {
     }
     //  move.w #$1234,d7
     #[test]
-    fn test_decode_15() {
+    fn test_decode_15_move_w_1234_d7() {
         test_decoding_result_ok(
             &[0x3e, 0x3c, 0x12, 0x34],
             Instruction {
@@ -198,7 +198,7 @@ mod tests {
     }
     //  move.l #$12345678,d7
     #[test]
-    fn test_decode_16() {
+    fn test_decode_16_move_l_12345678_d7() {
         test_decoding_result_ok(
             &[0x2e, 0x3c, 0x12, 0x34, 0x56, 0x78],
             Instruction {
@@ -211,7 +211,7 @@ mod tests {
     }
     //  move.l D1,-(A2)
     #[test]
-    fn test_decode_17() {
+    fn test_decode_17_move_l_D1_A2_() {
         test_decoding_result_ok(
             &[0x25, 0x01],
             Instruction {
@@ -224,7 +224,7 @@ mod tests {
     }
     //  move.l D1,(A2)+
     #[test]
-    fn test_decode_18() {
+    fn test_decode_18_move_l_D1_A2_() {
         test_decoding_result_ok(
             &[0x24, 0xc1],
             Instruction {
@@ -237,7 +237,7 @@ mod tests {
     }
     //  move.l -(A4),(A2)+
     #[test]
-    fn test_decode_19() {
+    fn test_decode_19_move_l_A4_A2_() {
         test_decoding_result_ok(
             &[0x24, 0xe4],
             Instruction {
@@ -250,7 +250,7 @@ mod tests {
     }
     //  move.l 4.w,A0
     #[test]
-    fn test_decode_20() {
+    fn test_decode_20_move_l_4_w_A0() {
         test_decoding_result_ok(
             &[0x20, 0x78, 0x00, 0x04],
             Instruction {
@@ -263,7 +263,7 @@ mod tests {
     }
     //  move.l $11223344,A0
     #[test]
-    fn test_decode_21() {
+    fn test_decode_21_move_l_11223344_A0() {
         test_decoding_result_ok(
             &[0x20, 0x79, 0x11, 0x22, 0x33, 0x44],
             Instruction {
@@ -276,7 +276,7 @@ mod tests {
     }
     //  move.w #$1234,123(d0)
     #[test]
-    fn test_decode_22() {
+    fn test_decode_22_move_w_1234_123_d0_() {
         test_decoding_result_ok(
             &[0x31, 0xbc, 0x12, 0x34, 0x01, 0xa0, 0x00, 0x7b],
             Instruction {
@@ -297,7 +297,7 @@ mod tests {
     }
     //  move.w -8(pc),d3
     #[test]
-    fn test_decode_23() {
+    fn test_decode_23_move_w_8_pc_d3() {
         test_decoding_result_ok(
             &[0x36, 0x3a, 0xff, 0xf8],
             Instruction {
@@ -318,7 +318,7 @@ mod tests {
     }
     //  move.w -8(pc,d2*8),d3
     #[test]
-    fn test_decode_24() {
+    fn test_decode_24_move_w_8_pc_d2_8_d3() {
         test_decoding_result_ok(
             &[0x36, 0x3b, 0x26, 0xf8],
             Instruction {
@@ -339,7 +339,7 @@ mod tests {
     }
     //  move.w 123(a1,d2*4),9876(a2,d3*2)
     #[test]
-    fn test_decode_25() {
+    fn test_decode_25_move_w_123_a1_d2_4_9876_a2_d3_2_() {
         test_decoding_result_ok(
             &[0x35, 0xb1, 0x24, 0x7b, 0x33, 0x20, 0x26, 0x94],
             Instruction {
@@ -355,7 +355,7 @@ mod tests {
     }
     //  move.w d0,12345(a0,a1*2)
     #[test]
-    fn test_decode_26() {
+    fn test_decode_26_move_w_d0_12345_a0_a1_2_() {
         test_decoding_result_ok(
             &[0x31, 0x80, 0x93, 0x20, 0x30, 0x39],
             Instruction {
@@ -379,7 +379,7 @@ mod tests {
     }
     //  lea (a0),a1
     #[test]
-    fn test_decode_27() {
+    fn test_decode_27_lea_a0_a1() {
         test_decoding_result_ok(
             &[0x43, 0xd0],
             Instruction {
@@ -392,7 +392,7 @@ mod tests {
     }
     //  lea 8(a0),a1
     #[test]
-    fn test_decode_28() {
+    fn test_decode_28_lea_8_a0_a1() {
         test_decoding_result_ok(
             &[0x43, 0xe8, 0x00, 0x08],
             Instruction {
@@ -405,7 +405,7 @@ mod tests {
     }
     //  ori #17,ccr
     #[test]
-    fn test_decode_29() {
+    fn test_decode_29_ori_17_ccr() {
         test_decoding_result_ok(
             &[0x00, 0x3c, 0x00, 0x11],
             Instruction {
@@ -418,7 +418,7 @@ mod tests {
     }
     //  ori #$1234,sr
     #[test]
-    fn test_decode_30() {
+    fn test_decode_30_ori_1234_sr() {
         test_decoding_result_ok(
             &[0x00, 0x7c, 0x12, 0x34],
             Instruction {
@@ -431,7 +431,7 @@ mod tests {
     }
     //  ori.w #$1234,d0
     #[test]
-    fn test_decode_31() {
+    fn test_decode_31_ori_w_1234_d0() {
         test_decoding_result_ok(
             &[0x00, 0x40, 0x12, 0x34],
             Instruction {
@@ -444,7 +444,7 @@ mod tests {
     }
     //  ori.b #$12,d2
     #[test]
-    fn test_decode_32() {
+    fn test_decode_32_ori_b_12_d2() {
         test_decoding_result_ok(
             &[0x00, 0x02, 0x00, 0x12],
             Instruction {
@@ -457,7 +457,7 @@ mod tests {
     }
     //  ori.w #$1234,123(a0,d0)
     #[test]
-    fn test_decode_33() {
+    fn test_decode_33_ori_w_1234_123_a0_d0_() {
         test_decoding_result_ok(
             &[0x00, 0x70, 0x12, 0x34, 0x00, 0x7b],
             Instruction {
@@ -470,7 +470,7 @@ mod tests {
     }
     //  ori.l #$12345678,-(a0)
     #[test]
-    fn test_decode_34() {
+    fn test_decode_34_ori_l_12345678_a0_() {
         test_decoding_result_ok(
             &[0x00, 0xa0, 0x12, 0x34, 0x56, 0x78],
             Instruction {
@@ -483,7 +483,7 @@ mod tests {
     }
     //  andi #17,ccr
     #[test]
-    fn test_decode_35() {
+    fn test_decode_35_andi_17_ccr() {
         test_decoding_result_ok(
             &[0x02, 0x3c, 0x00, 0x11],
             Instruction {
@@ -496,7 +496,7 @@ mod tests {
     }
     //  andi #$1234,sr
     #[test]
-    fn test_decode_36() {
+    fn test_decode_36_andi_1234_sr() {
         test_decoding_result_ok(
             &[0x02, 0x7c, 0x12, 0x34],
             Instruction {
@@ -509,7 +509,7 @@ mod tests {
     }
     //  andi.w #$1234,d0
     #[test]
-    fn test_decode_37() {
+    fn test_decode_37_andi_w_1234_d0() {
         test_decoding_result_ok(
             &[0x02, 0x40, 0x12, 0x34],
             Instruction {
@@ -522,7 +522,7 @@ mod tests {
     }
     //  andi.b #$12,d2
     #[test]
-    fn test_decode_38() {
+    fn test_decode_38_andi_b_12_d2() {
         test_decoding_result_ok(
             &[0x02, 0x02, 0x00, 0x12],
             Instruction {
@@ -535,7 +535,7 @@ mod tests {
     }
     //  andi.w #$1234,123(a0,d0)
     #[test]
-    fn test_decode_39() {
+    fn test_decode_39_andi_w_1234_123_a0_d0_() {
         test_decoding_result_ok(
             &[0x02, 0x70, 0x12, 0x34, 0x00, 0x7b],
             Instruction {
@@ -548,7 +548,7 @@ mod tests {
     }
     //  andi.l #$12345678,-(a0)
     #[test]
-    fn test_decode_40() {
+    fn test_decode_40_andi_l_12345678_a0_() {
         test_decoding_result_ok(
             &[0x02, 0xa0, 0x12, 0x34, 0x56, 0x78],
             Instruction {
@@ -561,7 +561,7 @@ mod tests {
     }
     //  eori #17,ccr
     #[test]
-    fn test_decode_41() {
+    fn test_decode_41_eori_17_ccr() {
         test_decoding_result_ok(
             &[0x0a, 0x3c, 0x00, 0x11],
             Instruction {
@@ -574,7 +574,7 @@ mod tests {
     }
     //  eori #$1234,sr
     #[test]
-    fn test_decode_42() {
+    fn test_decode_42_eori_1234_sr() {
         test_decoding_result_ok(
             &[0x0a, 0x7c, 0x12, 0x34],
             Instruction {
@@ -587,7 +587,7 @@ mod tests {
     }
     //  eori.w #$1234,d0
     #[test]
-    fn test_decode_43() {
+    fn test_decode_43_eori_w_1234_d0() {
         test_decoding_result_ok(
             &[0x0a, 0x40, 0x12, 0x34],
             Instruction {
@@ -600,7 +600,7 @@ mod tests {
     }
     //  eori.b #$12,d2
     #[test]
-    fn test_decode_44() {
+    fn test_decode_44_eori_b_12_d2() {
         test_decoding_result_ok(
             &[0x0a, 0x02, 0x00, 0x12],
             Instruction {
@@ -613,7 +613,7 @@ mod tests {
     }
     //  eori.w #$1234,123(a0,d0)
     #[test]
-    fn test_decode_45() {
+    fn test_decode_45_eori_w_1234_123_a0_d0_() {
         test_decoding_result_ok(
             &[0x0a, 0x70, 0x12, 0x34, 0x00, 0x7b],
             Instruction {
@@ -626,7 +626,7 @@ mod tests {
     }
     //  eori.l #$12345678,-(a0)
     #[test]
-    fn test_decode_46() {
+    fn test_decode_46_eori_l_12345678_a0_() {
         test_decoding_result_ok(
             &[0x0a, 0xa0, 0x12, 0x34, 0x56, 0x78],
             Instruction {
@@ -639,7 +639,7 @@ mod tests {
     }
     //  addi.l #$12345678,-(a0)
     #[test]
-    fn test_decode_47() {
+    fn test_decode_47_addi_l_12345678_a0_() {
         test_decoding_result_ok(
             &[0x06, 0xa0, 0x12, 0x34, 0x56, 0x78],
             Instruction {
@@ -652,7 +652,7 @@ mod tests {
     }
     //  subi.l #$12345678,-(a0)
     #[test]
-    fn test_decode_48() {
+    fn test_decode_48_subi_l_12345678_a0_() {
         test_decoding_result_ok(
             &[0x04, 0xa0, 0x12, 0x34, 0x56, 0x78],
             Instruction {
@@ -665,7 +665,7 @@ mod tests {
     }
     //  rtm d3
     #[test]
-    fn test_decode_49() {
+    fn test_decode_49_rtm_d3() {
         test_decoding_result_ok(
             &[0x06, 0xc3],
             Instruction {
@@ -678,7 +678,7 @@ mod tests {
     }
     //  rtm a1
     #[test]
-    fn test_decode_50() {
+    fn test_decode_50_rtm_a1() {
         test_decoding_result_ok(
             &[0x06, 0xc9],
             Instruction {
@@ -691,7 +691,7 @@ mod tests {
     }
     //  cmp2.l (a0),d3
     #[test]
-    fn test_decode_51() {
+    fn test_decode_51_cmp2_l_a0_d3() {
         test_decoding_result_ok(
             &[0x04, 0xd0, 0x30, 0x00],
             Instruction {
@@ -704,7 +704,7 @@ mod tests {
     }
     //  cmp2.b 90(a0,d2),a6
     #[test]
-    fn test_decode_52() {
+    fn test_decode_52_cmp2_b_90_a0_d2_a6() {
         test_decoding_result_ok(
             &[0x00, 0xf0, 0xe0, 0x00, 0x20, 0x5a],
             Instruction {
@@ -717,7 +717,7 @@ mod tests {
     }
     //  chk2.w 90(a0,d2),a6
     #[test]
-    fn test_decode_53() {
+    fn test_decode_53_chk2_w_90_a0_d2_a6() {
         test_decoding_result_ok(
             &[0x02, 0xf0, 0xe8, 0x00, 0x20, 0x5a],
             Instruction {
@@ -730,7 +730,7 @@ mod tests {
     }
     //  cmpi.b #$a5,90(a0,d2*4)
     #[test]
-    fn test_decode_54() {
+    fn test_decode_54_cmpi_b_a5_90_a0_d2_4_() {
         test_decoding_result_ok(
             &[0x0c, 0x30, 0x00, 0xa5, 0x24, 0x5a],
             Instruction {
@@ -743,7 +743,7 @@ mod tests {
     }
     //  cmpi.w #$a512,90(a0,d2*4)
     #[test]
-    fn test_decode_55() {
+    fn test_decode_55_cmpi_w_a512_90_a0_d2_4_() {
         test_decoding_result_ok(
             &[0x0c, 0x70, 0xa5, 0x12, 0x24, 0x5a],
             Instruction {
@@ -756,7 +756,7 @@ mod tests {
     }
     //  cmpi.l #$12345678,90(a0,d2*4)
     #[test]
-    fn test_decode_56() {
+    fn test_decode_56_cmpi_l_12345678_90_a0_d2_4_() {
         test_decoding_result_ok(
             &[0x0c, 0xb0, 0x12, 0x34, 0x56, 0x78, 0x24, 0x5a],
             Instruction {
@@ -769,7 +769,7 @@ mod tests {
     }
     //  btst #18,d0
     #[test]
-    fn test_decode_57() {
+    fn test_decode_57_btst_18_d0() {
         test_decoding_result_ok(
             &[0x08, 0x00, 0x00, 0x12],
             Instruction {
@@ -782,7 +782,7 @@ mod tests {
     }
     //  btst #18,(a0)+
     #[test]
-    fn test_decode_58() {
+    fn test_decode_58_btst_18_a0_() {
         test_decoding_result_ok(
             &[0x08, 0x18, 0x00, 0x12],
             Instruction {
@@ -795,7 +795,7 @@ mod tests {
     }
     //  bclr #18,(a0)+
     #[test]
-    fn test_decode_59() {
+    fn test_decode_59_bclr_18_a0_() {
         test_decoding_result_ok(
             &[0x08, 0x98, 0x00, 0x12],
             Instruction {
@@ -808,7 +808,7 @@ mod tests {
     }
     //  bchg #18,(a0)+
     #[test]
-    fn test_decode_60() {
+    fn test_decode_60_bchg_18_a0_() {
         test_decoding_result_ok(
             &[0x08, 0x58, 0x00, 0x12],
             Instruction {
@@ -821,7 +821,7 @@ mod tests {
     }
     //  bset #18,(a0)+
     #[test]
-    fn test_decode_61() {
+    fn test_decode_61_bset_18_a0_() {
         test_decoding_result_ok(
             &[0x08, 0xd8, 0x00, 0x12],
             Instruction {
@@ -834,7 +834,7 @@ mod tests {
     }
     //  moves.l a0,(a1)
     #[test]
-    fn test_decode_62() {
+    fn test_decode_62_moves_l_a0_a1_() {
         test_decoding_result_ok(
             &[0x0e, 0x91, 0x88, 0x00],
             Instruction {
@@ -847,7 +847,7 @@ mod tests {
     }
     //  moves.b d0,(a1)
     #[test]
-    fn test_decode_63() {
+    fn test_decode_63_moves_b_d0_a1_() {
         test_decoding_result_ok(
             &[0x0e, 0x11, 0x08, 0x00],
             Instruction {
@@ -860,7 +860,7 @@ mod tests {
     }
     //  cas d0,d1,(a0)
     #[test]
-    fn test_decode_64() {
+    fn test_decode_64_cas_d0_d1_a0_() {
         test_decoding_result_err(
             &[0x0c, 0xd0, 0x00, 0x40],
             NotImplemented,
@@ -869,7 +869,7 @@ mod tests {
     }
     //  cas2 d0:d1,d2:d3,(a0):(a1)
     #[test]
-    fn test_decode_65() {
+    fn test_decode_65_cas2_d0_d1_d2_d3_a0_a1_() {
         test_decoding_result_err(
             &[0x0c, 0xfc, 0x80, 0x80, 0x90, 0xc1],
             NotImplemented,

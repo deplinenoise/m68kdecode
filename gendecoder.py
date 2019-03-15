@@ -2,6 +2,7 @@
 
 import re
 import sys
+import subprocess
 
 R_BLANK = re.compile('^\s*$')
 R_COMMENT = re.compile('^#.*')
@@ -110,23 +111,36 @@ with open(infile, "r") as inf:
         #print(i)
     
 with open(outfile, "w") as of:
-    of.write('fn decode_insn(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {\n')
-    of.write('  let mut offset = 0usize;\n')
-    of.write('  let mut peek_word = |i| -> u16 { let dummy = offset + 2 * i; pull_16(&code[2..], &mut dummy)? };\n')
-    of.write('  let mut next_word = || pull_16(code, &mut offset)?;\n');
-    of.write('  let mut EA = |md, rg, sz| decode_ea(rd, md, &mut offset, &code[2..], si)?;\n');
-    of.write('  let mut p_imm8() = || pull_16(code, &mut offset);\n');
+    of.write('use crate::*;\n')
+    of.write('use codestream::*;\n')
 
-    of.write('  let w0 = next_word();\n')
+    seen_insn_names = {}
+    of.write('#[derive(Debug, PartialEq)]\npub enum Operation {\n');
     for i in instructions:
-        of.write('if (w0 & 0b{:016b}) == 0b{:016b} {{\n'.format(i.masks[0], i.instruction_patterns[0]))
+        if not seen_insn_names.has_key(i.name):
+            seen_insn_names[i.name] = True
+            of.write('  {},'.format(i.name))
+    of.write('}\n');
+
+    of.write('pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {\n')
+    of.write('  let mut cs = CodeStream::new(code);\n')
+    of.write('  let w0 = cs.pull16();\n')
+    of.write('  let sz;\n')
+    of.write('  let src;\n')
+    of.write('  let dst;\n')
+    for i in instructions:
+        of.write('if (w0 & 0b{:016b}) == 0b{:016b} '.format(i.masks[0], i.instruction_patterns[0]))
+        if len(i.masks) > 1:
+            of.write('&& cs.has_words({})'.format(len(i.masks) - 1))
+        of.write('{\n')
         for n in range(1, len(i.masks)):
-            of.write('let w{0} = peek_word({0});\n'.format(n))
+            of.write('let w{} = cs.peek_word({});\n'.format(n, n-1))
 
         if len(i.masks) > 1:
             of.write('if {} {{\n'.format(' && '.join([i.match_expr(n) for n in range(1, len(i.masks))])))
 
-        of.write('word_index += {};\n'.format(len(i.masks)))
+        if len(i.masks) > 1:
+            of.write('cs.skip_words({});\n'.format(len(i.masks)-1))
 
         for c in i.captures:
             of.write('let {} = get_bits(w{}, {}, {});\n'.format(c.name, c.wordindex, c.bit, c.length))
@@ -134,10 +148,13 @@ with open(outfile, "w") as of:
         of.write(i.result + '\n')
 
         if i.result.find('return') == -1:
-            of.write('return Ok(DecodedInstruction {{ bytes_used: offset as u32, instruction: Instruction {{ size: sz, operation: {}, operands: [ src, dst ] }} }});\n'.format(i.name))
+            of.write('return cs.check_overflow(Instruction {{ size: sz, operation: {}, operands: [ src, dst ] }});\n'.format(i.name))
 
         if len(i.masks) > 1:
             of.write('}\n')
 
         of.write('}\n')
+    of.write('  return Err(NotImplemented);\n')
     of.write('}\n')
+
+subprocess.call(['rustfmt', outfile])

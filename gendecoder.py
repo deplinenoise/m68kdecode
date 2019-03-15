@@ -122,6 +122,7 @@ with open(outfile, "w") as of:
             of.write('  {},'.format(i.name))
     of.write('}\n');
 
+    of.write('#[allow(non_snake_case)]\n')
     of.write('pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {\n')
     of.write('  let mut cs = CodeStream::new(code);\n')
     of.write('  let w0 = cs.pull16();\n')

@@ -28,6 +28,7 @@ pub enum Operation {
     MOVES,
     LEA,
 }
+#[allow(non_snake_case)]
 pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {
     let mut cs = CodeStream::new(code);
     let w0 = cs.pull16();

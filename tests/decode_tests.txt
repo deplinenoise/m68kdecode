@@ -197,6 +197,12 @@
 > rtm a1
 # Instruction { size: 0, operation: RTM, operands: [ AR(A1), NoOperand ] }
 
+> callm #3,(a1)
+# Instruction { size: 0, operation: CALLM, operands: [ IMM8(3), ARIND(A1) ] }
+
+> callm #99,$12345678
+# Instruction { size: 0, operation: CALLM, operands: [ IMM8(99), ABS32(0x12345678) ] }
+
 > cmp2.l (a0),d3
 # Instruction { size: 4, operation: CMP2, operands: [ ARIND(A0), DR(D3) ] }
 

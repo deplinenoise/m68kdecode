@@ -65,7 +65,7 @@ with open(outfilename, "w") as of:
         asm_lines = t[2]
         for al in asm_lines:
             of.write('// {}\n'.format(al))
-        name = re.sub(R_NSYMCHAR, '_', asm_lines[0].strip())
+        name = re.sub(R_NSYMCHAR, '_', asm_lines[0].strip()).lower()
         of.write('#[test]\n')
         of.write('fn test_decode_{:04d}_{}() {{\n'.format(testnum, name))
         if result_lines[0].find('Instruction {') == -1:

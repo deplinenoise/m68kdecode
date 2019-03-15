@@ -58,17 +58,17 @@ EORI            0000_1010_00mm_mrrr sz=1; src=cs.imm8(); dst=cs.ea(r, m, 1);
 EORI            0000_1010_01mm_mrrr sz=2; src=cs.imm16(); dst=cs.ea(r, m, 2);
 EORI            0000_1010_10mm_mrrr sz=4; src=cs.imm32(); dst=cs.ea(r, m, 4);
 
-CMPI            0000_1000_00mm_mrrr sz=1; src=cs.imm8(); dst=cs.ea(r, m, 1);
-CMPI            0000_1000_01mm_mrrr sz=2; src=cs.imm16(); dst=cs.ea(r, m, 2);
-CMPI            0000_1000_10mm_mrrr sz=4; src=cs.imm32(); dst=cs.ea(r, m, 4);
+CMPI            0000_1100_00mm_mrrr sz=1; src=cs.imm8(); dst=cs.ea(r, m, 1);
+CMPI            0000_1100_01mm_mrrr sz=2; src=cs.imm16(); dst=cs.ea(r, m, 2);
+CMPI            0000_1100_10mm_mrrr sz=4; src=cs.imm32(); dst=cs.ea(r, m, 4);
 
-MOVES           0000_1110_00mm_mrrr addd_0000_0000_0000 sz=1; src=cs.dar(a, d); dst=cs.ea(r, m, 1);
-MOVES           0000_1110_01mm_mrrr addd_0000_0000_0000 sz=2; src=cs.dar(a, d); dst=cs.ea(r, m, 2);
-MOVES           0000_1110_10mm_mrrr addd_0000_0000_0000 sz=4; src=cs.dar(a, d); dst=cs.ea(r, m, 4);
+MOVES           0000_1110_00mm_mrrr addd_0000_0000_0000 sz=1; dst=cs.dar(a, d); src=cs.ea(r, m, 1);
+MOVES           0000_1110_01mm_mrrr addd_0000_0000_0000 sz=2; dst=cs.dar(a, d); src=cs.ea(r, m, 2);
+MOVES           0000_1110_10mm_mrrr addd_0000_0000_0000 sz=4; dst=cs.dar(a, d); src=cs.ea(r, m, 4);
 
-MOVES           0000_1110_00mm_mrrr addd_1000_0000_0000 sz=1; dst=cs.dar(a, d); src=cs.ea(r, m, 1);
-MOVES           0000_1110_01mm_mrrr addd_1000_0000_0000 sz=2; dst=cs.dar(a, d); src=cs.ea(r, m, 2);
-MOVES           0000_1110_10mm_mrrr addd_1000_0000_0000 sz=4; dst=cs.dar(a, d); src=cs.ea(r, m, 4);
+MOVES           0000_1110_00mm_mrrr addd_1000_0000_0000 sz=1; src=cs.dar(a, d); dst=cs.ea(r, m, 1);
+MOVES           0000_1110_01mm_mrrr addd_1000_0000_0000 sz=2; src=cs.dar(a, d); dst=cs.ea(r, m, 2);
+MOVES           0000_1110_10mm_mrrr addd_1000_0000_0000 sz=4; src=cs.dar(a, d); dst=cs.ea(r, m, 4);
 
 #define CAS2_MASK ENCW(1,1,1,1, 1,1,0,1, 1,1,1,1, 1,1,1,1)
 #define CAS2_INST ENCW(0,0,0,0, 1,1,0,0, 1,1,1,1, 1,1,0,0)

@@ -773,9 +773,9 @@ mod tests {
         test_decoding_result_ok(
             &[0x08, 0x00, 0x00, 0x12],
             Instruction {
-                size: 0,
+                size: 1,
                 operation: BTST,
-                operands: [IMM8(18), DR(D0)],
+                operands: [IMM16(18), DR(D0)],
             },
             &[" btst #18,d0"],
         );
@@ -786,9 +786,9 @@ mod tests {
         test_decoding_result_ok(
             &[0x08, 0x18, 0x00, 0x12],
             Instruction {
-                size: 0,
+                size: 1,
                 operation: BTST,
-                operands: [IMM8(18), ARINC(A0)],
+                operands: [IMM16(18), ARINC(A0)],
             },
             &[" btst #18,(a0)+"],
         );
@@ -799,9 +799,9 @@ mod tests {
         test_decoding_result_ok(
             &[0x08, 0x98, 0x00, 0x12],
             Instruction {
-                size: 0,
+                size: 1,
                 operation: BCLR,
-                operands: [IMM8(18), ARINC(A0)],
+                operands: [IMM16(18), ARINC(A0)],
             },
             &[" bclr #18,(a0)+"],
         );
@@ -812,9 +812,9 @@ mod tests {
         test_decoding_result_ok(
             &[0x08, 0x58, 0x00, 0x12],
             Instruction {
-                size: 0,
+                size: 1,
                 operation: BCHG,
-                operands: [IMM8(18), ARINC(A0)],
+                operands: [IMM16(18), ARINC(A0)],
             },
             &[" bchg #18,(a0)+"],
         );
@@ -825,9 +825,9 @@ mod tests {
         test_decoding_result_ok(
             &[0x08, 0xd8, 0x00, 0x12],
             Instruction {
-                size: 0,
+                size: 1,
                 operation: BSET,
-                operands: [IMM8(18), ARINC(A0)],
+                operands: [IMM16(18), ARINC(A0)],
             },
             &[" bset #18,(a0)+"],
         );

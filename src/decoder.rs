@@ -562,7 +562,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             operands: [src, dst],
         });
     }
-    if (w0 & 0b1111111111000000) == 0b0000100000000000 {
+    if (w0 & 0b1111111111000000) == 0b0000110000000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
         sz = 1;
@@ -574,7 +574,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             operands: [src, dst],
         });
     }
-    if (w0 & 0b1111111111000000) == 0b0000100001000000 {
+    if (w0 & 0b1111111111000000) == 0b0000110001000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
         sz = 2;
@@ -586,7 +586,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             operands: [src, dst],
         });
     }
-    if (w0 & 0b1111111111000000) == 0b0000100010000000 {
+    if (w0 & 0b1111111111000000) == 0b0000110010000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
         sz = 4;
@@ -607,60 +607,6 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             let a = get_bits(w1, 15, 1);
             let d = get_bits(w1, 12, 3);
             sz = 1;
-            src = cs.dar(a, d);
-            dst = cs.ea(r, m, 1);
-            return cs.check_overflow(Instruction {
-                size: sz,
-                operation: MOVES,
-                operands: [src, dst],
-            });
-        }
-    }
-    if (w0 & 0b1111111111000000) == 0b0000111001000000 && cs.has_words(1) {
-        let w1 = cs.peek_word(0);
-        if (w1 & 0b0000111111111111) == 0b0000000000000000 {
-            cs.skip_words(1);
-            let m = get_bits(w0, 3, 3);
-            let r = get_bits(w0, 0, 3);
-            let a = get_bits(w1, 15, 1);
-            let d = get_bits(w1, 12, 3);
-            sz = 2;
-            src = cs.dar(a, d);
-            dst = cs.ea(r, m, 2);
-            return cs.check_overflow(Instruction {
-                size: sz,
-                operation: MOVES,
-                operands: [src, dst],
-            });
-        }
-    }
-    if (w0 & 0b1111111111000000) == 0b0000111010000000 && cs.has_words(1) {
-        let w1 = cs.peek_word(0);
-        if (w1 & 0b0000111111111111) == 0b0000000000000000 {
-            cs.skip_words(1);
-            let m = get_bits(w0, 3, 3);
-            let r = get_bits(w0, 0, 3);
-            let a = get_bits(w1, 15, 1);
-            let d = get_bits(w1, 12, 3);
-            sz = 4;
-            src = cs.dar(a, d);
-            dst = cs.ea(r, m, 4);
-            return cs.check_overflow(Instruction {
-                size: sz,
-                operation: MOVES,
-                operands: [src, dst],
-            });
-        }
-    }
-    if (w0 & 0b1111111111000000) == 0b0000111000000000 && cs.has_words(1) {
-        let w1 = cs.peek_word(0);
-        if (w1 & 0b0000111111111111) == 0b0000100000000000 {
-            cs.skip_words(1);
-            let m = get_bits(w0, 3, 3);
-            let r = get_bits(w0, 0, 3);
-            let a = get_bits(w1, 15, 1);
-            let d = get_bits(w1, 12, 3);
-            sz = 1;
             dst = cs.dar(a, d);
             src = cs.ea(r, m, 1);
             return cs.check_overflow(Instruction {
@@ -672,7 +618,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
     }
     if (w0 & 0b1111111111000000) == 0b0000111001000000 && cs.has_words(1) {
         let w1 = cs.peek_word(0);
-        if (w1 & 0b0000111111111111) == 0b0000100000000000 {
+        if (w1 & 0b0000111111111111) == 0b0000000000000000 {
             cs.skip_words(1);
             let m = get_bits(w0, 3, 3);
             let r = get_bits(w0, 0, 3);
@@ -690,7 +636,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
     }
     if (w0 & 0b1111111111000000) == 0b0000111010000000 && cs.has_words(1) {
         let w1 = cs.peek_word(0);
-        if (w1 & 0b0000111111111111) == 0b0000100000000000 {
+        if (w1 & 0b0000111111111111) == 0b0000000000000000 {
             cs.skip_words(1);
             let m = get_bits(w0, 3, 3);
             let r = get_bits(w0, 0, 3);
@@ -699,6 +645,60 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             sz = 4;
             dst = cs.dar(a, d);
             src = cs.ea(r, m, 4);
+            return cs.check_overflow(Instruction {
+                size: sz,
+                operation: MOVES,
+                operands: [src, dst],
+            });
+        }
+    }
+    if (w0 & 0b1111111111000000) == 0b0000111000000000 && cs.has_words(1) {
+        let w1 = cs.peek_word(0);
+        if (w1 & 0b0000111111111111) == 0b0000100000000000 {
+            cs.skip_words(1);
+            let m = get_bits(w0, 3, 3);
+            let r = get_bits(w0, 0, 3);
+            let a = get_bits(w1, 15, 1);
+            let d = get_bits(w1, 12, 3);
+            sz = 1;
+            src = cs.dar(a, d);
+            dst = cs.ea(r, m, 1);
+            return cs.check_overflow(Instruction {
+                size: sz,
+                operation: MOVES,
+                operands: [src, dst],
+            });
+        }
+    }
+    if (w0 & 0b1111111111000000) == 0b0000111001000000 && cs.has_words(1) {
+        let w1 = cs.peek_word(0);
+        if (w1 & 0b0000111111111111) == 0b0000100000000000 {
+            cs.skip_words(1);
+            let m = get_bits(w0, 3, 3);
+            let r = get_bits(w0, 0, 3);
+            let a = get_bits(w1, 15, 1);
+            let d = get_bits(w1, 12, 3);
+            sz = 2;
+            src = cs.dar(a, d);
+            dst = cs.ea(r, m, 2);
+            return cs.check_overflow(Instruction {
+                size: sz,
+                operation: MOVES,
+                operands: [src, dst],
+            });
+        }
+    }
+    if (w0 & 0b1111111111000000) == 0b0000111010000000 && cs.has_words(1) {
+        let w1 = cs.peek_word(0);
+        if (w1 & 0b0000111111111111) == 0b0000100000000000 {
+            cs.skip_words(1);
+            let m = get_bits(w0, 3, 3);
+            let r = get_bits(w0, 0, 3);
+            let a = get_bits(w1, 15, 1);
+            let d = get_bits(w1, 12, 3);
+            sz = 4;
+            src = cs.dar(a, d);
+            dst = cs.ea(r, m, 4);
             return cs.check_overflow(Instruction {
                 size: sz,
                 operation: MOVES,

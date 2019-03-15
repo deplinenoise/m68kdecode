@@ -216,19 +216,19 @@
 # Instruction { size: 4, operation: CMPI, operands: [ IMM32(0x12345678), ARDISP(A0, dr_disp_scale(D2, 90, 2)) ] }
 
 > btst #18,d0
-# Instruction { size: 0, operation: BTST, operands: [ IMM8(18), DR(D0) ] }
+# Instruction { size: 1, operation: BTST, operands: [ IMM16(18), DR(D0) ] }
 
 > btst #18,(a0)+
-# Instruction { size: 0, operation: BTST, operands: [ IMM8(18), ARINC(A0) ] }
+# Instruction { size: 1, operation: BTST, operands: [ IMM16(18), ARINC(A0) ] }
 
 > bclr #18,(a0)+
-# Instruction { size: 0, operation: BCLR, operands: [ IMM8(18), ARINC(A0) ] }
+# Instruction { size: 1, operation: BCLR, operands: [ IMM16(18), ARINC(A0) ] }
 
 > bchg #18,(a0)+
-# Instruction { size: 0, operation: BCHG, operands: [ IMM8(18), ARINC(A0) ] }
+# Instruction { size: 1, operation: BCHG, operands: [ IMM16(18), ARINC(A0) ] }
 
 > bset #18,(a0)+
-# Instruction { size: 0, operation: BSET, operands: [ IMM8(18), ARINC(A0) ] }
+# Instruction { size: 1, operation: BSET, operands: [ IMM16(18), ARINC(A0) ] }
 
 > moves.l a0,(a1)
 # Instruction { size: 4, operation: MOVES, operands: [ AR(A0), ARIND(A1) ] }

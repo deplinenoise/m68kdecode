@@ -108,15 +108,12 @@ LINK            0100_1000_0000_1rrr sz=4; src=cs.address_reg_op(r); dst=cs.imm32
 
 UNLK            0100_1110_0101_1rrr sz=0; src=cs.address_reg_op(r); dst=NoOperand;
 
+TRAP            0100_1110_0100_vvvv sz=0; src=IMM8(v as u8); dst=NoOperand;
+
 #define MOVEFRUSP_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,1,1, 1,0,0,0)
 #define MOVETOUSP_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,1,1, 1,0,0,0)
-#define EXTWL_INST  ENCW(0,1,0,0, 1,0,0,0, 1,1,0,0, 0,0,0,0)
-#define EXTBL_INST  ENCW(0,1,0,0, 1,0,0,1, 1,1,0,0, 0,0,0,0)
 #define MOVETOUSP_INST  ENCW(0,1,0,0, 1,1,1,0, 0,1,1,0, 0,0,0,0)
 #define MOVEFRUSP_INST  ENCW(0,1,0,0, 1,1,1,0, 0,1,1,0, 1,0,0,0)
-
-#define TRAP_MASK ENCW(1,1,1,1, 1,1,1,1, 1,1,1,1, 0,0,0,0)
-#define TRAP_INST ENCW(0,1,0,0, 1,1,1,0, 0,1,0,0, 0,0,0,0)
                                                     
 #define DIVSL_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,0,0, 0,0,0,0)
 #define DIVUL_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,0,0, 0,0,0,0)

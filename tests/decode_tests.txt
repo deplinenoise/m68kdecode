@@ -302,3 +302,6 @@
 
 > unlk a2
 # Instruction { size: 0, operation: UNLK, operands: [ AR(A2), NoOperand ] }
+
+> trap #15
+# Instruction { size: 0, operation: TRAP, operands: [ IMM8(15), NoOperand ] }

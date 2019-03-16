@@ -1123,4 +1123,17 @@ mod tests {
             &[" unlk a2"],
         );
     }
+    //  trap #15
+    #[test]
+    fn test_decode_0085_trap_15() {
+        test_decoding_result_ok(
+            &[0x4e, 0x4f],
+            Instruction {
+                size: 0,
+                operation: TRAP,
+                operands: [IMM8(15), NoOperand],
+            },
+            &[" trap #15"],
+        );
+    }
 }

@@ -44,6 +44,7 @@ pub enum Operation {
     LEA,
     LINK,
     UNLK,
+    TRAP,
 }
 #[allow(non_snake_case)]
 pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {
@@ -922,6 +923,17 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
         return cs.check_overflow(Instruction {
             size: sz,
             operation: UNLK,
+            operands: [src, dst],
+        });
+    }
+    if (w0 & 0b1111111111110000) == 0b0100111001000000 {
+        let v = get_bits(w0, 0, 4);
+        sz = 0;
+        src = IMM8(v as u8);
+        dst = NoOperand;
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: TRAP,
             operands: [src, dst],
         });
     }

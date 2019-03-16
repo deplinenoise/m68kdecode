@@ -367,3 +367,21 @@
 #     NoOperand,
 #   ]
 # }
+
+> muls.w  d0,d1
+# Instruction { size: 2, operation: MULS, operands: [ DR(D0), DR(D1) ] }
+
+> muls.l  d0,d1
+# Instruction { size: 4, operation: MULS, operands: [ DR(D0), DR(D1) ] }
+
+> muls.l  d0,d2:d1
+# Instruction { size: 4, operation: MULS, operands: [ DR(D0), DPAIR(D1, D2) ] }
+
+> mulu.w  d0,d1
+# Instruction { size: 2, operation: MULU, operands: [ DR(D0), DR(D1) ] }
+
+> mulu.l  d0,d1
+# Instruction { size: 4, operation: MULU, operands: [ DR(D0), DR(D1) ] }
+
+> mulu.l  d0,d2:d1
+# Instruction { size: 4, operation: MULU, operands: [ DR(D0), DPAIR(D1, D2) ] }

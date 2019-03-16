@@ -1334,4 +1334,82 @@ mod tests {
             &[" jsr 123(pc)"],
         );
     }
+    //  muls.w  d0,d1
+    #[test]
+    fn test_decode_0100_muls_w_d0_d1() {
+        test_decoding_result_ok(
+            &[0xc3, 0xc0],
+            Instruction {
+                size: 2,
+                operation: MULS,
+                operands: [DR(D0), DR(D1)],
+            },
+            &[" muls.w  d0,d1"],
+        );
+    }
+    //  muls.l  d0,d1
+    #[test]
+    fn test_decode_0101_muls_l_d0_d1() {
+        test_decoding_result_ok(
+            &[0x4c, 0x00, 0x18, 0x01],
+            Instruction {
+                size: 4,
+                operation: MULS,
+                operands: [DR(D0), DR(D1)],
+            },
+            &[" muls.l  d0,d1"],
+        );
+    }
+    //  muls.l  d0,d2:d1
+    #[test]
+    fn test_decode_0102_muls_l_d0_d2_d1() {
+        test_decoding_result_ok(
+            &[0x4c, 0x00, 0x1c, 0x02],
+            Instruction {
+                size: 4,
+                operation: MULS,
+                operands: [DR(D0), DPAIR(D1, D2)],
+            },
+            &[" muls.l  d0,d2:d1"],
+        );
+    }
+    //  mulu.w  d0,d1
+    #[test]
+    fn test_decode_0103_mulu_w_d0_d1() {
+        test_decoding_result_ok(
+            &[0xc2, 0xc0],
+            Instruction {
+                size: 2,
+                operation: MULU,
+                operands: [DR(D0), DR(D1)],
+            },
+            &[" mulu.w  d0,d1"],
+        );
+    }
+    //  mulu.l  d0,d1
+    #[test]
+    fn test_decode_0104_mulu_l_d0_d1() {
+        test_decoding_result_ok(
+            &[0x4c, 0x00, 0x10, 0x01],
+            Instruction {
+                size: 4,
+                operation: MULU,
+                operands: [DR(D0), DR(D1)],
+            },
+            &[" mulu.l  d0,d1"],
+        );
+    }
+    //  mulu.l  d0,d2:d1
+    #[test]
+    fn test_decode_0105_mulu_l_d0_d2_d1() {
+        test_decoding_result_ok(
+            &[0x4c, 0x00, 0x14, 0x02],
+            Instruction {
+                size: 4,
+                operation: MULU,
+                operands: [DR(D0), DPAIR(D1, D2)],
+            },
+            &[" mulu.l  d0,d2:d1"],
+        );
+    }
 }

@@ -53,6 +53,8 @@ pub enum Operation {
     DIVULL,
     JMP,
     JSR,
+    MULS,
+    MULU,
 }
 #[allow(non_snake_case)]
 pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {
@@ -1144,6 +1146,102 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             operation: JSR,
             operands: [src, dst],
         });
+    }
+    if (w0 & 0b1111000111000000) == 0b1100000111000000 {
+        let p = get_bits(w0, 9, 3);
+        let m = get_bits(w0, 3, 3);
+        let r = get_bits(w0, 0, 3);
+        sz = 2;
+        src = cs.ea(r, m, 2);
+        dst = cs.data_reg_op(p);
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: MULS,
+            operands: [src, dst],
+        });
+    }
+    if (w0 & 0b1111111111000000) == 0b0100110000000000 && cs.has_words(1) {
+        let w1 = cs.peek_word(0);
+        if (w1 & 0b1000111111111000) == 0b0000100000000000 {
+            let m = get_bits(w0, 3, 3);
+            let r = get_bits(w0, 0, 3);
+            let l = get_bits(w1, 12, 3);
+            cs.skip_words(1);
+            sz = 4;
+            src = cs.ea(r, m, 4);
+            dst = cs.data_reg_op(l);
+            return cs.check_overflow(Instruction {
+                size: sz,
+                operation: MULS,
+                operands: [src, dst],
+            });
+        }
+    }
+    if (w0 & 0b1111111111000000) == 0b0100110000000000 && cs.has_words(1) {
+        let w1 = cs.peek_word(0);
+        if (w1 & 0b1000111111111000) == 0b0000110000000000 {
+            let m = get_bits(w0, 3, 3);
+            let r = get_bits(w0, 0, 3);
+            let l = get_bits(w1, 12, 3);
+            let h = get_bits(w1, 0, 3);
+            cs.skip_words(1);
+            sz = 4;
+            src = cs.ea(r, m, 4);
+            dst = DPAIR(cs.data_reg(l), cs.data_reg(h));
+            return cs.check_overflow(Instruction {
+                size: sz,
+                operation: MULS,
+                operands: [src, dst],
+            });
+        }
+    }
+    if (w0 & 0b1111000111000000) == 0b1100000011000000 {
+        let p = get_bits(w0, 9, 3);
+        let m = get_bits(w0, 3, 3);
+        let r = get_bits(w0, 0, 3);
+        sz = 2;
+        src = cs.ea(r, m, 2);
+        dst = cs.data_reg_op(p);
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: MULU,
+            operands: [src, dst],
+        });
+    }
+    if (w0 & 0b1111111111000000) == 0b0100110000000000 && cs.has_words(1) {
+        let w1 = cs.peek_word(0);
+        if (w1 & 0b1000111111111000) == 0b0000000000000000 {
+            let m = get_bits(w0, 3, 3);
+            let r = get_bits(w0, 0, 3);
+            let l = get_bits(w1, 12, 3);
+            cs.skip_words(1);
+            sz = 4;
+            src = cs.ea(r, m, 4);
+            dst = cs.data_reg_op(l);
+            return cs.check_overflow(Instruction {
+                size: sz,
+                operation: MULU,
+                operands: [src, dst],
+            });
+        }
+    }
+    if (w0 & 0b1111111111000000) == 0b0100110000000000 && cs.has_words(1) {
+        let w1 = cs.peek_word(0);
+        if (w1 & 0b1000111111111000) == 0b0000010000000000 {
+            let m = get_bits(w0, 3, 3);
+            let r = get_bits(w0, 0, 3);
+            let l = get_bits(w1, 12, 3);
+            let h = get_bits(w1, 0, 3);
+            cs.skip_words(1);
+            sz = 4;
+            src = cs.ea(r, m, 4);
+            dst = DPAIR(cs.data_reg(l), cs.data_reg(h));
+            return cs.check_overflow(Instruction {
+                size: sz,
+                operation: MULU,
+                operands: [src, dst],
+            });
+        }
     }
     return Err(NotImplemented);
 }

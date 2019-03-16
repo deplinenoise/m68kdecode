@@ -48,6 +48,9 @@ pub enum Operation {
     DIVS,
     DIVSL,
     DIVSLL,
+    DIVU,
+    DIVUL,
+    DIVULL,
 }
 #[allow(non_snake_case)]
 pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {
@@ -1024,6 +1027,94 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             return cs.check_overflow(Instruction {
                 size: sz,
                 operation: DIVSL,
+                operands: [src, dst],
+            });
+        }
+    }
+    if (w0 & 0b1111000111000000) == 0b1000000011000000 {
+        let d = get_bits(w0, 9, 3);
+        let m = get_bits(w0, 3, 3);
+        let r = get_bits(w0, 0, 3);
+        sz = 2;
+        src = cs.ea(r, m, 2);
+        dst = cs.data_reg_op(d);
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: DIVU,
+            operands: [src, dst],
+        });
+    }
+    if (w0 & 0b1111111111000000) == 0b0100110001000000 && cs.has_words(1) {
+        let w1 = cs.peek_word(0);
+        if (w1 & 0b1000111111111000) == 0b0000010000000000 {
+            let m = get_bits(w0, 3, 3);
+            let r = get_bits(w0, 0, 3);
+            let q = get_bits(w1, 12, 3);
+            let R = get_bits(w1, 0, 3);
+            if R != q {
+                cs.skip_words(1);
+                sz = 4;
+                src = cs.ea(r, m, 4);
+                dst = DPAIR(cs.data_reg(q), cs.data_reg(R));
+                return cs.check_overflow(Instruction {
+                    size: sz,
+                    operation: DIVUL,
+                    operands: [src, dst],
+                });
+            }
+        }
+    }
+    if (w0 & 0b1111111111000000) == 0b0100110001000000 && cs.has_words(1) {
+        let w1 = cs.peek_word(0);
+        if (w1 & 0b1000111111111000) == 0b0000010000000000 {
+            let m = get_bits(w0, 3, 3);
+            let r = get_bits(w0, 0, 3);
+            let q = get_bits(w1, 12, 3);
+            let R = get_bits(w1, 0, 3);
+            cs.skip_words(1);
+            sz = 4;
+            src = cs.ea(r, m, 4);
+            dst = DPAIR(cs.data_reg(q), cs.data_reg(R));
+            return cs.check_overflow(Instruction {
+                size: sz,
+                operation: DIVUL,
+                operands: [src, dst],
+            });
+        }
+    }
+    if (w0 & 0b1111111111000000) == 0b0100110001000000 && cs.has_words(1) {
+        let w1 = cs.peek_word(0);
+        if (w1 & 0b1000111111111000) == 0b0000000000000000 {
+            let m = get_bits(w0, 3, 3);
+            let r = get_bits(w0, 0, 3);
+            let q = get_bits(w1, 12, 3);
+            let R = get_bits(w1, 0, 3);
+            if R != q {
+                cs.skip_words(1);
+                sz = 4;
+                src = cs.ea(r, m, 4);
+                dst = DPAIR(cs.data_reg(q), cs.data_reg(R));
+                return cs.check_overflow(Instruction {
+                    size: sz,
+                    operation: DIVULL,
+                    operands: [src, dst],
+                });
+            }
+        }
+    }
+    if (w0 & 0b1111111111000000) == 0b0100110001000000 && cs.has_words(1) {
+        let w1 = cs.peek_word(0);
+        if (w1 & 0b1000111111111000) == 0b0000000000000000 {
+            let m = get_bits(w0, 3, 3);
+            let r = get_bits(w0, 0, 3);
+            let q = get_bits(w1, 12, 3);
+            cs.skip_words(1);
+            sz = 4;
+            src = cs.ea(r, m, 4);
+            dst = cs.data_reg_op(q);
+            return cs.check_overflow(Instruction {
+                size: sz,
+                operation: DIVUL,
                 operands: [src, dst],
             });
         }

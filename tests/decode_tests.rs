@@ -1188,4 +1188,56 @@ mod tests {
             &[" divsl.l d0,d3:d2"],
         );
     }
+    //  divu.w (a1)+,d2
+    #[test]
+    fn test_decode_0090_divu_w_a1_d2() {
+        test_decoding_result_ok(
+            &[0x84, 0xd9],
+            Instruction {
+                size: 2,
+                operation: DIVU,
+                operands: [ARINC(A1), DR(D2)],
+            },
+            &[" divu.w (a1)+,d2"],
+        );
+    }
+    //  divu.l d0,d2
+    #[test]
+    fn test_decode_0091_divu_l_d0_d2() {
+        test_decoding_result_ok(
+            &[0x4c, 0x40, 0x20, 0x02],
+            Instruction {
+                size: 4,
+                operation: DIVUL,
+                operands: [DR(D0), DR(D2)],
+            },
+            &[" divu.l d0,d2"],
+        );
+    }
+    //  divu.l d0,d3:d2
+    #[test]
+    fn test_decode_0092_divu_l_d0_d3_d2() {
+        test_decoding_result_ok(
+            &[0x4c, 0x40, 0x24, 0x03],
+            Instruction {
+                size: 4,
+                operation: DIVUL,
+                operands: [DR(D0), DPAIR(D2, D3)],
+            },
+            &[" divu.l d0,d3:d2"],
+        );
+    }
+    //  divul.l d0,d3:d2
+    #[test]
+    fn test_decode_0093_divul_l_d0_d3_d2() {
+        test_decoding_result_ok(
+            &[0x4c, 0x40, 0x20, 0x03],
+            Instruction {
+                size: 4,
+                operation: DIVULL,
+                operands: [DR(D0), DPAIR(D2, D3)],
+            },
+            &[" divul.l d0,d3:d2"],
+        );
+    }
 }

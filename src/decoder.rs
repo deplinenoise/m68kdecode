@@ -55,6 +55,7 @@ pub enum Operation {
     JSR,
     MULS,
     MULU,
+    NBCD,
 }
 #[allow(non_snake_case)]
 pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {
@@ -1242,6 +1243,18 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
                 operands: [src, dst],
             });
         }
+    }
+    if (w0 & 0b1111111111000000) == 0b0100100000000000 {
+        let m = get_bits(w0, 3, 3);
+        let r = get_bits(w0, 0, 3);
+        sz = 1;
+        src = cs.ea(r, m, 1);
+        dst = NoOperand;
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: NBCD,
+            operands: [src, dst],
+        });
     }
     return Err(NotImplemented);
 }

@@ -1412,4 +1412,17 @@ mod tests {
             &[" mulu.l  d0,d2:d1"],
         );
     }
+    //  nbcd  (a0)+
+    #[test]
+    fn test_decode_0106_nbcd_a0_() {
+        test_decoding_result_ok(
+            &[0x48, 0x18],
+            Instruction {
+                size: 1,
+                operation: NBCD,
+                operands: [ARINC(A0), NoOperand],
+            },
+            &[" nbcd  (a0)+"],
+        );
+    }
 }

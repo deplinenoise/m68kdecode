@@ -135,6 +135,8 @@ MULU            1100_ppp0_11mm_mrrr sz=2; src=cs.ea(r, m, 2); dst=cs.data_reg_op
 MULU            0100_1100_00mm_mrrr 0lll_0000_0000_0??? sz=4; src=cs.ea(r, m, 4); dst=cs.data_reg_op(l);
 MULU            0100_1100_00mm_mrrr 0lll_0100_0000_0hhh sz=4; src=cs.ea(r, m, 4); dst=DPAIR(cs.data_reg(l), cs.data_reg(h));
 
+NBCD            0100_1000_00mm_mrrr sz=1; src=cs.ea(r, m, 1); dst=NoOperand;
+
 #define MOVEFRUSP_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,1,1, 1,0,0,0)
 #define MOVETOUSP_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,1,1, 1,0,0,0)
 #define MOVETOUSP_INST  ENCW(0,1,0,0, 1,1,1,0, 0,1,1,0, 0,0,0,0)
@@ -144,20 +146,14 @@ MULU            0100_1100_00mm_mrrr 0lll_0100_0000_0hhh sz=4; src=cs.ea(r, m, 4)
 #define MOVEFRSR_MASK ENCW(1,1,1,1, 1,1,1,1, 1,1,0,0, 0,0,0,0)
 #define MOVETOSR_MASK ENCW(1,1,1,1, 1,1,1,1, 1,1,0,0, 0,0,0,0)
 
-#define MULSL_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,0,0, 0,0,0,0)
-#define MULUL_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,0,0, 0,0,0,0)
-#define NBCD_MASK ENCW(1,1,1,1, 1,1,1,1, 1,1,0,0, 0,0,0,0)
 #define PEA_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,0,0, 0,0,0,0)
 #define TAS_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,0,0, 0,0,0,0)
-#define DIVSL_INST  ENCW(0,1,0,0, 1,1,0,0, 0,1,0,0, 0,0,0,0)
-#define DIVUL_INST  DIVSL_INST
 #define MOVEFRCCR_INST  ENCW(0,1,0,0, 0,0,1,0, 1,1,0,0, 0,0,0,0)
 #define MOVETOCCR_INST  ENCW(0,1,0,0, 0,1,0,0, 1,1,0,0, 0,0,0,0)
 #define MOVEFRSR_INST ENCW(0,1,0,0, 0,0,0,0, 1,1,0,0, 0,0,0,0)
 #define MOVETOSR_INST ENCW(0,1,0,0, 0,1,1,0, 1,1,0,0, 0,0,0,0)
 #define MULSL_INST  ENCW(0,1,0,0, 1,1,0,0, 0,0,0,0, 0,0,0,0)
 #define MULUL_INST  MULSL_INST
-#define NBCD_INST ENCW(0,1,0,0, 1,0,0,0, 0,0,0,0, 0,0,0,0)
 #define PEA_INST  ENCW(0,1,0,0, 1,0,0,0, 0,1,0,0, 0,0,0,0)
 #define TAS_INST  ENCW(0,1,0,0, 1,0,1,0, 1,1,0,0, 0,0,0,0)
 

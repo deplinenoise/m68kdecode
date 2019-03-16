@@ -385,3 +385,6 @@
 
 > mulu.l  d0,d2:d1
 # Instruction { size: 4, operation: MULU, operands: [ DR(D0), DPAIR(D1, D2) ] }
+
+> nbcd  (a0)+
+# Instruction { size: 1, operation: NBCD, operands: [ ARINC(A0), NoOperand ] }

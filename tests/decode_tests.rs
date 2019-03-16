@@ -1425,4 +1425,30 @@ mod tests {
             &[" nbcd  (a0)+"],
         );
     }
+    //  move sr,d0
+    #[test]
+    fn test_decode_0107_move_sr_d0() {
+        test_decoding_result_ok(
+            &[0x40, 0xc0],
+            Instruction {
+                size: 2,
+                operation: MOVEFROMSR,
+                operands: [Implied, DR(D0)],
+            },
+            &[" move sr,d0"],
+        );
+    }
+    //  move d0,sr
+    #[test]
+    fn test_decode_0108_move_d0_sr() {
+        test_decoding_result_ok(
+            &[0x46, 0xc0],
+            Instruction {
+                size: 2,
+                operation: MOVETOSR,
+                operands: [DR(D0), Implied],
+            },
+            &[" move d0,sr"],
+        );
+    }
 }

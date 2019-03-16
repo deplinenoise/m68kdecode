@@ -388,3 +388,9 @@
 
 > nbcd  (a0)+
 # Instruction { size: 1, operation: NBCD, operands: [ ARINC(A0), NoOperand ] }
+
+> move sr,d0
+# Instruction { size: 2, operation: MOVEFROMSR, operands: [ Implied, DR(D0) ] }
+
+> move d0,sr
+# Instruction { size: 2, operation: MOVETOSR, operands: [ DR(D0), Implied ] }

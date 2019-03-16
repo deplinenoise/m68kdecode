@@ -137,6 +137,9 @@ MULU            0100_1100_00mm_mrrr 0lll_0100_0000_0hhh sz=4; src=cs.ea(r, m, 4)
 
 NBCD            0100_1000_00mm_mrrr sz=1; src=cs.ea(r, m, 1); dst=NoOperand;
 
+MOVEFROMSR      0100_0000_11mm_mrrr sz=2; src=Implied; dst=cs.ea(r, m, 2);
+MOVETOSR        0100_0110_11mm_mrrr sz=2; src=cs.ea(r, m, 2); dst=Implied; 
+
 #define MOVEFRUSP_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,1,1, 1,0,0,0)
 #define MOVETOUSP_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,1,1, 1,0,0,0)
 #define MOVETOUSP_INST  ENCW(0,1,0,0, 1,1,1,0, 0,1,1,0, 0,0,0,0)

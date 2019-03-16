@@ -56,6 +56,8 @@ pub enum Operation {
     MULS,
     MULU,
     NBCD,
+    MOVEFROMSR,
+    MOVETOSR,
 }
 #[allow(non_snake_case)]
 pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {
@@ -1253,6 +1255,30 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
         return cs.check_overflow(Instruction {
             size: sz,
             operation: NBCD,
+            operands: [src, dst],
+        });
+    }
+    if (w0 & 0b1111111111000000) == 0b0100000011000000 {
+        let m = get_bits(w0, 3, 3);
+        let r = get_bits(w0, 0, 3);
+        sz = 2;
+        src = Implied;
+        dst = cs.ea(r, m, 2);
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: MOVEFROMSR,
+            operands: [src, dst],
+        });
+    }
+    if (w0 & 0b1111111111000000) == 0b0100011011000000 {
+        let m = get_bits(w0, 3, 3);
+        let r = get_bits(w0, 0, 3);
+        sz = 2;
+        src = cs.ea(r, m, 2);
+        dst = Implied;
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: MOVETOSR,
             operands: [src, dst],
         });
     }

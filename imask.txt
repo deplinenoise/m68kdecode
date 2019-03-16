@@ -103,21 +103,14 @@ EXTBL           0100_1001_1100_0rrr sz=4; src=cs.data_reg_op(r); dst=NoOperand;
 
 LEA             0100_nnn1_11mm_mrrr sz=4; src=cs.ea(r, m, 4); dst=cs.address_reg_op(n);
 
-#define EXTBW_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,1,1, 1,0,0,0)
-#define EXTBW_INST  
+LINK            0100_1110_0101_0rrr sz=2; src=cs.address_reg_op(r); dst=cs.imm16(); 
+LINK            0100_1000_0000_1rrr sz=4; src=cs.address_reg_op(r); dst=cs.imm32(); 
 
-#define EXTWL_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,1,1, 1,0,0,0)
-#define EXTBL_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,1,1, 1,0,0,0)
-
-#define LINKW_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,1,1, 1,0,0,0)
-#define LINKL_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,1,1, 1,0,0,0)
 #define MOVEFRUSP_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,1,1, 1,0,0,0)
 #define MOVETOUSP_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,1,1, 1,0,0,0)
 #define UNLK_MASK ENCW(1,1,1,1, 1,1,1,1, 1,1,1,1, 1,0,0,0)
 #define EXTWL_INST  ENCW(0,1,0,0, 1,0,0,0, 1,1,0,0, 0,0,0,0)
 #define EXTBL_INST  ENCW(0,1,0,0, 1,0,0,1, 1,1,0,0, 0,0,0,0)
-#define LINKW_INST  ENCW(0,1,0,0, 1,1,1,0, 0,1,0,1, 0,0,0,0)
-#define LINKL_INST  ENCW(0,1,0,0, 1,0,0,0, 0,0,0,0, 1,0,0,0)
 #define MOVETOUSP_INST  ENCW(0,1,0,0, 1,1,1,0, 0,1,1,0, 0,0,0,0)
 #define MOVEFRUSP_INST  ENCW(0,1,0,0, 1,1,1,0, 0,1,1,0, 1,0,0,0)
 #define UNLK_INST ENCW(0,1,0,0, 1,1,1,0, 0,1,0,1, 1,0,0,0)

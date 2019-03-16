@@ -1084,4 +1084,30 @@ mod tests {
             &[" extb.l d6"],
         );
     }
+    //  link.w a0,#1234
+    #[test]
+    fn test_decode_0082_link_w_a0_1234() {
+        test_decoding_result_ok(
+            &[0x4e, 0x50, 0x04, 0xd2],
+            Instruction {
+                size: 2,
+                operation: LINK,
+                operands: [AR(A0), IMM16(1234)],
+            },
+            &[" link.w a0,#1234"],
+        );
+    }
+    //  link.l a5,#$12345678
+    #[test]
+    fn test_decode_0083_link_l_a5_12345678() {
+        test_decoding_result_ok(
+            &[0x48, 0x0d, 0x12, 0x34, 0x56, 0x78],
+            Instruction {
+                size: 4,
+                operation: LINK,
+                operands: [AR(A5), IMM32(0x12345678)],
+            },
+            &[" link.l a5,#$12345678"],
+        );
+    }
 }

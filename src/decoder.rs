@@ -42,6 +42,7 @@ pub enum Operation {
     EXTL,
     EXTBL,
     LEA,
+    LINK,
 }
 #[allow(non_snake_case)]
 pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {
@@ -887,6 +888,28 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
         return cs.check_overflow(Instruction {
             size: sz,
             operation: LEA,
+            operands: [src, dst],
+        });
+    }
+    if (w0 & 0b1111111111111000) == 0b0100111001010000 {
+        let r = get_bits(w0, 0, 3);
+        sz = 2;
+        src = cs.address_reg_op(r);
+        dst = cs.imm16();
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: LINK,
+            operands: [src, dst],
+        });
+    }
+    if (w0 & 0b1111111111111000) == 0b0100100000001000 {
+        let r = get_bits(w0, 0, 3);
+        sz = 4;
+        src = cs.address_reg_op(r);
+        dst = cs.imm32();
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: LINK,
             operands: [src, dst],
         });
     }

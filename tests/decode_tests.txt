@@ -293,3 +293,9 @@
 
 > extb.l d6
 # Instruction { size: 4, operation: EXTBL, operands: [ DR(D6), NoOperand ] }
+
+> link.w a0,#1234
+# Instruction { size: 2, operation: LINK, operands: [ AR(A0), IMM16(1234) ] }
+
+> link.l a5,#$12345678
+# Instruction { size: 4, operation: LINK, operands: [ AR(A5), IMM32(0x12345678) ] }

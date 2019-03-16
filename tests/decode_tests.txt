@@ -406,3 +406,6 @@
 
 > move ccr,d0
 # Instruction { size: 2, operation: MOVEFROMCCR, operands: [ Implied, DR(D0) ] }
+
+> pea (a0)
+# Instruction { size: 4, operation: PEA, operands: [ ARIND(A0), Implied ] }

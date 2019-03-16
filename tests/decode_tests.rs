@@ -1503,4 +1503,17 @@ mod tests {
             &[" move ccr,d0"],
         );
     }
+    //  pea (a0)
+    #[test]
+    fn test_decode_0113_pea_a0_() {
+        test_decoding_result_ok(
+            &[0x48, 0x50],
+            Instruction {
+                size: 4,
+                operation: PEA,
+                operands: [ARIND(A0), Implied],
+            },
+            &[" pea (a0)"],
+        );
+    }
 }

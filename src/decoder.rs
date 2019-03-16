@@ -38,6 +38,7 @@ pub enum Operation {
     STOP,
     TRAPV,
     SWAP,
+    BKPT,
 }
 #[allow(non_snake_case)]
 pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {
@@ -839,6 +840,17 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
         return cs.check_overflow(Instruction {
             size: sz,
             operation: SWAP,
+            operands: [src, dst],
+        });
+    }
+    if (w0 & 0b1111111111111000) == 0b0100100001001000 {
+        let n = get_bits(w0, 0, 3);
+        sz = 0;
+        src = IMM8(n as u8);
+        dst = NoOperand;
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: BKPT,
             operands: [src, dst],
         });
     }

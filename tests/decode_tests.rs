@@ -1032,4 +1032,17 @@ mod tests {
             &[" swap d7"],
         );
     }
+    //  bkpt #3
+    #[test]
+    fn test_decode_0078_bkpt_3() {
+        test_decoding_result_ok(
+            &[0x48, 0x4b],
+            Instruction {
+                size: 0,
+                operation: BKPT,
+                operands: [IMM8(3), NoOperand],
+            },
+            &[" bkpt #3"],
+        );
+    }
 }

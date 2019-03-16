@@ -281,3 +281,6 @@
 
 > swap d7
 # Instruction { size: 0, operation: SWAP, operands: [ DR(D7), NoOperand ] }
+
+> bkpt #3
+# Instruction { size: 0, operation: BKPT, operands: [ IMM8(3), NoOperand ] }

@@ -158,14 +158,13 @@ CLR             0100_0010_00mm_mrrr sz=1; src=Implied; dst=cs.ea(r, m, sz);
 CLR             0100_0010_01mm_mrrr sz=2; src=Implied; dst=cs.ea(r, m, sz);
 CLR             0100_0010_10mm_mrrr sz=4; src=Implied; dst=cs.ea(r, m, sz);
 
-#define CLR_MASK  ENCW(1,1,1,1, 1,1,1,1, 0,0,0,0, 0,0,0,0)
-#define CLR_INST  ENCW()
+NEG             0100_0100_00mm_mrrr sz=1; src=Implied; dst=cs.ea(r, m, sz);
+NEG             0100_0100_01mm_mrrr sz=2; src=Implied; dst=cs.ea(r, m, sz);
+NEG             0100_0100_10mm_mrrr sz=4; src=Implied; dst=cs.ea(r, m, sz);
 
-#define NEG_MASK  ENCW(1,1,1,1, 1,1,1,1, 0,0,0,0, 0,0,0,0)
 #define NEGX_MASK ENCW(1,1,1,1, 1,1,1,1, 0,0,0,0, 0,0,0,0)
 #define NOT_MASK  ENCW(1,1,1,1, 1,1,1,1, 0,0,0,0, 0,0,0,0)
 #define TST_MASK  ENCW(1,1,1,1, 1,1,1,1, 0,0,0,0, 0,0,0,0)
-#define NEG_INST  ENCW(0,1,0,0, 0,1,0,0, 0,0,0,0, 0,0,0,0)
 #define NEGX_INST ENCW(0,1,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0)
 #define NOT_INST  ENCW(0,1,0,0, 0,1,1,0, 0,0,0,0, 0,0,0,0)
 #  /* Note: very similatr to MOVEM but bit 9 differentiates. */

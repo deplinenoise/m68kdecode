@@ -1581,4 +1581,43 @@ mod tests {
             &[" clr.l (a4)"],
         );
     }
+    //  neg.b d0
+    #[test]
+    fn test_decode_0119_neg_b_d0() {
+        test_decoding_result_ok(
+            &[0x44, 0x00],
+            Instruction {
+                size: 1,
+                operation: NEG,
+                operands: [Implied, DR(D0)],
+            },
+            &[" neg.b d0"],
+        );
+    }
+    //  neg.w (a0)+
+    #[test]
+    fn test_decode_0120_neg_w_a0_() {
+        test_decoding_result_ok(
+            &[0x44, 0x58],
+            Instruction {
+                size: 2,
+                operation: NEG,
+                operands: [Implied, ARINC(A0)],
+            },
+            &[" neg.w (a0)+"],
+        );
+    }
+    //  neg.l (a4)
+    #[test]
+    fn test_decode_0121_neg_l_a4_() {
+        test_decoding_result_ok(
+            &[0x44, 0x94],
+            Instruction {
+                size: 4,
+                operation: NEG,
+                operands: [Implied, ARIND(A4)],
+            },
+            &[" neg.l (a4)"],
+        );
+    }
 }

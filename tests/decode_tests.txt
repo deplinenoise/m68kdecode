@@ -424,3 +424,12 @@
 
 > clr.l (a4)
 # Instruction { size: 4, operation: CLR, operands: [ Implied, ARIND(A4) ] }
+
+> neg.b d0
+# Instruction { size: 1, operation: NEG, operands: [ Implied, DR(D0) ] }
+
+> neg.w (a0)+
+# Instruction { size: 2, operation: NEG, operands: [ Implied, ARINC(A0) ] }
+
+> neg.l (a4)
+# Instruction { size: 4, operation: NEG, operands: [ Implied, ARIND(A4) ] }

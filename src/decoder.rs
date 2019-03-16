@@ -66,6 +66,7 @@ pub enum Operation {
     TAS,
     MOVEM,
     CLR,
+    NEG,
 }
 #[allow(non_snake_case)]
 pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {
@@ -1419,6 +1420,42 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
         return cs.check_overflow(Instruction {
             size: sz,
             operation: CLR,
+            operands: [src, dst],
+        });
+    }
+    if (w0 & 0b1111111111000000) == 0b0100010000000000 {
+        let m = get_bits(w0, 3, 3);
+        let r = get_bits(w0, 0, 3);
+        sz = 1;
+        src = Implied;
+        dst = cs.ea(r, m, sz);
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: NEG,
+            operands: [src, dst],
+        });
+    }
+    if (w0 & 0b1111111111000000) == 0b0100010001000000 {
+        let m = get_bits(w0, 3, 3);
+        let r = get_bits(w0, 0, 3);
+        sz = 2;
+        src = Implied;
+        dst = cs.ea(r, m, sz);
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: NEG,
+            operands: [src, dst],
+        });
+    }
+    if (w0 & 0b1111111111000000) == 0b0100010010000000 {
+        let m = get_bits(w0, 3, 3);
+        let r = get_bits(w0, 0, 3);
+        sz = 4;
+        src = Implied;
+        dst = cs.ea(r, m, sz);
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: NEG,
             operands: [src, dst],
         });
     }

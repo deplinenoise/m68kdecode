@@ -69,6 +69,7 @@ pub enum Operation {
     NEG,
     NEGX,
     NOT,
+    TST,
 }
 #[allow(non_snake_case)]
 pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {
@@ -1530,6 +1531,42 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
         return cs.check_overflow(Instruction {
             size: sz,
             operation: NOT,
+            operands: [src, dst],
+        });
+    }
+    if (w0 & 0b1111111111000000) == 0b0100101000000000 {
+        let m = get_bits(w0, 3, 3);
+        let r = get_bits(w0, 0, 3);
+        sz = 1;
+        src = Implied;
+        dst = cs.ea(r, m, sz);
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: TST,
+            operands: [src, dst],
+        });
+    }
+    if (w0 & 0b1111111111000000) == 0b0100101001000000 {
+        let m = get_bits(w0, 3, 3);
+        let r = get_bits(w0, 0, 3);
+        sz = 2;
+        src = Implied;
+        dst = cs.ea(r, m, sz);
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: TST,
+            operands: [src, dst],
+        });
+    }
+    if (w0 & 0b1111111111000000) == 0b0100101010000000 {
+        let m = get_bits(w0, 3, 3);
+        let r = get_bits(w0, 0, 3);
+        sz = 4;
+        src = Implied;
+        dst = cs.ea(r, m, sz);
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: TST,
             operands: [src, dst],
         });
     }

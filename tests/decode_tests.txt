@@ -451,3 +451,12 @@
 
 > not.l (a4)
 # Instruction { size: 4, operation: NOT, operands: [ Implied, ARIND(A4) ] }
+
+> tst.b d0
+# Instruction { size: 1, operation: TST, operands: [ Implied, DR(D0) ] }
+
+> tst.w (a0)+
+# Instruction { size: 2, operation: TST, operands: [ Implied, ARINC(A0) ] }
+
+> tst.l (a4)
+# Instruction { size: 4, operation: TST, operands: [ Implied, ARIND(A4) ] }

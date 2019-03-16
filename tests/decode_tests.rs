@@ -1698,4 +1698,43 @@ mod tests {
             &[" not.l (a4)"],
         );
     }
+    //  tst.b d0
+    #[test]
+    fn test_decode_0128_tst_b_d0() {
+        test_decoding_result_ok(
+            &[0x4a, 0x00],
+            Instruction {
+                size: 1,
+                operation: TST,
+                operands: [Implied, DR(D0)],
+            },
+            &[" tst.b d0"],
+        );
+    }
+    //  tst.w (a0)+
+    #[test]
+    fn test_decode_0129_tst_w_a0_() {
+        test_decoding_result_ok(
+            &[0x4a, 0x58],
+            Instruction {
+                size: 2,
+                operation: TST,
+                operands: [Implied, ARINC(A0)],
+            },
+            &[" tst.w (a0)+"],
+        );
+    }
+    //  tst.l (a4)
+    #[test]
+    fn test_decode_0130_tst_l_a4_() {
+        test_decoding_result_ok(
+            &[0x4a, 0x94],
+            Instruction {
+                size: 4,
+                operation: TST,
+                operands: [Implied, ARIND(A4)],
+            },
+            &[" tst.l (a4)"],
+        );
+    }
 }

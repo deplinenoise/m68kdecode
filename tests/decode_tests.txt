@@ -409,3 +409,9 @@
 
 > pea (a0)
 # Instruction { size: 4, operation: PEA, operands: [ ARIND(A0), Implied ] }
+
+> movem.w d0-d4/a0-a2,-(a4)
+# Instruction { size: 2, operation: MOVEM, operands: [ REGLIST(0b1111100011100000), ARDEC(A4) ] }
+
+> movem.l (a4)+,d0-d4/a0-a2
+# Instruction { size: 4, operation: MOVEM, operands: [ ARINC(A4), REGLIST(0b0000011100011111) ] }

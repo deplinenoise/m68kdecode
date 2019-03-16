@@ -83,6 +83,7 @@ pub enum Operand {
     PCDISP(Displacement),
     DISP(Displacement),
     DPAIR(DataRegister, DataRegister),
+    REGLIST(u16),
 }
 
 #[derive(Debug, PartialEq)]

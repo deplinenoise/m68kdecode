@@ -1516,4 +1516,30 @@ mod tests {
             &[" pea (a0)"],
         );
     }
+    //  movem.w d0-d4/a0-a2,-(a4)
+    #[test]
+    fn test_decode_0114_movem_w_d0_d4_a0_a2_a4_() {
+        test_decoding_result_ok(
+            &[0x48, 0xa4, 0xf8, 0xe0],
+            Instruction {
+                size: 2,
+                operation: MOVEM,
+                operands: [REGLIST(0b1111100011100000), ARDEC(A4)],
+            },
+            &[" movem.w d0-d4/a0-a2,-(a4)"],
+        );
+    }
+    //  movem.l (a4)+,d0-d4/a0-a2
+    #[test]
+    fn test_decode_0115_movem_l_a4_d0_d4_a0_a2() {
+        test_decoding_result_ok(
+            &[0x4c, 0xdc, 0x07, 0x1f],
+            Instruction {
+                size: 4,
+                operation: MOVEM,
+                operands: [ARINC(A4), REGLIST(0b0000011100011111)],
+            },
+            &[" movem.l (a4)+,d0-d4/a0-a2"],
+        );
+    }
 }

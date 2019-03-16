@@ -6,7 +6,8 @@ import subprocess
 
 R_BLANK = re.compile('^\s*$')
 R_COMMENT = re.compile('^#.*')
-R_LINEFMT = re.compile('^([A-Z][A-Z0-9]+)\s+((?:(?:(?:[01A-Za-z]{4}_){3}[01A-Za-z]{4})\s+)+)(.*?)$')
+R_LINEFMT = re.compile('^([A-Z][A-Z0-9?]+)\s+((?:(?:(?:[01A-Za-z?]{4}_){3}[01A-Za-z?]{4})\s+)+)(.*?)$')
+R_PREDICATE = re.compile('\\?\\(.*?\\)')
 
 lineno = 0
 infile = sys.argv[1]
@@ -134,22 +135,36 @@ with open(outfile, "w") as of:
         if len(i.masks) > 1:
             of.write('&& cs.has_words({})'.format(len(i.masks) - 1))
         of.write('{\n')
+        #of.write('println!("w0 match {}");\n'.format(i.name))
         for n in range(1, len(i.masks)):
             of.write('let w{} = cs.peek_word({});\n'.format(n, n-1))
 
         if len(i.masks) > 1:
             of.write('if {} {{\n'.format(' && '.join([i.match_expr(n) for n in range(1, len(i.masks))])))
 
+        for c in i.captures:
+            if c.name != '?':
+                of.write('let {} = get_bits(w{}, {}, {});\n'.format(c.name, c.wordindex, c.bit, c.length))
+                #of.write('println!("{} = {{}}", {});\n'.format(c.name, c.name))
+
+        predicate_nesting = 0
+
+        for predicate in re.findall(R_PREDICATE, i.result):
+            predicate_nesting = predicate_nesting + 1
+            of.write('if {} {{\n'.format(predicate[2:-1]))
+
         if len(i.masks) > 1:
             of.write('cs.skip_words({});\n'.format(len(i.masks)-1))
 
-        for c in i.captures:
-            of.write('let {} = get_bits(w{}, {}, {});\n'.format(c.name, c.wordindex, c.bit, c.length))
+        expr = re.sub(R_PREDICATE, "", i.result)
 
-        of.write(i.result + '\n')
+        of.write(expr + '\n')
 
-        if i.result.find('return') == -1:
+        if expr.find('return') == -1:
             of.write('return cs.check_overflow(Instruction {{ size: sz, operation: {}, operands: [ src, dst ] }});\n'.format(i.name))
+
+        for x in range(0, predicate_nesting):
+            of.write('}\n')
 
         if len(i.masks) > 1:
             of.write('}\n')

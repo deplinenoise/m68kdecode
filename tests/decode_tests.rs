@@ -1149,4 +1149,43 @@ mod tests {
             &[" divs.w (a1)+,d2"],
         );
     }
+    //  divs.l d0,d2
+    #[test]
+    fn test_decode_0087_divs_l_d0_d2() {
+        test_decoding_result_ok(
+            &[0x4c, 0x40, 0x28, 0x02],
+            Instruction {
+                size: 4,
+                operation: DIVSL,
+                operands: [DR(D0), DR(D2)],
+            },
+            &[" divs.l d0,d2"],
+        );
+    }
+    //  divs.l d0,d3:d2
+    #[test]
+    fn test_decode_0088_divs_l_d0_d3_d2() {
+        test_decoding_result_ok(
+            &[0x4c, 0x40, 0x2c, 0x03],
+            Instruction {
+                size: 4,
+                operation: DIVSL,
+                operands: [DR(D0), DPAIR(D2, D3)],
+            },
+            &[" divs.l d0,d3:d2"],
+        );
+    }
+    //  divsl.l d0,d3:d2
+    #[test]
+    fn test_decode_0089_divsl_l_d0_d3_d2() {
+        test_decoding_result_ok(
+            &[0x4c, 0x40, 0x28, 0x03],
+            Instruction {
+                size: 4,
+                operation: DIVSLL,
+                operands: [DR(D0), DPAIR(D2, D3)],
+            },
+            &[" divsl.l d0,d3:d2"],
+        );
+    }
 }

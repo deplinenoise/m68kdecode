@@ -46,6 +46,8 @@ pub enum Operation {
     UNLK,
     TRAP,
     DIVS,
+    DIVSL,
+    DIVSLL,
 }
 #[allow(non_snake_case)]
 pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {
@@ -275,10 +277,10 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
     if (w0 & 0b1111111111000000) == 0b0000100000000000 && cs.has_words(1) {
         let w1 = cs.peek_word(0);
         if (w1 & 0b1111111000000000) == 0b0000000000000000 {
-            cs.skip_words(1);
             let m = get_bits(w0, 3, 3);
             let r = get_bits(w0, 0, 3);
             let n = get_bits(w1, 0, 9);
+            cs.skip_words(1);
             sz = 1;
             src = IMM16(n);
             dst = cs.ea(r, m, 1);
@@ -292,10 +294,10 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
     if (w0 & 0b1111111111000000) == 0b0000100001000000 && cs.has_words(1) {
         let w1 = cs.peek_word(0);
         if (w1 & 0b1111111000000000) == 0b0000000000000000 {
-            cs.skip_words(1);
             let m = get_bits(w0, 3, 3);
             let r = get_bits(w0, 0, 3);
             let n = get_bits(w1, 0, 9);
+            cs.skip_words(1);
             sz = 1;
             src = IMM16(n);
             dst = cs.ea(r, m, 1);
@@ -309,10 +311,10 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
     if (w0 & 0b1111111111000000) == 0b0000100010000000 && cs.has_words(1) {
         let w1 = cs.peek_word(0);
         if (w1 & 0b1111111000000000) == 0b0000000000000000 {
-            cs.skip_words(1);
             let m = get_bits(w0, 3, 3);
             let r = get_bits(w0, 0, 3);
             let n = get_bits(w1, 0, 9);
+            cs.skip_words(1);
             sz = 1;
             src = IMM16(n);
             dst = cs.ea(r, m, 1);
@@ -326,10 +328,10 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
     if (w0 & 0b1111111111000000) == 0b0000100011000000 && cs.has_words(1) {
         let w1 = cs.peek_word(0);
         if (w1 & 0b1111111000000000) == 0b0000000000000000 {
-            cs.skip_words(1);
             let m = get_bits(w0, 3, 3);
             let r = get_bits(w0, 0, 3);
             let n = get_bits(w1, 0, 9);
+            cs.skip_words(1);
             sz = 1;
             src = IMM16(n);
             dst = cs.ea(r, m, 1);
@@ -511,12 +513,12 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
     if (w0 & 0b1111100111000000) == 0b0000000011000000 && cs.has_words(1) {
         let w1 = cs.peek_word(0);
         if (w1 & 0b0000111111111111) == 0b0000000000000000 {
-            cs.skip_words(1);
             let s = get_bits(w0, 9, 2);
             let m = get_bits(w0, 3, 3);
             let r = get_bits(w0, 0, 3);
             let a = get_bits(w1, 15, 1);
             let d = get_bits(w1, 12, 3);
+            cs.skip_words(1);
             sz = 1 << s;
             src = cs.ea(r, m, sz);
             dst = cs.dar(a, d);
@@ -530,12 +532,12 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
     if (w0 & 0b1111100111000000) == 0b0000000011000000 && cs.has_words(1) {
         let w1 = cs.peek_word(0);
         if (w1 & 0b0000111111111111) == 0b0000100000000000 {
-            cs.skip_words(1);
             let s = get_bits(w0, 9, 2);
             let m = get_bits(w0, 3, 3);
             let r = get_bits(w0, 0, 3);
             let a = get_bits(w1, 15, 1);
             let d = get_bits(w1, 12, 3);
+            cs.skip_words(1);
             sz = 1 << s;
             src = cs.ea(r, m, sz);
             dst = cs.dar(a, d);
@@ -621,11 +623,11 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
     if (w0 & 0b1111111111000000) == 0b0000111000000000 && cs.has_words(1) {
         let w1 = cs.peek_word(0);
         if (w1 & 0b0000111111111111) == 0b0000000000000000 {
-            cs.skip_words(1);
             let m = get_bits(w0, 3, 3);
             let r = get_bits(w0, 0, 3);
             let a = get_bits(w1, 15, 1);
             let d = get_bits(w1, 12, 3);
+            cs.skip_words(1);
             sz = 1;
             dst = cs.dar(a, d);
             src = cs.ea(r, m, 1);
@@ -639,11 +641,11 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
     if (w0 & 0b1111111111000000) == 0b0000111001000000 && cs.has_words(1) {
         let w1 = cs.peek_word(0);
         if (w1 & 0b0000111111111111) == 0b0000000000000000 {
-            cs.skip_words(1);
             let m = get_bits(w0, 3, 3);
             let r = get_bits(w0, 0, 3);
             let a = get_bits(w1, 15, 1);
             let d = get_bits(w1, 12, 3);
+            cs.skip_words(1);
             sz = 2;
             dst = cs.dar(a, d);
             src = cs.ea(r, m, 2);
@@ -657,11 +659,11 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
     if (w0 & 0b1111111111000000) == 0b0000111010000000 && cs.has_words(1) {
         let w1 = cs.peek_word(0);
         if (w1 & 0b0000111111111111) == 0b0000000000000000 {
-            cs.skip_words(1);
             let m = get_bits(w0, 3, 3);
             let r = get_bits(w0, 0, 3);
             let a = get_bits(w1, 15, 1);
             let d = get_bits(w1, 12, 3);
+            cs.skip_words(1);
             sz = 4;
             dst = cs.dar(a, d);
             src = cs.ea(r, m, 4);
@@ -675,11 +677,11 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
     if (w0 & 0b1111111111000000) == 0b0000111000000000 && cs.has_words(1) {
         let w1 = cs.peek_word(0);
         if (w1 & 0b0000111111111111) == 0b0000100000000000 {
-            cs.skip_words(1);
             let m = get_bits(w0, 3, 3);
             let r = get_bits(w0, 0, 3);
             let a = get_bits(w1, 15, 1);
             let d = get_bits(w1, 12, 3);
+            cs.skip_words(1);
             sz = 1;
             src = cs.dar(a, d);
             dst = cs.ea(r, m, 1);
@@ -693,11 +695,11 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
     if (w0 & 0b1111111111000000) == 0b0000111001000000 && cs.has_words(1) {
         let w1 = cs.peek_word(0);
         if (w1 & 0b0000111111111111) == 0b0000100000000000 {
-            cs.skip_words(1);
             let m = get_bits(w0, 3, 3);
             let r = get_bits(w0, 0, 3);
             let a = get_bits(w1, 15, 1);
             let d = get_bits(w1, 12, 3);
+            cs.skip_words(1);
             sz = 2;
             src = cs.dar(a, d);
             dst = cs.ea(r, m, 2);
@@ -711,11 +713,11 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
     if (w0 & 0b1111111111000000) == 0b0000111010000000 && cs.has_words(1) {
         let w1 = cs.peek_word(0);
         if (w1 & 0b0000111111111111) == 0b0000100000000000 {
-            cs.skip_words(1);
             let m = get_bits(w0, 3, 3);
             let r = get_bits(w0, 0, 3);
             let a = get_bits(w1, 15, 1);
             let d = get_bits(w1, 12, 3);
+            cs.skip_words(1);
             sz = 4;
             src = cs.dar(a, d);
             dst = cs.ea(r, m, 4);
@@ -950,6 +952,81 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             operation: DIVS,
             operands: [src, dst],
         });
+    }
+    if (w0 & 0b1111111111000000) == 0b0100110001000000 && cs.has_words(1) {
+        let w1 = cs.peek_word(0);
+        if (w1 & 0b1000111111111000) == 0b0000110000000000 {
+            let m = get_bits(w0, 3, 3);
+            let r = get_bits(w0, 0, 3);
+            let q = get_bits(w1, 12, 3);
+            let R = get_bits(w1, 0, 3);
+            if R != q {
+                cs.skip_words(1);
+                sz = 4;
+                src = cs.ea(r, m, 4);
+                dst = DPAIR(cs.data_reg(q), cs.data_reg(R));
+                return cs.check_overflow(Instruction {
+                    size: sz,
+                    operation: DIVSL,
+                    operands: [src, dst],
+                });
+            }
+        }
+    }
+    if (w0 & 0b1111111111000000) == 0b0100110001000000 && cs.has_words(1) {
+        let w1 = cs.peek_word(0);
+        if (w1 & 0b1000111111111000) == 0b0000110000000000 {
+            let m = get_bits(w0, 3, 3);
+            let r = get_bits(w0, 0, 3);
+            let q = get_bits(w1, 12, 3);
+            let R = get_bits(w1, 0, 3);
+            cs.skip_words(1);
+            sz = 4;
+            src = cs.ea(r, m, 4);
+            dst = DPAIR(cs.data_reg(q), cs.data_reg(R));
+            return cs.check_overflow(Instruction {
+                size: sz,
+                operation: DIVSL,
+                operands: [src, dst],
+            });
+        }
+    }
+    if (w0 & 0b1111111111000000) == 0b0100110001000000 && cs.has_words(1) {
+        let w1 = cs.peek_word(0);
+        if (w1 & 0b1000111111111000) == 0b0000100000000000 {
+            let m = get_bits(w0, 3, 3);
+            let r = get_bits(w0, 0, 3);
+            let q = get_bits(w1, 12, 3);
+            let R = get_bits(w1, 0, 3);
+            if R != q {
+                cs.skip_words(1);
+                sz = 4;
+                src = cs.ea(r, m, 4);
+                dst = DPAIR(cs.data_reg(q), cs.data_reg(R));
+                return cs.check_overflow(Instruction {
+                    size: sz,
+                    operation: DIVSLL,
+                    operands: [src, dst],
+                });
+            }
+        }
+    }
+    if (w0 & 0b1111111111000000) == 0b0100110001000000 && cs.has_words(1) {
+        let w1 = cs.peek_word(0);
+        if (w1 & 0b1000111111111000) == 0b0000100000000000 {
+            let m = get_bits(w0, 3, 3);
+            let r = get_bits(w0, 0, 3);
+            let q = get_bits(w1, 12, 3);
+            cs.skip_words(1);
+            sz = 4;
+            src = cs.ea(r, m, 4);
+            dst = cs.data_reg_op(q);
+            return cs.check_overflow(Instruction {
+                size: sz,
+                operation: DIVSL,
+                operands: [src, dst],
+            });
+        }
     }
     return Err(NotImplemented);
 }

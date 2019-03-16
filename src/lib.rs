@@ -82,6 +82,7 @@ pub enum Operand {
     ARDISP(AddressRegister, Displacement),
     PCDISP(Displacement),
     DISP(Displacement),
+    DPAIR(DataRegister, DataRegister),
 }
 
 #[derive(Debug, PartialEq)]

@@ -308,3 +308,12 @@
 
 > divs.w (a1)+,d2
 # Instruction { size: 2, operation: DIVS, operands: [ ARINC(A1), DR(D2) ] }
+
+> divs.l d0,d2
+# Instruction { size: 4, operation: DIVSL, operands: [ DR(D0), DR(D2) ] }
+
+> divs.l d0,d3:d2
+# Instruction { size: 4, operation: DIVSL, operands: [ DR(D0), DPAIR(D2, D3) ] }
+
+> divsl.l d0,d3:d2
+# Instruction { size: 4, operation: DIVSLL, operands: [ DR(D0), DPAIR(D2, D3) ] }

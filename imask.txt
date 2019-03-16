@@ -177,9 +177,6 @@ TST             0100_1010_10mm_mrrr sz=4; src=Implied; dst=cs.ea(r, m, sz);
 CHK             0100_ddd1_10mm_mrrr sz=2; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
 CHK             0100_ddd1_00mm_mrrr sz=4; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
 
-#define CHK_MASK  ENCW(1,1,1,1, 0,0,0,1, 0,1,0,0, 0,0,0,0)
-#define CHK_INST  ENCW(0,1,0,0, 0,0,0,1, 0,0,0,0, 0,0,0,0)
-
 #/*
 # * Group bitfield/Shift/Rotate. (1110)
 # */

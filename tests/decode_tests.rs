@@ -1737,4 +1737,30 @@ mod tests {
             &[" tst.l (a4)"],
         );
     }
+    //  chk.w (a4),d2
+    #[test]
+    fn test_decode_0131_chk_w_a4_d2() {
+        test_decoding_result_ok(
+            &[0x45, 0x94],
+            Instruction {
+                size: 2,
+                operation: CHK,
+                operands: [ARIND(A4), DR(D2)],
+            },
+            &[" chk.w (a4),d2"],
+        );
+    }
+    //  chk.l (a4),d2
+    #[test]
+    fn test_decode_0132_chk_l_a4_d2() {
+        test_decoding_result_ok(
+            &[0x45, 0x14],
+            Instruction {
+                size: 4,
+                operation: CHK,
+                operands: [ARIND(A4), DR(D2)],
+            },
+            &[" chk.l (a4),d2"],
+        );
+    }
 }

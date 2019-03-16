@@ -460,3 +460,9 @@
 
 > tst.l (a4)
 # Instruction { size: 4, operation: TST, operands: [ Implied, ARIND(A4) ] }
+
+> chk.w (a4),d2
+# Instruction { size: 2, operation: CHK, operands: [ ARIND(A4), DR(D2) ] }
+
+> chk.l (a4),d2
+# Instruction { size: 4, operation: CHK, operands: [ ARIND(A4), DR(D2) ] }

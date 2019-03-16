@@ -70,6 +70,7 @@ pub enum Operation {
     NEGX,
     NOT,
     TST,
+    CHK,
 }
 #[allow(non_snake_case)]
 pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {
@@ -1567,6 +1568,32 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
         return cs.check_overflow(Instruction {
             size: sz,
             operation: TST,
+            operands: [src, dst],
+        });
+    }
+    if (w0 & 0b1111000111000000) == 0b0100000110000000 {
+        let d = get_bits(w0, 9, 3);
+        let m = get_bits(w0, 3, 3);
+        let r = get_bits(w0, 0, 3);
+        sz = 2;
+        src = cs.ea(r, m, sz);
+        dst = cs.data_reg_op(d);
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: CHK,
+            operands: [src, dst],
+        });
+    }
+    if (w0 & 0b1111000111000000) == 0b0100000100000000 {
+        let d = get_bits(w0, 9, 3);
+        let m = get_bits(w0, 3, 3);
+        let r = get_bits(w0, 0, 3);
+        sz = 4;
+        src = cs.ea(r, m, sz);
+        dst = cs.data_reg_op(d);
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: CHK,
             operands: [src, dst],
         });
     }

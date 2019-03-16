@@ -174,8 +174,9 @@ TST             0100_1010_00mm_mrrr sz=1; src=Implied; dst=cs.ea(r, m, sz);
 TST             0100_1010_01mm_mrrr sz=2; src=Implied; dst=cs.ea(r, m, sz);
 TST             0100_1010_10mm_mrrr sz=4; src=Implied; dst=cs.ea(r, m, sz);
 
-#define LEA_MASK  ENCW(1,1,1,1, 0,0,0,1, 1,1,0,0, 0,0,0,0)
-#define LEA_INST  ENCW(0,1,0,0, 0,0,0,1, 1,1,0,0, 0,0,0,0)
+CHK             0100_ddd1_10mm_mrrr sz=2; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
+CHK             0100_ddd1_00mm_mrrr sz=4; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
+
 #define CHK_MASK  ENCW(1,1,1,1, 0,0,0,1, 0,1,0,0, 0,0,0,0)
 #define CHK_INST  ENCW(0,1,0,0, 0,0,0,1, 0,0,0,0, 0,0,0,0)
 

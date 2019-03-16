@@ -45,6 +45,7 @@ pub enum Operation {
     LINK,
     UNLK,
     TRAP,
+    DIVS,
 }
 #[allow(non_snake_case)]
 pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {
@@ -934,6 +935,19 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
         return cs.check_overflow(Instruction {
             size: sz,
             operation: TRAP,
+            operands: [src, dst],
+        });
+    }
+    if (w0 & 0b1111000111000000) == 0b1000000111000000 {
+        let d = get_bits(w0, 9, 3);
+        let m = get_bits(w0, 3, 3);
+        let r = get_bits(w0, 0, 3);
+        sz = 2;
+        src = cs.ea(r, m, 2);
+        dst = cs.data_reg_op(d);
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: DIVS,
             operands: [src, dst],
         });
     }

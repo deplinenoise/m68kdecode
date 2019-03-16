@@ -110,6 +110,8 @@ UNLK            0100_1110_0101_1rrr sz=0; src=cs.address_reg_op(r); dst=NoOperan
 
 TRAP            0100_1110_0100_vvvv sz=0; src=IMM8(v as u8); dst=NoOperand;
 
+DIVS            1000_ddd1_11mm_mrrr sz=2; src=cs.ea(r, m, 2); dst=cs.data_reg_op(d);
+
 #define MOVEFRUSP_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,1,1, 1,0,0,0)
 #define MOVETOUSP_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,1,1, 1,0,0,0)
 #define MOVETOUSP_INST  ENCW(0,1,0,0, 1,1,1,0, 0,1,1,0, 0,0,0,0)

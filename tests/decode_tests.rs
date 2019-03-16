@@ -1136,4 +1136,17 @@ mod tests {
             &[" trap #15"],
         );
     }
+    //  divs.w (a1)+,d2
+    #[test]
+    fn test_decode_0086_divs_w_a1_d2() {
+        test_decoding_result_ok(
+            &[0x85, 0xd9],
+            Instruction {
+                size: 2,
+                operation: DIVS,
+                operands: [ARINC(A1), DR(D2)],
+            },
+            &[" divs.w (a1)+,d2"],
+        );
+    }
 }

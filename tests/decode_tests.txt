@@ -305,3 +305,6 @@
 
 > trap #15
 # Instruction { size: 0, operation: TRAP, operands: [ IMM8(15), NoOperand ] }
+
+> divs.w (a1)+,d2
+# Instruction { size: 2, operation: DIVS, operands: [ ARINC(A1), DR(D2) ] }

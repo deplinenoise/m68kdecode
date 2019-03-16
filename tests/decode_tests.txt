@@ -329,3 +329,22 @@
 
 > divul.l d0,d3:d2
 # Instruction { size: 4, operation: DIVULL, operands: [ DR(D0), DPAIR(D2, D3) ] }
+
+> jmp (a0)
+# Instruction { size: 0, operation: JMP, operands: [ ARIND(A0), NoOperand ] }
+
+> jmp $12345678
+# Instruction { size: 0, operation: JMP, operands: [ ABS32(0x12345678), NoOperand ] }
+
+> jmp 123(pc)
+# Instruction {
+#   size: 0, operation: JMP, operands: [ 
+#     PCDISP(Displacement {
+#       base_displacement: 123,
+#       outer_displacement: 0,
+#       indexer: Indexer::NoIndexer,
+#       indirection: NoIndirection,
+#     }),
+#     NoOperand,
+#   ]
+# }

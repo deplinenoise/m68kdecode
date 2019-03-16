@@ -1240,4 +1240,51 @@ mod tests {
             &[" divul.l d0,d3:d2"],
         );
     }
+    //  jmp (a0)
+    #[test]
+    fn test_decode_0094_jmp_a0_() {
+        test_decoding_result_ok(
+            &[0x4e, 0xd0],
+            Instruction {
+                size: 0,
+                operation: JMP,
+                operands: [ARIND(A0), NoOperand],
+            },
+            &[" jmp (a0)"],
+        );
+    }
+    //  jmp $12345678
+    #[test]
+    fn test_decode_0095_jmp_12345678() {
+        test_decoding_result_ok(
+            &[0x4e, 0xf9, 0x12, 0x34, 0x56, 0x78],
+            Instruction {
+                size: 0,
+                operation: JMP,
+                operands: [ABS32(0x12345678), NoOperand],
+            },
+            &[" jmp $12345678"],
+        );
+    }
+    //  jmp 123(pc)
+    #[test]
+    fn test_decode_0096_jmp_123_pc_() {
+        test_decoding_result_ok(
+            &[0x4e, 0xfa, 0x00, 0x7b],
+            Instruction {
+                size: 0,
+                operation: JMP,
+                operands: [
+                    PCDISP(Displacement {
+                        base_displacement: 123,
+                        outer_displacement: 0,
+                        indexer: Indexer::NoIndexer,
+                        indirection: NoIndirection,
+                    }),
+                    NoOperand,
+                ],
+            },
+            &[" jmp 123(pc)"],
+        );
+    }
 }

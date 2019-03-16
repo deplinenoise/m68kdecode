@@ -51,6 +51,7 @@ pub enum Operation {
     DIVU,
     DIVUL,
     DIVULL,
+    JMP,
 }
 #[allow(non_snake_case)]
 pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {
@@ -1118,6 +1119,18 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
                 operands: [src, dst],
             });
         }
+    }
+    if (w0 & 0b1111111111000000) == 0b0100111011000000 {
+        let m = get_bits(w0, 3, 3);
+        let r = get_bits(w0, 0, 3);
+        sz = 0;
+        src = cs.ea(r, m, 0);
+        dst = NoOperand;
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: JMP,
+            operands: [src, dst],
+        });
     }
     return Err(NotImplemented);
 }

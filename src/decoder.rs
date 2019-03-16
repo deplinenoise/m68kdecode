@@ -58,6 +58,8 @@ pub enum Operation {
     NBCD,
     MOVEFROMSR,
     MOVETOSR,
+    MOVETOUSP,
+    MOVEFROMUSP,
 }
 #[allow(non_snake_case)]
 pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {
@@ -1279,6 +1281,28 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
         return cs.check_overflow(Instruction {
             size: sz,
             operation: MOVETOSR,
+            operands: [src, dst],
+        });
+    }
+    if (w0 & 0b1111111111111000) == 0b0100111001100000 {
+        let r = get_bits(w0, 0, 3);
+        sz = 4;
+        src = cs.address_reg_op(r);
+        dst = Implied;
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: MOVETOUSP,
+            operands: [src, dst],
+        });
+    }
+    if (w0 & 0b1111111111111000) == 0b0100111001101000 {
+        let r = get_bits(w0, 0, 3);
+        sz = 4;
+        src = Implied;
+        dst = cs.address_reg_op(r);
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: MOVEFROMUSP,
             operands: [src, dst],
         });
     }

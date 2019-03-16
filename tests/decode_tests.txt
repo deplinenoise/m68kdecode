@@ -394,3 +394,9 @@
 
 > move d0,sr
 # Instruction { size: 2, operation: MOVETOSR, operands: [ DR(D0), Implied ] }
+
+> move a0,usp
+# Instruction { size: 4, operation: MOVETOUSP, operands: [ AR(A0), Implied ] }
+
+> move usp,a3
+# Instruction { size: 4, operation: MOVEFROMUSP, operands: [ Implied, AR(A3) ] }

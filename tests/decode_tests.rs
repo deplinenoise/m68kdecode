@@ -1451,4 +1451,30 @@ mod tests {
             &[" move d0,sr"],
         );
     }
+    //  move a0,usp
+    #[test]
+    fn test_decode_0109_move_a0_usp() {
+        test_decoding_result_ok(
+            &[0x4e, 0x60],
+            Instruction {
+                size: 4,
+                operation: MOVETOUSP,
+                operands: [AR(A0), Implied],
+            },
+            &[" move a0,usp"],
+        );
+    }
+    //  move usp,a3
+    #[test]
+    fn test_decode_0110_move_usp_a3() {
+        test_decoding_result_ok(
+            &[0x4e, 0x6b],
+            Instruction {
+                size: 4,
+                operation: MOVEFROMUSP,
+                operands: [Implied, AR(A3)],
+            },
+            &[" move usp,a3"],
+        );
+    }
 }

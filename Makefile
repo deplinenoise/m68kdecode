@@ -4,6 +4,7 @@ VASM = ../newage_a500/t2-output/hostbuild/vasm
 .PHONY: all
 
 all: src/decoder.rs tests/decode_tests.rs
+	cargo test
 
 clean:
 	rm -f src/decoder.rs tests/decode_tests.rs

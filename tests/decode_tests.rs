@@ -1110,4 +1110,17 @@ mod tests {
             &[" link.l a5,#$12345678"],
         );
     }
+    //  unlk a2
+    #[test]
+    fn test_decode_0084_unlk_a2() {
+        test_decoding_result_ok(
+            &[0x4e, 0x5a],
+            Instruction {
+                size: 0,
+                operation: UNLK,
+                operands: [AR(A2), NoOperand],
+            },
+            &[" unlk a2"],
+        );
+    }
 }

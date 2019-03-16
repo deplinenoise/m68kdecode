@@ -299,3 +299,6 @@
 
 > link.l a5,#$12345678
 # Instruction { size: 4, operation: LINK, operands: [ AR(A5), IMM32(0x12345678) ] }
+
+> unlk a2
+# Instruction { size: 0, operation: UNLK, operands: [ AR(A2), NoOperand ] }

@@ -348,3 +348,22 @@
 #     NoOperand,
 #   ]
 # }
+
+> jsr (a0)
+# Instruction { size: 0, operation: JSR, operands: [ ARIND(A0), NoOperand ] }
+
+> jsr $12345678
+# Instruction { size: 0, operation: JSR, operands: [ ABS32(0x12345678), NoOperand ] }
+
+> jsr 123(pc)
+# Instruction {
+#   size: 0, operation: JSR, operands: [ 
+#     PCDISP(Displacement {
+#       base_displacement: 123,
+#       outer_displacement: 0,
+#       indexer: Indexer::NoIndexer,
+#       indirection: NoIndirection,
+#     }),
+#     NoOperand,
+#   ]
+# }

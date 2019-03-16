@@ -125,13 +125,13 @@ DIVULL          0100_1100_01mm_mrrr 0qqq_0000_0000_0RRR ?(R != q) sz=4; src=cs.e
 DIVUL           0100_1100_01mm_mrrr 0qqq_0000_0000_0??? sz=4; src=cs.ea(r, m, 4); dst=cs.data_reg_op(q);
                                                     
 JMP             0100_1110_11mm_mrrr sz=0; src=cs.ea(r, m, 0); dst=NoOperand;
+JSR             0100_1110_10mm_mrrr sz=0; src=cs.ea(r, m, 0); dst=NoOperand;
 
 #define MOVEFRUSP_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,1,1, 1,0,0,0)
 #define MOVETOUSP_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,1,1, 1,0,0,0)
 #define MOVETOUSP_INST  ENCW(0,1,0,0, 1,1,1,0, 0,1,1,0, 0,0,0,0)
 #define MOVEFRUSP_INST  ENCW(0,1,0,0, 1,1,1,0, 0,1,1,0, 1,0,0,0)
 
-#define JSR_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,0,0, 0,0,0,0)
 #define MOVEFRCCR_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,0,0, 0,0,0,0)
 #define MOVETOCCR_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,0,0, 0,0,0,0)
 #define MOVEFRSR_MASK ENCW(1,1,1,1, 1,1,1,1, 1,1,0,0, 0,0,0,0)
@@ -143,7 +143,6 @@ JMP             0100_1110_11mm_mrrr sz=0; src=cs.ea(r, m, 0); dst=NoOperand;
 #define TAS_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,0,0, 0,0,0,0)
 #define DIVSL_INST  ENCW(0,1,0,0, 1,1,0,0, 0,1,0,0, 0,0,0,0)
 #define DIVUL_INST  DIVSL_INST
-#define JSR_INST  ENCW(0,1,0,0, 1,1,1,0, 1,0,0,0, 0,0,0,0)
 #define MOVEFRCCR_INST  ENCW(0,1,0,0, 0,0,1,0, 1,1,0,0, 0,0,0,0)
 #define MOVETOCCR_INST  ENCW(0,1,0,0, 0,1,0,0, 1,1,0,0, 0,0,0,0)
 #define MOVEFRSR_INST ENCW(0,1,0,0, 0,0,0,0, 1,1,0,0, 0,0,0,0)

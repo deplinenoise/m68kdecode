@@ -1287,4 +1287,51 @@ mod tests {
             &[" jmp 123(pc)"],
         );
     }
+    //  jsr (a0)
+    #[test]
+    fn test_decode_0097_jsr_a0_() {
+        test_decoding_result_ok(
+            &[0x4e, 0x90],
+            Instruction {
+                size: 0,
+                operation: JSR,
+                operands: [ARIND(A0), NoOperand],
+            },
+            &[" jsr (a0)"],
+        );
+    }
+    //  jsr $12345678
+    #[test]
+    fn test_decode_0098_jsr_12345678() {
+        test_decoding_result_ok(
+            &[0x4e, 0xb9, 0x12, 0x34, 0x56, 0x78],
+            Instruction {
+                size: 0,
+                operation: JSR,
+                operands: [ABS32(0x12345678), NoOperand],
+            },
+            &[" jsr $12345678"],
+        );
+    }
+    //  jsr 123(pc)
+    #[test]
+    fn test_decode_0099_jsr_123_pc_() {
+        test_decoding_result_ok(
+            &[0x4e, 0xba, 0x00, 0x7b],
+            Instruction {
+                size: 0,
+                operation: JSR,
+                operands: [
+                    PCDISP(Displacement {
+                        base_displacement: 123,
+                        outer_displacement: 0,
+                        indexer: Indexer::NoIndexer,
+                        indirection: NoIndirection,
+                    }),
+                    NoOperand,
+                ],
+            },
+            &[" jsr 123(pc)"],
+        );
+    }
 }

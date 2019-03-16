@@ -1542,4 +1542,43 @@ mod tests {
             &[" movem.l (a4)+,d0-d4/a0-a2"],
         );
     }
+    //  clr.b d0
+    #[test]
+    fn test_decode_0116_clr_b_d0() {
+        test_decoding_result_ok(
+            &[0x42, 0x00],
+            Instruction {
+                size: 1,
+                operation: CLR,
+                operands: [Implied, DR(D0)],
+            },
+            &[" clr.b d0"],
+        );
+    }
+    //  clr.w (a0)+
+    #[test]
+    fn test_decode_0117_clr_w_a0_() {
+        test_decoding_result_ok(
+            &[0x42, 0x58],
+            Instruction {
+                size: 2,
+                operation: CLR,
+                operands: [Implied, ARINC(A0)],
+            },
+            &[" clr.w (a0)+"],
+        );
+    }
+    //  clr.l (a4)
+    #[test]
+    fn test_decode_0118_clr_l_a4_() {
+        test_decoding_result_ok(
+            &[0x42, 0x94],
+            Instruction {
+                size: 4,
+                operation: CLR,
+                operands: [Implied, ARIND(A4)],
+            },
+            &[" clr.l (a4)"],
+        );
+    }
 }

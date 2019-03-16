@@ -415,3 +415,12 @@
 
 > movem.l (a4)+,d0-d4/a0-a2
 # Instruction { size: 4, operation: MOVEM, operands: [ ARINC(A4), REGLIST(0b0000011100011111) ] }
+
+> clr.b d0
+# Instruction { size: 1, operation: CLR, operands: [ Implied, DR(D0) ] }
+
+> clr.w (a0)+
+# Instruction { size: 2, operation: CLR, operands: [ Implied, ARINC(A0) ] }
+
+> clr.l (a4)
+# Instruction { size: 4, operation: CLR, operands: [ Implied, ARIND(A4) ] }

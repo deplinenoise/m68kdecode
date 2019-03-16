@@ -153,12 +153,18 @@ TAS             0100_1010_11mm_mrrr sz=1; src=cs.ea(r, m, 1); dst=NoOperand;
 MOVEM           0100_1000_1smm_mrrr sz=2 << s; src=REGLIST(cs.pull16()); dst=cs.ea(r, m, sz);
 MOVEM           0100_1100_1smm_mrrr sz=2 << s; dst=REGLIST(cs.pull16()); src=cs.ea(r, m, sz);
 
+
+CLR             0100_0010_00mm_mrrr sz=1; src=Implied; dst=cs.ea(r, m, sz);
+CLR             0100_0010_01mm_mrrr sz=2; src=Implied; dst=cs.ea(r, m, sz);
+CLR             0100_0010_10mm_mrrr sz=4; src=Implied; dst=cs.ea(r, m, sz);
+
 #define CLR_MASK  ENCW(1,1,1,1, 1,1,1,1, 0,0,0,0, 0,0,0,0)
+#define CLR_INST  ENCW()
+
 #define NEG_MASK  ENCW(1,1,1,1, 1,1,1,1, 0,0,0,0, 0,0,0,0)
 #define NEGX_MASK ENCW(1,1,1,1, 1,1,1,1, 0,0,0,0, 0,0,0,0)
 #define NOT_MASK  ENCW(1,1,1,1, 1,1,1,1, 0,0,0,0, 0,0,0,0)
 #define TST_MASK  ENCW(1,1,1,1, 1,1,1,1, 0,0,0,0, 0,0,0,0)
-#define CLR_INST  ENCW(0,1,0,0, 0,0,1,0, 0,0,0,0, 0,0,0,0)
 #define NEG_INST  ENCW(0,1,0,0, 0,1,0,0, 0,0,0,0, 0,0,0,0)
 #define NEGX_INST ENCW(0,1,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0)
 #define NOT_INST  ENCW(0,1,0,0, 0,1,1,0, 0,0,0,0, 0,0,0,0)

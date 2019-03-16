@@ -1659,4 +1659,43 @@ mod tests {
             &[" negx.l (a4)"],
         );
     }
+    //  not.b d0
+    #[test]
+    fn test_decode_0125_not_b_d0() {
+        test_decoding_result_ok(
+            &[0x46, 0x00],
+            Instruction {
+                size: 1,
+                operation: NOT,
+                operands: [Implied, DR(D0)],
+            },
+            &[" not.b d0"],
+        );
+    }
+    //  not.w (a0)+
+    #[test]
+    fn test_decode_0126_not_w_a0_() {
+        test_decoding_result_ok(
+            &[0x46, 0x58],
+            Instruction {
+                size: 2,
+                operation: NOT,
+                operands: [Implied, ARINC(A0)],
+            },
+            &[" not.w (a0)+"],
+        );
+    }
+    //  not.l (a4)
+    #[test]
+    fn test_decode_0127_not_l_a4_() {
+        test_decoding_result_ok(
+            &[0x46, 0x94],
+            Instruction {
+                size: 4,
+                operation: NOT,
+                operands: [Implied, ARIND(A4)],
+            },
+            &[" not.l (a4)"],
+        );
+    }
 }

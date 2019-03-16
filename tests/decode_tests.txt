@@ -442,3 +442,12 @@
 
 > negx.l (a4)
 # Instruction { size: 4, operation: NEGX, operands: [ Implied, ARIND(A4) ] }
+
+> not.b d0
+# Instruction { size: 1, operation: NOT, operands: [ Implied, DR(D0) ] }
+
+> not.w (a0)+
+# Instruction { size: 2, operation: NOT, operands: [ Implied, ARINC(A0) ] }
+
+> not.l (a4)
+# Instruction { size: 4, operation: NOT, operands: [ Implied, ARIND(A4) ] }

@@ -166,11 +166,14 @@ NEGX            0100_0000_00mm_mrrr sz=1; src=Implied; dst=cs.ea(r, m, sz);
 NEGX            0100_0000_01mm_mrrr sz=2; src=Implied; dst=cs.ea(r, m, sz);
 NEGX            0100_0000_10mm_mrrr sz=4; src=Implied; dst=cs.ea(r, m, sz);
 
-#define NEGX_MASK ENCW(1,1,1,1, 1,1,1,1, 0,0,0,0, 0,0,0,0)
+NOT             0100_0110_00mm_mrrr sz=1; src=Implied; dst=cs.ea(r, m, sz);
+NOT             0100_0110_01mm_mrrr sz=2; src=Implied; dst=cs.ea(r, m, sz);
+NOT             0100_0110_10mm_mrrr sz=4; src=Implied; dst=cs.ea(r, m, sz);
+
 #define NOT_MASK  ENCW(1,1,1,1, 1,1,1,1, 0,0,0,0, 0,0,0,0)
-#define TST_MASK  ENCW(1,1,1,1, 1,1,1,1, 0,0,0,0, 0,0,0,0)
-#define NEGX_INST ENCW(0,1,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0)
 #define NOT_INST  ENCW(0,1,0,0, 0,1,1,0, 0,0,0,0, 0,0,0,0)
+
+#define TST_MASK  ENCW(1,1,1,1, 1,1,1,1, 0,0,0,0, 0,0,0,0)
 #  /* Note: very similatr to MOVEM but bit 9 differentiates. */
 #define TST_INST  ENCW(0,1,0,0, 1,0,1,0, 0,0,0,0, 0,0,0,0)
 

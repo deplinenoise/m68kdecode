@@ -400,3 +400,9 @@
 
 > move usp,a3
 # Instruction { size: 4, operation: MOVEFROMUSP, operands: [ Implied, AR(A3) ] }
+
+> move d0,ccr
+# Instruction { size: 2, operation: MOVETOCCR, operands: [ DR(D0), Implied ] }
+
+> move ccr,d0
+# Instruction { size: 2, operation: MOVEFROMCCR, operands: [ Implied, DR(D0) ] }

@@ -143,6 +143,9 @@ MOVETOSR        0100_0110_11mm_mrrr sz=2; src=cs.ea(r, m, 2); dst=Implied;
 MOVETOUSP       0100_1110_0110_0rrr sz=4; src=cs.address_reg_op(r); dst=Implied;
 MOVEFROMUSP     0100_1110_0110_1rrr sz=4; src=Implied; dst=cs.address_reg_op(r); 
 
+MOVEFROMCCR     0100_0010_11mm_mrrr sz=2; src=Implied; dst=cs.ea(r, m, 2);
+MOVETOCCR       0100_0100_11mm_mrrr sz=2; src=cs.ea(r, m, 2); dst=Implied;
+
 #define MOVEFRUSP_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,1,1, 1,0,0,0)
 #define MOVETOUSP_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,1,1, 1,0,0,0)
 #define MOVETOUSP_INST  ENCW(0,1,0,0, 1,1,1,0, 0,1,1,0, 0,0,0,0)

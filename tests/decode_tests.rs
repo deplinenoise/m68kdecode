@@ -1477,4 +1477,30 @@ mod tests {
             &[" move usp,a3"],
         );
     }
+    //  move d0,ccr
+    #[test]
+    fn test_decode_0111_move_d0_ccr() {
+        test_decoding_result_ok(
+            &[0x44, 0xc0],
+            Instruction {
+                size: 2,
+                operation: MOVETOCCR,
+                operands: [DR(D0), Implied],
+            },
+            &[" move d0,ccr"],
+        );
+    }
+    //  move ccr,d0
+    #[test]
+    fn test_decode_0112_move_ccr_d0() {
+        test_decoding_result_ok(
+            &[0x42, 0xc0],
+            Instruction {
+                size: 2,
+                operation: MOVEFROMCCR,
+                operands: [Implied, DR(D0)],
+            },
+            &[" move ccr,d0"],
+        );
+    }
 }

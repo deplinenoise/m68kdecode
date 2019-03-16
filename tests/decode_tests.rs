@@ -1019,4 +1019,17 @@ mod tests {
             &[" trapv"],
         );
     }
+    //  swap d7
+    #[test]
+    fn test_decode_0077_swap_d7() {
+        test_decoding_result_ok(
+            &[0x48, 0x47],
+            Instruction {
+                size: 0,
+                operation: SWAP,
+                operands: [DR(D7), NoOperand],
+            },
+            &[" swap d7"],
+        );
+    }
 }

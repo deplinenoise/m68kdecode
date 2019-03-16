@@ -93,19 +93,10 @@ RTS             0100_1110_0111_0101 sz=0; src=NoOperand; dst=NoOperand;
 STOP            0100_1110_0111_0010 sz=0; src=cs.imm16(); dst=NoOperand;
 TRAPV           0100_1110_0111_0110 sz=0; src=NoOperand; dst=NoOperand;
 
-#define ILLEGAL_MASK  0xffff
 #define MOVEFRC_MASK  0xffff
 #define MOVETOC_MASK  0xffff
-#define NOP_MASK  0xffff
-#define RESET_MASK  0xffff
-#define RTD_MASk  0xffff
-#define RTE_MASK  0xffff
-#define RTR_MASK  0xffff
-#define RTS_MASK  0xffff
-#define STOP_MASK 0xffff
-#define TRAPV_MASK  0xffff
-#define SWAP_MASK ENCW(1,1,1,1, 1,1,1,1, 1,1,1,1, 1,0,0,0)
-#define SWAP_INST ENCW(0,1,0,0, 1,0,0,0, 0,1,0,0, 0,0,0,0)
+
+SWAP            0100_1000_0100_0rrr sz=0; src=cs.data_reg_op(r); dst=NoOperand;
 
 #define BKPT_MASK ENCW(1,1,1,1, 1,1,1,1, 1,1,1,1, 1,0,0,0)
 #define EXTBW_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,1,1, 1,0,0,0)

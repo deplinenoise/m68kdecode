@@ -278,3 +278,6 @@
 
 > trapv
 # Instruction { size: 0, operation: TRAPV, operands: [ NoOperand, NoOperand ] }
+
+> swap d7
+# Instruction { size: 0, operation: SWAP, operands: [ DR(D7), NoOperand ] }

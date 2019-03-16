@@ -37,6 +37,7 @@ pub enum Operation {
     RTS,
     STOP,
     TRAPV,
+    SWAP,
 }
 #[allow(non_snake_case)]
 pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {
@@ -827,6 +828,17 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
         return cs.check_overflow(Instruction {
             size: sz,
             operation: TRAPV,
+            operands: [src, dst],
+        });
+    }
+    if (w0 & 0b1111111111111000) == 0b0100100001000000 {
+        let r = get_bits(w0, 0, 3);
+        sz = 0;
+        src = cs.data_reg_op(r);
+        dst = NoOperand;
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: SWAP,
             operands: [src, dst],
         });
     }

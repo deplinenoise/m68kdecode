@@ -1045,4 +1045,43 @@ mod tests {
             &[" bkpt #3"],
         );
     }
+    //  ext.w d6
+    #[test]
+    fn test_decode_0079_ext_w_d6() {
+        test_decoding_result_ok(
+            &[0x48, 0x86],
+            Instruction {
+                size: 2,
+                operation: EXTW,
+                operands: [DR(D6), NoOperand],
+            },
+            &[" ext.w d6"],
+        );
+    }
+    //  ext.l d6
+    #[test]
+    fn test_decode_0080_ext_l_d6() {
+        test_decoding_result_ok(
+            &[0x48, 0xc6],
+            Instruction {
+                size: 4,
+                operation: EXTL,
+                operands: [DR(D6), NoOperand],
+            },
+            &[" ext.l d6"],
+        );
+    }
+    //  extb.l d6
+    #[test]
+    fn test_decode_0081_extb_l_d6() {
+        test_decoding_result_ok(
+            &[0x49, 0xc6],
+            Instruction {
+                size: 4,
+                operation: EXTBL,
+                operands: [DR(D6), NoOperand],
+            },
+            &[" extb.l d6"],
+        );
+    }
 }

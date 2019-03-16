@@ -79,8 +79,6 @@ MOVES           0000_1110_10mm_mrrr addd_1000_0000_0000 sz=4; src=cs.dar(a, d); 
 # * Group misc. (0100)
 # */     
 
-LEA             0100_nnn1_11mm_mrrr sz=4; src=cs.ea(r, m, 4); dst=cs.address_reg_op(n);
-
 BGND            0100_1010_1111_1010 sz=0; src=NoOperand; dst=NoOperand;
 ILLEGAL         0100_1010_1111_1100 sz=0; src=NoOperand; dst=NoOperand;
 
@@ -97,19 +95,25 @@ TRAPV           0100_1110_0111_0110 sz=0; src=NoOperand; dst=NoOperand;
 #define MOVETOC_MASK  0xffff
 
 SWAP            0100_1000_0100_0rrr sz=0; src=cs.data_reg_op(r); dst=NoOperand;
-
 BKPT            0100_1000_0100_1nnn sz=0; src=IMM8(n as u8); dst=NoOperand;
 
+EXTW            0100_1000_1000_0rrr sz=2; src=cs.data_reg_op(r); dst=NoOperand;
+EXTL            0100_1000_1100_0rrr sz=4; src=cs.data_reg_op(r); dst=NoOperand;
+EXTBL           0100_1001_1100_0rrr sz=4; src=cs.data_reg_op(r); dst=NoOperand;
+
+LEA             0100_nnn1_11mm_mrrr sz=4; src=cs.ea(r, m, 4); dst=cs.address_reg_op(n);
+
 #define EXTBW_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,1,1, 1,0,0,0)
+#define EXTBW_INST  
+
 #define EXTWL_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,1,1, 1,0,0,0)
 #define EXTBL_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,1,1, 1,0,0,0)
+
 #define LINKW_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,1,1, 1,0,0,0)
 #define LINKL_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,1,1, 1,0,0,0)
 #define MOVEFRUSP_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,1,1, 1,0,0,0)
 #define MOVETOUSP_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,1,1, 1,0,0,0)
 #define UNLK_MASK ENCW(1,1,1,1, 1,1,1,1, 1,1,1,1, 1,0,0,0)
-#undef BKPT_INST
-#define EXTBW_INST  ENCW(0,1,0,0, 1,0,0,0, 1,0,0,0, 0,0,0,0)
 #define EXTWL_INST  ENCW(0,1,0,0, 1,0,0,0, 1,1,0,0, 0,0,0,0)
 #define EXTBL_INST  ENCW(0,1,0,0, 1,0,0,1, 1,1,0,0, 0,0,0,0)
 #define LINKW_INST  ENCW(0,1,0,0, 1,1,1,0, 0,1,0,1, 0,0,0,0)

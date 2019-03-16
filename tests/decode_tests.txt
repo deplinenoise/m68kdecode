@@ -284,3 +284,12 @@
 
 > bkpt #3
 # Instruction { size: 0, operation: BKPT, operands: [ IMM8(3), NoOperand ] }
+
+> ext.w d6
+# Instruction { size: 2, operation: EXTW, operands: [ DR(D6), NoOperand ] }
+
+> ext.l d6
+# Instruction { size: 4, operation: EXTL, operands: [ DR(D6), NoOperand ] }
+
+> extb.l d6
+# Instruction { size: 4, operation: EXTBL, operands: [ DR(D6), NoOperand ] }

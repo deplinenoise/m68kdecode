@@ -433,3 +433,12 @@
 
 > neg.l (a4)
 # Instruction { size: 4, operation: NEG, operands: [ Implied, ARIND(A4) ] }
+
+> negx.b d0
+# Instruction { size: 1, operation: NEGX, operands: [ Implied, DR(D0) ] }
+
+> negx.w (a0)+
+# Instruction { size: 2, operation: NEGX, operands: [ Implied, ARINC(A0) ] }
+
+> negx.l (a4)
+# Instruction { size: 4, operation: NEGX, operands: [ Implied, ARIND(A4) ] }

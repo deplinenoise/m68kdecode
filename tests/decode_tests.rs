@@ -1620,4 +1620,43 @@ mod tests {
             &[" neg.l (a4)"],
         );
     }
+    //  negx.b d0
+    #[test]
+    fn test_decode_0122_negx_b_d0() {
+        test_decoding_result_ok(
+            &[0x40, 0x00],
+            Instruction {
+                size: 1,
+                operation: NEGX,
+                operands: [Implied, DR(D0)],
+            },
+            &[" negx.b d0"],
+        );
+    }
+    //  negx.w (a0)+
+    #[test]
+    fn test_decode_0123_negx_w_a0_() {
+        test_decoding_result_ok(
+            &[0x40, 0x58],
+            Instruction {
+                size: 2,
+                operation: NEGX,
+                operands: [Implied, ARINC(A0)],
+            },
+            &[" negx.w (a0)+"],
+        );
+    }
+    //  negx.l (a4)
+    #[test]
+    fn test_decode_0124_negx_l_a4_() {
+        test_decoding_result_ok(
+            &[0x40, 0x94],
+            Instruction {
+                size: 4,
+                operation: NEGX,
+                operands: [Implied, ARIND(A4)],
+            },
+            &[" negx.l (a4)"],
+        );
+    }
 }

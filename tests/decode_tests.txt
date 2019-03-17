@@ -78,7 +78,7 @@
 > move.w -8(pc),d3
 # Instruction {
 #   size: 2, operation: MOVE, operands: [ 
-#     PCDISP(Displacement {
+#     PCDISP(2, Displacement {
 #       base_displacement: -8,
 #       outer_displacement: 0,
 #       indexer: Indexer::NoIndexer,
@@ -92,7 +92,7 @@
 > move.w -8(pc,d2*8),d3
 # Instruction {
 #   size: 2, operation: MOVE, operands: [ 
-#     PCDISP(Displacement {
+#     PCDISP(2, Displacement {
 #       base_displacement: -8,
 #       outer_displacement: 0,
 #       indexer: Indexer::DR(D2, 3),
@@ -344,7 +344,7 @@
 > jmp 123(pc)
 # Instruction {
 #   size: 0, operation: JMP, operands: [ 
-#     PCDISP(Displacement {
+#     PCDISP(2, Displacement {
 #       base_displacement: 123,
 #       outer_displacement: 0,
 #       indexer: Indexer::NoIndexer,
@@ -364,7 +364,7 @@
 > jsr 123(pc)
 # Instruction {
 #   size: 0, operation: JSR, operands: [ 
-#     PCDISP(Displacement {
+#     PCDISP(2, Displacement {
 #       base_displacement: 123,
 #       outer_displacement: 0,
 #       indexer: Indexer::NoIndexer,

@@ -80,7 +80,7 @@ pub enum Operand {
     ARINC(AddressRegister),
     ARDEC(AddressRegister),
     ARDISP(AddressRegister, Displacement),
-    PCDISP(Displacement),
+    PCDISP(u8, Displacement),
     DISP(Displacement),
     DPAIR(DataRegister, DataRegister),
     REGLIST(u16),

@@ -91,9 +91,6 @@ RTS             0100_1110_0111_0101 sz=0; src=NoOperand; dst=NoOperand;
 STOP            0100_1110_0111_0010 sz=0; src=cs.imm16(); dst=NoOperand;
 TRAPV           0100_1110_0111_0110 sz=0; src=NoOperand; dst=NoOperand;
 
-#define MOVEFRC_MASK  0xffff
-#define MOVETOC_MASK  0xffff
-
 SWAP            0100_1000_0100_0rrr sz=0; src=cs.data_reg_op(r); dst=NoOperand;
 BKPT            0100_1000_0100_1nnn sz=0; src=IMM8(n as u8); dst=NoOperand;
 

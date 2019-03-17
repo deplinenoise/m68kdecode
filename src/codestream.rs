@@ -116,7 +116,10 @@ impl<'a> CodeStream<'a> {
             0b111 => match src_reg {
                 0b000 => ABS16(self.pull16() as i16),
                 0b001 => ABS32(self.pull32()),
-                0b010 => PCDISP(simple_disp(self.pull16() as i16 as i32)),
+                0b010 => {
+                    let pc_offset = self.pos as u8;
+                    PCDISP(pc_offset, simple_disp(self.pull16() as i16 as i32))
+                },
                 0b011 => self.decode_extended_ea(None),
                 0b100 => match size {
                     1 => IMM8(self.pull16() as u8),
@@ -131,6 +134,8 @@ impl<'a> CodeStream<'a> {
     }
 
     fn decode_extended_ea(&mut self, src_reg: Option<AddressRegister>) -> Operand {
+        let pc_off = self.pos as u8;
+        println!("decode_extended_ea: pc_off={}", pc_off);
         let ext = self.pull16();
         let scale = get_bits(ext, 9, 2) as u8;
         let idx = get_bits(ext, 12, 3);
@@ -201,7 +206,7 @@ impl<'a> CodeStream<'a> {
                 })
             } else {
                 match src_reg {
-                    None => PCDISP(Displacement {
+                    None => PCDISP(pc_off, Displacement {
                         base_displacement: disp as i32,
                         outer_displacement: odisp as i32,
                         indexer: indexer,
@@ -232,7 +237,7 @@ impl<'a> CodeStream<'a> {
             };
 
             match src_reg {
-                None => PCDISP(displacement),
+                None => PCDISP(pc_off, displacement),
                 Some(r) => ARDISP(r, displacement),
             }
         }

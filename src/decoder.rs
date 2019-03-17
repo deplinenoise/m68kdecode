@@ -72,6 +72,13 @@ pub enum Operation {
     TST,
     CHK,
     BFCHG,
+    BFCLR,
+    BFEXTS,
+    BFEXTU,
+    BFFFO,
+    BFINS,
+    BFSET,
+    BFTST,
 }
 #[allow(non_snake_case)]
 pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {
@@ -1732,6 +1739,164 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             return cs.check_overflow(Instruction {
                 size: sz,
                 operation: BFCHG,
+                operands: [src, dst],
+                extra: extra,
+            });
+        }
+    }
+    if (w0 & 0b1111111111000000) == 0b1110110011000000 && cs.has_words(1) {
+        let w1 = cs.peek_word(0);
+        if (w1 & 0b1111000000000000) == 0b0000000000000000 {
+            let m = get_bits(w0, 3, 3);
+            let r = get_bits(w0, 0, 3);
+            let O = get_bits(w1, 11, 1);
+            let o = get_bits(w1, 6, 5);
+            let W = get_bits(w1, 5, 1);
+            let w = get_bits(w1, 0, 5);
+            cs.skip_words(1);
+            extra = cs.bitfield(O, o, W, w);
+            sz = 0;
+            src = NoOperand;
+            dst = cs.ea(r, m, 0);
+            return cs.check_overflow(Instruction {
+                size: sz,
+                operation: BFCLR,
+                operands: [src, dst],
+                extra: extra,
+            });
+        }
+    }
+    if (w0 & 0b1111111111000000) == 0b1110101111000000 && cs.has_words(1) {
+        let w1 = cs.peek_word(0);
+        if (w1 & 0b1000000000000000) == 0b0000000000000000 {
+            let m = get_bits(w0, 3, 3);
+            let r = get_bits(w0, 0, 3);
+            let d = get_bits(w1, 12, 3);
+            let O = get_bits(w1, 11, 1);
+            let o = get_bits(w1, 6, 5);
+            let W = get_bits(w1, 5, 1);
+            let w = get_bits(w1, 0, 5);
+            cs.skip_words(1);
+            extra = cs.bitfield(O, o, W, w);
+            sz = 0;
+            src = cs.ea(r, m, 0);
+            dst = cs.data_reg_op(d);
+            return cs.check_overflow(Instruction {
+                size: sz,
+                operation: BFEXTS,
+                operands: [src, dst],
+                extra: extra,
+            });
+        }
+    }
+    if (w0 & 0b1111111111000000) == 0b1110100111000000 && cs.has_words(1) {
+        let w1 = cs.peek_word(0);
+        if (w1 & 0b1000000000000000) == 0b0000000000000000 {
+            let m = get_bits(w0, 3, 3);
+            let r = get_bits(w0, 0, 3);
+            let d = get_bits(w1, 12, 3);
+            let O = get_bits(w1, 11, 1);
+            let o = get_bits(w1, 6, 5);
+            let W = get_bits(w1, 5, 1);
+            let w = get_bits(w1, 0, 5);
+            cs.skip_words(1);
+            extra = cs.bitfield(O, o, W, w);
+            sz = 0;
+            src = cs.ea(r, m, 0);
+            dst = cs.data_reg_op(d);
+            return cs.check_overflow(Instruction {
+                size: sz,
+                operation: BFEXTU,
+                operands: [src, dst],
+                extra: extra,
+            });
+        }
+    }
+    if (w0 & 0b1111111111000000) == 0b1110110111000000 && cs.has_words(1) {
+        let w1 = cs.peek_word(0);
+        if (w1 & 0b1000000000000000) == 0b0000000000000000 {
+            let m = get_bits(w0, 3, 3);
+            let r = get_bits(w0, 0, 3);
+            let d = get_bits(w1, 12, 3);
+            let O = get_bits(w1, 11, 1);
+            let o = get_bits(w1, 6, 5);
+            let W = get_bits(w1, 5, 1);
+            let w = get_bits(w1, 0, 5);
+            cs.skip_words(1);
+            extra = cs.bitfield(O, o, W, w);
+            sz = 0;
+            src = cs.ea(r, m, 0);
+            dst = cs.data_reg_op(d);
+            return cs.check_overflow(Instruction {
+                size: sz,
+                operation: BFFFO,
+                operands: [src, dst],
+                extra: extra,
+            });
+        }
+    }
+    if (w0 & 0b1111111111000000) == 0b1110111111000000 && cs.has_words(1) {
+        let w1 = cs.peek_word(0);
+        if (w1 & 0b1000000000000000) == 0b0000000000000000 {
+            let m = get_bits(w0, 3, 3);
+            let r = get_bits(w0, 0, 3);
+            let d = get_bits(w1, 12, 3);
+            let O = get_bits(w1, 11, 1);
+            let o = get_bits(w1, 6, 5);
+            let W = get_bits(w1, 5, 1);
+            let w = get_bits(w1, 0, 5);
+            cs.skip_words(1);
+            extra = cs.bitfield(O, o, W, w);
+            sz = 0;
+            src = cs.data_reg_op(d);
+            dst = cs.ea(r, m, 0);
+            return cs.check_overflow(Instruction {
+                size: sz,
+                operation: BFINS,
+                operands: [src, dst],
+                extra: extra,
+            });
+        }
+    }
+    if (w0 & 0b1111111111000000) == 0b1110111011000000 && cs.has_words(1) {
+        let w1 = cs.peek_word(0);
+        if (w1 & 0b1111000000000000) == 0b0000000000000000 {
+            let m = get_bits(w0, 3, 3);
+            let r = get_bits(w0, 0, 3);
+            let O = get_bits(w1, 11, 1);
+            let o = get_bits(w1, 6, 5);
+            let W = get_bits(w1, 5, 1);
+            let w = get_bits(w1, 0, 5);
+            cs.skip_words(1);
+            extra = cs.bitfield(O, o, W, w);
+            sz = 0;
+            src = NoOperand;
+            dst = cs.ea(r, m, 0);
+            return cs.check_overflow(Instruction {
+                size: sz,
+                operation: BFSET,
+                operands: [src, dst],
+                extra: extra,
+            });
+        }
+    }
+    if (w0 & 0b1111111111000000) == 0b1110100011000000 && cs.has_words(1) {
+        let w1 = cs.peek_word(0);
+        if (w1 & 0b1111000000000000) == 0b0000000000000000 {
+            let m = get_bits(w0, 3, 3);
+            let r = get_bits(w0, 0, 3);
+            let O = get_bits(w1, 11, 1);
+            let o = get_bits(w1, 6, 5);
+            let W = get_bits(w1, 5, 1);
+            let w = get_bits(w1, 0, 5);
+            cs.skip_words(1);
+            extra = cs.bitfield(O, o, W, w);
+            sz = 0;
+            src = NoOperand;
+            dst = cs.ea(r, m, 0);
+            return cs.check_overflow(Instruction {
+                size: sz,
+                operation: BFTST,
                 operands: [src, dst],
                 extra: extra,
             });

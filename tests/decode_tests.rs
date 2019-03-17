@@ -1907,4 +1907,130 @@ mod tests {
             &[" bfchg (a4){12:7}"],
         );
     }
+    //  bfchg (a4){d2:7}
+    #[test]
+    fn test_decode_0134_bfchg_a4_d2_7_() {
+        test_decoding_result_ok(
+            &[0xea, 0xd4, 0x08, 0x87],
+            Instruction {
+                size: 0,
+                operation: BFCHG,
+                operands: [NoOperand, ARIND(A4)],
+                extra: Bitfield(DYNAMIC(D2), STATIC(7)),
+            },
+            &[" bfchg (a4){d2:7}"],
+        );
+    }
+    //  bfchg (a4){d2:d3}
+    #[test]
+    fn test_decode_0135_bfchg_a4_d2_d3_() {
+        test_decoding_result_ok(
+            &[0xea, 0xd4, 0x08, 0xa3],
+            Instruction {
+                size: 0,
+                operation: BFCHG,
+                operands: [NoOperand, ARIND(A4)],
+                extra: Bitfield(DYNAMIC(D2), DYNAMIC(D3)),
+            },
+            &[" bfchg (a4){d2:d3}"],
+        );
+    }
+    //  bfclr (a4){12:7}
+    #[test]
+    fn test_decode_0136_bfclr_a4_12_7_() {
+        test_decoding_result_ok(
+            &[0xec, 0xd4, 0x03, 0x07],
+            Instruction {
+                size: 0,
+                operation: BFCLR,
+                operands: [NoOperand, ARIND(A4)],
+                extra: Bitfield(STATIC(12), STATIC(7)),
+            },
+            &[" bfclr (a4){12:7}"],
+        );
+    }
+    //  bfexts (a4){12:7},d1
+    #[test]
+    fn test_decode_0137_bfexts_a4_12_7_d1() {
+        test_decoding_result_ok(
+            &[0xeb, 0xd4, 0x13, 0x07],
+            Instruction {
+                size: 0,
+                operation: BFEXTS,
+                operands: [ARIND(A4), DR(D1)],
+                extra: Bitfield(STATIC(12), STATIC(7)),
+            },
+            &[" bfexts (a4){12:7},d1"],
+        );
+    }
+    //  bfextu (a4){12:7},d1
+    #[test]
+    fn test_decode_0138_bfextu_a4_12_7_d1() {
+        test_decoding_result_ok(
+            &[0xe9, 0xd4, 0x13, 0x07],
+            Instruction {
+                size: 0,
+                operation: BFEXTU,
+                operands: [ARIND(A4), DR(D1)],
+                extra: Bitfield(STATIC(12), STATIC(7)),
+            },
+            &[" bfextu (a4){12:7},d1"],
+        );
+    }
+    //  bfffo (a4){12:7},d1
+    #[test]
+    fn test_decode_0139_bfffo_a4_12_7_d1() {
+        test_decoding_result_ok(
+            &[0xed, 0xd4, 0x13, 0x07],
+            Instruction {
+                size: 0,
+                operation: BFFFO,
+                operands: [ARIND(A4), DR(D1)],
+                extra: Bitfield(STATIC(12), STATIC(7)),
+            },
+            &[" bfffo (a4){12:7},d1"],
+        );
+    }
+    //  bfins d1,(a4){12:7}
+    #[test]
+    fn test_decode_0140_bfins_d1_a4_12_7_() {
+        test_decoding_result_ok(
+            &[0xef, 0xd4, 0x13, 0x07],
+            Instruction {
+                size: 0,
+                operation: BFINS,
+                operands: [DR(D1), ARIND(A4)],
+                extra: Bitfield(STATIC(12), STATIC(7)),
+            },
+            &[" bfins d1,(a4){12:7}"],
+        );
+    }
+    //  bfset (a4){12:7}
+    #[test]
+    fn test_decode_0141_bfset_a4_12_7_() {
+        test_decoding_result_ok(
+            &[0xee, 0xd4, 0x03, 0x07],
+            Instruction {
+                size: 0,
+                operation: BFSET,
+                operands: [NoOperand, ARIND(A4)],
+                extra: Bitfield(STATIC(12), STATIC(7)),
+            },
+            &[" bfset (a4){12:7}"],
+        );
+    }
+    //  bftst (a4){12:7}
+    #[test]
+    fn test_decode_0142_bftst_a4_12_7_() {
+        test_decoding_result_ok(
+            &[0xe8, 0xd4, 0x03, 0x07],
+            Instruction {
+                size: 0,
+                operation: BFTST,
+                operands: [NoOperand, ARIND(A4)],
+                extra: Bitfield(STATIC(12), STATIC(7)),
+            },
+            &[" bftst (a4){12:7}"],
+        );
+    }
 }

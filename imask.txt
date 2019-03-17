@@ -183,22 +183,13 @@ CHK             0100_ddd1_00mm_mrrr sz=4; src=cs.ea(r, m, sz); dst=cs.data_reg_o
 
 
 BFCHG           1110_1010_11mm_mrrr 0000_Oooo_ooWw_wwww extra = cs.bitfield(O, o, W, w); sz=0; src=NoOperand; dst=cs.ea(r, m, 0);
-
-#define BFCLR_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,0,0, 0,0,0,0)
-#define BFEXTS_MASK ENCW(1,1,1,1, 1,1,1,1, 1,1,0,0, 0,0,0,0)
-#define BFEXTU_MASK ENCW(1,1,1,1, 1,1,1,1, 1,1,0,0, 0,0,0,0)
-#define BFFFO_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,0,0, 0,0,0,0)
-#define BFINS_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,0,0, 0,0,0,0)
-#define BFSET_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,0,0, 0,0,0,0)
-#define BFTST_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,0,0, 0,0,0,0)
-
-#define BFCLR_INST  ENCW(1,1,1,0, 1,1,0,0, 1,1,0,0, 0,0,0,0)
-#define BFEXTS_INST ENCW(1,1,1,0, 1,0,1,1, 1,1,0,0, 0,0,0,0)
-#define BFEXTU_INST ENCW(1,1,1,0, 1,0,0,1, 1,1,0,0, 0,0,0,0)
-#define BFFFO_INST  ENCW(1,1,1,0, 1,1,0,1, 1,1,0,0, 0,0,0,0)
-#define BFINS_INST  ENCW(1,1,1,0, 1,1,1,1, 1,1,0,0, 0,0,0,0)
-#define BFSET_INST  ENCW(1,1,1,0, 1,1,1,0, 1,1,0,0, 0,0,0,0)
-#define BFTST_INST  ENCW(1,1,1,0, 1,0,0,0, 1,1,0,0, 0,0,0,0)
+BFCLR           1110_1100_11mm_mrrr 0000_Oooo_ooWw_wwww extra = cs.bitfield(O, o, W, w); sz=0; src=NoOperand; dst=cs.ea(r, m, 0);
+BFEXTS          1110_1011_11mm_mrrr 0ddd_Oooo_ooWw_wwww extra = cs.bitfield(O, o, W, w); sz=0; src=cs.ea(r, m, 0); dst=cs.data_reg_op(d);
+BFEXTU          1110_1001_11mm_mrrr 0ddd_Oooo_ooWw_wwww extra = cs.bitfield(O, o, W, w); sz=0; src=cs.ea(r, m, 0); dst=cs.data_reg_op(d);
+BFFFO           1110_1101_11mm_mrrr 0ddd_Oooo_ooWw_wwww extra = cs.bitfield(O, o, W, w); sz=0; src=cs.ea(r, m, 0); dst=cs.data_reg_op(d);
+BFINS           1110_1111_11mm_mrrr 0ddd_Oooo_ooWw_wwww extra = cs.bitfield(O, o, W, w); sz=0; src=cs.data_reg_op(d); dst=cs.ea(r, m, 0);
+BFSET           1110_1110_11mm_mrrr 0000_Oooo_ooWw_wwww extra = cs.bitfield(O, o, W, w); sz=0; src=NoOperand; dst=cs.ea(r, m, 0);
+BFTST           1110_1000_11mm_mrrr 0000_Oooo_ooWw_wwww extra = cs.bitfield(O, o, W, w); sz=0; src=NoOperand; dst=cs.ea(r, m, 0);
 
 ##define AS_TYPE   0x0
 ##define LS_TYPE   0x1

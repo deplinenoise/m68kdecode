@@ -476,3 +476,30 @@
 
 > bfchg (a4){12:7}
 # Instruction { size: 0, operation: BFCHG, operands: [ NoOperand, ARIND(A4) ], extra: Bitfield(STATIC(12), STATIC(7)) }
+
+> bfchg (a4){d2:7}
+# Instruction { size: 0, operation: BFCHG, operands: [ NoOperand, ARIND(A4) ], extra: Bitfield(DYNAMIC(D2), STATIC(7)) }
+
+> bfchg (a4){d2:d3}
+# Instruction { size: 0, operation: BFCHG, operands: [ NoOperand, ARIND(A4) ], extra: Bitfield(DYNAMIC(D2), DYNAMIC(D3)) }
+
+> bfclr (a4){12:7}
+# Instruction { size: 0, operation: BFCLR, operands: [ NoOperand, ARIND(A4) ], extra: Bitfield(STATIC(12), STATIC(7)) }
+
+> bfexts (a4){12:7},d1
+# Instruction { size: 0, operation: BFEXTS, operands: [ ARIND(A4), DR(D1) ], extra: Bitfield(STATIC(12), STATIC(7)) }
+
+> bfextu (a4){12:7},d1
+# Instruction { size: 0, operation: BFEXTU, operands: [ ARIND(A4), DR(D1) ], extra: Bitfield(STATIC(12), STATIC(7)) }
+
+> bfffo (a4){12:7},d1
+# Instruction { size: 0, operation: BFFFO, operands: [ ARIND(A4), DR(D1) ], extra: Bitfield(STATIC(12), STATIC(7)) }
+
+> bfins d1,(a4){12:7}
+# Instruction { size: 0, operation: BFINS, operands: [ DR(D1), ARIND(A4) ], extra: Bitfield(STATIC(12), STATIC(7)) }
+
+> bfset (a4){12:7}
+# Instruction { size: 0, operation: BFSET, operands: [ NoOperand, ARIND(A4) ], extra: Bitfield(STATIC(12), STATIC(7)) }
+
+> bftst (a4){12:7}
+# Instruction { size: 0, operation: BFTST, operands: [ NoOperand, ARIND(A4) ], extra: Bitfield(STATIC(12), STATIC(7)) }

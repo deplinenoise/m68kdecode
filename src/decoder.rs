@@ -71,6 +71,7 @@ pub enum Operation {
     NOT,
     TST,
     CHK,
+    BFCHG,
 }
 #[allow(non_snake_case)]
 pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {
@@ -79,6 +80,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
     let sz;
     let src;
     let dst;
+    let mut extra = NoExtra;
     if (w0 & 0b1111111111111111) == 0b0000001000111100 {
         sz = 1;
         src = cs.imm8();
@@ -87,6 +89,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: ANDITOCCR,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111111111) == 0b0000001001111100 {
@@ -97,6 +100,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: ANDITOSR,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111111111) == 0b0000101000111100 {
@@ -107,6 +111,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: EORITOCCR,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111111111) == 0b0000101001111100 {
@@ -117,6 +122,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: EORITOSR,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111111111) == 0b0000000000111100 {
@@ -127,6 +133,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: ORITOCCR,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111111111) == 0b0000000001111100 {
@@ -137,6 +144,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: ORITOSR,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111110000) == 0b0000011011000000 {
@@ -149,6 +157,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: RTM,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111000111000000) == 0b0011000001000000 {
@@ -162,6 +171,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: MOVEA,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111000111000000) == 0b0010000001000000 {
@@ -175,6 +185,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: MOVEA,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111000000000000) == 0b0001000000000000 {
@@ -189,6 +200,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: MOVE,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111000000000000) == 0b0011000000000000 {
@@ -203,6 +215,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: MOVE,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111000000000000) == 0b0010000000000000 {
@@ -217,6 +230,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: MOVE,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111000110111000) == 0b0000000100001000 {
@@ -230,6 +244,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: MOVEP,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111000110111000) == 0b0000000100101000 {
@@ -243,6 +258,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: MOVEP,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111000111000000) == 0b0000000100000000 {
@@ -256,6 +272,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: BTST,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111000111000000) == 0b0000000101000000 {
@@ -269,6 +286,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: BCHG,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111000111000000) == 0b0000000110000000 {
@@ -282,6 +300,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: BCLR,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111000111000000) == 0b0000000111000000 {
@@ -295,6 +314,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: BSET,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0000100000000000 && cs.has_words(1) {
@@ -311,6 +331,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
                 size: sz,
                 operation: BTST,
                 operands: [src, dst],
+                extra: extra,
             });
         }
     }
@@ -328,6 +349,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
                 size: sz,
                 operation: BCHG,
                 operands: [src, dst],
+                extra: extra,
             });
         }
     }
@@ -345,6 +367,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
                 size: sz,
                 operation: BCLR,
                 operands: [src, dst],
+                extra: extra,
             });
         }
     }
@@ -362,6 +385,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
                 size: sz,
                 operation: BSET,
                 operands: [src, dst],
+                extra: extra,
             });
         }
     }
@@ -375,6 +399,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: RTM,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0000011011000000 {
@@ -387,6 +412,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: CALLM,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0000011000000000 {
@@ -399,6 +425,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: ADDI,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0000011001000000 {
@@ -411,6 +438,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: ADDI,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0000011010000000 {
@@ -423,6 +451,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: ADDI,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0000010000000000 {
@@ -435,6 +464,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: SUBI,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0000010001000000 {
@@ -447,6 +477,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: SUBI,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0000010010000000 {
@@ -459,6 +490,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: SUBI,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0000001000000000 {
@@ -471,6 +503,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: ANDI,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0000001001000000 {
@@ -483,6 +516,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: ANDI,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0000001010000000 {
@@ -495,6 +529,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: ANDI,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0000000000000000 {
@@ -507,6 +542,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: ORI,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0000000001000000 {
@@ -519,6 +555,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: ORI,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0000000010000000 {
@@ -531,6 +568,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: ORI,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111100111000000) == 0b0000000011000000 && cs.has_words(1) {
@@ -549,6 +587,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
                 size: sz,
                 operation: CMP2,
                 operands: [src, dst],
+                extra: extra,
             });
         }
     }
@@ -568,6 +607,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
                 size: sz,
                 operation: CHK2,
                 operands: [src, dst],
+                extra: extra,
             });
         }
     }
@@ -581,6 +621,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: EORI,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0000101001000000 {
@@ -593,6 +634,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: EORI,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0000101010000000 {
@@ -605,6 +647,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: EORI,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0000110000000000 {
@@ -617,6 +660,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: CMPI,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0000110001000000 {
@@ -629,6 +673,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: CMPI,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0000110010000000 {
@@ -641,6 +686,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: CMPI,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0000111000000000 && cs.has_words(1) {
@@ -658,6 +704,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
                 size: sz,
                 operation: MOVES,
                 operands: [src, dst],
+                extra: extra,
             });
         }
     }
@@ -676,6 +723,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
                 size: sz,
                 operation: MOVES,
                 operands: [src, dst],
+                extra: extra,
             });
         }
     }
@@ -694,6 +742,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
                 size: sz,
                 operation: MOVES,
                 operands: [src, dst],
+                extra: extra,
             });
         }
     }
@@ -712,6 +761,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
                 size: sz,
                 operation: MOVES,
                 operands: [src, dst],
+                extra: extra,
             });
         }
     }
@@ -730,6 +780,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
                 size: sz,
                 operation: MOVES,
                 operands: [src, dst],
+                extra: extra,
             });
         }
     }
@@ -748,6 +799,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
                 size: sz,
                 operation: MOVES,
                 operands: [src, dst],
+                extra: extra,
             });
         }
     }
@@ -759,6 +811,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: BGND,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111111111) == 0b0100101011111100 {
@@ -769,6 +822,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: ILLEGAL,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111111111) == 0b0100111001110001 {
@@ -779,6 +833,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: NOP,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111111111) == 0b0100111001110000 {
@@ -789,6 +844,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: RESET,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111111111) == 0b0100111001110100 {
@@ -799,6 +855,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: RTD,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111111111) == 0b0100111001110011 {
@@ -809,6 +866,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: RTE,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111111111) == 0b0100111001110111 {
@@ -819,6 +877,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: RTR,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111111111) == 0b0100111001110101 {
@@ -829,6 +888,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: RTS,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111111111) == 0b0100111001110010 {
@@ -839,6 +899,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: STOP,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111111111) == 0b0100111001110110 {
@@ -849,6 +910,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: TRAPV,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111111000) == 0b0100100001000000 {
@@ -860,6 +922,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: SWAP,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111111000) == 0b0100100001001000 {
@@ -871,6 +934,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: BKPT,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111111000) == 0b0100100010000000 {
@@ -882,6 +946,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: EXTW,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111111000) == 0b0100100011000000 {
@@ -893,6 +958,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: EXTL,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111111000) == 0b0100100111000000 {
@@ -904,6 +970,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: EXTBL,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111000111000000) == 0b0100000111000000 {
@@ -917,6 +984,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: LEA,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111111000) == 0b0100111001010000 {
@@ -928,6 +996,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: LINK,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111111000) == 0b0100100000001000 {
@@ -939,6 +1008,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: LINK,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111111000) == 0b0100111001011000 {
@@ -950,6 +1020,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: UNLK,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111110000) == 0b0100111001000000 {
@@ -961,6 +1032,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: TRAP,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111000111000000) == 0b1000000111000000 {
@@ -974,6 +1046,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: DIVS,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0100110001000000 && cs.has_words(1) {
@@ -992,6 +1065,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
                     size: sz,
                     operation: DIVSL,
                     operands: [src, dst],
+                    extra: extra,
                 });
             }
         }
@@ -1011,6 +1085,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
                 size: sz,
                 operation: DIVSL,
                 operands: [src, dst],
+                extra: extra,
             });
         }
     }
@@ -1030,6 +1105,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
                     size: sz,
                     operation: DIVSLL,
                     operands: [src, dst],
+                    extra: extra,
                 });
             }
         }
@@ -1048,6 +1124,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
                 size: sz,
                 operation: DIVSL,
                 operands: [src, dst],
+                extra: extra,
             });
         }
     }
@@ -1062,6 +1139,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: DIVU,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0100110001000000 && cs.has_words(1) {
@@ -1080,6 +1158,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
                     size: sz,
                     operation: DIVUL,
                     operands: [src, dst],
+                    extra: extra,
                 });
             }
         }
@@ -1099,6 +1178,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
                 size: sz,
                 operation: DIVUL,
                 operands: [src, dst],
+                extra: extra,
             });
         }
     }
@@ -1118,6 +1198,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
                     size: sz,
                     operation: DIVULL,
                     operands: [src, dst],
+                    extra: extra,
                 });
             }
         }
@@ -1136,6 +1217,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
                 size: sz,
                 operation: DIVUL,
                 operands: [src, dst],
+                extra: extra,
             });
         }
     }
@@ -1149,6 +1231,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: JMP,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0100111010000000 {
@@ -1161,6 +1244,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: JSR,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111000111000000) == 0b1100000111000000 {
@@ -1174,6 +1258,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: MULS,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0100110000000000 && cs.has_words(1) {
@@ -1190,6 +1275,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
                 size: sz,
                 operation: MULS,
                 operands: [src, dst],
+                extra: extra,
             });
         }
     }
@@ -1208,6 +1294,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
                 size: sz,
                 operation: MULS,
                 operands: [src, dst],
+                extra: extra,
             });
         }
     }
@@ -1222,6 +1309,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: MULU,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0100110000000000 && cs.has_words(1) {
@@ -1238,6 +1326,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
                 size: sz,
                 operation: MULU,
                 operands: [src, dst],
+                extra: extra,
             });
         }
     }
@@ -1256,6 +1345,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
                 size: sz,
                 operation: MULU,
                 operands: [src, dst],
+                extra: extra,
             });
         }
     }
@@ -1269,6 +1359,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: NBCD,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0100000011000000 {
@@ -1281,6 +1372,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: MOVEFROMSR,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0100011011000000 {
@@ -1293,6 +1385,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: MOVETOSR,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111111000) == 0b0100111001100000 {
@@ -1304,6 +1397,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: MOVETOUSP,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111111000) == 0b0100111001101000 {
@@ -1315,6 +1409,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: MOVEFROMUSP,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0100001011000000 {
@@ -1327,6 +1422,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: MOVEFROMCCR,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0100010011000000 {
@@ -1339,6 +1435,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: MOVETOCCR,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0100100001000000 {
@@ -1351,6 +1448,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: PEA,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0100101011000000 {
@@ -1363,6 +1461,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: TAS,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111110000000) == 0b0100100010000000 {
@@ -1376,6 +1475,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: MOVEM,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111110000000) == 0b0100110010000000 {
@@ -1389,6 +1489,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: MOVEM,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0100001000000000 {
@@ -1401,6 +1502,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: CLR,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0100001001000000 {
@@ -1413,6 +1515,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: CLR,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0100001010000000 {
@@ -1425,6 +1528,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: CLR,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0100010000000000 {
@@ -1437,6 +1541,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: NEG,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0100010001000000 {
@@ -1449,6 +1554,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: NEG,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0100010010000000 {
@@ -1461,6 +1567,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: NEG,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0100000000000000 {
@@ -1473,6 +1580,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: NEGX,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0100000001000000 {
@@ -1485,6 +1593,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: NEGX,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0100000010000000 {
@@ -1497,6 +1606,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: NEGX,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0100011000000000 {
@@ -1509,6 +1619,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: NOT,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0100011001000000 {
@@ -1521,6 +1632,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: NOT,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0100011010000000 {
@@ -1533,6 +1645,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: NOT,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0100101000000000 {
@@ -1545,6 +1658,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: TST,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0100101001000000 {
@@ -1557,6 +1671,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: TST,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111111111000000) == 0b0100101010000000 {
@@ -1569,6 +1684,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: TST,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111000111000000) == 0b0100000110000000 {
@@ -1582,6 +1698,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: CHK,
             operands: [src, dst],
+            extra: extra,
         });
     }
     if (w0 & 0b1111000111000000) == 0b0100000100000000 {
@@ -1595,7 +1712,30 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             size: sz,
             operation: CHK,
             operands: [src, dst],
+            extra: extra,
         });
+    }
+    if (w0 & 0b1111111111000000) == 0b1110101011000000 && cs.has_words(1) {
+        let w1 = cs.peek_word(0);
+        if (w1 & 0b1111000000000000) == 0b0000000000000000 {
+            let m = get_bits(w0, 3, 3);
+            let r = get_bits(w0, 0, 3);
+            let O = get_bits(w1, 11, 1);
+            let o = get_bits(w1, 6, 5);
+            let W = get_bits(w1, 5, 1);
+            let w = get_bits(w1, 0, 5);
+            cs.skip_words(1);
+            extra = cs.bitfield(O, o, W, w);
+            sz = 0;
+            src = NoOperand;
+            dst = cs.ea(r, m, 0);
+            return cs.check_overflow(Instruction {
+                size: sz,
+                operation: BFCHG,
+                operands: [src, dst],
+                extra: extra,
+            });
+        }
     }
     return Err(NotImplemented);
 }

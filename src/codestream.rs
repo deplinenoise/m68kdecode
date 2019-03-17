@@ -256,4 +256,17 @@ impl<'a> CodeStream<'a> {
             _ => AR(self.address_reg(regno))
         }
     }
+
+    pub fn bitfield(&mut self, dyn_off: u16, off: u16, dyn_width: u16, width: u16) -> InstructionExtra {
+        let bf_offset = match dyn_off {
+            0 => STATIC(if off & 31 == 0 { 32 } else { (off & 31) as u8 }),
+            _ => DYNAMIC(self.data_reg(off)),
+        };
+        let bf_width = match dyn_width {
+            0 => STATIC(if width & 31 == 0 { 32 } else { (width & 31) as u8 }),
+            _ => DYNAMIC(self.data_reg(width)),
+        };
+        Bitfield(bf_offset, bf_width)
+    }
 }
+

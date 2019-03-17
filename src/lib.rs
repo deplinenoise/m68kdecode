@@ -87,14 +87,30 @@ pub enum Operand {
 }
 
 #[derive(Debug, PartialEq)]
+pub enum BitfieldData {
+    STATIC(u8),
+    DYNAMIC(DataRegister)
+}
+
+#[derive(Debug, PartialEq)]
+pub enum InstructionExtra {
+    NoExtra,
+    Bitfield(BitfieldData, BitfieldData),
+    BranchOffset(u8),
+}
+
+#[derive(Debug, PartialEq)]
 pub struct Instruction {
     pub size: i32,
     pub operation: Operation,
     pub operands: [Operand;2],
+    pub extra: InstructionExtra,
 }
 
 pub use Operation::*;
 pub use Operand::*;
+pub use InstructionExtra::*;
+pub use BitfieldData::*;
 
 #[derive(Debug,PartialEq)]
 pub struct DecodedInstruction {

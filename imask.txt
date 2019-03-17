@@ -180,7 +180,10 @@ CHK             0100_ddd1_00mm_mrrr sz=4; src=cs.ea(r, m, sz); dst=cs.data_reg_o
 #/*
 # * Group bitfield/Shift/Rotate. (1110)
 # */
-#define BFCHG_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,0,0, 0,0,0,0)
+
+
+BFCHG           1110_1010_11mm_mrrr 0000_Oooo_ooWw_wwww extra = cs.bitfield(O, o, W, w); sz=0; src=NoOperand; dst=cs.ea(r, m, 0);
+
 #define BFCLR_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,0,0, 0,0,0,0)
 #define BFEXTS_MASK ENCW(1,1,1,1, 1,1,1,1, 1,1,0,0, 0,0,0,0)
 #define BFEXTU_MASK ENCW(1,1,1,1, 1,1,1,1, 1,1,0,0, 0,0,0,0)
@@ -189,7 +192,6 @@ CHK             0100_ddd1_00mm_mrrr sz=4; src=cs.ea(r, m, sz); dst=cs.data_reg_o
 #define BFSET_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,0,0, 0,0,0,0)
 #define BFTST_MASK  ENCW(1,1,1,1, 1,1,1,1, 1,1,0,0, 0,0,0,0)
 
-#define BFCHG_INST  ENCW(1,1,1,0, 1,0,1,0, 1,1,0,0, 0,0,0,0)
 #define BFCLR_INST  ENCW(1,1,1,0, 1,1,0,0, 1,1,0,0, 0,0,0,0)
 #define BFEXTS_INST ENCW(1,1,1,0, 1,0,1,1, 1,1,0,0, 0,0,0,0)
 #define BFEXTU_INST ENCW(1,1,1,0, 1,0,0,1, 1,1,0,0, 0,0,0,0)

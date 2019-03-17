@@ -130,6 +130,7 @@ with open(outfile, "w") as of:
     of.write('  let sz;\n')
     of.write('  let src;\n')
     of.write('  let dst;\n')
+    of.write('  let mut extra = NoExtra;\n')
     for i in instructions:
         of.write('if (w0 & 0b{:016b}) == 0b{:016b} '.format(i.masks[0], i.instruction_patterns[0]))
         if len(i.masks) > 1:
@@ -161,7 +162,7 @@ with open(outfile, "w") as of:
         of.write(expr + '\n')
 
         if expr.find('return') == -1:
-            of.write('return cs.check_overflow(Instruction {{ size: sz, operation: {}, operands: [ src, dst ] }});\n'.format(i.name))
+            of.write('return cs.check_overflow(Instruction {{ size: sz, operation: {}, operands: [ src, dst ], extra: extra }});\n'.format(i.name))
 
         for x in range(0, predicate_nesting):
             of.write('}\n')

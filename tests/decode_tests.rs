@@ -10,6 +10,7 @@ mod tests {
                 size: 1,
                 operation: MOVE,
                 operands: [DR(D0), DR(D1)],
+                extra: NoExtra,
             },
             &[" move.b d0,d1"],
         );
@@ -23,6 +24,7 @@ mod tests {
                 size: 1,
                 operation: MOVE,
                 operands: [DR(D2), DR(D3)],
+                extra: NoExtra,
             },
             &[" move.b d2,d3"],
         );
@@ -36,6 +38,7 @@ mod tests {
                 size: 1,
                 operation: MOVE,
                 operands: [DR(D4), DR(D5)],
+                extra: NoExtra,
             },
             &[" move.b d4,d5"],
         );
@@ -49,6 +52,7 @@ mod tests {
                 size: 1,
                 operation: MOVE,
                 operands: [DR(D6), DR(D7)],
+                extra: NoExtra,
             },
             &[" move.b d6,d7"],
         );
@@ -62,6 +66,7 @@ mod tests {
                 size: 2,
                 operation: MOVEA,
                 operands: [AR(A0), AR(A1)],
+                extra: NoExtra,
             },
             &[" move.w a0,a1"],
         );
@@ -75,6 +80,7 @@ mod tests {
                 size: 2,
                 operation: MOVEA,
                 operands: [AR(A2), AR(A3)],
+                extra: NoExtra,
             },
             &[" move.w a2,a3"],
         );
@@ -88,6 +94,7 @@ mod tests {
                 size: 2,
                 operation: MOVEA,
                 operands: [AR(A4), AR(A5)],
+                extra: NoExtra,
             },
             &[" move.w a4,a5"],
         );
@@ -101,6 +108,7 @@ mod tests {
                 size: 2,
                 operation: MOVEA,
                 operands: [AR(A6), AR(A7)],
+                extra: NoExtra,
             },
             &[" move.w a6,a7"],
         );
@@ -114,6 +122,7 @@ mod tests {
                 size: 1,
                 operation: MOVE,
                 operands: [ARDISP(A0, dr_disp(D0, 123)), DR(D3)],
+                extra: NoExtra,
             },
             &[" move.b 123(a0,d0),d3"],
         );
@@ -127,6 +136,7 @@ mod tests {
                 size: 2,
                 operation: MOVE,
                 operands: [ARDISP(A0, dr_disp(D0, 123)), DR(D3)],
+                extra: NoExtra,
             },
             &[" move.w 123(a0,d0),d3"],
         );
@@ -140,6 +150,7 @@ mod tests {
                 size: 4,
                 operation: MOVE,
                 operands: [ARDISP(A0, dr_disp(D0, 123)), DR(D3)],
+                extra: NoExtra,
             },
             &[" move.l 123(a0,d0),d3"],
         );
@@ -153,6 +164,7 @@ mod tests {
                 size: 4,
                 operation: MOVEA,
                 operands: [ARDISP(A0, dr_disp(D0, 123)), AR(A1)],
+                extra: NoExtra,
             },
             &[" move.l 123(a0,d0),a1"],
         );
@@ -166,6 +178,7 @@ mod tests {
                 size: 2,
                 operation: MOVEA,
                 operands: [ARDISP(A0, dr_disp(D0, 123)), AR(A1)],
+                extra: NoExtra,
             },
             &[" move.w 123(a0,d0),a1"],
         );
@@ -179,6 +192,7 @@ mod tests {
                 size: 1,
                 operation: MOVE,
                 operands: [IMM8(0x12), DR(D7)],
+                extra: NoExtra,
             },
             &[" move.b #$12,d7"],
         );
@@ -192,6 +206,7 @@ mod tests {
                 size: 2,
                 operation: MOVE,
                 operands: [IMM16(0x1234), DR(D7)],
+                extra: NoExtra,
             },
             &[" move.w #$1234,d7"],
         );
@@ -205,6 +220,7 @@ mod tests {
                 size: 4,
                 operation: MOVE,
                 operands: [IMM32(0x12345678), DR(D7)],
+                extra: NoExtra,
             },
             &[" move.l #$12345678,d7"],
         );
@@ -218,6 +234,7 @@ mod tests {
                 size: 4,
                 operation: MOVE,
                 operands: [DR(D1), ARDEC(A2)],
+                extra: NoExtra,
             },
             &[" move.l D1,-(A2)"],
         );
@@ -231,6 +248,7 @@ mod tests {
                 size: 4,
                 operation: MOVE,
                 operands: [DR(D1), ARINC(A2)],
+                extra: NoExtra,
             },
             &[" move.l D1,(A2)+"],
         );
@@ -244,6 +262,7 @@ mod tests {
                 size: 4,
                 operation: MOVE,
                 operands: [ARDEC(A4), ARINC(A2)],
+                extra: NoExtra,
             },
             &[" move.l -(A4),(A2)+"],
         );
@@ -257,6 +276,7 @@ mod tests {
                 size: 4,
                 operation: MOVEA,
                 operands: [ABS16(4), AR(A0)],
+                extra: NoExtra,
             },
             &[" move.l 4.w,A0"],
         );
@@ -270,6 +290,7 @@ mod tests {
                 size: 4,
                 operation: MOVEA,
                 operands: [ABS32(0x11223344), AR(A0)],
+                extra: NoExtra,
             },
             &[" move.l $11223344,A0"],
         );
@@ -291,6 +312,7 @@ mod tests {
                         indirection: NoIndirection,
                     }),
                 ],
+                extra: NoExtra,
             },
             &[" move.w #$1234,123(d0)"],
         );
@@ -312,6 +334,7 @@ mod tests {
                     }),
                     DR(D3),
                 ],
+                extra: NoExtra,
             },
             &[" move.w -8(pc),d3"],
         );
@@ -333,6 +356,7 @@ mod tests {
                     }),
                     DR(D3),
                 ],
+                extra: NoExtra,
             },
             &[" move.w -8(pc,d2*8),d3"],
         );
@@ -349,6 +373,7 @@ mod tests {
                     ARDISP(A1, dr_disp_scale(D2, 123, 2)),
                     ARDISP(A2, dr_disp_scale(D3, 9876, 1)),
                 ],
+                extra: NoExtra,
             },
             &[" move.w 123(a1,d2*4),9876(a2,d3*2)"],
         );
@@ -373,6 +398,7 @@ mod tests {
                         },
                     ),
                 ],
+                extra: NoExtra,
             },
             &[" move.w d0,12345(a0,a1*2)"],
         );
@@ -386,6 +412,7 @@ mod tests {
                 size: 4,
                 operation: LEA,
                 operands: [ARIND(A0), AR(A1)],
+                extra: NoExtra,
             },
             &[" lea (a0),a1"],
         );
@@ -399,6 +426,7 @@ mod tests {
                 size: 4,
                 operation: LEA,
                 operands: [ARDISP(A0, simple_disp(8)), AR(A1)],
+                extra: NoExtra,
             },
             &[" lea 8(a0),a1"],
         );
@@ -412,6 +440,7 @@ mod tests {
                 size: 1,
                 operation: ORITOCCR,
                 operands: [IMM8(17), Implied],
+                extra: NoExtra,
             },
             &[" ori #17,ccr"],
         );
@@ -425,6 +454,7 @@ mod tests {
                 size: 2,
                 operation: ORITOSR,
                 operands: [IMM16(0x1234), Implied],
+                extra: NoExtra,
             },
             &[" ori #$1234,sr"],
         );
@@ -438,6 +468,7 @@ mod tests {
                 size: 2,
                 operation: ORI,
                 operands: [IMM16(0x1234), DR(D0)],
+                extra: NoExtra,
             },
             &[" ori.w #$1234,d0"],
         );
@@ -451,6 +482,7 @@ mod tests {
                 size: 1,
                 operation: ORI,
                 operands: [IMM8(0x12), DR(D2)],
+                extra: NoExtra,
             },
             &[" ori.b #$12,d2"],
         );
@@ -464,6 +496,7 @@ mod tests {
                 size: 2,
                 operation: ORI,
                 operands: [IMM16(0x1234), ARDISP(A0, dr_disp(D0, 123))],
+                extra: NoExtra,
             },
             &[" ori.w #$1234,123(a0,d0)"],
         );
@@ -477,6 +510,7 @@ mod tests {
                 size: 4,
                 operation: ORI,
                 operands: [IMM32(0x12345678), ARDEC(A0)],
+                extra: NoExtra,
             },
             &[" ori.l #$12345678,-(a0)"],
         );
@@ -490,6 +524,7 @@ mod tests {
                 size: 1,
                 operation: ANDITOCCR,
                 operands: [IMM8(17), Implied],
+                extra: NoExtra,
             },
             &[" andi #17,ccr"],
         );
@@ -503,6 +538,7 @@ mod tests {
                 size: 2,
                 operation: ANDITOSR,
                 operands: [IMM16(0x1234), Implied],
+                extra: NoExtra,
             },
             &[" andi #$1234,sr"],
         );
@@ -516,6 +552,7 @@ mod tests {
                 size: 2,
                 operation: ANDI,
                 operands: [IMM16(0x1234), DR(D0)],
+                extra: NoExtra,
             },
             &[" andi.w #$1234,d0"],
         );
@@ -529,6 +566,7 @@ mod tests {
                 size: 1,
                 operation: ANDI,
                 operands: [IMM8(0x12), DR(D2)],
+                extra: NoExtra,
             },
             &[" andi.b #$12,d2"],
         );
@@ -542,6 +580,7 @@ mod tests {
                 size: 2,
                 operation: ANDI,
                 operands: [IMM16(0x1234), ARDISP(A0, dr_disp(D0, 123))],
+                extra: NoExtra,
             },
             &[" andi.w #$1234,123(a0,d0)"],
         );
@@ -555,6 +594,7 @@ mod tests {
                 size: 4,
                 operation: ANDI,
                 operands: [IMM32(0x12345678), ARDEC(A0)],
+                extra: NoExtra,
             },
             &[" andi.l #$12345678,-(a0)"],
         );
@@ -568,6 +608,7 @@ mod tests {
                 size: 1,
                 operation: EORITOCCR,
                 operands: [IMM8(17), Implied],
+                extra: NoExtra,
             },
             &[" eori #17,ccr"],
         );
@@ -581,6 +622,7 @@ mod tests {
                 size: 2,
                 operation: EORITOSR,
                 operands: [IMM16(0x1234), Implied],
+                extra: NoExtra,
             },
             &[" eori #$1234,sr"],
         );
@@ -594,6 +636,7 @@ mod tests {
                 size: 2,
                 operation: EORI,
                 operands: [IMM16(0x1234), DR(D0)],
+                extra: NoExtra,
             },
             &[" eori.w #$1234,d0"],
         );
@@ -607,6 +650,7 @@ mod tests {
                 size: 1,
                 operation: EORI,
                 operands: [IMM8(0x12), DR(D2)],
+                extra: NoExtra,
             },
             &[" eori.b #$12,d2"],
         );
@@ -620,6 +664,7 @@ mod tests {
                 size: 2,
                 operation: EORI,
                 operands: [IMM16(0x1234), ARDISP(A0, dr_disp(D0, 123))],
+                extra: NoExtra,
             },
             &[" eori.w #$1234,123(a0,d0)"],
         );
@@ -633,6 +678,7 @@ mod tests {
                 size: 4,
                 operation: EORI,
                 operands: [IMM32(0x12345678), ARDEC(A0)],
+                extra: NoExtra,
             },
             &[" eori.l #$12345678,-(a0)"],
         );
@@ -646,6 +692,7 @@ mod tests {
                 size: 4,
                 operation: ADDI,
                 operands: [IMM32(0x12345678), ARDEC(A0)],
+                extra: NoExtra,
             },
             &[" addi.l #$12345678,-(a0)"],
         );
@@ -659,6 +706,7 @@ mod tests {
                 size: 4,
                 operation: SUBI,
                 operands: [IMM32(0x12345678), ARDEC(A0)],
+                extra: NoExtra,
             },
             &[" subi.l #$12345678,-(a0)"],
         );
@@ -672,6 +720,7 @@ mod tests {
                 size: 0,
                 operation: RTM,
                 operands: [DR(D3), NoOperand],
+                extra: NoExtra,
             },
             &[" rtm d3"],
         );
@@ -685,6 +734,7 @@ mod tests {
                 size: 0,
                 operation: RTM,
                 operands: [AR(A1), NoOperand],
+                extra: NoExtra,
             },
             &[" rtm a1"],
         );
@@ -698,6 +748,7 @@ mod tests {
                 size: 0,
                 operation: CALLM,
                 operands: [IMM8(3), ARIND(A1)],
+                extra: NoExtra,
             },
             &[" callm #3,(a1)"],
         );
@@ -711,6 +762,7 @@ mod tests {
                 size: 0,
                 operation: CALLM,
                 operands: [IMM8(99), ABS32(0x12345678)],
+                extra: NoExtra,
             },
             &[" callm #99,$12345678"],
         );
@@ -724,6 +776,7 @@ mod tests {
                 size: 4,
                 operation: CMP2,
                 operands: [ARIND(A0), DR(D3)],
+                extra: NoExtra,
             },
             &[" cmp2.l (a0),d3"],
         );
@@ -737,6 +790,7 @@ mod tests {
                 size: 1,
                 operation: CMP2,
                 operands: [ARDISP(A0, dr_disp(D2, 90)), AR(A6)],
+                extra: NoExtra,
             },
             &[" cmp2.b 90(a0,d2),a6"],
         );
@@ -750,6 +804,7 @@ mod tests {
                 size: 2,
                 operation: CHK2,
                 operands: [ARDISP(A0, dr_disp(D2, 90)), AR(A6)],
+                extra: NoExtra,
             },
             &[" chk2.w 90(a0,d2),a6"],
         );
@@ -763,6 +818,7 @@ mod tests {
                 size: 1,
                 operation: CMPI,
                 operands: [IMM8(0xa5), ARDISP(A0, dr_disp_scale(D2, 90, 2))],
+                extra: NoExtra,
             },
             &[" cmpi.b #$a5,90(a0,d2*4)"],
         );
@@ -776,6 +832,7 @@ mod tests {
                 size: 2,
                 operation: CMPI,
                 operands: [IMM16(0xa512), ARDISP(A0, dr_disp_scale(D2, 90, 2))],
+                extra: NoExtra,
             },
             &[" cmpi.w #$a512,90(a0,d2*4)"],
         );
@@ -789,6 +846,7 @@ mod tests {
                 size: 4,
                 operation: CMPI,
                 operands: [IMM32(0x12345678), ARDISP(A0, dr_disp_scale(D2, 90, 2))],
+                extra: NoExtra,
             },
             &[" cmpi.l #$12345678,90(a0,d2*4)"],
         );
@@ -802,6 +860,7 @@ mod tests {
                 size: 1,
                 operation: BTST,
                 operands: [IMM16(18), DR(D0)],
+                extra: NoExtra,
             },
             &[" btst #18,d0"],
         );
@@ -815,6 +874,7 @@ mod tests {
                 size: 1,
                 operation: BTST,
                 operands: [IMM16(18), ARINC(A0)],
+                extra: NoExtra,
             },
             &[" btst #18,(a0)+"],
         );
@@ -828,6 +888,7 @@ mod tests {
                 size: 1,
                 operation: BCLR,
                 operands: [IMM16(18), ARINC(A0)],
+                extra: NoExtra,
             },
             &[" bclr #18,(a0)+"],
         );
@@ -841,6 +902,7 @@ mod tests {
                 size: 1,
                 operation: BCHG,
                 operands: [IMM16(18), ARINC(A0)],
+                extra: NoExtra,
             },
             &[" bchg #18,(a0)+"],
         );
@@ -854,6 +916,7 @@ mod tests {
                 size: 1,
                 operation: BSET,
                 operands: [IMM16(18), ARINC(A0)],
+                extra: NoExtra,
             },
             &[" bset #18,(a0)+"],
         );
@@ -867,6 +930,7 @@ mod tests {
                 size: 4,
                 operation: MOVES,
                 operands: [AR(A0), ARIND(A1)],
+                extra: NoExtra,
             },
             &[" moves.l a0,(a1)"],
         );
@@ -880,6 +944,7 @@ mod tests {
                 size: 1,
                 operation: MOVES,
                 operands: [DR(D0), ARIND(A1)],
+                extra: NoExtra,
             },
             &[" moves.b d0,(a1)"],
         );
@@ -911,6 +976,7 @@ mod tests {
                 size: 0,
                 operation: ILLEGAL,
                 operands: [NoOperand, NoOperand],
+                extra: NoExtra,
             },
             &[" illegal"],
         );
@@ -924,6 +990,7 @@ mod tests {
                 size: 0,
                 operation: NOP,
                 operands: [NoOperand, NoOperand],
+                extra: NoExtra,
             },
             &[" nop"],
         );
@@ -937,6 +1004,7 @@ mod tests {
                 size: 0,
                 operation: RESET,
                 operands: [NoOperand, NoOperand],
+                extra: NoExtra,
             },
             &[" reset"],
         );
@@ -950,6 +1018,7 @@ mod tests {
                 size: 0,
                 operation: RTD,
                 operands: [IMM16(578), NoOperand],
+                extra: NoExtra,
             },
             &[" rtd #578"],
         );
@@ -963,6 +1032,7 @@ mod tests {
                 size: 0,
                 operation: RTE,
                 operands: [NoOperand, NoOperand],
+                extra: NoExtra,
             },
             &[" rte"],
         );
@@ -976,6 +1046,7 @@ mod tests {
                 size: 0,
                 operation: RTR,
                 operands: [NoOperand, NoOperand],
+                extra: NoExtra,
             },
             &[" rtr"],
         );
@@ -989,6 +1060,7 @@ mod tests {
                 size: 0,
                 operation: RTS,
                 operands: [NoOperand, NoOperand],
+                extra: NoExtra,
             },
             &[" rts"],
         );
@@ -1002,6 +1074,7 @@ mod tests {
                 size: 0,
                 operation: STOP,
                 operands: [IMM16(123), NoOperand],
+                extra: NoExtra,
             },
             &[" stop #123"],
         );
@@ -1015,6 +1088,7 @@ mod tests {
                 size: 0,
                 operation: TRAPV,
                 operands: [NoOperand, NoOperand],
+                extra: NoExtra,
             },
             &[" trapv"],
         );
@@ -1028,6 +1102,7 @@ mod tests {
                 size: 0,
                 operation: SWAP,
                 operands: [DR(D7), NoOperand],
+                extra: NoExtra,
             },
             &[" swap d7"],
         );
@@ -1041,6 +1116,7 @@ mod tests {
                 size: 0,
                 operation: BKPT,
                 operands: [IMM8(3), NoOperand],
+                extra: NoExtra,
             },
             &[" bkpt #3"],
         );
@@ -1054,6 +1130,7 @@ mod tests {
                 size: 2,
                 operation: EXTW,
                 operands: [DR(D6), NoOperand],
+                extra: NoExtra,
             },
             &[" ext.w d6"],
         );
@@ -1067,6 +1144,7 @@ mod tests {
                 size: 4,
                 operation: EXTL,
                 operands: [DR(D6), NoOperand],
+                extra: NoExtra,
             },
             &[" ext.l d6"],
         );
@@ -1080,6 +1158,7 @@ mod tests {
                 size: 4,
                 operation: EXTBL,
                 operands: [DR(D6), NoOperand],
+                extra: NoExtra,
             },
             &[" extb.l d6"],
         );
@@ -1093,6 +1172,7 @@ mod tests {
                 size: 2,
                 operation: LINK,
                 operands: [AR(A0), IMM16(1234)],
+                extra: NoExtra,
             },
             &[" link.w a0,#1234"],
         );
@@ -1106,6 +1186,7 @@ mod tests {
                 size: 4,
                 operation: LINK,
                 operands: [AR(A5), IMM32(0x12345678)],
+                extra: NoExtra,
             },
             &[" link.l a5,#$12345678"],
         );
@@ -1119,6 +1200,7 @@ mod tests {
                 size: 0,
                 operation: UNLK,
                 operands: [AR(A2), NoOperand],
+                extra: NoExtra,
             },
             &[" unlk a2"],
         );
@@ -1132,6 +1214,7 @@ mod tests {
                 size: 0,
                 operation: TRAP,
                 operands: [IMM8(15), NoOperand],
+                extra: NoExtra,
             },
             &[" trap #15"],
         );
@@ -1145,6 +1228,7 @@ mod tests {
                 size: 2,
                 operation: DIVS,
                 operands: [ARINC(A1), DR(D2)],
+                extra: NoExtra,
             },
             &[" divs.w (a1)+,d2"],
         );
@@ -1158,6 +1242,7 @@ mod tests {
                 size: 4,
                 operation: DIVSL,
                 operands: [DR(D0), DR(D2)],
+                extra: NoExtra,
             },
             &[" divs.l d0,d2"],
         );
@@ -1171,6 +1256,7 @@ mod tests {
                 size: 4,
                 operation: DIVSL,
                 operands: [DR(D0), DPAIR(D2, D3)],
+                extra: NoExtra,
             },
             &[" divs.l d0,d3:d2"],
         );
@@ -1184,6 +1270,7 @@ mod tests {
                 size: 4,
                 operation: DIVSLL,
                 operands: [DR(D0), DPAIR(D2, D3)],
+                extra: NoExtra,
             },
             &[" divsl.l d0,d3:d2"],
         );
@@ -1197,6 +1284,7 @@ mod tests {
                 size: 2,
                 operation: DIVU,
                 operands: [ARINC(A1), DR(D2)],
+                extra: NoExtra,
             },
             &[" divu.w (a1)+,d2"],
         );
@@ -1210,6 +1298,7 @@ mod tests {
                 size: 4,
                 operation: DIVUL,
                 operands: [DR(D0), DR(D2)],
+                extra: NoExtra,
             },
             &[" divu.l d0,d2"],
         );
@@ -1223,6 +1312,7 @@ mod tests {
                 size: 4,
                 operation: DIVUL,
                 operands: [DR(D0), DPAIR(D2, D3)],
+                extra: NoExtra,
             },
             &[" divu.l d0,d3:d2"],
         );
@@ -1236,6 +1326,7 @@ mod tests {
                 size: 4,
                 operation: DIVULL,
                 operands: [DR(D0), DPAIR(D2, D3)],
+                extra: NoExtra,
             },
             &[" divul.l d0,d3:d2"],
         );
@@ -1249,6 +1340,7 @@ mod tests {
                 size: 0,
                 operation: JMP,
                 operands: [ARIND(A0), NoOperand],
+                extra: NoExtra,
             },
             &[" jmp (a0)"],
         );
@@ -1262,6 +1354,7 @@ mod tests {
                 size: 0,
                 operation: JMP,
                 operands: [ABS32(0x12345678), NoOperand],
+                extra: NoExtra,
             },
             &[" jmp $12345678"],
         );
@@ -1283,6 +1376,7 @@ mod tests {
                     }),
                     NoOperand,
                 ],
+                extra: NoExtra,
             },
             &[" jmp 123(pc)"],
         );
@@ -1296,6 +1390,7 @@ mod tests {
                 size: 0,
                 operation: JSR,
                 operands: [ARIND(A0), NoOperand],
+                extra: NoExtra,
             },
             &[" jsr (a0)"],
         );
@@ -1309,6 +1404,7 @@ mod tests {
                 size: 0,
                 operation: JSR,
                 operands: [ABS32(0x12345678), NoOperand],
+                extra: NoExtra,
             },
             &[" jsr $12345678"],
         );
@@ -1330,6 +1426,7 @@ mod tests {
                     }),
                     NoOperand,
                 ],
+                extra: NoExtra,
             },
             &[" jsr 123(pc)"],
         );
@@ -1343,6 +1440,7 @@ mod tests {
                 size: 2,
                 operation: MULS,
                 operands: [DR(D0), DR(D1)],
+                extra: NoExtra,
             },
             &[" muls.w  d0,d1"],
         );
@@ -1356,6 +1454,7 @@ mod tests {
                 size: 4,
                 operation: MULS,
                 operands: [DR(D0), DR(D1)],
+                extra: NoExtra,
             },
             &[" muls.l  d0,d1"],
         );
@@ -1369,6 +1468,7 @@ mod tests {
                 size: 4,
                 operation: MULS,
                 operands: [DR(D0), DPAIR(D1, D2)],
+                extra: NoExtra,
             },
             &[" muls.l  d0,d2:d1"],
         );
@@ -1382,6 +1482,7 @@ mod tests {
                 size: 2,
                 operation: MULU,
                 operands: [DR(D0), DR(D1)],
+                extra: NoExtra,
             },
             &[" mulu.w  d0,d1"],
         );
@@ -1395,6 +1496,7 @@ mod tests {
                 size: 4,
                 operation: MULU,
                 operands: [DR(D0), DR(D1)],
+                extra: NoExtra,
             },
             &[" mulu.l  d0,d1"],
         );
@@ -1408,6 +1510,7 @@ mod tests {
                 size: 4,
                 operation: MULU,
                 operands: [DR(D0), DPAIR(D1, D2)],
+                extra: NoExtra,
             },
             &[" mulu.l  d0,d2:d1"],
         );
@@ -1421,6 +1524,7 @@ mod tests {
                 size: 1,
                 operation: NBCD,
                 operands: [ARINC(A0), NoOperand],
+                extra: NoExtra,
             },
             &[" nbcd  (a0)+"],
         );
@@ -1434,6 +1538,7 @@ mod tests {
                 size: 2,
                 operation: MOVEFROMSR,
                 operands: [Implied, DR(D0)],
+                extra: NoExtra,
             },
             &[" move sr,d0"],
         );
@@ -1447,6 +1552,7 @@ mod tests {
                 size: 2,
                 operation: MOVETOSR,
                 operands: [DR(D0), Implied],
+                extra: NoExtra,
             },
             &[" move d0,sr"],
         );
@@ -1460,6 +1566,7 @@ mod tests {
                 size: 4,
                 operation: MOVETOUSP,
                 operands: [AR(A0), Implied],
+                extra: NoExtra,
             },
             &[" move a0,usp"],
         );
@@ -1473,6 +1580,7 @@ mod tests {
                 size: 4,
                 operation: MOVEFROMUSP,
                 operands: [Implied, AR(A3)],
+                extra: NoExtra,
             },
             &[" move usp,a3"],
         );
@@ -1486,6 +1594,7 @@ mod tests {
                 size: 2,
                 operation: MOVETOCCR,
                 operands: [DR(D0), Implied],
+                extra: NoExtra,
             },
             &[" move d0,ccr"],
         );
@@ -1499,6 +1608,7 @@ mod tests {
                 size: 2,
                 operation: MOVEFROMCCR,
                 operands: [Implied, DR(D0)],
+                extra: NoExtra,
             },
             &[" move ccr,d0"],
         );
@@ -1512,6 +1622,7 @@ mod tests {
                 size: 4,
                 operation: PEA,
                 operands: [ARIND(A0), Implied],
+                extra: NoExtra,
             },
             &[" pea (a0)"],
         );
@@ -1525,6 +1636,7 @@ mod tests {
                 size: 2,
                 operation: MOVEM,
                 operands: [REGLIST(0b1111100011100000), ARDEC(A4)],
+                extra: NoExtra,
             },
             &[" movem.w d0-d4/a0-a2,-(a4)"],
         );
@@ -1538,6 +1650,7 @@ mod tests {
                 size: 4,
                 operation: MOVEM,
                 operands: [ARINC(A4), REGLIST(0b0000011100011111)],
+                extra: NoExtra,
             },
             &[" movem.l (a4)+,d0-d4/a0-a2"],
         );
@@ -1551,6 +1664,7 @@ mod tests {
                 size: 1,
                 operation: CLR,
                 operands: [Implied, DR(D0)],
+                extra: NoExtra,
             },
             &[" clr.b d0"],
         );
@@ -1564,6 +1678,7 @@ mod tests {
                 size: 2,
                 operation: CLR,
                 operands: [Implied, ARINC(A0)],
+                extra: NoExtra,
             },
             &[" clr.w (a0)+"],
         );
@@ -1577,6 +1692,7 @@ mod tests {
                 size: 4,
                 operation: CLR,
                 operands: [Implied, ARIND(A4)],
+                extra: NoExtra,
             },
             &[" clr.l (a4)"],
         );
@@ -1590,6 +1706,7 @@ mod tests {
                 size: 1,
                 operation: NEG,
                 operands: [Implied, DR(D0)],
+                extra: NoExtra,
             },
             &[" neg.b d0"],
         );
@@ -1603,6 +1720,7 @@ mod tests {
                 size: 2,
                 operation: NEG,
                 operands: [Implied, ARINC(A0)],
+                extra: NoExtra,
             },
             &[" neg.w (a0)+"],
         );
@@ -1616,6 +1734,7 @@ mod tests {
                 size: 4,
                 operation: NEG,
                 operands: [Implied, ARIND(A4)],
+                extra: NoExtra,
             },
             &[" neg.l (a4)"],
         );
@@ -1629,6 +1748,7 @@ mod tests {
                 size: 1,
                 operation: NEGX,
                 operands: [Implied, DR(D0)],
+                extra: NoExtra,
             },
             &[" negx.b d0"],
         );
@@ -1642,6 +1762,7 @@ mod tests {
                 size: 2,
                 operation: NEGX,
                 operands: [Implied, ARINC(A0)],
+                extra: NoExtra,
             },
             &[" negx.w (a0)+"],
         );
@@ -1655,6 +1776,7 @@ mod tests {
                 size: 4,
                 operation: NEGX,
                 operands: [Implied, ARIND(A4)],
+                extra: NoExtra,
             },
             &[" negx.l (a4)"],
         );
@@ -1668,6 +1790,7 @@ mod tests {
                 size: 1,
                 operation: NOT,
                 operands: [Implied, DR(D0)],
+                extra: NoExtra,
             },
             &[" not.b d0"],
         );
@@ -1681,6 +1804,7 @@ mod tests {
                 size: 2,
                 operation: NOT,
                 operands: [Implied, ARINC(A0)],
+                extra: NoExtra,
             },
             &[" not.w (a0)+"],
         );
@@ -1694,6 +1818,7 @@ mod tests {
                 size: 4,
                 operation: NOT,
                 operands: [Implied, ARIND(A4)],
+                extra: NoExtra,
             },
             &[" not.l (a4)"],
         );
@@ -1707,6 +1832,7 @@ mod tests {
                 size: 1,
                 operation: TST,
                 operands: [Implied, DR(D0)],
+                extra: NoExtra,
             },
             &[" tst.b d0"],
         );
@@ -1720,6 +1846,7 @@ mod tests {
                 size: 2,
                 operation: TST,
                 operands: [Implied, ARINC(A0)],
+                extra: NoExtra,
             },
             &[" tst.w (a0)+"],
         );
@@ -1733,6 +1860,7 @@ mod tests {
                 size: 4,
                 operation: TST,
                 operands: [Implied, ARIND(A4)],
+                extra: NoExtra,
             },
             &[" tst.l (a4)"],
         );
@@ -1746,6 +1874,7 @@ mod tests {
                 size: 2,
                 operation: CHK,
                 operands: [ARIND(A4), DR(D2)],
+                extra: NoExtra,
             },
             &[" chk.w (a4),d2"],
         );
@@ -1759,8 +1888,23 @@ mod tests {
                 size: 4,
                 operation: CHK,
                 operands: [ARIND(A4), DR(D2)],
+                extra: NoExtra,
             },
             &[" chk.l (a4),d2"],
+        );
+    }
+    //  bfchg (a4){12:7}
+    #[test]
+    fn test_decode_0133_bfchg_a4_12_7_() {
+        test_decoding_result_ok(
+            &[0xea, 0xd4, 0x03, 0x07],
+            Instruction {
+                size: 0,
+                operation: BFCHG,
+                operands: [NoOperand, ARIND(A4)],
+                extra: Bitfield(STATIC(12), STATIC(7)),
+            },
+            &[" bfchg (a4){12:7}"],
         );
     }
 }

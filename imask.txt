@@ -1,18 +1,14 @@
+
+#====================================================================================================
+# Group 0000: Bit manipulation, MOVEP, Immediate
+#====================================================================================================
+
 ANDITOCCR       0000_0010_0011_1100 sz=1; src=cs.imm8(); dst=Implied;
 ANDITOSR        0000_0010_0111_1100 sz=2; src=cs.imm16(); dst=Implied;
 EORITOCCR       0000_1010_0011_1100 sz=1; src=cs.imm8(); dst=Implied;
 EORITOSR        0000_1010_0111_1100 sz=2; src=cs.imm16(); dst=Implied;
 ORITOCCR        0000_0000_0011_1100 sz=1; src=cs.imm8(); dst=Implied;
 ORITOSR         0000_0000_0111_1100 sz=2; src=cs.imm16(); dst=Implied;
-
-RTM             0000_0110_1100_arrr sz=0; src=cs.dar(a,r); dst=NoOperand;
-
-MOVEA           0011_RRR0_01mm_mrrr sz=2; src=cs.ea(r, m, 2); dst=cs.ea(R, 0b001, 2); 
-MOVEA           0010_RRR0_01mm_mrrr sz=4; src=cs.ea(r, m, 4); dst=cs.ea(R, 0b001, 4); 
-
-MOVE            0001_RRRM_MMmm_mrrr sz=1; src=cs.ea(r, m, 1); dst=cs.ea(R, M, 1); 
-MOVE            0011_RRRM_MMmm_mrrr sz=2; src=cs.ea(r, m, 2); dst=cs.ea(R, M, 2); 
-MOVE            0010_RRRM_MMmm_mrrr sz=4; src=cs.ea(r, m, 4); dst=cs.ea(R, M, 4); 
 
 # Note: bit eight being 1 here allows these to be check before all else 
 # Note: for movep bits 5-3, specify a mode An, which all the other
@@ -70,14 +66,31 @@ MOVES           0000_1110_00mm_mrrr addd_1000_0000_0000 sz=1; src=cs.dar(a, d); 
 MOVES           0000_1110_01mm_mrrr addd_1000_0000_0000 sz=2; src=cs.dar(a, d); dst=cs.ea(r, m, 2);
 MOVES           0000_1110_10mm_mrrr addd_1000_0000_0000 sz=4; src=cs.dar(a, d); dst=cs.ea(r, m, 4);
 
-#define CAS2_MASK ENCW(1,1,1,1, 1,1,0,1, 1,1,1,1, 1,1,1,1)
-#define CAS2_INST ENCW(0,0,0,0, 1,1,0,0, 1,1,1,1, 1,1,0,0)
-
+# Not handling CAS2 right now because it's a little crazy and doesn't work on an Amiga anyway due to the multiple bus transactions
 #CAS2            0000_11s0_1111_1100 Aaaa_000b_bb00_0ccc Dddd_000e_ee00_0fff return special_cas2(s << 1, A, a, b, c, D, d, e, f)
 
-#/*
-# * Group misc. (0100)
-# */     
+RTM             0000_0110_1100_arrr sz=0; src=cs.dar(a,r); dst=NoOperand;
+
+#====================================================================================================
+# Group 0001: Move byte
+#====================================================================================================
+MOVE            0001_RRRM_MMmm_mrrr sz=1; src=cs.ea(r, m, 1); dst=cs.ea(R, M, 1); 
+
+#====================================================================================================
+# Group 0010: Move word
+#====================================================================================================
+MOVEA           0010_RRR0_01mm_mrrr sz=4; src=cs.ea(r, m, 4); dst=cs.ea(R, 0b001, 4); 
+MOVE            0010_RRRM_MMmm_mrrr sz=4; src=cs.ea(r, m, 4); dst=cs.ea(R, M, 4); 
+
+#====================================================================================================
+# Group 0011: Move Long
+#====================================================================================================
+MOVEA           0011_RRR0_01mm_mrrr sz=2; src=cs.ea(r, m, 2); dst=cs.ea(R, 0b001, 2); 
+MOVE            0011_RRRM_MMmm_mrrr sz=2; src=cs.ea(r, m, 2); dst=cs.ea(R, M, 2); 
+
+#====================================================================================================
+# Group 0100: Miscellaneous
+#====================================================================================================
 
 BGND            0100_1010_1111_1010 sz=0; src=NoOperand; dst=NoOperand;
 ILLEGAL         0100_1010_1111_1100 sz=0; src=NoOperand; dst=NoOperand;
@@ -169,28 +182,9 @@ TST             0100_1010_10mm_mrrr sz=4; src=Implied; dst=cs.ea(r, m, sz);
 CHK             0100_ddd1_10mm_mrrr sz=2; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
 CHK             0100_ddd1_00mm_mrrr sz=4; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
 
-#/*
-# * Group bitfield/Shift/Rotate. (1110)
-# */
-
-
-BFCHG           1110_1010_11mm_mrrr 0000_Oooo_ooWw_wwww extra = cs.bitfield(O, o, W, w); sz=0; src=NoOperand; dst=cs.ea(r, m, 0);
-BFCLR           1110_1100_11mm_mrrr 0000_Oooo_ooWw_wwww extra = cs.bitfield(O, o, W, w); sz=0; src=NoOperand; dst=cs.ea(r, m, 0);
-BFEXTS          1110_1011_11mm_mrrr 0ddd_Oooo_ooWw_wwww extra = cs.bitfield(O, o, W, w); sz=0; src=cs.ea(r, m, 0); dst=cs.data_reg_op(d);
-BFEXTU          1110_1001_11mm_mrrr 0ddd_Oooo_ooWw_wwww extra = cs.bitfield(O, o, W, w); sz=0; src=cs.ea(r, m, 0); dst=cs.data_reg_op(d);
-BFFFO           1110_1101_11mm_mrrr 0ddd_Oooo_ooWw_wwww extra = cs.bitfield(O, o, W, w); sz=0; src=cs.ea(r, m, 0); dst=cs.data_reg_op(d);
-BFINS           1110_1111_11mm_mrrr 0ddd_Oooo_ooWw_wwww extra = cs.bitfield(O, o, W, w); sz=0; src=cs.data_reg_op(d); dst=cs.ea(r, m, 0);
-BFSET           1110_1110_11mm_mrrr 0000_Oooo_ooWw_wwww extra = cs.bitfield(O, o, W, w); sz=0; src=NoOperand; dst=cs.ea(r, m, 0);
-BFTST           1110_1000_11mm_mrrr 0000_Oooo_ooWw_wwww extra = cs.bitfield(O, o, W, w); sz=0; src=NoOperand; dst=cs.ea(r, m, 0);
-
-##define AS_TYPE   0x0
-##define LS_TYPE   0x1
-##define RO_TYPE   0x3
-##define ROX_TYPE  0x2
-
-#/*
-# * Group DBcc/TRAPcc/ADDQ/SUBQ (0101)
-# */
+#====================================================================================================
+# Group 0101: ADDQ/SUBQ/Scc/DBcc/TRAPcc
+#====================================================================================================
 
 DBCC            0101_cccc_1100_1rrr sz=2; src=cs.data_reg_op(r); dst=PCDISP(2, simple_disp(cs.pull16() as i16 as i32)); extra=cs.cc(c);
 
@@ -208,74 +202,9 @@ TRAPCC          0101_cccc_1111_1011 sz=4; src=cs.imm32(); dst=NoOperand; extra=c
 
 SCC             0101_cccc_11mm_mrrr sz=1; src=Implied; dst=cs.ea(r, m, 1); extra=cs.cc(c);
 
-#/*
-# * Group ADD/ADDX (1101)
-# */
-
-# data register pair
-ADDX            1101_xxx1_0000_0yyy sz=1; src=cs.data_reg_op(y); dst=cs.data_reg_op(x);
-ADDX            1101_xxx1_0100_0yyy sz=2; src=cs.data_reg_op(y); dst=cs.data_reg_op(x);
-ADDX            1101_xxx1_1000_0yyy sz=4; src=cs.data_reg_op(y); dst=cs.data_reg_op(x);
-
-# decrementing address pair
-ADDX            1101_xxx1_0000_1yyy sz=1; src=ARDEC(cs.address_reg(y)); dst=ARDEC(cs.address_reg(x));
-ADDX            1101_xxx1_0100_1yyy sz=2; src=ARDEC(cs.address_reg(y)); dst=ARDEC(cs.address_reg(x));
-ADDX            1101_xxx1_1000_1yyy sz=4; src=ARDEC(cs.address_reg(y)); dst=ARDEC(cs.address_reg(x));
-
-# ADD <ea>,Dn
-ADD             1101_ddd0_00mm_mrrr sz=1; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
-ADD             1101_ddd0_01mm_mrrr sz=2; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
-ADD             1101_ddd0_10mm_mrrr sz=4; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
-# ADD Dn,<ea>
-ADD             1101_ddd1_00mm_mrrr sz=1; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz); 
-ADD             1101_ddd1_01mm_mrrr sz=2; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz); 
-ADD             1101_ddd1_10mm_mrrr sz=4; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz); 
-
-#/*
-# * Group SUB/SUBX (1001)
-# */
-
-# data register pair
-SUBX            1001_xxx1_0000_0yyy sz=1; src=cs.data_reg_op(y); dst=cs.data_reg_op(x);
-SUBX            1001_xxx1_0100_0yyy sz=2; src=cs.data_reg_op(y); dst=cs.data_reg_op(x);
-SUBX            1001_xxx1_1000_0yyy sz=4; src=cs.data_reg_op(y); dst=cs.data_reg_op(x);
-
-# decrementing address pair
-SUBX            1001_xxx1_0000_1yyy sz=1; src=ARDEC(cs.address_reg(y)); dst=ARDEC(cs.address_reg(x));
-SUBX            1001_xxx1_0100_1yyy sz=2; src=ARDEC(cs.address_reg(y)); dst=ARDEC(cs.address_reg(x));
-SUBX            1001_xxx1_1000_1yyy sz=4; src=ARDEC(cs.address_reg(y)); dst=ARDEC(cs.address_reg(x));
-
-# SUB <ea>,Dn
-SUB             1001_ddd0_00mm_mrrr sz=1; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
-SUB             1001_ddd0_01mm_mrrr sz=2; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
-SUB             1001_ddd0_10mm_mrrr sz=4; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
-# SUB Dn,<ea>
-SUB             1001_ddd1_00mm_mrrr sz=1; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz); 
-SUB             1001_ddd1_01mm_mrrr sz=2; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz); 
-SUB             1001_ddd1_10mm_mrrr sz=4; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz); 
-
-#/*
-# * Group CMP/CMPA/EOR (1011)
-# */
-
-CMPA            1011_aaa0_11mm_mrrr sz=2; src=cs.ea(r, m, sz); dst=cs.address_reg_op(a);
-CMPA            1011_aaa1_11mm_mrrr sz=4; src=cs.ea(r, m, sz); dst=cs.address_reg_op(a);
-
-CMPM            1011_xxx1_0000_1yyy sz=1; src=ARINC(cs.address_reg(y)); dst=ARINC(cs.address_reg(x));
-CMPM            1011_xxx1_0100_1yyy sz=2; src=ARINC(cs.address_reg(y)); dst=ARINC(cs.address_reg(x));
-CMPM            1011_xxx1_1000_1yyy sz=4; src=ARINC(cs.address_reg(y)); dst=ARINC(cs.address_reg(x));
-
-CMP             1011_ddd0_00mm_mrrr sz=1; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
-CMP             1011_ddd0_01mm_mrrr sz=2; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
-CMP             1011_ddd0_10mm_mrrr sz=4; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
-
-EOR             1011_ddd1_00mm_mrrr sz=1; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz);
-EOR             1011_ddd1_01mm_mrrr sz=2; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz);
-EOR             1011_ddd1_10mm_mrrr sz=4; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz);
-
-#/*
-# * Group branch. (0110)
-# */
+#====================================================================================================
+# Group 0110: Bcc/BSR/BRA
+#====================================================================================================
 
 BRA             0110_0000_0000_0000 sz=2; src = PCDISP(2, simple_disp(cs.pull16() as i16 as i32)); dst=NoOperand;
 BRA             0110_0000_1111_1111 sz=4; src = PCDISP(2, simple_disp(cs.pull32() as i32)); dst=NoOperand;
@@ -289,9 +218,13 @@ BCC             0110_cccc_0000_0000 sz=2; src = PCDISP(2, simple_disp(cs.pull16(
 BCC             0110_cccc_1111_1111 sz=4; src = PCDISP(2, simple_disp(cs.pull32() as i32)); dst=NoOperand; extra=cs.cc(c);
 BCC             0110_cccc_dddd_dddd sz=1; src = PCDISP(2, simple_disp(d as i8 as i32)); dst=NoOperand; extra=cs.cc(c);
 
-#/*
-# * Group SBCD/DIVx/OR (1000)
-# */
+#====================================================================================================
+# Group 0111: MOVEQ
+#====================================================================================================
+
+#====================================================================================================
+# Group 1000: OR/DIV/SBCD
+#====================================================================================================
 
 PACK            1000_yyy1_0100_0xxx sz=0; src = cs.data_reg_op(x); dst = cs.data_reg_op(y); extra=PackAdjustment(cs.pull16());
 PACK            1000_yyy1_0100_1xxx sz=0; src = ARDEC(cs.address_reg(x)); dst = ARDEC(cs.address_reg(y)); extra=PackAdjustment(cs.pull16());
@@ -312,15 +245,61 @@ OR              1000_ddd1_00mm_mrrr sz=1; src=cs.data_reg_op(d); dst=cs.ea(r, m,
 OR              1000_ddd1_01mm_mrrr sz=2; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz);
 OR              1000_ddd1_10mm_mrrr sz=4; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz);
 
-#/*
-# * Group AND/MUL/ABCD/EXG (1100)
-# */
+#====================================================================================================
+# Group 1001: SUB/SUBX
+#====================================================================================================
+
+# data register pair
+SUBX            1001_xxx1_0000_0yyy sz=1; src=cs.data_reg_op(y); dst=cs.data_reg_op(x);
+SUBX            1001_xxx1_0100_0yyy sz=2; src=cs.data_reg_op(y); dst=cs.data_reg_op(x);
+SUBX            1001_xxx1_1000_0yyy sz=4; src=cs.data_reg_op(y); dst=cs.data_reg_op(x);
+
+# decrementing address pair
+SUBX            1001_xxx1_0000_1yyy sz=1; src=ARDEC(cs.address_reg(y)); dst=ARDEC(cs.address_reg(x));
+SUBX            1001_xxx1_0100_1yyy sz=2; src=ARDEC(cs.address_reg(y)); dst=ARDEC(cs.address_reg(x));
+SUBX            1001_xxx1_1000_1yyy sz=4; src=ARDEC(cs.address_reg(y)); dst=ARDEC(cs.address_reg(x));
+
+# SUB <ea>,Dn
+SUB             1001_ddd0_00mm_mrrr sz=1; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
+SUB             1001_ddd0_01mm_mrrr sz=2; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
+SUB             1001_ddd0_10mm_mrrr sz=4; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
+# SUB Dn,<ea>
+SUB             1001_ddd1_00mm_mrrr sz=1; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz); 
+SUB             1001_ddd1_01mm_mrrr sz=2; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz); 
+SUB             1001_ddd1_10mm_mrrr sz=4; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz); 
+
+#====================================================================================================
+# Group 1010: Reserved/Unassigned
+#====================================================================================================
+
+#====================================================================================================
+# Group 1011: CMP/EOR
+#====================================================================================================
+
+CMPA            1011_aaa0_11mm_mrrr sz=2; src=cs.ea(r, m, sz); dst=cs.address_reg_op(a);
+CMPA            1011_aaa1_11mm_mrrr sz=4; src=cs.ea(r, m, sz); dst=cs.address_reg_op(a);
+
+CMPM            1011_xxx1_0000_1yyy sz=1; src=ARINC(cs.address_reg(y)); dst=ARINC(cs.address_reg(x));
+CMPM            1011_xxx1_0100_1yyy sz=2; src=ARINC(cs.address_reg(y)); dst=ARINC(cs.address_reg(x));
+CMPM            1011_xxx1_1000_1yyy sz=4; src=ARINC(cs.address_reg(y)); dst=ARINC(cs.address_reg(x));
+
+CMP             1011_ddd0_00mm_mrrr sz=1; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
+CMP             1011_ddd0_01mm_mrrr sz=2; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
+CMP             1011_ddd0_10mm_mrrr sz=4; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
+
+EOR             1011_ddd1_00mm_mrrr sz=1; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz);
+EOR             1011_ddd1_01mm_mrrr sz=2; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz);
+EOR             1011_ddd1_10mm_mrrr sz=4; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz);
+
+#====================================================================================================
+# Group 1100: AND/MUL/ABCD/EXG
+#====================================================================================================
 
 ABCD            1100_yyy1_0000_0xxx sz=1; src = cs.data_reg_op(x); dst = cs.data_reg_op(y);
 ABCD            1100_yyy1_0000_1xxx sz=1; src = ARDEC(cs.address_reg(x)); dst = ARDEC(cs.address_reg(y));
 
-MULS            1100_ppp1_11mm_mrrr sz=2; src=cs.ea(r, m, 2); dst=cs.data_reg_op(p);
 MULU            1100_ppp0_11mm_mrrr sz=2; src=cs.ea(r, m, 2); dst=cs.data_reg_op(p);
+MULS            1100_ppp1_11mm_mrrr sz=2; src=cs.ea(r, m, 2); dst=cs.data_reg_op(p);
 
 EXG             1100_xxx1_0100_0yyy sz=4; src=cs.data_reg_op(x); dst=cs.data_reg_op(y);
 EXG             1100_xxx1_0100_1yyy sz=4; src=cs.address_reg_op(x); dst=cs.address_reg_op(y);
@@ -333,7 +312,41 @@ AND             1100_ddd1_00mm_mrrr sz=1; src=cs.data_reg_op(d); dst=cs.ea(r, m,
 AND             1100_ddd1_01mm_mrrr sz=2; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz);
 AND             1100_ddd1_10mm_mrrr sz=4; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz);
 
-# Shifts
+#====================================================================================================
+# Group 1101: ADD/ADDX
+#====================================================================================================
+
+# data register pair
+ADDX            1101_xxx1_0000_0yyy sz=1; src=cs.data_reg_op(y); dst=cs.data_reg_op(x);
+ADDX            1101_xxx1_0100_0yyy sz=2; src=cs.data_reg_op(y); dst=cs.data_reg_op(x);
+ADDX            1101_xxx1_1000_0yyy sz=4; src=cs.data_reg_op(y); dst=cs.data_reg_op(x);
+
+# decrementing address pair
+ADDX            1101_xxx1_0000_1yyy sz=1; src=ARDEC(cs.address_reg(y)); dst=ARDEC(cs.address_reg(x));
+ADDX            1101_xxx1_0100_1yyy sz=2; src=ARDEC(cs.address_reg(y)); dst=ARDEC(cs.address_reg(x));
+ADDX            1101_xxx1_1000_1yyy sz=4; src=ARDEC(cs.address_reg(y)); dst=ARDEC(cs.address_reg(x));
+
+# ADD <ea>,Dn
+ADD             1101_ddd0_00mm_mrrr sz=1; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
+ADD             1101_ddd0_01mm_mrrr sz=2; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
+ADD             1101_ddd0_10mm_mrrr sz=4; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
+# ADD Dn,<ea>
+ADD             1101_ddd1_00mm_mrrr sz=1; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz); 
+ADD             1101_ddd1_01mm_mrrr sz=2; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz); 
+ADD             1101_ddd1_10mm_mrrr sz=4; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz); 
+
+#====================================================================================================
+# Group 1110: Shift, Rotate, Bitfield
+#====================================================================================================
+
+BFCHG           1110_1010_11mm_mrrr 0000_Oooo_ooWw_wwww extra = cs.bitfield(O, o, W, w); sz=0; src=NoOperand; dst=cs.ea(r, m, 0);
+BFCLR           1110_1100_11mm_mrrr 0000_Oooo_ooWw_wwww extra = cs.bitfield(O, o, W, w); sz=0; src=NoOperand; dst=cs.ea(r, m, 0);
+BFEXTS          1110_1011_11mm_mrrr 0ddd_Oooo_ooWw_wwww extra = cs.bitfield(O, o, W, w); sz=0; src=cs.ea(r, m, 0); dst=cs.data_reg_op(d);
+BFEXTU          1110_1001_11mm_mrrr 0ddd_Oooo_ooWw_wwww extra = cs.bitfield(O, o, W, w); sz=0; src=cs.ea(r, m, 0); dst=cs.data_reg_op(d);
+BFFFO           1110_1101_11mm_mrrr 0ddd_Oooo_ooWw_wwww extra = cs.bitfield(O, o, W, w); sz=0; src=cs.ea(r, m, 0); dst=cs.data_reg_op(d);
+BFINS           1110_1111_11mm_mrrr 0ddd_Oooo_ooWw_wwww extra = cs.bitfield(O, o, W, w); sz=0; src=cs.data_reg_op(d); dst=cs.ea(r, m, 0);
+BFSET           1110_1110_11mm_mrrr 0000_Oooo_ooWw_wwww extra = cs.bitfield(O, o, W, w); sz=0; src=NoOperand; dst=cs.ea(r, m, 0);
+BFTST           1110_1000_11mm_mrrr 0000_Oooo_ooWw_wwww extra = cs.bitfield(O, o, W, w); sz=0; src=NoOperand; dst=cs.ea(r, m, 0);
 
 ASL             1110_ccc1_0000_0rrr sz=1; src=IMM8(c as u8); dst=cs.data_reg_op(r);
 ASL             1110_ccc1_0100_0rrr sz=2; src=IMM8(c as u8); dst=cs.data_reg_op(r);
@@ -395,6 +408,10 @@ ROXL            1110_0101_11mm_mrrr sz=2; src=Implied; dst=cs.ea(r, m, sz);
 ROXR            1110_0100_11mm_mrrr sz=2; src=Implied; dst=cs.ea(r, m, sz);
 ROL             1110_0111_11mm_mrrr sz=2; src=Implied; dst=cs.ea(r, m, sz);
 ROR             1110_0110_11mm_mrrr sz=2; src=Implied; dst=cs.ea(r, m, sz);
+
+#====================================================================================================
+# Group 1111: Coprocessor interface, MC68040 and CPU32 extensions
+#====================================================================================================
 
 #define ENCFT(b5,b4,b3,b2,b1,b0) ENCB(0,0,b5,b4,b3,b2,b1,b0)
 

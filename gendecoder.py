@@ -111,28 +111,19 @@ with open(infile, "r") as inf:
 
         instructions.append(i)
         #print(i)
-    
-with open(outfile, "w") as of:
-    of.write('use crate::*;\n')
-    of.write('use codestream::*;\n')
 
-    seen_insn_names = {}
-    of.write('#[derive(Debug, PartialEq)]\npub enum Operation {\n');
-    for i in instructions:
-        if not seen_insn_names.has_key(i.name):
-            seen_insn_names[i.name] = True
-            of.write('  {},'.format(i.name))
-    of.write('}\n');
+def gen_decoders(of, insns):
+    group = insns[0].instruction_patterns[0] >> 12
 
     of.write('#[allow(non_snake_case)]\n')
-    of.write('pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {\n')
-    of.write('  let mut cs = CodeStream::new(code);\n')
-    of.write('  let w0 = cs.pull16();\n')
+    of.write('#[allow(unused_mut)]\n')
+    of.write('pub fn decode_group_{0:04b}(w0: u16, cs: &mut CodeStream) -> Result<DecodedInstruction, DecodingError> {{\n'.format(group))
     of.write('  let sz;\n')
     of.write('  let src;\n')
     of.write('  let dst;\n')
     of.write('  let mut extra = NoExtra;\n')
-    for i in instructions:
+
+    for i in insns:
         of.write('if (w0 & 0b{:016b}) == 0b{:016b} '.format(i.masks[0], i.instruction_patterns[0]))
         if len(i.masks) > 1:
             of.write('&& cs.has_words({})'.format(len(i.masks) - 1))
@@ -172,7 +163,42 @@ with open(outfile, "w") as of:
             of.write('}\n')
 
         of.write('}\n')
+
     of.write('  return Err(NotImplemented);\n')
+    of.write('}\n')
+    
+with open(outfile, "w") as of:
+    of.write('use crate::*;\n')
+    of.write('use codestream::*;\n')
+
+    seen_insn_names = {}
+    of.write('#[derive(Debug, PartialEq)]\npub enum Operation {\n');
+    for i in instructions:
+        if not seen_insn_names.has_key(i.name):
+            seen_insn_names[i.name] = True
+            of.write('  {},'.format(i.name))
+    of.write('}\n');
+
+    has_group = {}
+
+    for group in range(0, 16):
+        insns = [i for i in instructions if (i.instruction_patterns[0] >> 12) == group]
+        if len(insns) == 0:
+            continue
+        has_group[group] = True
+        gen_decoders(of, insns)
+
+    of.write('pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {\n')
+    of.write('  let mut cs = CodeStream::new(code);\n')
+    of.write('  let w0 = cs.pull16();\n')
+    of.write('  match w0 >> 12 {\n')
+    for group in range(0, 16):
+        if not has_group.has_key(group):
+            continue
+        of.write('    0b{0:04b} => decode_group_{0:04b}(w0, &mut cs),\n'.format(group))
+    of.write('    _ => Err(NotImplemented)\n')
+    of.write('  }\n')
+
     of.write('}\n')
 
 subprocess.call(['rustfmt', outfile])

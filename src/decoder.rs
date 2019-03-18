@@ -113,9 +113,11 @@ pub enum Operation {
     ROR,
 }
 #[allow(non_snake_case)]
-pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {
-    let mut cs = CodeStream::new(code);
-    let w0 = cs.pull16();
+#[allow(unused_mut)]
+pub fn decode_group_0000(
+    w0: u16,
+    cs: &mut CodeStream,
+) -> Result<DecodedInstruction, DecodingError> {
     let sz;
     let src;
     let dst;
@@ -769,6 +771,18 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             extra: extra,
         });
     }
+    return Err(NotImplemented);
+}
+#[allow(non_snake_case)]
+#[allow(unused_mut)]
+pub fn decode_group_0001(
+    w0: u16,
+    cs: &mut CodeStream,
+) -> Result<DecodedInstruction, DecodingError> {
+    let sz;
+    let src;
+    let dst;
+    let mut extra = NoExtra;
     if (w0 & 0b1111000000000000) == 0b0001000000000000 {
         let R = get_bits(w0, 9, 3);
         let M = get_bits(w0, 6, 3);
@@ -784,6 +798,18 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             extra: extra,
         });
     }
+    return Err(NotImplemented);
+}
+#[allow(non_snake_case)]
+#[allow(unused_mut)]
+pub fn decode_group_0010(
+    w0: u16,
+    cs: &mut CodeStream,
+) -> Result<DecodedInstruction, DecodingError> {
+    let sz;
+    let src;
+    let dst;
+    let mut extra = NoExtra;
     if (w0 & 0b1111000111000000) == 0b0010000001000000 {
         let R = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
@@ -813,6 +839,18 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             extra: extra,
         });
     }
+    return Err(NotImplemented);
+}
+#[allow(non_snake_case)]
+#[allow(unused_mut)]
+pub fn decode_group_0011(
+    w0: u16,
+    cs: &mut CodeStream,
+) -> Result<DecodedInstruction, DecodingError> {
+    let sz;
+    let src;
+    let dst;
+    let mut extra = NoExtra;
     if (w0 & 0b1111000111000000) == 0b0011000001000000 {
         let R = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
@@ -842,6 +880,18 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             extra: extra,
         });
     }
+    return Err(NotImplemented);
+}
+#[allow(non_snake_case)]
+#[allow(unused_mut)]
+pub fn decode_group_0100(
+    w0: u16,
+    cs: &mut CodeStream,
+) -> Result<DecodedInstruction, DecodingError> {
+    let sz;
+    let src;
+    let dst;
+    let mut extra = NoExtra;
     if (w0 & 0b1111111111111111) == 0b0100101011111010 {
         sz = 0;
         src = NoOperand;
@@ -1698,6 +1748,18 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             extra: extra,
         });
     }
+    return Err(NotImplemented);
+}
+#[allow(non_snake_case)]
+#[allow(unused_mut)]
+pub fn decode_group_0101(
+    w0: u16,
+    cs: &mut CodeStream,
+) -> Result<DecodedInstruction, DecodingError> {
+    let sz;
+    let src;
+    let dst;
+    let mut extra = NoExtra;
     if (w0 & 0b1111000011111000) == 0b0101000011001000 {
         let c = get_bits(w0, 8, 4);
         let r = get_bits(w0, 0, 3);
@@ -1850,6 +1912,18 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             extra: extra,
         });
     }
+    return Err(NotImplemented);
+}
+#[allow(non_snake_case)]
+#[allow(unused_mut)]
+pub fn decode_group_0110(
+    w0: u16,
+    cs: &mut CodeStream,
+) -> Result<DecodedInstruction, DecodingError> {
+    let sz;
+    let src;
+    let dst;
+    let mut extra = NoExtra;
     if (w0 & 0b1111111111111111) == 0b0110000000000000 {
         sz = 2;
         src = PCDISP(2, simple_disp(cs.pull16() as i16 as i32));
@@ -1958,6 +2032,18 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             extra: extra,
         });
     }
+    return Err(NotImplemented);
+}
+#[allow(non_snake_case)]
+#[allow(unused_mut)]
+pub fn decode_group_0111(
+    w0: u16,
+    cs: &mut CodeStream,
+) -> Result<DecodedInstruction, DecodingError> {
+    let sz;
+    let src;
+    let dst;
+    let mut extra = NoExtra;
     if (w0 & 0b1111000100000000) == 0b0111000000000000 {
         let r = get_bits(w0, 9, 3);
         let n = get_bits(w0, 0, 8);
@@ -1971,6 +2057,18 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             extra: extra,
         });
     }
+    return Err(NotImplemented);
+}
+#[allow(non_snake_case)]
+#[allow(unused_mut)]
+pub fn decode_group_1000(
+    w0: u16,
+    cs: &mut CodeStream,
+) -> Result<DecodedInstruction, DecodingError> {
+    let sz;
+    let src;
+    let dst;
+    let mut extra = NoExtra;
     if (w0 & 0b1111000111111000) == 0b1000000101000000 {
         let y = get_bits(w0, 9, 3);
         let x = get_bits(w0, 0, 3);
@@ -2165,6 +2263,18 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             extra: extra,
         });
     }
+    return Err(NotImplemented);
+}
+#[allow(non_snake_case)]
+#[allow(unused_mut)]
+pub fn decode_group_1001(
+    w0: u16,
+    cs: &mut CodeStream,
+) -> Result<DecodedInstruction, DecodingError> {
+    let sz;
+    let src;
+    let dst;
+    let mut extra = NoExtra;
     if (w0 & 0b1111000111111000) == 0b1001000100000000 {
         let x = get_bits(w0, 9, 3);
         let y = get_bits(w0, 0, 3);
@@ -2327,6 +2437,18 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             extra: extra,
         });
     }
+    return Err(NotImplemented);
+}
+#[allow(non_snake_case)]
+#[allow(unused_mut)]
+pub fn decode_group_1011(
+    w0: u16,
+    cs: &mut CodeStream,
+) -> Result<DecodedInstruction, DecodingError> {
+    let sz;
+    let src;
+    let dst;
+    let mut extra = NoExtra;
     if (w0 & 0b1111000111000000) == 0b1011000011000000 {
         let a = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
@@ -2478,6 +2600,18 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             extra: extra,
         });
     }
+    return Err(NotImplemented);
+}
+#[allow(non_snake_case)]
+#[allow(unused_mut)]
+pub fn decode_group_1100(
+    w0: u16,
+    cs: &mut CodeStream,
+) -> Result<DecodedInstruction, DecodingError> {
+    let sz;
+    let src;
+    let dst;
+    let mut extra = NoExtra;
     if (w0 & 0b1111000111111000) == 0b1100000100000000 {
         let y = get_bits(w0, 9, 3);
         let x = get_bits(w0, 0, 3);
@@ -2655,6 +2789,18 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             extra: extra,
         });
     }
+    return Err(NotImplemented);
+}
+#[allow(non_snake_case)]
+#[allow(unused_mut)]
+pub fn decode_group_1101(
+    w0: u16,
+    cs: &mut CodeStream,
+) -> Result<DecodedInstruction, DecodingError> {
+    let sz;
+    let src;
+    let dst;
+    let mut extra = NoExtra;
     if (w0 & 0b1111000111111000) == 0b1101000100000000 {
         let x = get_bits(w0, 9, 3);
         let y = get_bits(w0, 0, 3);
@@ -2817,6 +2963,18 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             extra: extra,
         });
     }
+    return Err(NotImplemented);
+}
+#[allow(non_snake_case)]
+#[allow(unused_mut)]
+pub fn decode_group_1110(
+    w0: u16,
+    cs: &mut CodeStream,
+) -> Result<DecodedInstruction, DecodingError> {
+    let sz;
+    let src;
+    let dst;
+    let mut extra = NoExtra;
     if (w0 & 0b1111111111000000) == 0b1110101011000000 && cs.has_words(1) {
         let w1 = cs.peek_word(0);
         if (w1 & 0b1111000000000000) == 0b0000000000000000 {
@@ -3726,4 +3884,25 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
         });
     }
     return Err(NotImplemented);
+}
+pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {
+    let mut cs = CodeStream::new(code);
+    let w0 = cs.pull16();
+    match w0 >> 12 {
+        0b0000 => decode_group_0000(w0, &mut cs),
+        0b0001 => decode_group_0001(w0, &mut cs),
+        0b0010 => decode_group_0010(w0, &mut cs),
+        0b0011 => decode_group_0011(w0, &mut cs),
+        0b0100 => decode_group_0100(w0, &mut cs),
+        0b0101 => decode_group_0101(w0, &mut cs),
+        0b0110 => decode_group_0110(w0, &mut cs),
+        0b0111 => decode_group_0111(w0, &mut cs),
+        0b1000 => decode_group_1000(w0, &mut cs),
+        0b1001 => decode_group_1001(w0, &mut cs),
+        0b1011 => decode_group_1011(w0, &mut cs),
+        0b1100 => decode_group_1100(w0, &mut cs),
+        0b1101 => decode_group_1101(w0, &mut cs),
+        0b1110 => decode_group_1110(w0, &mut cs),
+        _ => Err(NotImplemented),
+    }
 }

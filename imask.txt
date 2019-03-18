@@ -290,10 +290,9 @@ BSR             0110_0001_0000_0000 sz=2; src = PCDISP(2, simple_disp(cs.pull16(
 BSR             0110_0001_1111_1111 sz=4; src = PCDISP(2, simple_disp(cs.pull32() as i32)); dst=NoOperand;
 BSR             0110_0001_dddd_dddd sz=1; src = PCDISP(2, simple_disp(d as i8 as i32)); dst=NoOperand;
 
+BCC             
 
-#define BSR_MASK  ENCW(1,1,1,1, 1,1,1,1, 0,0,0,0, 0,0,0,0)
 #define Bcc_MASK  ENCW(1,1,1,1, 0,0,0,0, 0,0,0,0, 0,0,0,0)
-#define BSR_INST  ENCW(0,1,1,0, 0,0,0,1, 0,0,0,0, 0,0,0,0)
 #define Bcc_INST  ENCW(0,1,1,0, 0,0,0,0, 0,0,0,0, 0,0,0,0)
 
 

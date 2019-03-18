@@ -118,6 +118,7 @@ pub enum InstructionExtra {
     NoExtra,
     Bitfield(BitfieldData, BitfieldData),
     Condition(ConditionCode),
+    PackAdjustment(u16),
 }
 
 #[derive(Debug, PartialEq)]

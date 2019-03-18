@@ -725,3 +725,15 @@
 > lab:
 >   bcs.l lab
 # Instruction { size: 4, operation: BCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: Condition(CC_CS) }
+
+> pack d0,d1,#12
+# Instruction { size: 0, operation: PACK, operands: [ DR(D0), DR(D1) ], extra: PackAdjustment(12) }
+
+> unpk d0,d1,#12
+# Instruction { size: 0, operation: UNPK, operands: [ DR(D0), DR(D1) ], extra: PackAdjustment(12) }
+
+> pack -(a0),-(a1),#37
+# Instruction { size: 0, operation: PACK, operands: [ ARDEC(A0), ARDEC(A1) ], extra: PackAdjustment(37) }
+
+> unpk -(a0),-(a1),#37
+# Instruction { size: 0, operation: UNPK, operands: [ ARDEC(A0), ARDEC(A1) ], extra: PackAdjustment(37) }

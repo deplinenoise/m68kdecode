@@ -95,6 +95,8 @@ pub enum Operation {
     BRA,
     BSR,
     BCC,
+    PACK,
+    UNPK,
 }
 #[allow(non_snake_case)]
 pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {
@@ -2649,6 +2651,62 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
         return cs.check_overflow(Instruction {
             size: sz,
             operation: BCC,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111000111111000) == 0b1000000101000000 {
+        let y = get_bits(w0, 9, 3);
+        let x = get_bits(w0, 0, 3);
+        sz = 0;
+        src = cs.data_reg_op(x);
+        dst = cs.data_reg_op(y);
+        extra = PackAdjustment(cs.pull16());
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: PACK,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111000111111000) == 0b1000000101001000 {
+        let y = get_bits(w0, 9, 3);
+        let x = get_bits(w0, 0, 3);
+        sz = 0;
+        src = ARDEC(cs.address_reg(x));
+        dst = ARDEC(cs.address_reg(y));
+        extra = PackAdjustment(cs.pull16());
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: PACK,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111000111111000) == 0b1000000110000000 {
+        let y = get_bits(w0, 9, 3);
+        let x = get_bits(w0, 0, 3);
+        sz = 0;
+        src = cs.data_reg_op(x);
+        dst = cs.data_reg_op(y);
+        extra = PackAdjustment(cs.pull16());
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: UNPK,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111000111111000) == 0b1000000110001000 {
+        let y = get_bits(w0, 9, 3);
+        let x = get_bits(w0, 0, 3);
+        sz = 0;
+        src = ARDEC(cs.address_reg(x));
+        dst = ARDEC(cs.address_reg(y));
+        extra = PackAdjustment(cs.pull16());
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: UNPK,
             operands: [src, dst],
             extra: extra,
         });

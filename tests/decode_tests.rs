@@ -3048,4 +3048,60 @@ mod tests {
             &[" lab:", "   bcs.l lab"],
         );
     }
+    //  pack d0,d1,#12
+    #[test]
+    fn test_decode_0214_pack_d0_d1_12() {
+        test_decoding_result_ok(
+            &[0x83, 0x40, 0x00, 0x0c],
+            Instruction {
+                size: 0,
+                operation: PACK,
+                operands: [DR(D0), DR(D1)],
+                extra: PackAdjustment(12),
+            },
+            &[" pack d0,d1,#12"],
+        );
+    }
+    //  unpk d0,d1,#12
+    #[test]
+    fn test_decode_0215_unpk_d0_d1_12() {
+        test_decoding_result_ok(
+            &[0x83, 0x80, 0x00, 0x0c],
+            Instruction {
+                size: 0,
+                operation: UNPK,
+                operands: [DR(D0), DR(D1)],
+                extra: PackAdjustment(12),
+            },
+            &[" unpk d0,d1,#12"],
+        );
+    }
+    //  pack -(a0),-(a1),#37
+    #[test]
+    fn test_decode_0216_pack_a0_a1_37() {
+        test_decoding_result_ok(
+            &[0x83, 0x48, 0x00, 0x25],
+            Instruction {
+                size: 0,
+                operation: PACK,
+                operands: [ARDEC(A0), ARDEC(A1)],
+                extra: PackAdjustment(37),
+            },
+            &[" pack -(a0),-(a1),#37"],
+        );
+    }
+    //  unpk -(a0),-(a1),#37
+    #[test]
+    fn test_decode_0217_unpk_a0_a1_37() {
+        test_decoding_result_ok(
+            &[0x83, 0x88, 0x00, 0x25],
+            Instruction {
+                size: 0,
+                operation: UNPK,
+                operands: [ARDEC(A0), ARDEC(A1)],
+                extra: PackAdjustment(37),
+            },
+            &[" unpk -(a0),-(a1),#37"],
+        );
+    }
 }

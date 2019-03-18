@@ -294,19 +294,16 @@ BCC             0110_cccc_0000_0000 sz=2; src = PCDISP(2, simple_disp(cs.pull16(
 BCC             0110_cccc_1111_1111 sz=4; src = PCDISP(2, simple_disp(cs.pull32() as i32)); dst=NoOperand; extra=cs.cc(c);
 BCC             0110_cccc_dddd_dddd sz=1; src = PCDISP(2, simple_disp(d as i8 as i32)); dst=NoOperand; extra=cs.cc(c);
 
-
-#define Bcc_MASK  ENCW(1,1,1,1, 0,0,0,0, 0,0,0,0, 0,0,0,0)
-#define Bcc_INST  ENCW(0,1,1,0, 0,0,0,0, 0,0,0,0, 0,0,0,0)
-
-
 #/*
 # * Group SBCD/DIVx/OR (1000)
 # */
 
-#define PACKA_MASK  ENCW(1,1,1,1, 0,0,0,1, 1,1,1,1, 1,0,0,0)
-#define PACKD_MASK  ENCW(1,1,1,1, 0,0,0,1, 1,1,1,1, 1,0,0,0)
-#define PACKA_INST  ENCW(1,0,0,0, 0,0,0,1, 0,1,0,0, 1,0,0,0)
-#define PACKD_INST  ENCW(1,0,0,0, 0,0,0,1, 0,1,0,0, 0,0,0,0)
+PACK            1000_yyy1_0100_0xxx sz=0; src = cs.data_reg_op(x); dst = cs.data_reg_op(y); extra=PackAdjustment(cs.pull16());
+PACK            1000_yyy1_0100_1xxx sz=0; src = ARDEC(cs.address_reg(x)); dst = ARDEC(cs.address_reg(y)); extra=PackAdjustment(cs.pull16());
+
+UNPK            1000_yyy1_1000_0xxx sz=0; src = cs.data_reg_op(x); dst = cs.data_reg_op(y); extra=PackAdjustment(cs.pull16());
+UNPK            1000_yyy1_1000_1xxx sz=0; src = ARDEC(cs.address_reg(x)); dst = ARDEC(cs.address_reg(y)); extra=PackAdjustment(cs.pull16());
+
 #define UNPKA_MASK  ENCW(1,1,1,1, 0,0,0,1, 1,1,1,1, 1,0,0,0)
 #define UNPKD_MASK  ENCW(1,1,1,1, 0,0,0,1, 1,1,1,1, 1,0,0,0)
 #define UNPKA_INST  ENCW(1,0,0,0, 0,0,0,1, 1,0,0,0, 1,0,0,0)

@@ -602,3 +602,21 @@
 
 > addx.l -(a2),-(a3)
 # Instruction { size: 4, operation: ADDX, operands: [ ARDEC(A2), ARDEC(A3) ], extra: NoExtra }
+
+> add.b (a2),d0
+# Instruction { size: 1, operation: ADD, operands: [ ARIND(A2), DR(D0) ], extra: NoExtra }
+
+> add.w (a2),d0
+# Instruction { size: 2, operation: ADD, operands: [ ARIND(A2), DR(D0) ], extra: NoExtra }
+
+> add.l (a2),d0
+# Instruction { size: 4, operation: ADD, operands: [ ARIND(A2), DR(D0) ], extra: NoExtra }
+
+> add.b d3,(a2)
+# Instruction { size: 1, operation: ADD, operands: [ DR(D3), ARIND(A2) ], extra: NoExtra }
+
+> add.w d3,(a2)
+# Instruction { size: 2, operation: ADD, operands: [ DR(D3), ARIND(A2) ], extra: NoExtra }
+
+> add.l d3,(a2)
+# Instruction { size: 4, operation: ADD, operands: [ DR(D3), ARIND(A2) ], extra: NoExtra }

@@ -2507,4 +2507,88 @@ mod tests {
             &[" addx.l -(a2),-(a3)"],
         );
     }
+    //  add.b (a2),d0
+    #[test]
+    fn test_decode_0176_add_b_a2_d0() {
+        test_decoding_result_ok(
+            &[0xd0, 0x12],
+            Instruction {
+                size: 1,
+                operation: ADD,
+                operands: [ARIND(A2), DR(D0)],
+                extra: NoExtra,
+            },
+            &[" add.b (a2),d0"],
+        );
+    }
+    //  add.w (a2),d0
+    #[test]
+    fn test_decode_0177_add_w_a2_d0() {
+        test_decoding_result_ok(
+            &[0xd0, 0x52],
+            Instruction {
+                size: 2,
+                operation: ADD,
+                operands: [ARIND(A2), DR(D0)],
+                extra: NoExtra,
+            },
+            &[" add.w (a2),d0"],
+        );
+    }
+    //  add.l (a2),d0
+    #[test]
+    fn test_decode_0178_add_l_a2_d0() {
+        test_decoding_result_ok(
+            &[0xd0, 0x92],
+            Instruction {
+                size: 4,
+                operation: ADD,
+                operands: [ARIND(A2), DR(D0)],
+                extra: NoExtra,
+            },
+            &[" add.l (a2),d0"],
+        );
+    }
+    //  add.b d3,(a2)
+    #[test]
+    fn test_decode_0179_add_b_d3_a2_() {
+        test_decoding_result_ok(
+            &[0xd7, 0x12],
+            Instruction {
+                size: 1,
+                operation: ADD,
+                operands: [DR(D3), ARIND(A2)],
+                extra: NoExtra,
+            },
+            &[" add.b d3,(a2)"],
+        );
+    }
+    //  add.w d3,(a2)
+    #[test]
+    fn test_decode_0180_add_w_d3_a2_() {
+        test_decoding_result_ok(
+            &[0xd7, 0x52],
+            Instruction {
+                size: 2,
+                operation: ADD,
+                operands: [DR(D3), ARIND(A2)],
+                extra: NoExtra,
+            },
+            &[" add.w d3,(a2)"],
+        );
+    }
+    //  add.l d3,(a2)
+    #[test]
+    fn test_decode_0181_add_l_d3_a2_() {
+        test_decoding_result_ok(
+            &[0xd7, 0x92],
+            Instruction {
+                size: 4,
+                operation: ADD,
+                operands: [DR(D3), ARIND(A2)],
+                extra: NoExtra,
+            },
+            &[" add.l d3,(a2)"],
+        );
+    }
 }

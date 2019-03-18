@@ -225,8 +225,14 @@ ADDX            1101_xxx1_0000_1yyy sz=1; src=ARDEC(cs.address_reg(y)); dst=ARDE
 ADDX            1101_xxx1_0100_1yyy sz=2; src=ARDEC(cs.address_reg(y)); dst=ARDEC(cs.address_reg(x));
 ADDX            1101_xxx1_1000_1yyy sz=4; src=ARDEC(cs.address_reg(y)); dst=ARDEC(cs.address_reg(x));
 
-#define ADDX_MASK ENCW(1,1,1,1, 0,0,0,1, 0,0,1,1, 0,0,0,0)
-#define ADDX_INST ENCW(1,1,0,1, 0,0,0,1, 0,0,0,0, 0,0,0,0)
+
+ADD             1101_ddd0_00mm_mrrr sz=1; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
+ADD             1101_ddd0_01mm_mrrr sz=2; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
+ADD             1101_ddd0_10mm_mrrr sz=4; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
+ADD             1101_ddd1_00mm_mrrr sz=1; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz); 
+ADD             1101_ddd1_01mm_mrrr sz=2; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz); 
+ADD             1101_ddd1_10mm_mrrr sz=4; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz); 
+
 #define ADD_MASK  ENCW(1,1,1,1, 0,0,0,0, 0,0,0,0, 0,0,0,0)
 #define ADD_INST  ENCW(1,1,0,1, 0,0,0,0, 0,0,0,0, 0,0,0,0)
 

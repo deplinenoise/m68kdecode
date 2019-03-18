@@ -656,3 +656,18 @@
 
 > sub.l d3,(a2)
 # Instruction { size: 4, operation: SUB, operands: [ DR(D3), ARIND(A2) ], extra: NoExtra }
+
+> cmpa.w (a1),a2
+# Instruction { size: 2, operation: CMPA, operands: [ ARIND(A1), AR(A2) ], extra: NoExtra }
+
+> cmpa.l (a1),a2
+# Instruction { size: 4, operation: CMPA, operands: [ ARIND(A1), AR(A2) ], extra: NoExtra }
+
+> cmpm.b (a0)+,(a2)+
+# Instruction { size: 1, operation: CMPM, operands: [ ARINC(A0), ARINC(A2) ], extra: NoExtra }
+
+> cmpm.w (a0)+,(a2)+
+# Instruction { size: 2, operation: CMPM, operands: [ ARINC(A0), ARINC(A2) ], extra: NoExtra }
+
+> cmpm.l (a0)+,(a2)+
+# Instruction { size: 4, operation: CMPM, operands: [ ARINC(A0), ARINC(A2) ], extra: NoExtra }

@@ -88,6 +88,8 @@ pub enum Operation {
     ADD,
     SUBX,
     SUB,
+    CMPA,
+    CMPM,
 }
 #[allow(non_snake_case)]
 pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {
@@ -2383,6 +2385,73 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
         return cs.check_overflow(Instruction {
             size: sz,
             operation: SUB,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111000111000000) == 0b1011000011000000 {
+        let a = get_bits(w0, 9, 3);
+        let m = get_bits(w0, 3, 3);
+        let r = get_bits(w0, 0, 3);
+        sz = 2;
+        src = cs.ea(r, m, sz);
+        dst = cs.address_reg_op(a);
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: CMPA,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111000111000000) == 0b1011000111000000 {
+        let a = get_bits(w0, 9, 3);
+        let m = get_bits(w0, 3, 3);
+        let r = get_bits(w0, 0, 3);
+        sz = 4;
+        src = cs.ea(r, m, sz);
+        dst = cs.address_reg_op(a);
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: CMPA,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111000111111000) == 0b1011000100001000 {
+        let x = get_bits(w0, 9, 3);
+        let y = get_bits(w0, 0, 3);
+        sz = 1;
+        src = ARINC(cs.address_reg(y));
+        dst = ARINC(cs.address_reg(x));
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: CMPM,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111000111111000) == 0b1011000101001000 {
+        let x = get_bits(w0, 9, 3);
+        let y = get_bits(w0, 0, 3);
+        sz = 2;
+        src = ARINC(cs.address_reg(y));
+        dst = ARINC(cs.address_reg(x));
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: CMPM,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111000111111000) == 0b1011000110001000 {
+        let x = get_bits(w0, 9, 3);
+        let y = get_bits(w0, 0, 3);
+        sz = 4;
+        src = ARINC(cs.address_reg(y));
+        dst = ARINC(cs.address_reg(x));
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: CMPM,
             operands: [src, dst],
             extra: extra,
         });

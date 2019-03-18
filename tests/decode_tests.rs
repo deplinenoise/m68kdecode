@@ -2759,4 +2759,74 @@ mod tests {
             &[" sub.l d3,(a2)"],
         );
     }
+    //  cmpa.w (a1),a2
+    #[test]
+    fn test_decode_0194_cmpa_w_a1_a2() {
+        test_decoding_result_ok(
+            &[0xb4, 0xd1],
+            Instruction {
+                size: 2,
+                operation: CMPA,
+                operands: [ARIND(A1), AR(A2)],
+                extra: NoExtra,
+            },
+            &[" cmpa.w (a1),a2"],
+        );
+    }
+    //  cmpa.l (a1),a2
+    #[test]
+    fn test_decode_0195_cmpa_l_a1_a2() {
+        test_decoding_result_ok(
+            &[0xb5, 0xd1],
+            Instruction {
+                size: 4,
+                operation: CMPA,
+                operands: [ARIND(A1), AR(A2)],
+                extra: NoExtra,
+            },
+            &[" cmpa.l (a1),a2"],
+        );
+    }
+    //  cmpm.b (a0)+,(a2)+
+    #[test]
+    fn test_decode_0196_cmpm_b_a0_a2_() {
+        test_decoding_result_ok(
+            &[0xb5, 0x08],
+            Instruction {
+                size: 1,
+                operation: CMPM,
+                operands: [ARINC(A0), ARINC(A2)],
+                extra: NoExtra,
+            },
+            &[" cmpm.b (a0)+,(a2)+"],
+        );
+    }
+    //  cmpm.w (a0)+,(a2)+
+    #[test]
+    fn test_decode_0197_cmpm_w_a0_a2_() {
+        test_decoding_result_ok(
+            &[0xb5, 0x48],
+            Instruction {
+                size: 2,
+                operation: CMPM,
+                operands: [ARINC(A0), ARINC(A2)],
+                extra: NoExtra,
+            },
+            &[" cmpm.w (a0)+,(a2)+"],
+        );
+    }
+    //  cmpm.l (a0)+,(a2)+
+    #[test]
+    fn test_decode_0198_cmpm_l_a0_a2_() {
+        test_decoding_result_ok(
+            &[0xb5, 0x88],
+            Instruction {
+                size: 4,
+                operation: CMPM,
+                operands: [ARINC(A0), ARINC(A2)],
+                extra: NoExtra,
+            },
+            &[" cmpm.l (a0)+,(a2)+"],
+        );
+    }
 }

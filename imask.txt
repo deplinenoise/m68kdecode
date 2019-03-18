@@ -262,6 +262,14 @@ SUB             1001_ddd1_10mm_mrrr sz=4; src=cs.data_reg_op(d); dst=cs.ea(r, m,
 #/*
 # * Group CMP/CMPA/EOR (1011)
 # */
+
+CMPA            1011_aaa0_11mm_mrrr sz=2; src=cs.ea(r, m, sz); dst=cs.address_reg_op(a);
+CMPA            1011_aaa1_11mm_mrrr sz=4; src=cs.ea(r, m, sz); dst=cs.address_reg_op(a);
+
+CMPM            1011_xxx1_0000_1yyy sz=1; src=ARINC(cs.address_reg(y)); dst=ARINC(cs.address_reg(x));
+CMPM            1011_xxx1_0100_1yyy sz=2; src=ARINC(cs.address_reg(y)); dst=ARINC(cs.address_reg(x));
+CMPM            1011_xxx1_1000_1yyy sz=4; src=ARINC(cs.address_reg(y)); dst=ARINC(cs.address_reg(x));
+
 #define CMPA_MASK ENCW(1,1,1,1, 0,0,0,0, 1,1,0,0, 0,0,0,0)
 #define CMPA_INST ENCW(1,0,1,1, 0,0,0,0, 1,1,0,0, 0,0,0,0)
 

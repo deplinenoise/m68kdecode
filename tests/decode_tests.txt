@@ -554,3 +554,12 @@
 
 > .self: dble d3,.self
 # Instruction { size: 2, operation: DBCC, operands: [ DR(D3), PCDISP(2, simple_disp(-2)) ], extra: Condition(CC_LE) }
+
+> addq.b #1,d0
+# Instruction { size: 1, operation: ADDQ, operands: [ IMM8(1), DR(D0) ], extra: NoExtra }
+
+> addq.w #7,a0
+# Instruction { size: 2, operation: ADDQ, operands: [ IMM8(7), AR(A0) ], extra: NoExtra }
+
+> addq.l #8,d0
+# Instruction { size: 4, operation: ADDQ, operands: [ IMM8(8), DR(D0) ], extra: NoExtra }

@@ -199,13 +199,15 @@ BFTST           1110_1000_11mm_mrrr 0000_Oooo_ooWw_wwww extra = cs.bitfield(O, o
 
 DBCC            0101_cccc_1100_1rrr sz=2; src=cs.data_reg_op(r); dst=PCDISP(2, simple_disp(cs.pull16() as i16 as i32)); extra=cs.cc(c);
 
+ADDQ            0101_ddd0_00mm_mrrr sz=1; src=cs.quick_const(d); dst=cs.ea(r, m, sz);
+ADDQ            0101_ddd0_01mm_mrrr sz=2; src=cs.quick_const(d); dst=cs.ea(r, m, sz);
+ADDQ            0101_ddd0_10mm_mrrr sz=4; src=cs.quick_const(d); dst=cs.ea(r, m, sz);
+
 #define TRAPcc_MASK ENCW(1,1,1,1, 0,0,0,0, 1,1,1,1, 1,0,0,0)
 #define Scc_MASK  ENCW(1,1,1,1, 0,0,0,0, 1,1,0,0, 0,0,0,0)
-#define ADDQ_MASK ENCW(1,1,1,1, 0,0,0,1, 0,0,0,0, 0,0,0,0)
 #define SUBQ_MASK ENCW(1,1,1,1, 0,0,0,1, 0,0,0,0, 0,0,0,0)
 #define TRAPcc_INST ENCW(0,1,0,1, 0,0,0,0, 1,1,1,1, 1,0,0,0)
 #define Scc_INST  ENCW(0,1,0,1, 0,0,0,0, 1,1,0,0, 0,0,0,0)
-#define ADDQ_INST ENCW(0,1,0,1, 0,0,0,0, 0,0,0,0, 0,0,0,0)
 #define SUBQ_INST ENCW(0,1,0,1, 0,0,0,1, 0,0,0,0, 0,0,0,0)
 
 #/*

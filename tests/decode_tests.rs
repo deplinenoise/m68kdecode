@@ -2283,4 +2283,46 @@ mod tests {
             &[" .self: dble d3,.self"],
         );
     }
+    //  addq.b #1,d0
+    #[test]
+    fn test_decode_0160_addq_b_1_d0() {
+        test_decoding_result_ok(
+            &[0x52, 0x00],
+            Instruction {
+                size: 1,
+                operation: ADDQ,
+                operands: [IMM8(1), DR(D0)],
+                extra: NoExtra,
+            },
+            &[" addq.b #1,d0"],
+        );
+    }
+    //  addq.w #7,a0
+    #[test]
+    fn test_decode_0161_addq_w_7_a0() {
+        test_decoding_result_ok(
+            &[0x5e, 0x48],
+            Instruction {
+                size: 2,
+                operation: ADDQ,
+                operands: [IMM8(7), AR(A0)],
+                extra: NoExtra,
+            },
+            &[" addq.w #7,a0"],
+        );
+    }
+    //  addq.l #8,d0
+    #[test]
+    fn test_decode_0162_addq_l_8_d0() {
+        test_decoding_result_ok(
+            &[0x50, 0x80],
+            Instruction {
+                size: 4,
+                operation: ADDQ,
+                operands: [IMM8(8), DR(D0)],
+                extra: NoExtra,
+            },
+            &[" addq.l #8,d0"],
+        );
+    }
 }

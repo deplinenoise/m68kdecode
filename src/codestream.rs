@@ -294,5 +294,9 @@ impl<'a> CodeStream<'a> {
             _      => CC_LE ,         // Less or Equal
         })
     }
+
+    pub fn quick_const(&self, i: u16) -> Operand {
+        IMM8(if i == 0 { 8 } else { i as u8 })
+    }
 }
 

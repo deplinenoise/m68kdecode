@@ -737,3 +737,9 @@
 
 > unpk -(a0),-(a1),#37
 # Instruction { size: 0, operation: UNPK, operands: [ ARDEC(A0), ARDEC(A1) ], extra: PackAdjustment(37) }
+
+> sbcd -(a0),-(a1)
+# Instruction { size: 1, operation: SBCD, operands: [ ARDEC(A0), ARDEC(A1) ], extra: NoExtra }
+
+> sbcd d3,d4
+# Instruction { size: 1, operation: SBCD, operands: [ DR(D3), DR(D4) ], extra: NoExtra }

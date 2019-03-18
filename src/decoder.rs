@@ -97,6 +97,7 @@ pub enum Operation {
     BCC,
     PACK,
     UNPK,
+    SBCD,
 }
 #[allow(non_snake_case)]
 pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {
@@ -2707,6 +2708,32 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
         return cs.check_overflow(Instruction {
             size: sz,
             operation: UNPK,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111000111111000) == 0b1000000100000000 {
+        let y = get_bits(w0, 9, 3);
+        let x = get_bits(w0, 0, 3);
+        sz = 1;
+        src = cs.data_reg_op(x);
+        dst = cs.data_reg_op(y);
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: SBCD,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111000111111000) == 0b1000000100001000 {
+        let y = get_bits(w0, 9, 3);
+        let x = get_bits(w0, 0, 3);
+        sz = 1;
+        src = ARDEC(cs.address_reg(x));
+        dst = ARDEC(cs.address_reg(y));
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: SBCD,
             operands: [src, dst],
             extra: extra,
         });

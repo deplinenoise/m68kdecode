@@ -304,14 +304,8 @@ PACK            1000_yyy1_0100_1xxx sz=0; src = ARDEC(cs.address_reg(x)); dst = 
 UNPK            1000_yyy1_1000_0xxx sz=0; src = cs.data_reg_op(x); dst = cs.data_reg_op(y); extra=PackAdjustment(cs.pull16());
 UNPK            1000_yyy1_1000_1xxx sz=0; src = ARDEC(cs.address_reg(x)); dst = ARDEC(cs.address_reg(y)); extra=PackAdjustment(cs.pull16());
 
-#define UNPKA_MASK  ENCW(1,1,1,1, 0,0,0,1, 1,1,1,1, 1,0,0,0)
-#define UNPKD_MASK  ENCW(1,1,1,1, 0,0,0,1, 1,1,1,1, 1,0,0,0)
-#define UNPKA_INST  ENCW(1,0,0,0, 0,0,0,1, 1,0,0,0, 1,0,0,0)
-#define UNPKD_INST  ENCW(1,0,0,0, 0,0,0,1, 1,0,0,0, 0,0,0,0)
-#define SBCDA_MASK  ENCW(1,1,1,1, 0,0,0,1, 1,1,1,1, 1,0,0,0)
-#define SBCDD_MASK  ENCW(1,1,1,1, 0,0,0,1, 1,1,1,1, 1,0,0,0)
-#define SBCDA_INST  ENCW(1,0,0,0, 0,0,0,1, 0,0,0,0, 1,0,0,0)
-#define SBCDD_INST  ENCW(1,0,0,0, 0,0,0,1, 0,0,0,0, 0,0,0,0)
+SBCD            1000_yyy1_0000_0xxx sz=1; src = cs.data_reg_op(x); dst = cs.data_reg_op(y);
+SBCD            1000_yyy1_0000_1xxx sz=1; src = ARDEC(cs.address_reg(x)); dst = ARDEC(cs.address_reg(y));
 
 #define DIVSW_MASK  ENCW(1,1,1,1, 0,0,0,1, 1,1,0,0, 0,0,0,0)
 #define DIVUW_MASK  ENCW(1,1,1,1, 0,0,0,1, 1,1,0,0, 0,0,0,0)

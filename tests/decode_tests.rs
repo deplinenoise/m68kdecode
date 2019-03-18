@@ -3104,4 +3104,32 @@ mod tests {
             &[" unpk -(a0),-(a1),#37"],
         );
     }
+    //  sbcd -(a0),-(a1)
+    #[test]
+    fn test_decode_0218_sbcd_a0_a1_() {
+        test_decoding_result_ok(
+            &[0x83, 0x08],
+            Instruction {
+                size: 1,
+                operation: SBCD,
+                operands: [ARDEC(A0), ARDEC(A1)],
+                extra: NoExtra,
+            },
+            &[" sbcd -(a0),-(a1)"],
+        );
+    }
+    //  sbcd d3,d4
+    #[test]
+    fn test_decode_0219_sbcd_d3_d4() {
+        test_decoding_result_ok(
+            &[0x89, 0x03],
+            Instruction {
+                size: 1,
+                operation: SBCD,
+                operands: [DR(D3), DR(D4)],
+                extra: NoExtra,
+            },
+            &[" sbcd d3,d4"],
+        );
+    }
 }

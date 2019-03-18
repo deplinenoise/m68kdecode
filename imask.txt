@@ -274,14 +274,9 @@ CMP             1011_ddd0_00mm_mrrr sz=1; src=cs.ea(r, m, sz); dst=cs.data_reg_o
 CMP             1011_ddd0_01mm_mrrr sz=2; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
 CMP             1011_ddd0_10mm_mrrr sz=4; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
 
-#define CMPA_MASK ENCW(1,1,1,1, 0,0,0,0, 1,1,0,0, 0,0,0,0)
-#define CMPA_INST ENCW(1,0,1,1, 0,0,0,0, 1,1,0,0, 0,0,0,0)
-
-#define CMP_MASK  ENCW(1,1,1,1, 0,0,0,1, 0,0,0,0, 0,0,0,0)
-#define CMP_INST  ENCW(1,0,1,1, 0,0,0,0, 0,0,0,0, 0,0,0,0)
-
-#define CMPM_MASK ENCW(1,1,1,1, 0,0,0,1, 0,0,1,1, 1,0,0,0)
-#define CMPM_INST ENCW(1,0,1,1, 0,0,0,1, 0,0,0,0, 1,0,0,0)
+EOR             1011_ddd1_00mm_mrrr sz=1; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz);
+EOR             1011_ddd1_01mm_mrrr sz=2; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz);
+EOR             1011_ddd1_10mm_mrrr sz=4; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz);
 
 #define EOR_MASK  ENCW(1,1,1,1, 0,0,0,1, 0,0,0,0, 0,0,0,0)
 #define EOR_INST  ENCW(1,0,1,1, 0,0,0,1, 0,0,0,0, 0,0,0,0)

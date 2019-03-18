@@ -680,3 +680,12 @@
 
 > cmp.l (a0)+,d7
 # Instruction { size: 4, operation: CMP, operands: [ ARINC(A0), DR(D7) ], extra: NoExtra }
+
+> eor.b d7,(a0)+
+# Instruction { size: 1, operation: EOR, operands: [ DR(D7), ARINC(A0) ], extra: NoExtra }
+
+> eor.w d7,(a0)+
+# Instruction { size: 2, operation: EOR, operands: [ DR(D7), ARINC(A0) ], extra: NoExtra }
+
+> eor.l d7,-(a0)
+# Instruction { size: 4, operation: EOR, operands: [ DR(D7), ARDEC(A0) ], extra: NoExtra }

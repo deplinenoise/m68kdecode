@@ -2871,4 +2871,46 @@ mod tests {
             &[" cmp.l (a0)+,d7"],
         );
     }
+    //  eor.b d7,(a0)+
+    #[test]
+    fn test_decode_0202_eor_b_d7_a0_() {
+        test_decoding_result_ok(
+            &[0xbf, 0x18],
+            Instruction {
+                size: 1,
+                operation: EOR,
+                operands: [DR(D7), ARINC(A0)],
+                extra: NoExtra,
+            },
+            &[" eor.b d7,(a0)+"],
+        );
+    }
+    //  eor.w d7,(a0)+
+    #[test]
+    fn test_decode_0203_eor_w_d7_a0_() {
+        test_decoding_result_ok(
+            &[0xbf, 0x58],
+            Instruction {
+                size: 2,
+                operation: EOR,
+                operands: [DR(D7), ARINC(A0)],
+                extra: NoExtra,
+            },
+            &[" eor.w d7,(a0)+"],
+        );
+    }
+    //  eor.l d7,-(a0)
+    #[test]
+    fn test_decode_0204_eor_l_d7_a0_() {
+        test_decoding_result_ok(
+            &[0xbf, 0xa0],
+            Instruction {
+                size: 4,
+                operation: EOR,
+                operands: [DR(D7), ARDEC(A0)],
+                extra: NoExtra,
+            },
+            &[" eor.l d7,-(a0)"],
+        );
+    }
 }

@@ -3003,4 +3003,49 @@ mod tests {
             &[" lab:", "   bsr.l lab"],
         );
     }
+    //  lab:
+    //    bne.s lab
+    #[test]
+    fn test_decode_0211_lab_() {
+        test_decoding_result_ok(
+            &[0x66, 0xfe],
+            Instruction {
+                size: 1,
+                operation: BCC,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: Condition(CC_NE),
+            },
+            &[" lab:", "   bne.s lab"],
+        );
+    }
+    //  lab:
+    //    beq.w lab
+    #[test]
+    fn test_decode_0212_lab_() {
+        test_decoding_result_ok(
+            &[0x67, 0x00, 0xff, 0xfe],
+            Instruction {
+                size: 2,
+                operation: BCC,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: Condition(CC_EQ),
+            },
+            &[" lab:", "   beq.w lab"],
+        );
+    }
+    //  lab:
+    //    bcs.l lab
+    #[test]
+    fn test_decode_0213_lab_() {
+        test_decoding_result_ok(
+            &[0x65, 0xff, 0xff, 0xff, 0xff, 0xfe],
+            Instruction {
+                size: 4,
+                operation: BCC,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: Condition(CC_CS),
+            },
+            &[" lab:", "   bcs.l lab"],
+        );
+    }
 }

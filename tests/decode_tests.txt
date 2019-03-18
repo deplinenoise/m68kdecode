@@ -713,3 +713,15 @@
 > lab:
 >   bsr.l lab
 # Instruction { size: 4, operation: BSR, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: NoExtra }
+
+> lab:
+>   bne.s lab
+# Instruction { size: 1, operation: BCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: Condition(CC_NE), }
+
+> lab:
+>   beq.w lab
+# Instruction { size: 2, operation: BCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: Condition(CC_EQ) }
+
+> lab:
+>   bcs.l lab
+# Instruction { size: 4, operation: BCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: Condition(CC_CS) }

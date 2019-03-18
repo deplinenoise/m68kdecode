@@ -2913,4 +2913,49 @@ mod tests {
             &[" eor.l d7,-(a0)"],
         );
     }
+    //  lab:
+    //    bra.s lab
+    #[test]
+    fn test_decode_0205_lab_() {
+        test_decoding_result_ok(
+            &[0x60, 0xfe],
+            Instruction {
+                size: 1,
+                operation: BRA,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: NoExtra,
+            },
+            &[" lab:", "   bra.s lab"],
+        );
+    }
+    //  lab:
+    //    bra.w lab
+    #[test]
+    fn test_decode_0206_lab_() {
+        test_decoding_result_ok(
+            &[0x60, 0x00, 0xff, 0xfe],
+            Instruction {
+                size: 2,
+                operation: BRA,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: NoExtra,
+            },
+            &[" lab:", "   bra.w lab"],
+        );
+    }
+    //  lab:
+    //    bra.l lab
+    #[test]
+    fn test_decode_0207_lab_() {
+        test_decoding_result_ok(
+            &[0x60, 0xff, 0xff, 0xff, 0xff, 0xfe],
+            Instruction {
+                size: 4,
+                operation: BRA,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: NoExtra,
+            },
+            &[" lab:", "   bra.l lab"],
+        );
+    }
 }

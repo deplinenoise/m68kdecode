@@ -92,6 +92,7 @@ pub enum Operation {
     CMPM,
     CMP,
     EOR,
+    BRA,
 }
 #[allow(non_snake_case)]
 pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {
@@ -2538,6 +2539,40 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
         return cs.check_overflow(Instruction {
             size: sz,
             operation: EOR,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111111111111111) == 0b0110000000000000 {
+        sz = 2;
+        src = PCDISP(2, simple_disp(cs.pull16() as i16 as i32));
+        dst = NoOperand;
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: BRA,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111111111111111) == 0b0110000011111111 {
+        sz = 4;
+        src = PCDISP(2, simple_disp(cs.pull32() as i32));
+        dst = NoOperand;
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: BRA,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111111100000000) == 0b0110000000000000 {
+        let d = get_bits(w0, 0, 8);
+        sz = 1;
+        src = PCDISP(2, simple_disp(d as i8 as i32));
+        dst = NoOperand;
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: BRA,
             operands: [src, dst],
             extra: extra,
         });

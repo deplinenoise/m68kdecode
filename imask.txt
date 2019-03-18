@@ -278,12 +278,14 @@ EOR             1011_ddd1_00mm_mrrr sz=1; src=cs.data_reg_op(d); dst=cs.ea(r, m,
 EOR             1011_ddd1_01mm_mrrr sz=2; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz);
 EOR             1011_ddd1_10mm_mrrr sz=4; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz);
 
-#define EOR_MASK  ENCW(1,1,1,1, 0,0,0,1, 0,0,0,0, 0,0,0,0)
-#define EOR_INST  ENCW(1,0,1,1, 0,0,0,1, 0,0,0,0, 0,0,0,0)
-
 #/*
 # * Group branch. (0110)
 # */
+
+BRA             0110_0000_0000_0000 sz=2; src = PCDISP(2, simple_disp(cs.pull16() as i16 as i32)); dst=NoOperand;
+BRA             0110_0000_1111_1111 sz=4; src = PCDISP(2, simple_disp(cs.pull32() as i32)); dst=NoOperand;
+BRA             0110_0000_dddd_dddd sz=1; src = PCDISP(2, simple_disp(d as i8 as i32)); dst=NoOperand;
+
 #define BRA_MASK  ENCW(1,1,1,1, 1,1,1,1, 0,0,0,0, 0,0,0,0)
 #define BSR_MASK  ENCW(1,1,1,1, 1,1,1,1, 0,0,0,0, 0,0,0,0)
 #define Bcc_MASK  ENCW(1,1,1,1, 0,0,0,0, 0,0,0,0, 0,0,0,0)

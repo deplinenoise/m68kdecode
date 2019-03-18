@@ -689,3 +689,15 @@
 
 > eor.l d7,-(a0)
 # Instruction { size: 4, operation: EOR, operands: [ DR(D7), ARDEC(A0) ], extra: NoExtra }
+
+> lab:
+>   bra.s lab
+# Instruction { size: 1, operation: BRA, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: NoExtra }
+
+> lab:
+>   bra.w lab
+# Instruction { size: 2, operation: BRA, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: NoExtra }
+
+> lab:
+>   bra.l lab
+# Instruction { size: 4, operation: BRA, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: NoExtra }

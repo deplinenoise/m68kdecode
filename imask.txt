@@ -333,9 +333,6 @@ AND             1100_ddd1_00mm_mrrr sz=1; src=cs.data_reg_op(d); dst=cs.ea(r, m,
 AND             1100_ddd1_01mm_mrrr sz=2; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz);
 AND             1100_ddd1_10mm_mrrr sz=4; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz);
 
-#define AND_MASK  ENCW(1,1,1,1, 0,0,0,0, 0,0,0,0, 0,0,0,0)
-#define AND_INST  ENCW(1,1,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0)
-
 #define ENCFT(b5,b4,b3,b2,b1,b0) ENCB(0,0,b5,b4,b3,b2,b1,b0)
 
 #define FABS  ENCFT(0,1,1,0,0,0)

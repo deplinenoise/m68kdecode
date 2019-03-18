@@ -97,7 +97,8 @@ with open(infile, "r") as inf:
         m = R_LINEFMT.match(line)
         if not m:
             sys.stderr.write('{}({}): bad line\n'.format(infile, lineno))
-            continue
+            sys.stderr.write('{}({}): line "{}"\n'.format(infile, lineno, line))
+            sys.exit(1)
 
         name, bits, result = m.groups()
 

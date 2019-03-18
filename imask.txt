@@ -333,6 +333,24 @@ AND             1100_ddd1_00mm_mrrr sz=1; src=cs.data_reg_op(d); dst=cs.ea(r, m,
 AND             1100_ddd1_01mm_mrrr sz=2; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz);
 AND             1100_ddd1_10mm_mrrr sz=4; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz);
 
+# Shifts
+
+ASL             1110_ccc1_0000_0rrr sz=1; src=IMM8(c as u8); dst=cs.data_reg_op(r);
+ASL             1110_ccc1_0100_0rrr sz=2; src=IMM8(c as u8); dst=cs.data_reg_op(r);
+ASL             1110_ccc1_1000_0rrr sz=4; src=IMM8(c as u8); dst=cs.data_reg_op(r);
+ASR             1110_ccc0_0000_0rrr sz=1; src=IMM8(c as u8); dst=cs.data_reg_op(r);
+ASR             1110_ccc0_0100_0rrr sz=2; src=IMM8(c as u8); dst=cs.data_reg_op(r);
+ASR             1110_ccc0_1000_0rrr sz=4; src=IMM8(c as u8); dst=cs.data_reg_op(r);
+ASL             1110_ccc1_0010_0rrr sz=1; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
+ASL             1110_ccc1_0110_0rrr sz=2; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
+ASL             1110_ccc1_1010_0rrr sz=4; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
+ASR             1110_ccc0_0010_0rrr sz=1; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
+ASR             1110_ccc0_0110_0rrr sz=2; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
+ASR             1110_ccc0_1010_0rrr sz=4; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
+
+ASL             1110_0001_11mm_mrrr sz=2; src=Implied; dst=cs.ea(r, m, sz);
+ASR             1110_0000_11mm_mrrr sz=2; src=Implied; dst=cs.ea(r, m, sz);
+
 #define ENCFT(b5,b4,b3,b2,b1,b0) ENCB(0,0,b5,b4,b3,b2,b1,b0)
 
 #define FABS  ENCFT(0,1,1,0,0,0)

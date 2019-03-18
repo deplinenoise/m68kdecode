@@ -3342,4 +3342,200 @@ mod tests {
             &[" and.l d0,(a0)+"],
         );
     }
+    //  asl.b #3,d7
+    #[test]
+    fn test_decode_0235_asl_b_3_d7() {
+        test_decoding_result_ok(
+            &[0xe7, 0x07],
+            Instruction {
+                size: 1,
+                operation: ASL,
+                operands: [IMM8(3), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" asl.b #3,d7"],
+        );
+    }
+    //  asl.w #3,d7
+    #[test]
+    fn test_decode_0236_asl_w_3_d7() {
+        test_decoding_result_ok(
+            &[0xe7, 0x47],
+            Instruction {
+                size: 2,
+                operation: ASL,
+                operands: [IMM8(3), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" asl.w #3,d7"],
+        );
+    }
+    //  asl.l #3,d7
+    #[test]
+    fn test_decode_0237_asl_l_3_d7() {
+        test_decoding_result_ok(
+            &[0xe7, 0x87],
+            Instruction {
+                size: 4,
+                operation: ASL,
+                operands: [IMM8(3), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" asl.l #3,d7"],
+        );
+    }
+    //  asr.b #3,d7
+    #[test]
+    fn test_decode_0238_asr_b_3_d7() {
+        test_decoding_result_ok(
+            &[0xe6, 0x07],
+            Instruction {
+                size: 1,
+                operation: ASR,
+                operands: [IMM8(3), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" asr.b #3,d7"],
+        );
+    }
+    //  asr.w #3,d7
+    #[test]
+    fn test_decode_0239_asr_w_3_d7() {
+        test_decoding_result_ok(
+            &[0xe6, 0x47],
+            Instruction {
+                size: 2,
+                operation: ASR,
+                operands: [IMM8(3), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" asr.w #3,d7"],
+        );
+    }
+    //  asr.l #3,d7
+    #[test]
+    fn test_decode_0240_asr_l_3_d7() {
+        test_decoding_result_ok(
+            &[0xe6, 0x87],
+            Instruction {
+                size: 4,
+                operation: ASR,
+                operands: [IMM8(3), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" asr.l #3,d7"],
+        );
+    }
+    //  asl.b d1,d7
+    #[test]
+    fn test_decode_0241_asl_b_d1_d7() {
+        test_decoding_result_ok(
+            &[0xe3, 0x27],
+            Instruction {
+                size: 1,
+                operation: ASL,
+                operands: [DR(D1), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" asl.b d1,d7"],
+        );
+    }
+    //  asl.w d1,d7
+    #[test]
+    fn test_decode_0242_asl_w_d1_d7() {
+        test_decoding_result_ok(
+            &[0xe3, 0x67],
+            Instruction {
+                size: 2,
+                operation: ASL,
+                operands: [DR(D1), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" asl.w d1,d7"],
+        );
+    }
+    //  asl.l d1,d7
+    #[test]
+    fn test_decode_0243_asl_l_d1_d7() {
+        test_decoding_result_ok(
+            &[0xe3, 0xa7],
+            Instruction {
+                size: 4,
+                operation: ASL,
+                operands: [DR(D1), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" asl.l d1,d7"],
+        );
+    }
+    //  asr.b d1,d7
+    #[test]
+    fn test_decode_0244_asr_b_d1_d7() {
+        test_decoding_result_ok(
+            &[0xe2, 0x27],
+            Instruction {
+                size: 1,
+                operation: ASR,
+                operands: [DR(D1), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" asr.b d1,d7"],
+        );
+    }
+    //  asr.w d1,d7
+    #[test]
+    fn test_decode_0245_asr_w_d1_d7() {
+        test_decoding_result_ok(
+            &[0xe2, 0x67],
+            Instruction {
+                size: 2,
+                operation: ASR,
+                operands: [DR(D1), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" asr.w d1,d7"],
+        );
+    }
+    //  asr.l d1,d7
+    #[test]
+    fn test_decode_0246_asr_l_d1_d7() {
+        test_decoding_result_ok(
+            &[0xe2, 0xa7],
+            Instruction {
+                size: 4,
+                operation: ASR,
+                operands: [DR(D1), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" asr.l d1,d7"],
+        );
+    }
+    //  asl.w (a0)
+    #[test]
+    fn test_decode_0247_asl_w_a0_() {
+        test_decoding_result_ok(
+            &[0xe1, 0xd0],
+            Instruction {
+                size: 2,
+                operation: ASL,
+                operands: [Implied, ARIND(A0)],
+                extra: NoExtra,
+            },
+            &[" asl.w (a0)"],
+        );
+    }
+    //  asr.w (a0)
+    #[test]
+    fn test_decode_0248_asr_w_a0_() {
+        test_decoding_result_ok(
+            &[0xe0, 0xd0],
+            Instruction {
+                size: 2,
+                operation: ASR,
+                operands: [Implied, ARIND(A0)],
+                extra: NoExtra,
+            },
+            &[" asr.w (a0)"],
+        );
+    }
 }

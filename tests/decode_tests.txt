@@ -789,3 +789,44 @@
 > and.l d0,(a0)+
 # Instruction { size: 4, operation: AND, operands: [ DR(D0), ARINC(A0) ], extra: NoExtra }
 
+> asl.b #3,d7
+# Instruction { size: 1, operation: ASL, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+
+> asl.w #3,d7
+# Instruction { size: 2, operation: ASL, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+
+> asl.l #3,d7
+# Instruction { size: 4, operation: ASL, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+
+> asr.b #3,d7
+# Instruction { size: 1, operation: ASR, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+
+> asr.w #3,d7
+# Instruction { size: 2, operation: ASR, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+
+> asr.l #3,d7
+# Instruction { size: 4, operation: ASR, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+
+> asl.b d1,d7
+# Instruction { size: 1, operation: ASL, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+
+> asl.w d1,d7
+# Instruction { size: 2, operation: ASL, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+
+> asl.l d1,d7
+# Instruction { size: 4, operation: ASL, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+
+> asr.b d1,d7
+# Instruction { size: 1, operation: ASR, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+
+> asr.w d1,d7
+# Instruction { size: 2, operation: ASR, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+
+> asr.l d1,d7
+# Instruction { size: 4, operation: ASR, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+
+> asl.w (a0)
+# Instruction { size: 2, operation: ASL, operands: [ Implied, ARIND(A0) ], extra: NoExtra }
+
+> asr.w (a0)
+# Instruction { size: 2, operation: ASR, operands: [ Implied, ARIND(A0) ], extra: NoExtra }

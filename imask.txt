@@ -203,6 +203,10 @@ ADDQ            0101_ddd0_00mm_mrrr sz=1; src=cs.quick_const(d); dst=cs.ea(r, m,
 ADDQ            0101_ddd0_01mm_mrrr sz=2; src=cs.quick_const(d); dst=cs.ea(r, m, sz);
 ADDQ            0101_ddd0_10mm_mrrr sz=4; src=cs.quick_const(d); dst=cs.ea(r, m, sz);
 
+SUBQ            0101_ddd1_00mm_mrrr sz=1; src=cs.quick_const(d); dst=cs.ea(r, m, sz);
+SUBQ            0101_ddd1_01mm_mrrr sz=2; src=cs.quick_const(d); dst=cs.ea(r, m, sz);
+SUBQ            0101_ddd1_10mm_mrrr sz=4; src=cs.quick_const(d); dst=cs.ea(r, m, sz);
+
 #define TRAPcc_MASK ENCW(1,1,1,1, 0,0,0,0, 1,1,1,1, 1,0,0,0)
 #define Scc_MASK  ENCW(1,1,1,1, 0,0,0,0, 1,1,0,0, 0,0,0,0)
 #define SUBQ_MASK ENCW(1,1,1,1, 0,0,0,1, 0,0,0,0, 0,0,0,0)

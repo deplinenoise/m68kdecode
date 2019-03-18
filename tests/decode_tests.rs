@@ -2325,4 +2325,46 @@ mod tests {
             &[" addq.l #8,d0"],
         );
     }
+    //  subq.b #1,d0
+    #[test]
+    fn test_decode_0163_subq_b_1_d0() {
+        test_decoding_result_ok(
+            &[0x53, 0x00],
+            Instruction {
+                size: 1,
+                operation: SUBQ,
+                operands: [IMM8(1), DR(D0)],
+                extra: NoExtra,
+            },
+            &[" subq.b #1,d0"],
+        );
+    }
+    //  subq.w #7,a0
+    #[test]
+    fn test_decode_0164_subq_w_7_a0() {
+        test_decoding_result_ok(
+            &[0x5f, 0x48],
+            Instruction {
+                size: 2,
+                operation: SUBQ,
+                operands: [IMM8(7), AR(A0)],
+                extra: NoExtra,
+            },
+            &[" subq.w #7,a0"],
+        );
+    }
+    //  subq.l #8,d0
+    #[test]
+    fn test_decode_0165_subq_l_8_d0() {
+        test_decoding_result_ok(
+            &[0x51, 0x80],
+            Instruction {
+                size: 4,
+                operation: SUBQ,
+                operands: [IMM8(8), DR(D0)],
+                extra: NoExtra,
+            },
+            &[" subq.l #8,d0"],
+        );
+    }
 }

@@ -563,3 +563,12 @@
 
 > addq.l #8,d0
 # Instruction { size: 4, operation: ADDQ, operands: [ IMM8(8), DR(D0) ], extra: NoExtra }
+
+> subq.b #1,d0
+# Instruction { size: 1, operation: SUBQ, operands: [ IMM8(1), DR(D0) ], extra: NoExtra }
+
+> subq.w #7,a0
+# Instruction { size: 2, operation: SUBQ, operands: [ IMM8(7), AR(A0) ], extra: NoExtra }
+
+> subq.l #8,d0
+# Instruction { size: 4, operation: SUBQ, operands: [ IMM8(8), DR(D0) ], extra: NoExtra }

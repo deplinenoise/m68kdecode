@@ -701,3 +701,15 @@
 > lab:
 >   bra.l lab
 # Instruction { size: 4, operation: BRA, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: NoExtra }
+
+> lab:
+>   bsr.s lab
+# Instruction { size: 1, operation: BSR, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: NoExtra }
+
+> lab:
+>   bsr.w lab
+# Instruction { size: 2, operation: BSR, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: NoExtra }
+
+> lab:
+>   bsr.l lab
+# Instruction { size: 4, operation: BSR, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: NoExtra }

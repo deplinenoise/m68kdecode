@@ -2958,4 +2958,49 @@ mod tests {
             &[" lab:", "   bra.l lab"],
         );
     }
+    //  lab:
+    //    bsr.s lab
+    #[test]
+    fn test_decode_0208_lab_() {
+        test_decoding_result_ok(
+            &[0x61, 0xfe],
+            Instruction {
+                size: 1,
+                operation: BSR,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: NoExtra,
+            },
+            &[" lab:", "   bsr.s lab"],
+        );
+    }
+    //  lab:
+    //    bsr.w lab
+    #[test]
+    fn test_decode_0209_lab_() {
+        test_decoding_result_ok(
+            &[0x61, 0x00, 0xff, 0xfe],
+            Instruction {
+                size: 2,
+                operation: BSR,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: NoExtra,
+            },
+            &[" lab:", "   bsr.w lab"],
+        );
+    }
+    //  lab:
+    //    bsr.l lab
+    #[test]
+    fn test_decode_0210_lab_() {
+        test_decoding_result_ok(
+            &[0x61, 0xff, 0xff, 0xff, 0xff, 0xfe],
+            Instruction {
+                size: 4,
+                operation: BSR,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: NoExtra,
+            },
+            &[" lab:", "   bsr.l lab"],
+        );
+    }
 }

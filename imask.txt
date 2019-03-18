@@ -207,12 +207,14 @@ SUBQ            0101_ddd1_00mm_mrrr sz=1; src=cs.quick_const(d); dst=cs.ea(r, m,
 SUBQ            0101_ddd1_01mm_mrrr sz=2; src=cs.quick_const(d); dst=cs.ea(r, m, sz);
 SUBQ            0101_ddd1_10mm_mrrr sz=4; src=cs.quick_const(d); dst=cs.ea(r, m, sz);
 
+TRAPCC          0101_cccc_1111_1100 sz=0; src=NoOperand; dst=NoOperand; extra=cs.cc(c);
+TRAPCC          0101_cccc_1111_1010 sz=2; src=cs.imm16(); dst=NoOperand; extra=cs.cc(c);
+TRAPCC          0101_cccc_1111_1011 sz=4; src=cs.imm32(); dst=NoOperand; extra=cs.cc(c);
+
 #define TRAPcc_MASK ENCW(1,1,1,1, 0,0,0,0, 1,1,1,1, 1,0,0,0)
 #define Scc_MASK  ENCW(1,1,1,1, 0,0,0,0, 1,1,0,0, 0,0,0,0)
-#define SUBQ_MASK ENCW(1,1,1,1, 0,0,0,1, 0,0,0,0, 0,0,0,0)
 #define TRAPcc_INST ENCW(0,1,0,1, 0,0,0,0, 1,1,1,1, 1,0,0,0)
 #define Scc_INST  ENCW(0,1,0,1, 0,0,0,0, 1,1,0,0, 0,0,0,0)
-#define SUBQ_INST ENCW(0,1,0,1, 0,0,0,1, 0,0,0,0, 0,0,0,0)
 
 #/*
 # * Group ADD/ADDX (1101)

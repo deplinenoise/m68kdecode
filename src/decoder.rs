@@ -82,6 +82,7 @@ pub enum Operation {
     DBCC,
     ADDQ,
     SUBQ,
+    TRAPCC,
 }
 #[allow(non_snake_case)]
 pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {
@@ -1999,6 +2000,45 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
         return cs.check_overflow(Instruction {
             size: sz,
             operation: SUBQ,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111000011111111) == 0b0101000011111100 {
+        let c = get_bits(w0, 8, 4);
+        sz = 0;
+        src = NoOperand;
+        dst = NoOperand;
+        extra = cs.cc(c);
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: TRAPCC,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111000011111111) == 0b0101000011111010 {
+        let c = get_bits(w0, 8, 4);
+        sz = 2;
+        src = cs.imm16();
+        dst = NoOperand;
+        extra = cs.cc(c);
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: TRAPCC,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111000011111111) == 0b0101000011111011 {
+        let c = get_bits(w0, 8, 4);
+        sz = 4;
+        src = cs.imm32();
+        dst = NoOperand;
+        extra = cs.cc(c);
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: TRAPCC,
             operands: [src, dst],
             extra: extra,
         });

@@ -572,3 +572,12 @@
 
 > subq.l #8,d0
 # Instruction { size: 4, operation: SUBQ, operands: [ IMM8(8), DR(D0) ], extra: NoExtra }
+
+> trapne
+# Instruction { size: 0, operation: TRAPCC, operands: [ NoOperand, NoOperand ], extra: Condition(CC_NE) }
+
+> trapne.w #1234
+# Instruction { size: 2, operation: TRAPCC, operands: [ IMM16(1234), NoOperand ], extra: Condition(CC_NE) }
+
+> trapne.l #$12345678
+# Instruction { size: 4, operation: TRAPCC, operands: [ IMM32(0x12345678), NoOperand ], extra: Condition(CC_NE) }

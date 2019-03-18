@@ -2367,4 +2367,46 @@ mod tests {
             &[" subq.l #8,d0"],
         );
     }
+    //  trapne
+    #[test]
+    fn test_decode_0166_trapne() {
+        test_decoding_result_ok(
+            &[0x56, 0xfc],
+            Instruction {
+                size: 0,
+                operation: TRAPCC,
+                operands: [NoOperand, NoOperand],
+                extra: Condition(CC_NE),
+            },
+            &[" trapne"],
+        );
+    }
+    //  trapne.w #1234
+    #[test]
+    fn test_decode_0167_trapne_w_1234() {
+        test_decoding_result_ok(
+            &[0x56, 0xfa, 0x04, 0xd2],
+            Instruction {
+                size: 2,
+                operation: TRAPCC,
+                operands: [IMM16(1234), NoOperand],
+                extra: Condition(CC_NE),
+            },
+            &[" trapne.w #1234"],
+        );
+    }
+    //  trapne.l #$12345678
+    #[test]
+    fn test_decode_0168_trapne_l_12345678() {
+        test_decoding_result_ok(
+            &[0x56, 0xfb, 0x12, 0x34, 0x56, 0x78],
+            Instruction {
+                size: 4,
+                operation: TRAPCC,
+                operands: [IMM32(0x12345678), NoOperand],
+                extra: Condition(CC_NE),
+            },
+            &[" trapne.l #$12345678"],
+        );
+    }
 }

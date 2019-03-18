@@ -3132,4 +3132,88 @@ mod tests {
             &[" sbcd d3,d4"],
         );
     }
+    //  or.b (a0)+,d0
+    #[test]
+    fn test_decode_0220_or_b_a0_d0() {
+        test_decoding_result_ok(
+            &[0x80, 0x18],
+            Instruction {
+                size: 1,
+                operation: OR,
+                operands: [ARINC(A0), DR(D0)],
+                extra: NoExtra,
+            },
+            &[" or.b (a0)+,d0"],
+        );
+    }
+    //  or.w (a0)+,d0
+    #[test]
+    fn test_decode_0221_or_w_a0_d0() {
+        test_decoding_result_ok(
+            &[0x80, 0x58],
+            Instruction {
+                size: 2,
+                operation: OR,
+                operands: [ARINC(A0), DR(D0)],
+                extra: NoExtra,
+            },
+            &[" or.w (a0)+,d0"],
+        );
+    }
+    //  or.l (a0)+,d0
+    #[test]
+    fn test_decode_0222_or_l_a0_d0() {
+        test_decoding_result_ok(
+            &[0x80, 0x98],
+            Instruction {
+                size: 4,
+                operation: OR,
+                operands: [ARINC(A0), DR(D0)],
+                extra: NoExtra,
+            },
+            &[" or.l (a0)+,d0"],
+        );
+    }
+    //  or.b d0,(a0)+
+    #[test]
+    fn test_decode_0223_or_b_d0_a0_() {
+        test_decoding_result_ok(
+            &[0x81, 0x18],
+            Instruction {
+                size: 1,
+                operation: OR,
+                operands: [DR(D0), ARINC(A0)],
+                extra: NoExtra,
+            },
+            &[" or.b d0,(a0)+"],
+        );
+    }
+    //  or.w d0,(a0)+
+    #[test]
+    fn test_decode_0224_or_w_d0_a0_() {
+        test_decoding_result_ok(
+            &[0x81, 0x58],
+            Instruction {
+                size: 2,
+                operation: OR,
+                operands: [DR(D0), ARINC(A0)],
+                extra: NoExtra,
+            },
+            &[" or.w d0,(a0)+"],
+        );
+    }
+    //  or.l d0,(a0)+
+    #[test]
+    fn test_decode_0225_or_l_d0_a0_() {
+        test_decoding_result_ok(
+            &[0x81, 0x98],
+            Instruction {
+                size: 4,
+                operation: OR,
+                operands: [DR(D0), ARINC(A0)],
+                extra: NoExtra,
+            },
+            &[" or.l d0,(a0)+"],
+        );
+    }
 }

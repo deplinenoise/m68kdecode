@@ -743,3 +743,21 @@
 
 > sbcd d3,d4
 # Instruction { size: 1, operation: SBCD, operands: [ DR(D3), DR(D4) ], extra: NoExtra }
+
+> or.b (a0)+,d0
+# Instruction { size: 1, operation: OR, operands: [ ARINC(A0), DR(D0) ], extra: NoExtra }
+
+> or.w (a0)+,d0
+# Instruction { size: 2, operation: OR, operands: [ ARINC(A0), DR(D0) ], extra: NoExtra }
+
+> or.l (a0)+,d0
+# Instruction { size: 4, operation: OR, operands: [ ARINC(A0), DR(D0) ], extra: NoExtra }
+
+> or.b d0,(a0)+
+# Instruction { size: 1, operation: OR, operands: [ DR(D0), ARINC(A0) ], extra: NoExtra }
+
+> or.w d0,(a0)+
+# Instruction { size: 2, operation: OR, operands: [ DR(D0), ARINC(A0) ], extra: NoExtra }
+
+> or.l d0,(a0)+
+# Instruction { size: 4, operation: OR, operands: [ DR(D0), ARINC(A0) ], extra: NoExtra }

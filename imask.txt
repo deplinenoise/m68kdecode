@@ -217,32 +217,47 @@ SCC             0101_cccc_11mm_mrrr sz=1; src=Implied; dst=cs.ea(r, m, 1); extra
 # * Group ADD/ADDX (1101)
 # */
 
+# data register pair
 ADDX            1101_xxx1_0000_0yyy sz=1; src=cs.data_reg_op(y); dst=cs.data_reg_op(x);
 ADDX            1101_xxx1_0100_0yyy sz=2; src=cs.data_reg_op(y); dst=cs.data_reg_op(x);
 ADDX            1101_xxx1_1000_0yyy sz=4; src=cs.data_reg_op(y); dst=cs.data_reg_op(x);
 
+# decrementing address pair
 ADDX            1101_xxx1_0000_1yyy sz=1; src=ARDEC(cs.address_reg(y)); dst=ARDEC(cs.address_reg(x));
 ADDX            1101_xxx1_0100_1yyy sz=2; src=ARDEC(cs.address_reg(y)); dst=ARDEC(cs.address_reg(x));
 ADDX            1101_xxx1_1000_1yyy sz=4; src=ARDEC(cs.address_reg(y)); dst=ARDEC(cs.address_reg(x));
 
-
+# ADD <ea>,Dn
 ADD             1101_ddd0_00mm_mrrr sz=1; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
 ADD             1101_ddd0_01mm_mrrr sz=2; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
 ADD             1101_ddd0_10mm_mrrr sz=4; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
+# ADD Dn,<ea>
 ADD             1101_ddd1_00mm_mrrr sz=1; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz); 
 ADD             1101_ddd1_01mm_mrrr sz=2; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz); 
 ADD             1101_ddd1_10mm_mrrr sz=4; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz); 
 
-#define ADD_MASK  ENCW(1,1,1,1, 0,0,0,0, 0,0,0,0, 0,0,0,0)
-#define ADD_INST  ENCW(1,1,0,1, 0,0,0,0, 0,0,0,0, 0,0,0,0)
-
 #/*
 # * Group SUB/SUBX (1001)
 # */
-#define SUBX_MASK ENCW(1,1,1,1, 0,0,0,1, 0,0,1,1, 0,0,0,0)
-#define SUBX_INST ENCW(1,0,0,1, 0,0,0,1, 0,0,0,0, 0,0,0,0)
-#define SUB_MASK  ENCW(1,1,1,1, 0,0,0,0, 0,0,0,0, 0,0,0,0)
-#define SUB_INST  ENCW(1,0,0,1, 0,0,0,0, 0,0,0,0, 0,0,0,0)
+
+# data register pair
+SUBX            1001_xxx1_0000_0yyy sz=1; src=cs.data_reg_op(y); dst=cs.data_reg_op(x);
+SUBX            1001_xxx1_0100_0yyy sz=2; src=cs.data_reg_op(y); dst=cs.data_reg_op(x);
+SUBX            1001_xxx1_1000_0yyy sz=4; src=cs.data_reg_op(y); dst=cs.data_reg_op(x);
+
+# decrementing address pair
+SUBX            1001_xxx1_0000_1yyy sz=1; src=ARDEC(cs.address_reg(y)); dst=ARDEC(cs.address_reg(x));
+SUBX            1001_xxx1_0100_1yyy sz=2; src=ARDEC(cs.address_reg(y)); dst=ARDEC(cs.address_reg(x));
+SUBX            1001_xxx1_1000_1yyy sz=4; src=ARDEC(cs.address_reg(y)); dst=ARDEC(cs.address_reg(x));
+
+# SUB <ea>,Dn
+SUB             1001_ddd0_00mm_mrrr sz=1; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
+SUB             1001_ddd0_01mm_mrrr sz=2; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
+SUB             1001_ddd0_10mm_mrrr sz=4; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
+# SUB Dn,<ea>
+SUB             1001_ddd1_00mm_mrrr sz=1; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz); 
+SUB             1001_ddd1_01mm_mrrr sz=2; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz); 
+SUB             1001_ddd1_10mm_mrrr sz=4; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz); 
 
 #/*
 # * Group CMP/CMPA/EOR (1011)

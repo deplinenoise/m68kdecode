@@ -620,3 +620,39 @@
 
 > add.l d3,(a2)
 # Instruction { size: 4, operation: ADD, operands: [ DR(D3), ARIND(A2) ], extra: NoExtra }
+
+> subx.b d0,d1
+# Instruction { size: 1, operation: SUBX, operands: [ DR(D0), DR(D1) ], extra: NoExtra }
+
+> subx.w d0,d1
+# Instruction { size: 2, operation: SUBX, operands: [ DR(D0), DR(D1) ], extra: NoExtra }
+
+> subx.l d0,d1
+# Instruction { size: 4, operation: SUBX, operands: [ DR(D0), DR(D1) ], extra: NoExtra }
+
+> subx.b -(a2),-(a3)
+# Instruction { size: 1, operation: SUBX, operands: [ ARDEC(A2), ARDEC(A3) ], extra: NoExtra }
+
+> subx.w -(a2),-(a3)
+# Instruction { size: 2, operation: SUBX, operands: [ ARDEC(A2), ARDEC(A3) ], extra: NoExtra }
+
+> subx.l -(a2),-(a3)
+# Instruction { size: 4, operation: SUBX, operands: [ ARDEC(A2), ARDEC(A3) ], extra: NoExtra }
+
+> sub.b (a2),d0
+# Instruction { size: 1, operation: SUB, operands: [ ARIND(A2), DR(D0) ], extra: NoExtra }
+
+> sub.w (a2),d0
+# Instruction { size: 2, operation: SUB, operands: [ ARIND(A2), DR(D0) ], extra: NoExtra }
+
+> sub.l (a2),d0
+# Instruction { size: 4, operation: SUB, operands: [ ARIND(A2), DR(D0) ], extra: NoExtra }
+
+> sub.b d3,(a2)
+# Instruction { size: 1, operation: SUB, operands: [ DR(D3), ARIND(A2) ], extra: NoExtra }
+
+> sub.w d3,(a2)
+# Instruction { size: 2, operation: SUB, operands: [ DR(D3), ARIND(A2) ], extra: NoExtra }
+
+> sub.l d3,(a2)
+# Instruction { size: 4, operation: SUB, operands: [ DR(D3), ARIND(A2) ], extra: NoExtra }

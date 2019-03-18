@@ -86,6 +86,8 @@ pub enum Operation {
     SCC,
     ADDX,
     ADD,
+    SUBX,
+    SUB,
 }
 #[allow(non_snake_case)]
 pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {
@@ -2219,6 +2221,168 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ADD,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111000111111000) == 0b1001000100000000 {
+        let x = get_bits(w0, 9, 3);
+        let y = get_bits(w0, 0, 3);
+        sz = 1;
+        src = cs.data_reg_op(y);
+        dst = cs.data_reg_op(x);
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: SUBX,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111000111111000) == 0b1001000101000000 {
+        let x = get_bits(w0, 9, 3);
+        let y = get_bits(w0, 0, 3);
+        sz = 2;
+        src = cs.data_reg_op(y);
+        dst = cs.data_reg_op(x);
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: SUBX,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111000111111000) == 0b1001000110000000 {
+        let x = get_bits(w0, 9, 3);
+        let y = get_bits(w0, 0, 3);
+        sz = 4;
+        src = cs.data_reg_op(y);
+        dst = cs.data_reg_op(x);
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: SUBX,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111000111111000) == 0b1001000100001000 {
+        let x = get_bits(w0, 9, 3);
+        let y = get_bits(w0, 0, 3);
+        sz = 1;
+        src = ARDEC(cs.address_reg(y));
+        dst = ARDEC(cs.address_reg(x));
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: SUBX,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111000111111000) == 0b1001000101001000 {
+        let x = get_bits(w0, 9, 3);
+        let y = get_bits(w0, 0, 3);
+        sz = 2;
+        src = ARDEC(cs.address_reg(y));
+        dst = ARDEC(cs.address_reg(x));
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: SUBX,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111000111111000) == 0b1001000110001000 {
+        let x = get_bits(w0, 9, 3);
+        let y = get_bits(w0, 0, 3);
+        sz = 4;
+        src = ARDEC(cs.address_reg(y));
+        dst = ARDEC(cs.address_reg(x));
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: SUBX,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111000111000000) == 0b1001000000000000 {
+        let d = get_bits(w0, 9, 3);
+        let m = get_bits(w0, 3, 3);
+        let r = get_bits(w0, 0, 3);
+        sz = 1;
+        src = cs.ea(r, m, sz);
+        dst = cs.data_reg_op(d);
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: SUB,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111000111000000) == 0b1001000001000000 {
+        let d = get_bits(w0, 9, 3);
+        let m = get_bits(w0, 3, 3);
+        let r = get_bits(w0, 0, 3);
+        sz = 2;
+        src = cs.ea(r, m, sz);
+        dst = cs.data_reg_op(d);
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: SUB,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111000111000000) == 0b1001000010000000 {
+        let d = get_bits(w0, 9, 3);
+        let m = get_bits(w0, 3, 3);
+        let r = get_bits(w0, 0, 3);
+        sz = 4;
+        src = cs.ea(r, m, sz);
+        dst = cs.data_reg_op(d);
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: SUB,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111000111000000) == 0b1001000100000000 {
+        let d = get_bits(w0, 9, 3);
+        let m = get_bits(w0, 3, 3);
+        let r = get_bits(w0, 0, 3);
+        sz = 1;
+        src = cs.data_reg_op(d);
+        dst = cs.ea(r, m, sz);
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: SUB,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111000111000000) == 0b1001000101000000 {
+        let d = get_bits(w0, 9, 3);
+        let m = get_bits(w0, 3, 3);
+        let r = get_bits(w0, 0, 3);
+        sz = 2;
+        src = cs.data_reg_op(d);
+        dst = cs.ea(r, m, sz);
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: SUB,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111000111000000) == 0b1001000110000000 {
+        let d = get_bits(w0, 9, 3);
+        let m = get_bits(w0, 3, 3);
+        let r = get_bits(w0, 0, 3);
+        sz = 4;
+        src = cs.data_reg_op(d);
+        dst = cs.ea(r, m, sz);
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: SUB,
             operands: [src, dst],
             extra: extra,
         });

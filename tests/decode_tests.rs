@@ -2591,4 +2591,172 @@ mod tests {
             &[" add.l d3,(a2)"],
         );
     }
+    //  subx.b d0,d1
+    #[test]
+    fn test_decode_0182_subx_b_d0_d1() {
+        test_decoding_result_ok(
+            &[0x93, 0x00],
+            Instruction {
+                size: 1,
+                operation: SUBX,
+                operands: [DR(D0), DR(D1)],
+                extra: NoExtra,
+            },
+            &[" subx.b d0,d1"],
+        );
+    }
+    //  subx.w d0,d1
+    #[test]
+    fn test_decode_0183_subx_w_d0_d1() {
+        test_decoding_result_ok(
+            &[0x93, 0x40],
+            Instruction {
+                size: 2,
+                operation: SUBX,
+                operands: [DR(D0), DR(D1)],
+                extra: NoExtra,
+            },
+            &[" subx.w d0,d1"],
+        );
+    }
+    //  subx.l d0,d1
+    #[test]
+    fn test_decode_0184_subx_l_d0_d1() {
+        test_decoding_result_ok(
+            &[0x93, 0x80],
+            Instruction {
+                size: 4,
+                operation: SUBX,
+                operands: [DR(D0), DR(D1)],
+                extra: NoExtra,
+            },
+            &[" subx.l d0,d1"],
+        );
+    }
+    //  subx.b -(a2),-(a3)
+    #[test]
+    fn test_decode_0185_subx_b_a2_a3_() {
+        test_decoding_result_ok(
+            &[0x97, 0x0a],
+            Instruction {
+                size: 1,
+                operation: SUBX,
+                operands: [ARDEC(A2), ARDEC(A3)],
+                extra: NoExtra,
+            },
+            &[" subx.b -(a2),-(a3)"],
+        );
+    }
+    //  subx.w -(a2),-(a3)
+    #[test]
+    fn test_decode_0186_subx_w_a2_a3_() {
+        test_decoding_result_ok(
+            &[0x97, 0x4a],
+            Instruction {
+                size: 2,
+                operation: SUBX,
+                operands: [ARDEC(A2), ARDEC(A3)],
+                extra: NoExtra,
+            },
+            &[" subx.w -(a2),-(a3)"],
+        );
+    }
+    //  subx.l -(a2),-(a3)
+    #[test]
+    fn test_decode_0187_subx_l_a2_a3_() {
+        test_decoding_result_ok(
+            &[0x97, 0x8a],
+            Instruction {
+                size: 4,
+                operation: SUBX,
+                operands: [ARDEC(A2), ARDEC(A3)],
+                extra: NoExtra,
+            },
+            &[" subx.l -(a2),-(a3)"],
+        );
+    }
+    //  sub.b (a2),d0
+    #[test]
+    fn test_decode_0188_sub_b_a2_d0() {
+        test_decoding_result_ok(
+            &[0x90, 0x12],
+            Instruction {
+                size: 1,
+                operation: SUB,
+                operands: [ARIND(A2), DR(D0)],
+                extra: NoExtra,
+            },
+            &[" sub.b (a2),d0"],
+        );
+    }
+    //  sub.w (a2),d0
+    #[test]
+    fn test_decode_0189_sub_w_a2_d0() {
+        test_decoding_result_ok(
+            &[0x90, 0x52],
+            Instruction {
+                size: 2,
+                operation: SUB,
+                operands: [ARIND(A2), DR(D0)],
+                extra: NoExtra,
+            },
+            &[" sub.w (a2),d0"],
+        );
+    }
+    //  sub.l (a2),d0
+    #[test]
+    fn test_decode_0190_sub_l_a2_d0() {
+        test_decoding_result_ok(
+            &[0x90, 0x92],
+            Instruction {
+                size: 4,
+                operation: SUB,
+                operands: [ARIND(A2), DR(D0)],
+                extra: NoExtra,
+            },
+            &[" sub.l (a2),d0"],
+        );
+    }
+    //  sub.b d3,(a2)
+    #[test]
+    fn test_decode_0191_sub_b_d3_a2_() {
+        test_decoding_result_ok(
+            &[0x97, 0x12],
+            Instruction {
+                size: 1,
+                operation: SUB,
+                operands: [DR(D3), ARIND(A2)],
+                extra: NoExtra,
+            },
+            &[" sub.b d3,(a2)"],
+        );
+    }
+    //  sub.w d3,(a2)
+    #[test]
+    fn test_decode_0192_sub_w_d3_a2_() {
+        test_decoding_result_ok(
+            &[0x97, 0x52],
+            Instruction {
+                size: 2,
+                operation: SUB,
+                operands: [DR(D3), ARIND(A2)],
+                extra: NoExtra,
+            },
+            &[" sub.w d3,(a2)"],
+        );
+    }
+    //  sub.l d3,(a2)
+    #[test]
+    fn test_decode_0193_sub_l_d3_a2_() {
+        test_decoding_result_ok(
+            &[0x97, 0x92],
+            Instruction {
+                size: 4,
+                operation: SUB,
+                operands: [DR(D3), ARIND(A2)],
+                extra: NoExtra,
+            },
+            &[" sub.l d3,(a2)"],
+        );
+    }
 }

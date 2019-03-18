@@ -770,3 +770,22 @@
 
 > exg d3,a5
 # Instruction { size: 4, operation: EXG, operands: [ DR(D3), AR(A5) ], extra: NoExtra }
+
+> and.b (a0)+,d0
+# Instruction { size: 1, operation: AND, operands: [ ARINC(A0), DR(D0) ], extra: NoExtra }
+
+> and.w (a0)+,d0
+# Instruction { size: 2, operation: AND, operands: [ ARINC(A0), DR(D0) ], extra: NoExtra }
+
+> and.l (a0)+,d0
+# Instruction { size: 4, operation: AND, operands: [ ARINC(A0), DR(D0) ], extra: NoExtra }
+
+> and.b d0,(a0)+
+# Instruction { size: 1, operation: AND, operands: [ DR(D0), ARINC(A0) ], extra: NoExtra }
+
+> and.w d0,(a0)+
+# Instruction { size: 2, operation: AND, operands: [ DR(D0), ARINC(A0) ], extra: NoExtra }
+
+> and.l d0,(a0)+
+# Instruction { size: 4, operation: AND, operands: [ DR(D0), ARINC(A0) ], extra: NoExtra }
+

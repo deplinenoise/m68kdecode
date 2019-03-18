@@ -3258,4 +3258,88 @@ mod tests {
             &[" exg d3,a5"],
         );
     }
+    //  and.b (a0)+,d0
+    #[test]
+    fn test_decode_0229_and_b_a0_d0() {
+        test_decoding_result_ok(
+            &[0xc0, 0x18],
+            Instruction {
+                size: 1,
+                operation: AND,
+                operands: [ARINC(A0), DR(D0)],
+                extra: NoExtra,
+            },
+            &[" and.b (a0)+,d0"],
+        );
+    }
+    //  and.w (a0)+,d0
+    #[test]
+    fn test_decode_0230_and_w_a0_d0() {
+        test_decoding_result_ok(
+            &[0xc0, 0x58],
+            Instruction {
+                size: 2,
+                operation: AND,
+                operands: [ARINC(A0), DR(D0)],
+                extra: NoExtra,
+            },
+            &[" and.w (a0)+,d0"],
+        );
+    }
+    //  and.l (a0)+,d0
+    #[test]
+    fn test_decode_0231_and_l_a0_d0() {
+        test_decoding_result_ok(
+            &[0xc0, 0x98],
+            Instruction {
+                size: 4,
+                operation: AND,
+                operands: [ARINC(A0), DR(D0)],
+                extra: NoExtra,
+            },
+            &[" and.l (a0)+,d0"],
+        );
+    }
+    //  and.b d0,(a0)+
+    #[test]
+    fn test_decode_0232_and_b_d0_a0_() {
+        test_decoding_result_ok(
+            &[0xc1, 0x18],
+            Instruction {
+                size: 1,
+                operation: AND,
+                operands: [DR(D0), ARINC(A0)],
+                extra: NoExtra,
+            },
+            &[" and.b d0,(a0)+"],
+        );
+    }
+    //  and.w d0,(a0)+
+    #[test]
+    fn test_decode_0233_and_w_d0_a0_() {
+        test_decoding_result_ok(
+            &[0xc1, 0x58],
+            Instruction {
+                size: 2,
+                operation: AND,
+                operands: [DR(D0), ARINC(A0)],
+                extra: NoExtra,
+            },
+            &[" and.w d0,(a0)+"],
+        );
+    }
+    //  and.l d0,(a0)+
+    #[test]
+    fn test_decode_0234_and_l_d0_a0_() {
+        test_decoding_result_ok(
+            &[0xc1, 0x98],
+            Instruction {
+                size: 4,
+                operation: AND,
+                operands: [DR(D0), ARINC(A0)],
+                extra: NoExtra,
+            },
+            &[" and.l d0,(a0)+"],
+        );
+    }
 }

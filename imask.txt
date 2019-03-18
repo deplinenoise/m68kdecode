@@ -326,8 +326,12 @@ EXG             1100_xxx1_0100_0yyy sz=4; src=cs.data_reg_op(x); dst=cs.data_reg
 EXG             1100_xxx1_0100_1yyy sz=4; src=cs.address_reg_op(x); dst=cs.address_reg_op(y);
 EXG             1100_xxx1_1000_1yyy sz=4; src=cs.data_reg_op(x); dst=cs.address_reg_op(y);
 
-#define EXG_MASK  ENCW(1,1,1,1, 0,0,0,1, 0,0,1,1, 0,0,0,0)
-#define EXG_INST  ENCW(1,1,0,0, 0,0,0,1, 0,0,0,0, 0,0,0,0)  
+AND             1100_ddd0_00mm_mrrr sz=1; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
+AND             1100_ddd0_01mm_mrrr sz=2; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
+AND             1100_ddd0_10mm_mrrr sz=4; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
+AND             1100_ddd1_00mm_mrrr sz=1; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz);
+AND             1100_ddd1_01mm_mrrr sz=2; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz);
+AND             1100_ddd1_10mm_mrrr sz=4; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz);
 
 #define AND_MASK  ENCW(1,1,1,1, 0,0,0,0, 0,0,0,0, 0,0,0,0)
 #define AND_INST  ENCW(1,1,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0)

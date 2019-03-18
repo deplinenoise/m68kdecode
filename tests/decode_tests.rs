@@ -2423,4 +2423,88 @@ mod tests {
             &[" sne (a0)"],
         );
     }
+    //  addx.b d0,d1
+    #[test]
+    fn test_decode_0170_addx_b_d0_d1() {
+        test_decoding_result_ok(
+            &[0xd3, 0x00],
+            Instruction {
+                size: 1,
+                operation: ADDX,
+                operands: [DR(D0), DR(D1)],
+                extra: NoExtra,
+            },
+            &[" addx.b d0,d1"],
+        );
+    }
+    //  addx.w d0,d1
+    #[test]
+    fn test_decode_0171_addx_w_d0_d1() {
+        test_decoding_result_ok(
+            &[0xd3, 0x40],
+            Instruction {
+                size: 2,
+                operation: ADDX,
+                operands: [DR(D0), DR(D1)],
+                extra: NoExtra,
+            },
+            &[" addx.w d0,d1"],
+        );
+    }
+    //  addx.l d0,d1
+    #[test]
+    fn test_decode_0172_addx_l_d0_d1() {
+        test_decoding_result_ok(
+            &[0xd3, 0x80],
+            Instruction {
+                size: 4,
+                operation: ADDX,
+                operands: [DR(D0), DR(D1)],
+                extra: NoExtra,
+            },
+            &[" addx.l d0,d1"],
+        );
+    }
+    //  addx.b -(a2),-(a3)
+    #[test]
+    fn test_decode_0173_addx_b_a2_a3_() {
+        test_decoding_result_ok(
+            &[0xd7, 0x0a],
+            Instruction {
+                size: 1,
+                operation: ADDX,
+                operands: [ARDEC(A2), ARDEC(A3)],
+                extra: NoExtra,
+            },
+            &[" addx.b -(a2),-(a3)"],
+        );
+    }
+    //  addx.w -(a2),-(a3)
+    #[test]
+    fn test_decode_0174_addx_w_a2_a3_() {
+        test_decoding_result_ok(
+            &[0xd7, 0x4a],
+            Instruction {
+                size: 2,
+                operation: ADDX,
+                operands: [ARDEC(A2), ARDEC(A3)],
+                extra: NoExtra,
+            },
+            &[" addx.w -(a2),-(a3)"],
+        );
+    }
+    //  addx.l -(a2),-(a3)
+    #[test]
+    fn test_decode_0175_addx_l_a2_a3_() {
+        test_decoding_result_ok(
+            &[0xd7, 0x8a],
+            Instruction {
+                size: 4,
+                operation: ADDX,
+                operands: [ARDEC(A2), ARDEC(A3)],
+                extra: NoExtra,
+            },
+            &[" addx.l -(a2),-(a3)"],
+        );
+    }
 }

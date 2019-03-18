@@ -584,3 +584,21 @@
 
 > sne (a0)
 # Instruction { size: 1, operation: SCC, operands: [ Implied, ARIND(A0) ], extra: Condition(CC_NE) }
+
+> addx.b d0,d1
+# Instruction { size: 1, operation: ADDX, operands: [ DR(D0), DR(D1) ], extra: NoExtra }
+
+> addx.w d0,d1
+# Instruction { size: 2, operation: ADDX, operands: [ DR(D0), DR(D1) ], extra: NoExtra }
+
+> addx.l d0,d1
+# Instruction { size: 4, operation: ADDX, operands: [ DR(D0), DR(D1) ], extra: NoExtra }
+
+> addx.b -(a2),-(a3)
+# Instruction { size: 1, operation: ADDX, operands: [ ARDEC(A2), ARDEC(A3) ], extra: NoExtra }
+
+> addx.w -(a2),-(a3)
+# Instruction { size: 2, operation: ADDX, operands: [ ARDEC(A2), ARDEC(A3) ], extra: NoExtra }
+
+> addx.l -(a2),-(a3)
+# Instruction { size: 4, operation: ADDX, operands: [ ARDEC(A2), ARDEC(A3) ], extra: NoExtra }

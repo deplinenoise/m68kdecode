@@ -216,6 +216,15 @@ SCC             0101_cccc_11mm_mrrr sz=1; src=Implied; dst=cs.ea(r, m, 1); extra
 #/*
 # * Group ADD/ADDX (1101)
 # */
+
+ADDX            1101_xxx1_0000_0yyy sz=1; src=cs.data_reg_op(y); dst=cs.data_reg_op(x);
+ADDX            1101_xxx1_0100_0yyy sz=2; src=cs.data_reg_op(y); dst=cs.data_reg_op(x);
+ADDX            1101_xxx1_1000_0yyy sz=4; src=cs.data_reg_op(y); dst=cs.data_reg_op(x);
+
+ADDX            1101_xxx1_0000_1yyy sz=1; src=ARDEC(cs.address_reg(y)); dst=ARDEC(cs.address_reg(x));
+ADDX            1101_xxx1_0100_1yyy sz=2; src=ARDEC(cs.address_reg(y)); dst=ARDEC(cs.address_reg(x));
+ADDX            1101_xxx1_1000_1yyy sz=4; src=ARDEC(cs.address_reg(y)); dst=ARDEC(cs.address_reg(x));
+
 #define ADDX_MASK ENCW(1,1,1,1, 0,0,0,1, 0,0,1,1, 0,0,0,0)
 #define ADDX_INST ENCW(1,1,0,1, 0,0,0,1, 0,0,0,0, 0,0,0,0)
 #define ADD_MASK  ENCW(1,1,1,1, 0,0,0,0, 0,0,0,0, 0,0,0,0)

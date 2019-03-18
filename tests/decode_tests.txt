@@ -503,3 +503,54 @@
 
 > bftst (a4){12:7}
 # Instruction { size: 0, operation: BFTST, operands: [ NoOperand, ARIND(A4) ], extra: Bitfield(STATIC(12), STATIC(7)) }
+
+> .self: dbf d3,.self
+# Instruction { size: 2, operation: DBCC, operands: [ DR(D3), PCDISP(2, simple_disp(-2)) ], extra: Condition(CC_F) }
+
+> .self: dbhi d3,.self
+# Instruction { size: 2, operation: DBCC, operands: [ DR(D3), PCDISP(2, simple_disp(-2)) ], extra: Condition(CC_HI) }
+
+> .self: dbls d3,.self
+# Instruction { size: 2, operation: DBCC, operands: [ DR(D3), PCDISP(2, simple_disp(-2)) ], extra: Condition(CC_LS) }
+
+> .self: dbcc d3,.self
+# Instruction { size: 2, operation: DBCC, operands: [ DR(D3), PCDISP(2, simple_disp(-2)) ], extra: Condition(CC_CC) }
+
+> .self: dbhs d3,.self
+# Instruction { size: 2, operation: DBCC, operands: [ DR(D3), PCDISP(2, simple_disp(-2)) ], extra: Condition(CC_CC) }
+
+> .self: dbcs d3,.self
+# Instruction { size: 2, operation: DBCC, operands: [ DR(D3), PCDISP(2, simple_disp(-2)) ], extra: Condition(CC_CS) }
+
+> .self: dblo d3,.self
+# Instruction { size: 2, operation: DBCC, operands: [ DR(D3), PCDISP(2, simple_disp(-2)) ], extra: Condition(CC_CS) }
+
+> .self: dbne d3,.self
+# Instruction { size: 2, operation: DBCC, operands: [ DR(D3), PCDISP(2, simple_disp(-2)) ], extra: Condition(CC_NE) }
+
+> .self: dbeq d3,.self
+# Instruction { size: 2, operation: DBCC, operands: [ DR(D3), PCDISP(2, simple_disp(-2)) ], extra: Condition(CC_EQ) }
+
+> .self: dbvc d3,.self
+# Instruction { size: 2, operation: DBCC, operands: [ DR(D3), PCDISP(2, simple_disp(-2)) ], extra: Condition(CC_VC) }
+
+> .self: dbvs d3,.self
+# Instruction { size: 2, operation: DBCC, operands: [ DR(D3), PCDISP(2, simple_disp(-2)) ], extra: Condition(CC_VS) }
+
+> .self: dbpl d3,.self
+# Instruction { size: 2, operation: DBCC, operands: [ DR(D3), PCDISP(2, simple_disp(-2)) ], extra: Condition(CC_PL) }
+
+> .self: dbmi d3,.self
+# Instruction { size: 2, operation: DBCC, operands: [ DR(D3), PCDISP(2, simple_disp(-2)) ], extra: Condition(CC_MI) }
+
+> .self: dbge d3,.self
+# Instruction { size: 2, operation: DBCC, operands: [ DR(D3), PCDISP(2, simple_disp(-2)) ], extra: Condition(CC_GE) }
+
+> .self: dblt d3,.self
+# Instruction { size: 2, operation: DBCC, operands: [ DR(D3), PCDISP(2, simple_disp(-2)) ], extra: Condition(CC_LT) }
+
+> .self: dbgt d3,.self
+# Instruction { size: 2, operation: DBCC, operands: [ DR(D3), PCDISP(2, simple_disp(-2)) ], extra: Condition(CC_GT) }
+
+> .self: dble d3,.self
+# Instruction { size: 2, operation: DBCC, operands: [ DR(D3), PCDISP(2, simple_disp(-2)) ], extra: Condition(CC_LE) }

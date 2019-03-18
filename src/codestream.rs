@@ -273,5 +273,26 @@ impl<'a> CodeStream<'a> {
         };
         Bitfield(bf_offset, bf_width)
     }
+
+    pub fn cc(&self, c: u16) -> InstructionExtra {
+        Condition(match c {
+            0b0000 => CC_T  ,         // Always True
+            0b0001 => CC_F  ,         // Always False
+            0b0010 => CC_HI ,         // High
+            0b0011 => CC_LS ,         // Low or Same
+            0b0100 => CC_CC ,         // Carry Clear
+            0b0101 => CC_CS ,         // Carry Set
+            0b0110 => CC_NE ,         // Not Equal
+            0b0111 => CC_EQ ,         // Equal
+            0b1000 => CC_VC ,         // Overflow Clear
+            0b1001 => CC_VS ,         // Overflow Set
+            0b1010 => CC_PL ,         // Plus
+            0b1011 => CC_MI ,         // Negative
+            0b1100 => CC_GE ,         // Greater or Equal
+            0b1101 => CC_LT ,         // Less
+            0b1110 => CC_GT ,         // Greater
+            _      => CC_LE ,         // Less or Equal
+        })
+    }
 }
 

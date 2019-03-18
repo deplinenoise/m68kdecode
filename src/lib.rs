@@ -93,9 +93,31 @@ pub enum BitfieldData {
 }
 
 #[derive(Debug, PartialEq)]
+#[allow(non_camel_case_types)]
+pub enum ConditionCode {
+    CC_T  = 0b0000,         // Always True
+    CC_F  = 0b0001,         // Always False
+    CC_HI = 0b0010,         // High
+    CC_LS = 0b0011,         // Low or Same
+    CC_CC = 0b0100,         // Carry Clear
+    CC_CS = 0b0101,         // Carry Set
+    CC_NE = 0b0110,         // Not Equal
+    CC_EQ = 0b0111,         // Equal
+    CC_VC = 0b1000,         // Overflow Clear
+    CC_VS = 0b1001,         // Overflow Set
+    CC_PL = 0b1010,         // Plus
+    CC_MI = 0b1011,         // Negative
+    CC_GE = 0b1100,         // Greater or Equal
+    CC_LT = 0b1101,         // Less
+    CC_GT = 0b1110,         // Greater
+    CC_LE = 0b1111,         // Less or Equal
+}
+
+#[derive(Debug, PartialEq)]
 pub enum InstructionExtra {
     NoExtra,
     Bitfield(BitfieldData, BitfieldData),
+    Condition(ConditionCode),
     BranchOffset(u8),
 }
 
@@ -111,6 +133,7 @@ pub use Operation::*;
 pub use Operand::*;
 pub use InstructionExtra::*;
 pub use BitfieldData::*;
+pub use ConditionCode::*;
 
 #[derive(Debug,PartialEq)]
 pub struct DecodedInstruction {

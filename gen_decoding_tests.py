@@ -6,6 +6,8 @@ import re
 import subprocess
 
 R_NSYMCHAR = re.compile('[^a-zA-Z0-9_]+')
+R_UNDERSCORES = re.compile('[_]+')
+R_LEADING_UNDERSCORE = re.compile('^_')
 
 vasm = sys.argv[1]
 infilename = sys.argv[2]
@@ -46,6 +48,7 @@ with open(infilename, 'r') as f:
                 sys.stderr.write('vasm failed for:')
                 for l in asm_lines:
                     sys.stderr.write(l)
+                sys.exit(1)
             else:
                 with open('test.out', 'rb') as bf:
                     code_bytes = bytearray(bf.read())
@@ -66,6 +69,8 @@ with open(outfilename, "w") as of:
         for al in asm_lines:
             of.write('// {}\n'.format(al))
         name = re.sub(R_NSYMCHAR, '_', asm_lines[0].strip()).lower()
+        name = re.sub(R_UNDERSCORES, '_', name)
+        name = re.sub(R_LEADING_UNDERSCORE, '', name)
         of.write('#[test]\n')
         of.write('fn test_decode_{:04d}_{}() {{\n'.format(testnum, name))
         if result_lines[0].find('Instruction {') == -1:
@@ -86,7 +91,8 @@ with open(outfilename, "w") as of:
         testnum = testnum + 1
     of.write('}\n')
 
-subprocess.call(['rustfmt', outfilename])
+if subprocess.call(['rustfmt', outfilename]) != 0:
+    sys.exit(1)
 
 os.remove('test.asm')
 os.remove('test.out')

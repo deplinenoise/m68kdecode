@@ -99,6 +99,8 @@ pub enum Operation {
     DIVS,
     DIVU,
     OR,
+    ABCD,
+    EXG,
 }
 #[allow(non_snake_case)]
 pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {
@@ -1246,20 +1248,6 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
             extra: extra,
         });
     }
-    if (w0 & 0b1111000111000000) == 0b1100000111000000 {
-        let p = get_bits(w0, 9, 3);
-        let m = get_bits(w0, 3, 3);
-        let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.ea(r, m, 2);
-        dst = cs.data_reg_op(p);
-        return cs.check_overflow(Instruction {
-            size: sz,
-            operation: MULS,
-            operands: [src, dst],
-            extra: extra,
-        });
-    }
     if (w0 & 0b1111111111000000) == 0b0100110000000000 && cs.has_words(1) {
         let w1 = cs.peek_word(0);
         if (w1 & 0b1000111111111000) == 0b0000100000000000 {
@@ -1296,20 +1284,6 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
                 extra: extra,
             });
         }
-    }
-    if (w0 & 0b1111000111000000) == 0b1100000011000000 {
-        let p = get_bits(w0, 9, 3);
-        let m = get_bits(w0, 3, 3);
-        let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.ea(r, m, 2);
-        dst = cs.data_reg_op(p);
-        return cs.check_overflow(Instruction {
-            size: sz,
-            operation: MULU,
-            operands: [src, dst],
-            extra: extra,
-        });
     }
     if (w0 & 0b1111111111000000) == 0b0100110000000000 && cs.has_words(1) {
         let w1 = cs.peek_word(0);
@@ -2819,6 +2793,99 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
         return cs.check_overflow(Instruction {
             size: sz,
             operation: OR,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111000111111000) == 0b1100000100000000 {
+        let y = get_bits(w0, 9, 3);
+        let x = get_bits(w0, 0, 3);
+        sz = 1;
+        src = cs.data_reg_op(x);
+        dst = cs.data_reg_op(y);
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: ABCD,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111000111111000) == 0b1100000100001000 {
+        let y = get_bits(w0, 9, 3);
+        let x = get_bits(w0, 0, 3);
+        sz = 1;
+        src = ARDEC(cs.address_reg(x));
+        dst = ARDEC(cs.address_reg(y));
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: ABCD,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111000111000000) == 0b1100000111000000 {
+        let p = get_bits(w0, 9, 3);
+        let m = get_bits(w0, 3, 3);
+        let r = get_bits(w0, 0, 3);
+        sz = 2;
+        src = cs.ea(r, m, 2);
+        dst = cs.data_reg_op(p);
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: MULS,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111000111000000) == 0b1100000011000000 {
+        let p = get_bits(w0, 9, 3);
+        let m = get_bits(w0, 3, 3);
+        let r = get_bits(w0, 0, 3);
+        sz = 2;
+        src = cs.ea(r, m, 2);
+        dst = cs.data_reg_op(p);
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: MULU,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111000111111000) == 0b1100000101000000 {
+        let x = get_bits(w0, 9, 3);
+        let y = get_bits(w0, 0, 3);
+        sz = 4;
+        src = cs.data_reg_op(x);
+        dst = cs.data_reg_op(y);
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: EXG,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111000111111000) == 0b1100000101001000 {
+        let x = get_bits(w0, 9, 3);
+        let y = get_bits(w0, 0, 3);
+        sz = 4;
+        src = cs.address_reg_op(x);
+        dst = cs.address_reg_op(y);
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: EXG,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111000111111000) == 0b1100000110001000 {
+        let x = get_bits(w0, 9, 3);
+        let y = get_bits(w0, 0, 3);
+        sz = 4;
+        src = cs.data_reg_op(x);
+        dst = cs.address_reg_op(y);
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: EXG,
             operands: [src, dst],
             extra: extra,
         });

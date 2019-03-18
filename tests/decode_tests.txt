@@ -761,3 +761,12 @@
 
 > or.l d0,(a0)+
 # Instruction { size: 4, operation: OR, operands: [ DR(D0), ARINC(A0) ], extra: NoExtra }
+
+> exg d0,d5
+# Instruction { size: 4, operation: EXG, operands: [ DR(D0), DR(D5) ], extra: NoExtra }
+
+> exg a0,a5
+# Instruction { size: 4, operation: EXG, operands: [ AR(A0), AR(A5) ], extra: NoExtra }
+
+> exg d3,a5
+# Instruction { size: 4, operation: EXG, operands: [ DR(D3), AR(A5) ], extra: NoExtra }

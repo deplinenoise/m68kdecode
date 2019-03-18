@@ -3216,4 +3216,46 @@ mod tests {
             &[" or.l d0,(a0)+"],
         );
     }
+    //  exg d0,d5
+    #[test]
+    fn test_decode_0226_exg_d0_d5() {
+        test_decoding_result_ok(
+            &[0xc1, 0x45],
+            Instruction {
+                size: 4,
+                operation: EXG,
+                operands: [DR(D0), DR(D5)],
+                extra: NoExtra,
+            },
+            &[" exg d0,d5"],
+        );
+    }
+    //  exg a0,a5
+    #[test]
+    fn test_decode_0227_exg_a0_a5() {
+        test_decoding_result_ok(
+            &[0xc1, 0x4d],
+            Instruction {
+                size: 4,
+                operation: EXG,
+                operands: [AR(A0), AR(A5)],
+                extra: NoExtra,
+            },
+            &[" exg a0,a5"],
+        );
+    }
+    //  exg d3,a5
+    #[test]
+    fn test_decode_0228_exg_d3_a5() {
+        test_decoding_result_ok(
+            &[0xc7, 0x8d],
+            Instruction {
+                size: 4,
+                operation: EXG,
+                operands: [DR(D3), AR(A5)],
+                extra: NoExtra,
+            },
+            &[" exg d3,a5"],
+        );
+    }
 }

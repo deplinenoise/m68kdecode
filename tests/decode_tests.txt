@@ -830,3 +830,129 @@
 
 > asr.w (a0)
 # Instruction { size: 2, operation: ASR, operands: [ Implied, ARIND(A0) ], extra: NoExtra }
+
+> lsl.b #3,d7
+# Instruction { size: 1, operation: LSL, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+
+> lsl.w #3,d7
+# Instruction { size: 2, operation: LSL, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+
+> lsl.l #3,d7
+# Instruction { size: 4, operation: LSL, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+
+> lsr.b #3,d7
+# Instruction { size: 1, operation: LSR, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+
+> lsr.w #3,d7
+# Instruction { size: 2, operation: LSR, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+
+> lsr.l #3,d7
+# Instruction { size: 4, operation: LSR, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+
+> lsl.b d1,d7
+# Instruction { size: 1, operation: LSL, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+
+> lsl.w d1,d7
+# Instruction { size: 2, operation: LSL, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+
+> lsl.l d1,d7
+# Instruction { size: 4, operation: LSL, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+
+> lsr.b d1,d7
+# Instruction { size: 1, operation: LSR, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+
+> lsr.w d1,d7
+# Instruction { size: 2, operation: LSR, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+
+> lsr.l d1,d7
+# Instruction { size: 4, operation: LSR, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+
+> lsl.w (a0)
+# Instruction { size: 2, operation: LSL, operands: [ Implied, ARIND(A0) ], extra: NoExtra }
+
+> lsr.w (a0)
+# Instruction { size: 2, operation: LSR, operands: [ Implied, ARIND(A0) ], extra: NoExtra }
+
+> roxl.b #3,d7
+# Instruction { size: 1, operation: ROXL, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+
+> roxl.w #3,d7
+# Instruction { size: 2, operation: ROXL, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+
+> roxl.l #3,d7
+# Instruction { size: 4, operation: ROXL, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+
+> roxr.b #3,d7
+# Instruction { size: 1, operation: ROXR, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+
+> roxr.w #3,d7
+# Instruction { size: 2, operation: ROXR, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+
+> roxr.l #3,d7
+# Instruction { size: 4, operation: ROXR, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+
+> roxl.b d1,d7
+# Instruction { size: 1, operation: ROXL, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+
+> roxl.w d1,d7
+# Instruction { size: 2, operation: ROXL, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+
+> roxl.l d1,d7
+# Instruction { size: 4, operation: ROXL, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+
+> roxr.b d1,d7
+# Instruction { size: 1, operation: ROXR, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+
+> roxr.w d1,d7
+# Instruction { size: 2, operation: ROXR, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+
+> roxr.l d1,d7
+# Instruction { size: 4, operation: ROXR, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+
+> roxl.w (a0)
+# Instruction { size: 2, operation: ROXL, operands: [ Implied, ARIND(A0) ], extra: NoExtra }
+
+> roxr.w (a0)
+# Instruction { size: 2, operation: ROXR, operands: [ Implied, ARIND(A0) ], extra: NoExtra }
+
+> rol.b #3,d7
+# Instruction { size: 1, operation: ROL, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+
+> rol.w #3,d7
+# Instruction { size: 2, operation: ROL, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+
+> rol.l #3,d7
+# Instruction { size: 4, operation: ROL, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+
+> ror.b #3,d7
+# Instruction { size: 1, operation: ROR, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+
+> ror.w #3,d7
+# Instruction { size: 2, operation: ROR, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+
+> ror.l #3,d7
+# Instruction { size: 4, operation: ROR, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+
+> rol.b d1,d7
+# Instruction { size: 1, operation: ROL, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+
+> rol.w d1,d7
+# Instruction { size: 2, operation: ROL, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+
+> rol.l d1,d7
+# Instruction { size: 4, operation: ROL, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+
+> ror.b d1,d7
+# Instruction { size: 1, operation: ROR, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+
+> ror.w d1,d7
+# Instruction { size: 2, operation: ROR, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+
+> ror.l d1,d7
+# Instruction { size: 4, operation: ROR, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+
+> rol.w (a0)
+# Instruction { size: 2, operation: ROL, operands: [ Implied, ARIND(A0) ], extra: NoExtra }
+
+> ror.w (a0)
+# Instruction { size: 2, operation: ROR, operands: [ Implied, ARIND(A0) ], extra: NoExtra }

@@ -3538,4 +3538,592 @@ mod tests {
             &[" asr.w (a0)"],
         );
     }
+    //  lsl.b #3,d7
+    #[test]
+    fn test_decode_0249_lsl_b_3_d7() {
+        test_decoding_result_ok(
+            &[0xe7, 0x0f],
+            Instruction {
+                size: 1,
+                operation: LSL,
+                operands: [IMM8(3), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" lsl.b #3,d7"],
+        );
+    }
+    //  lsl.w #3,d7
+    #[test]
+    fn test_decode_0250_lsl_w_3_d7() {
+        test_decoding_result_ok(
+            &[0xe7, 0x4f],
+            Instruction {
+                size: 2,
+                operation: LSL,
+                operands: [IMM8(3), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" lsl.w #3,d7"],
+        );
+    }
+    //  lsl.l #3,d7
+    #[test]
+    fn test_decode_0251_lsl_l_3_d7() {
+        test_decoding_result_ok(
+            &[0xe7, 0x8f],
+            Instruction {
+                size: 4,
+                operation: LSL,
+                operands: [IMM8(3), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" lsl.l #3,d7"],
+        );
+    }
+    //  lsr.b #3,d7
+    #[test]
+    fn test_decode_0252_lsr_b_3_d7() {
+        test_decoding_result_ok(
+            &[0xe6, 0x0f],
+            Instruction {
+                size: 1,
+                operation: LSR,
+                operands: [IMM8(3), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" lsr.b #3,d7"],
+        );
+    }
+    //  lsr.w #3,d7
+    #[test]
+    fn test_decode_0253_lsr_w_3_d7() {
+        test_decoding_result_ok(
+            &[0xe6, 0x4f],
+            Instruction {
+                size: 2,
+                operation: LSR,
+                operands: [IMM8(3), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" lsr.w #3,d7"],
+        );
+    }
+    //  lsr.l #3,d7
+    #[test]
+    fn test_decode_0254_lsr_l_3_d7() {
+        test_decoding_result_ok(
+            &[0xe6, 0x8f],
+            Instruction {
+                size: 4,
+                operation: LSR,
+                operands: [IMM8(3), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" lsr.l #3,d7"],
+        );
+    }
+    //  lsl.b d1,d7
+    #[test]
+    fn test_decode_0255_lsl_b_d1_d7() {
+        test_decoding_result_ok(
+            &[0xe3, 0x2f],
+            Instruction {
+                size: 1,
+                operation: LSL,
+                operands: [DR(D1), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" lsl.b d1,d7"],
+        );
+    }
+    //  lsl.w d1,d7
+    #[test]
+    fn test_decode_0256_lsl_w_d1_d7() {
+        test_decoding_result_ok(
+            &[0xe3, 0x6f],
+            Instruction {
+                size: 2,
+                operation: LSL,
+                operands: [DR(D1), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" lsl.w d1,d7"],
+        );
+    }
+    //  lsl.l d1,d7
+    #[test]
+    fn test_decode_0257_lsl_l_d1_d7() {
+        test_decoding_result_ok(
+            &[0xe3, 0xaf],
+            Instruction {
+                size: 4,
+                operation: LSL,
+                operands: [DR(D1), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" lsl.l d1,d7"],
+        );
+    }
+    //  lsr.b d1,d7
+    #[test]
+    fn test_decode_0258_lsr_b_d1_d7() {
+        test_decoding_result_ok(
+            &[0xe2, 0x2f],
+            Instruction {
+                size: 1,
+                operation: LSR,
+                operands: [DR(D1), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" lsr.b d1,d7"],
+        );
+    }
+    //  lsr.w d1,d7
+    #[test]
+    fn test_decode_0259_lsr_w_d1_d7() {
+        test_decoding_result_ok(
+            &[0xe2, 0x6f],
+            Instruction {
+                size: 2,
+                operation: LSR,
+                operands: [DR(D1), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" lsr.w d1,d7"],
+        );
+    }
+    //  lsr.l d1,d7
+    #[test]
+    fn test_decode_0260_lsr_l_d1_d7() {
+        test_decoding_result_ok(
+            &[0xe2, 0xaf],
+            Instruction {
+                size: 4,
+                operation: LSR,
+                operands: [DR(D1), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" lsr.l d1,d7"],
+        );
+    }
+    //  lsl.w (a0)
+    #[test]
+    fn test_decode_0261_lsl_w_a0_() {
+        test_decoding_result_ok(
+            &[0xe3, 0xd0],
+            Instruction {
+                size: 2,
+                operation: LSL,
+                operands: [Implied, ARIND(A0)],
+                extra: NoExtra,
+            },
+            &[" lsl.w (a0)"],
+        );
+    }
+    //  lsr.w (a0)
+    #[test]
+    fn test_decode_0262_lsr_w_a0_() {
+        test_decoding_result_ok(
+            &[0xe2, 0xd0],
+            Instruction {
+                size: 2,
+                operation: LSR,
+                operands: [Implied, ARIND(A0)],
+                extra: NoExtra,
+            },
+            &[" lsr.w (a0)"],
+        );
+    }
+    //  roxl.b #3,d7
+    #[test]
+    fn test_decode_0263_roxl_b_3_d7() {
+        test_decoding_result_ok(
+            &[0xe7, 0x17],
+            Instruction {
+                size: 1,
+                operation: ROXL,
+                operands: [IMM8(3), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" roxl.b #3,d7"],
+        );
+    }
+    //  roxl.w #3,d7
+    #[test]
+    fn test_decode_0264_roxl_w_3_d7() {
+        test_decoding_result_ok(
+            &[0xe7, 0x57],
+            Instruction {
+                size: 2,
+                operation: ROXL,
+                operands: [IMM8(3), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" roxl.w #3,d7"],
+        );
+    }
+    //  roxl.l #3,d7
+    #[test]
+    fn test_decode_0265_roxl_l_3_d7() {
+        test_decoding_result_ok(
+            &[0xe7, 0x97],
+            Instruction {
+                size: 4,
+                operation: ROXL,
+                operands: [IMM8(3), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" roxl.l #3,d7"],
+        );
+    }
+    //  roxr.b #3,d7
+    #[test]
+    fn test_decode_0266_roxr_b_3_d7() {
+        test_decoding_result_ok(
+            &[0xe6, 0x17],
+            Instruction {
+                size: 1,
+                operation: ROXR,
+                operands: [IMM8(3), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" roxr.b #3,d7"],
+        );
+    }
+    //  roxr.w #3,d7
+    #[test]
+    fn test_decode_0267_roxr_w_3_d7() {
+        test_decoding_result_ok(
+            &[0xe6, 0x57],
+            Instruction {
+                size: 2,
+                operation: ROXR,
+                operands: [IMM8(3), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" roxr.w #3,d7"],
+        );
+    }
+    //  roxr.l #3,d7
+    #[test]
+    fn test_decode_0268_roxr_l_3_d7() {
+        test_decoding_result_ok(
+            &[0xe6, 0x97],
+            Instruction {
+                size: 4,
+                operation: ROXR,
+                operands: [IMM8(3), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" roxr.l #3,d7"],
+        );
+    }
+    //  roxl.b d1,d7
+    #[test]
+    fn test_decode_0269_roxl_b_d1_d7() {
+        test_decoding_result_ok(
+            &[0xe3, 0x37],
+            Instruction {
+                size: 1,
+                operation: ROXL,
+                operands: [DR(D1), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" roxl.b d1,d7"],
+        );
+    }
+    //  roxl.w d1,d7
+    #[test]
+    fn test_decode_0270_roxl_w_d1_d7() {
+        test_decoding_result_ok(
+            &[0xe3, 0x77],
+            Instruction {
+                size: 2,
+                operation: ROXL,
+                operands: [DR(D1), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" roxl.w d1,d7"],
+        );
+    }
+    //  roxl.l d1,d7
+    #[test]
+    fn test_decode_0271_roxl_l_d1_d7() {
+        test_decoding_result_ok(
+            &[0xe3, 0xb7],
+            Instruction {
+                size: 4,
+                operation: ROXL,
+                operands: [DR(D1), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" roxl.l d1,d7"],
+        );
+    }
+    //  roxr.b d1,d7
+    #[test]
+    fn test_decode_0272_roxr_b_d1_d7() {
+        test_decoding_result_ok(
+            &[0xe2, 0x37],
+            Instruction {
+                size: 1,
+                operation: ROXR,
+                operands: [DR(D1), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" roxr.b d1,d7"],
+        );
+    }
+    //  roxr.w d1,d7
+    #[test]
+    fn test_decode_0273_roxr_w_d1_d7() {
+        test_decoding_result_ok(
+            &[0xe2, 0x77],
+            Instruction {
+                size: 2,
+                operation: ROXR,
+                operands: [DR(D1), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" roxr.w d1,d7"],
+        );
+    }
+    //  roxr.l d1,d7
+    #[test]
+    fn test_decode_0274_roxr_l_d1_d7() {
+        test_decoding_result_ok(
+            &[0xe2, 0xb7],
+            Instruction {
+                size: 4,
+                operation: ROXR,
+                operands: [DR(D1), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" roxr.l d1,d7"],
+        );
+    }
+    //  roxl.w (a0)
+    #[test]
+    fn test_decode_0275_roxl_w_a0_() {
+        test_decoding_result_ok(
+            &[0xe5, 0xd0],
+            Instruction {
+                size: 2,
+                operation: ROXL,
+                operands: [Implied, ARIND(A0)],
+                extra: NoExtra,
+            },
+            &[" roxl.w (a0)"],
+        );
+    }
+    //  roxr.w (a0)
+    #[test]
+    fn test_decode_0276_roxr_w_a0_() {
+        test_decoding_result_ok(
+            &[0xe4, 0xd0],
+            Instruction {
+                size: 2,
+                operation: ROXR,
+                operands: [Implied, ARIND(A0)],
+                extra: NoExtra,
+            },
+            &[" roxr.w (a0)"],
+        );
+    }
+    //  rol.b #3,d7
+    #[test]
+    fn test_decode_0277_rol_b_3_d7() {
+        test_decoding_result_ok(
+            &[0xe7, 0x1f],
+            Instruction {
+                size: 1,
+                operation: ROL,
+                operands: [IMM8(3), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" rol.b #3,d7"],
+        );
+    }
+    //  rol.w #3,d7
+    #[test]
+    fn test_decode_0278_rol_w_3_d7() {
+        test_decoding_result_ok(
+            &[0xe7, 0x5f],
+            Instruction {
+                size: 2,
+                operation: ROL,
+                operands: [IMM8(3), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" rol.w #3,d7"],
+        );
+    }
+    //  rol.l #3,d7
+    #[test]
+    fn test_decode_0279_rol_l_3_d7() {
+        test_decoding_result_ok(
+            &[0xe7, 0x9f],
+            Instruction {
+                size: 4,
+                operation: ROL,
+                operands: [IMM8(3), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" rol.l #3,d7"],
+        );
+    }
+    //  ror.b #3,d7
+    #[test]
+    fn test_decode_0280_ror_b_3_d7() {
+        test_decoding_result_ok(
+            &[0xe6, 0x1f],
+            Instruction {
+                size: 1,
+                operation: ROR,
+                operands: [IMM8(3), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" ror.b #3,d7"],
+        );
+    }
+    //  ror.w #3,d7
+    #[test]
+    fn test_decode_0281_ror_w_3_d7() {
+        test_decoding_result_ok(
+            &[0xe6, 0x5f],
+            Instruction {
+                size: 2,
+                operation: ROR,
+                operands: [IMM8(3), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" ror.w #3,d7"],
+        );
+    }
+    //  ror.l #3,d7
+    #[test]
+    fn test_decode_0282_ror_l_3_d7() {
+        test_decoding_result_ok(
+            &[0xe6, 0x9f],
+            Instruction {
+                size: 4,
+                operation: ROR,
+                operands: [IMM8(3), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" ror.l #3,d7"],
+        );
+    }
+    //  rol.b d1,d7
+    #[test]
+    fn test_decode_0283_rol_b_d1_d7() {
+        test_decoding_result_ok(
+            &[0xe3, 0x3f],
+            Instruction {
+                size: 1,
+                operation: ROL,
+                operands: [DR(D1), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" rol.b d1,d7"],
+        );
+    }
+    //  rol.w d1,d7
+    #[test]
+    fn test_decode_0284_rol_w_d1_d7() {
+        test_decoding_result_ok(
+            &[0xe3, 0x7f],
+            Instruction {
+                size: 2,
+                operation: ROL,
+                operands: [DR(D1), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" rol.w d1,d7"],
+        );
+    }
+    //  rol.l d1,d7
+    #[test]
+    fn test_decode_0285_rol_l_d1_d7() {
+        test_decoding_result_ok(
+            &[0xe3, 0xbf],
+            Instruction {
+                size: 4,
+                operation: ROL,
+                operands: [DR(D1), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" rol.l d1,d7"],
+        );
+    }
+    //  ror.b d1,d7
+    #[test]
+    fn test_decode_0286_ror_b_d1_d7() {
+        test_decoding_result_ok(
+            &[0xe2, 0x3f],
+            Instruction {
+                size: 1,
+                operation: ROR,
+                operands: [DR(D1), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" ror.b d1,d7"],
+        );
+    }
+    //  ror.w d1,d7
+    #[test]
+    fn test_decode_0287_ror_w_d1_d7() {
+        test_decoding_result_ok(
+            &[0xe2, 0x7f],
+            Instruction {
+                size: 2,
+                operation: ROR,
+                operands: [DR(D1), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" ror.w d1,d7"],
+        );
+    }
+    //  ror.l d1,d7
+    #[test]
+    fn test_decode_0288_ror_l_d1_d7() {
+        test_decoding_result_ok(
+            &[0xe2, 0xbf],
+            Instruction {
+                size: 4,
+                operation: ROR,
+                operands: [DR(D1), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" ror.l d1,d7"],
+        );
+    }
+    //  rol.w (a0)
+    #[test]
+    fn test_decode_0289_rol_w_a0_() {
+        test_decoding_result_ok(
+            &[0xe7, 0xd0],
+            Instruction {
+                size: 2,
+                operation: ROL,
+                operands: [Implied, ARIND(A0)],
+                extra: NoExtra,
+            },
+            &[" rol.w (a0)"],
+        );
+    }
+    //  ror.w (a0)
+    #[test]
+    fn test_decode_0290_ror_w_a0_() {
+        test_decoding_result_ok(
+            &[0xe6, 0xd0],
+            Instruction {
+                size: 2,
+                operation: ROR,
+                operands: [Implied, ARIND(A0)],
+                extra: NoExtra,
+            },
+            &[" ror.w (a0)"],
+        );
+    }
 }

@@ -348,8 +348,53 @@ ASR             1110_ccc0_0010_0rrr sz=1; src=cs.data_reg_op(c); dst=cs.data_reg
 ASR             1110_ccc0_0110_0rrr sz=2; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
 ASR             1110_ccc0_1010_0rrr sz=4; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
 
+LSL             1110_ccc1_0000_1rrr sz=1; src=IMM8(c as u8); dst=cs.data_reg_op(r);
+LSL             1110_ccc1_0100_1rrr sz=2; src=IMM8(c as u8); dst=cs.data_reg_op(r);
+LSL             1110_ccc1_1000_1rrr sz=4; src=IMM8(c as u8); dst=cs.data_reg_op(r);
+LSR             1110_ccc0_0000_1rrr sz=1; src=IMM8(c as u8); dst=cs.data_reg_op(r);
+LSR             1110_ccc0_0100_1rrr sz=2; src=IMM8(c as u8); dst=cs.data_reg_op(r);
+LSR             1110_ccc0_1000_1rrr sz=4; src=IMM8(c as u8); dst=cs.data_reg_op(r);
+LSL             1110_ccc1_0010_1rrr sz=1; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
+LSL             1110_ccc1_0110_1rrr sz=2; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
+LSL             1110_ccc1_1010_1rrr sz=4; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
+LSR             1110_ccc0_0010_1rrr sz=1; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
+LSR             1110_ccc0_0110_1rrr sz=2; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
+LSR             1110_ccc0_1010_1rrr sz=4; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
+
+ROXL            1110_ccc1_0001_0rrr sz=1; src=IMM8(c as u8); dst=cs.data_reg_op(r);
+ROXL            1110_ccc1_0101_0rrr sz=2; src=IMM8(c as u8); dst=cs.data_reg_op(r);
+ROXL            1110_ccc1_1001_0rrr sz=4; src=IMM8(c as u8); dst=cs.data_reg_op(r);
+ROXR            1110_ccc0_0001_0rrr sz=1; src=IMM8(c as u8); dst=cs.data_reg_op(r);
+ROXR            1110_ccc0_0101_0rrr sz=2; src=IMM8(c as u8); dst=cs.data_reg_op(r);
+ROXR            1110_ccc0_1001_0rrr sz=4; src=IMM8(c as u8); dst=cs.data_reg_op(r);
+ROXL            1110_ccc1_0011_0rrr sz=1; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
+ROXL            1110_ccc1_0111_0rrr sz=2; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
+ROXL            1110_ccc1_1011_0rrr sz=4; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
+ROXR            1110_ccc0_0011_0rrr sz=1; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
+ROXR            1110_ccc0_0111_0rrr sz=2; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
+ROXR            1110_ccc0_1011_0rrr sz=4; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
+
+ROL             1110_ccc1_0001_1rrr sz=1; src=IMM8(c as u8); dst=cs.data_reg_op(r);
+ROL             1110_ccc1_0101_1rrr sz=2; src=IMM8(c as u8); dst=cs.data_reg_op(r);
+ROL             1110_ccc1_1001_1rrr sz=4; src=IMM8(c as u8); dst=cs.data_reg_op(r);
+ROR             1110_ccc0_0001_1rrr sz=1; src=IMM8(c as u8); dst=cs.data_reg_op(r);
+ROR             1110_ccc0_0101_1rrr sz=2; src=IMM8(c as u8); dst=cs.data_reg_op(r);
+ROR             1110_ccc0_1001_1rrr sz=4; src=IMM8(c as u8); dst=cs.data_reg_op(r);
+ROL             1110_ccc1_0011_1rrr sz=1; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
+ROL             1110_ccc1_0111_1rrr sz=2; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
+ROL             1110_ccc1_1011_1rrr sz=4; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
+ROR             1110_ccc0_0011_1rrr sz=1; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
+ROR             1110_ccc0_0111_1rrr sz=2; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
+ROR             1110_ccc0_1011_1rrr sz=4; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
+
 ASL             1110_0001_11mm_mrrr sz=2; src=Implied; dst=cs.ea(r, m, sz);
 ASR             1110_0000_11mm_mrrr sz=2; src=Implied; dst=cs.ea(r, m, sz);
+LSL             1110_0011_11mm_mrrr sz=2; src=Implied; dst=cs.ea(r, m, sz);
+LSR             1110_0010_11mm_mrrr sz=2; src=Implied; dst=cs.ea(r, m, sz);
+ROXL            1110_0101_11mm_mrrr sz=2; src=Implied; dst=cs.ea(r, m, sz);
+ROXR            1110_0100_11mm_mrrr sz=2; src=Implied; dst=cs.ea(r, m, sz);
+ROL             1110_0111_11mm_mrrr sz=2; src=Implied; dst=cs.ea(r, m, sz);
+ROR             1110_0110_11mm_mrrr sz=2; src=Implied; dst=cs.ea(r, m, sz);
 
 #define ENCFT(b5,b4,b3,b2,b1,b0) ENCB(0,0,b5,b4,b3,b2,b1,b0)
 

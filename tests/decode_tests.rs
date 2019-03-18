@@ -4126,4 +4126,32 @@ mod tests {
             &[" ror.w (a0)"],
         );
     }
+    //  moveq #-1,d2
+    #[test]
+    fn test_decode_0291_moveq_1_d2() {
+        test_decoding_result_ok(
+            &[0x74, 0xff],
+            Instruction {
+                size: 4,
+                operation: MOVEQ,
+                operands: [IMM8(0xff), DR(D2)],
+                extra: NoExtra,
+            },
+            &[" moveq #-1,d2"],
+        );
+    }
+    //  moveq #127,d5
+    #[test]
+    fn test_decode_0292_moveq_127_d5() {
+        test_decoding_result_ok(
+            &[0x7a, 0x7f],
+            Instruction {
+                size: 4,
+                operation: MOVEQ,
+                operands: [IMM8(0x7f), DR(D5)],
+                extra: NoExtra,
+            },
+            &[" moveq #127,d5"],
+        );
+    }
 }

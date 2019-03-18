@@ -956,3 +956,10 @@
 
 > ror.w (a0)
 # Instruction { size: 2, operation: ROR, operands: [ Implied, ARIND(A0) ], extra: NoExtra }
+
+> moveq #-1,d2
+# Instruction { size: 4, operation: MOVEQ, operands: [ IMM8(0xff), DR(D2) ], extra: NoExtra }
+
+> moveq #127,d5
+# Instruction { size: 4, operation: MOVEQ, operands: [ IMM8(0x7f), DR(D5) ], extra: NoExtra }
+

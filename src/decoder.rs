@@ -77,6 +77,7 @@ pub enum Operation {
     BRA,
     BSR,
     BCC,
+    MOVEQ,
     PACK,
     UNPK,
     SBCD,
@@ -1953,6 +1954,19 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
         return cs.check_overflow(Instruction {
             size: sz,
             operation: BCC,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111000100000000) == 0b0111000000000000 {
+        let r = get_bits(w0, 9, 3);
+        let n = get_bits(w0, 0, 8);
+        sz = 4;
+        src = IMM8(n as u8);
+        dst = cs.data_reg_op(r);
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: MOVEQ,
             operands: [src, dst],
             extra: extra,
         });

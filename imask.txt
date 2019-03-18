@@ -270,6 +270,10 @@ CMPM            1011_xxx1_0000_1yyy sz=1; src=ARINC(cs.address_reg(y)); dst=ARIN
 CMPM            1011_xxx1_0100_1yyy sz=2; src=ARINC(cs.address_reg(y)); dst=ARINC(cs.address_reg(x));
 CMPM            1011_xxx1_1000_1yyy sz=4; src=ARINC(cs.address_reg(y)); dst=ARINC(cs.address_reg(x));
 
+CMP             1011_ddd0_00mm_mrrr sz=1; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
+CMP             1011_ddd0_01mm_mrrr sz=2; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
+CMP             1011_ddd0_10mm_mrrr sz=4; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
+
 #define CMPA_MASK ENCW(1,1,1,1, 0,0,0,0, 1,1,0,0, 0,0,0,0)
 #define CMPA_INST ENCW(1,0,1,1, 0,0,0,0, 1,1,0,0, 0,0,0,0)
 

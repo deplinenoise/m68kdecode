@@ -2829,4 +2829,46 @@ mod tests {
             &[" cmpm.l (a0)+,(a2)+"],
         );
     }
+    //  cmp.b (a0)+,d7
+    #[test]
+    fn test_decode_0199_cmp_b_a0_d7() {
+        test_decoding_result_ok(
+            &[0xbe, 0x18],
+            Instruction {
+                size: 1,
+                operation: CMP,
+                operands: [ARINC(A0), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" cmp.b (a0)+,d7"],
+        );
+    }
+    //  cmp.w (a0)+,d7
+    #[test]
+    fn test_decode_0200_cmp_w_a0_d7() {
+        test_decoding_result_ok(
+            &[0xbe, 0x58],
+            Instruction {
+                size: 2,
+                operation: CMP,
+                operands: [ARINC(A0), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" cmp.w (a0)+,d7"],
+        );
+    }
+    //  cmp.l (a0)+,d7
+    #[test]
+    fn test_decode_0201_cmp_l_a0_d7() {
+        test_decoding_result_ok(
+            &[0xbe, 0x98],
+            Instruction {
+                size: 4,
+                operation: CMP,
+                operands: [ARINC(A0), DR(D7)],
+                extra: NoExtra,
+            },
+            &[" cmp.l (a0)+,d7"],
+        );
+    }
 }

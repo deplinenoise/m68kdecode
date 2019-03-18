@@ -671,3 +671,12 @@
 
 > cmpm.l (a0)+,(a2)+
 # Instruction { size: 4, operation: CMPM, operands: [ ARINC(A0), ARINC(A2) ], extra: NoExtra }
+
+> cmp.b (a0)+,d7
+# Instruction { size: 1, operation: CMP, operands: [ ARINC(A0), DR(D7) ], extra: NoExtra }
+
+> cmp.w (a0)+,d7
+# Instruction { size: 2, operation: CMP, operands: [ ARINC(A0), DR(D7) ], extra: NoExtra }
+
+> cmp.l (a0)+,d7
+# Instruction { size: 4, operation: CMP, operands: [ ARINC(A0), DR(D7) ], extra: NoExtra }

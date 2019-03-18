@@ -83,6 +83,7 @@ pub enum Operation {
     ADDQ,
     SUBQ,
     TRAPCC,
+    SCC,
 }
 #[allow(non_snake_case)]
 pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {
@@ -2039,6 +2040,21 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
         return cs.check_overflow(Instruction {
             size: sz,
             operation: TRAPCC,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111000011000000) == 0b0101000011000000 {
+        let c = get_bits(w0, 8, 4);
+        let m = get_bits(w0, 3, 3);
+        let r = get_bits(w0, 0, 3);
+        sz = 1;
+        src = Implied;
+        dst = cs.ea(r, m, 1);
+        extra = cs.cc(c);
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: SCC,
             operands: [src, dst],
             extra: extra,
         });

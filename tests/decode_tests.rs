@@ -2409,4 +2409,18 @@ mod tests {
             &[" trapne.l #$12345678"],
         );
     }
+    //  sne (a0)
+    #[test]
+    fn test_decode_0169_sne_a0_() {
+        test_decoding_result_ok(
+            &[0x56, 0xd0],
+            Instruction {
+                size: 1,
+                operation: SCC,
+                operands: [Implied, ARIND(A0)],
+                extra: Condition(CC_NE),
+            },
+            &[" sne (a0)"],
+        );
+    }
 }

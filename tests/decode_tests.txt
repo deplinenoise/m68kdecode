@@ -581,3 +581,6 @@
 
 > trapne.l #$12345678
 # Instruction { size: 4, operation: TRAPCC, operands: [ IMM32(0x12345678), NoOperand ], extra: Condition(CC_NE) }
+
+> sne (a0)
+# Instruction { size: 1, operation: SCC, operands: [ Implied, ARIND(A0) ], extra: Condition(CC_NE) }

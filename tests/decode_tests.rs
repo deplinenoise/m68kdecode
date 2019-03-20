@@ -5120,4 +5120,18 @@ mod tests {
             &[" fsin.s (a0),fp1"],
         );
     }
+    //  lab: fdbgt d6,lab
+    #[test]
+    fn test_decode_0362_lab_fdbgt_d6_lab() {
+        test_decoding_result_ok(
+            &[0xf2, 0x4e, 0x00, 0x12, 0xff, 0xfc],
+            Instruction {
+                size: 2,
+                operation: FDBCC,
+                operands: [DR(D6), PCDISP(4, simple_disp(-4))],
+                extra: FPCondition(FPCC_GT),
+            },
+            &[" lab: fdbgt d6,lab"],
+        );
+    }
 }

@@ -125,6 +125,7 @@ pub enum Operation {
     FCMP,
     FCOS,
     FCOSH,
+    FDBCC,
     FSIN,
 }
 #[allow(non_snake_case)]
@@ -4344,6 +4345,24 @@ pub fn decode_group_1111(
             return cs.check_overflow(Instruction {
                 size: sz,
                 operation: FCOSH,
+                operands: [src, dst],
+                extra: extra,
+            });
+        }
+    }
+    if (w0 & 0b1111111111111000) == 0b1111001001001000 && cs.has_words(1) {
+        let w1 = cs.peek_word(0);
+        if (w1 & 0b1111111111100000) == 0b0000000000000000 {
+            let r = get_bits(w0, 0, 3);
+            let c = get_bits(w1, 0, 5);
+            cs.skip_words(1);
+            let sz = 2;
+            let src = cs.data_reg_op(r);
+            let dst = PCDISP(4, simple_disp(cs.pull16() as i16 as i32));
+            let extra = cs.fpcc(c);
+            return cs.check_overflow(Instruction {
+                size: sz,
+                operation: FDBCC,
                 operands: [src, dst],
                 extra: extra,
             });

@@ -1149,3 +1149,9 @@
 
 > lab: fbst.w lab
 # Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_ST) }
+
+> fcmp fp2,fp4
+# Instruction { size: 10, operation: FCMP, operands: [ FR(FP2), FR(FP4) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fcmp.s (a0),fp4
+# Instruction { size: 4, operation: FCMP, operands: [ ARIND(A0), FR(FP4) ], extra: FloatFormat(FPF_SINGLE) }

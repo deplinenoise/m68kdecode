@@ -5008,4 +5008,32 @@ mod tests {
             &[" lab: fbst.w lab"],
         );
     }
+    //  fcmp fp2,fp4
+    #[test]
+    fn test_decode_0354_fcmp_fp2_fp4() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x0a, 0x38],
+            Instruction {
+                size: 10,
+                operation: FCMP,
+                operands: [FR(FP2), FR(FP4)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fcmp fp2,fp4"],
+        );
+    }
+    //  fcmp.s (a0),fp4
+    #[test]
+    fn test_decode_0355_fcmp_s_a0_fp4() {
+        test_decoding_result_ok(
+            &[0xf2, 0x10, 0x46, 0x38],
+            Instruction {
+                size: 4,
+                operation: FCMP,
+                operands: [ARIND(A0), FR(FP4)],
+                extra: FloatFormat(FPF_SINGLE),
+            },
+            &[" fcmp.s (a0),fp4"],
+        );
+    }
 }

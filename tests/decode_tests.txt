@@ -1005,3 +1005,12 @@
 
 > facos.s (a6),fp1
 # Instruction { size: 4, operation: FACOS, operands: [ ARIND(A6), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+
+> fadd fp0,fp1
+# Instruction { size: 10, operation: FADD, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fsadd.s (a6),fp1
+# Instruction { size: 4, operation: FSADD, operands: [ ARIND(A6), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+
+> fdadd.d (a6),fp1
+# Instruction { size: 8, operation: FDADD, operands: [ ARIND(A6), FR(FP1) ], extra: FloatFormat(FPF_DOUBLE) }

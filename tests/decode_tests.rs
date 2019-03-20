@@ -4336,4 +4336,46 @@ mod tests {
             &[" facos.s (a6),fp1"],
         );
     }
+    //  fadd fp0,fp1
+    #[test]
+    fn test_decode_0306_fadd_fp0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x00, 0xa2],
+            Instruction {
+                size: 10,
+                operation: FADD,
+                operands: [FR(FP0), FR(FP1)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fadd fp0,fp1"],
+        );
+    }
+    //  fsadd.s (a6),fp1
+    #[test]
+    fn test_decode_0307_fsadd_s_a6_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x16, 0x44, 0xe2],
+            Instruction {
+                size: 4,
+                operation: FSADD,
+                operands: [ARIND(A6), FR(FP1)],
+                extra: FloatFormat(FPF_SINGLE),
+            },
+            &[" fsadd.s (a6),fp1"],
+        );
+    }
+    //  fdadd.d (a6),fp1
+    #[test]
+    fn test_decode_0308_fdadd_d_a6_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x16, 0x54, 0xe6],
+            Instruction {
+                size: 8,
+                operation: FDADD,
+                operands: [ARIND(A6), FR(FP1)],
+                extra: FloatFormat(FPF_DOUBLE),
+            },
+            &[" fdadd.d (a6),fp1"],
+        );
+    }
 }

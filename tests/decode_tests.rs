@@ -4308,4 +4308,32 @@ mod tests {
             &[" fabs fp3,fp1"],
         );
     }
+    //  facos fp0,fp1
+    #[test]
+    fn test_decode_0304_facos_fp0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x00, 0x9c],
+            Instruction {
+                size: 10,
+                operation: FACOS,
+                operands: [FR(FP0), FR(FP1)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" facos fp0,fp1"],
+        );
+    }
+    //  facos.s (a6),fp1
+    #[test]
+    fn test_decode_0305_facos_s_a6_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x16, 0x44, 0x9c],
+            Instruction {
+                size: 4,
+                operation: FACOS,
+                operands: [ARIND(A6), FR(FP1)],
+                extra: FloatFormat(FPF_SINGLE),
+            },
+            &[" facos.s (a6),fp1"],
+        );
+    }
 }

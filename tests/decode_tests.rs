@@ -4420,4 +4420,46 @@ mod tests {
             &[" fasin.s (a0),fp1"],
         );
     }
+    //  fatan fp3
+    #[test]
+    fn test_decode_0312_fatan_fp3() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x0d, 0x8a],
+            Instruction {
+                size: 10,
+                operation: FATAN,
+                operands: [FR(FP3), FR(FP3)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fatan fp3"],
+        );
+    }
+    //  fatan fp0,fp1
+    #[test]
+    fn test_decode_0313_fatan_fp0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x00, 0x8a],
+            Instruction {
+                size: 10,
+                operation: FATAN,
+                operands: [FR(FP0), FR(FP1)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fatan fp0,fp1"],
+        );
+    }
+    //  fatan.s (a0),fp1
+    #[test]
+    fn test_decode_0314_fatan_s_a0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x10, 0x44, 0x8a],
+            Instruction {
+                size: 4,
+                operation: FATAN,
+                operands: [ARIND(A0), FR(FP1)],
+                extra: FloatFormat(FPF_SINGLE),
+            },
+            &[" fatan.s (a0),fp1"],
+        );
+    }
 }

@@ -1042,15 +1042,6 @@
 > fatanh.s (a0),fp1
 # Instruction { size: 4, operation: FATANH, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
 
-> fsin fp3
-# Instruction { size: 10, operation: FSIN, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
-
-> fsin fp0,fp1
-# Instruction { size: 10, operation: FSIN, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
-
-> fsin.s (a0),fp1
-# Instruction { size: 4, operation: FSIN, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
-
 > lab: fbne.l lab
 # Instruction { size: 4, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_NE) }
 
@@ -1155,3 +1146,23 @@
 
 > fcmp.s (a0),fp4
 # Instruction { size: 4, operation: FCMP, operands: [ ARIND(A0), FR(FP4) ], extra: FloatFormat(FPF_SINGLE) }
+
+> fcos fp3
+# Instruction { size: 10, operation: FCOS, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fcos fp0,fp1
+# Instruction { size: 10, operation: FCOS, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fcos.s (a0),fp1
+# Instruction { size: 4, operation: FCOS, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+
+
+> fsin fp3
+# Instruction { size: 10, operation: FSIN, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fsin fp0,fp1
+# Instruction { size: 10, operation: FSIN, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fsin.s (a0),fp1
+# Instruction { size: 4, operation: FSIN, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+

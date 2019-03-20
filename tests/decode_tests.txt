@@ -1165,6 +1165,28 @@
 > fcosh.s (a0),fp1
 # Instruction { size: 4, operation: FCOSH, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
 
+> fdiv fp0,fp1
+# Instruction { size: 10, operation: FDIV, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fdiv.s (a0),fp1
+# Instruction { size: 4, operation: FDIV, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+
+> fsdiv.s (a0),fp1
+# Instruction { size: 4, operation: FSDIV, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+
+> fddiv.s (a0),fp1
+# Instruction { size: 4, operation: FDDIV, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+
+> fetox fp3
+# Instruction { size: 10, operation: FETOX, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fetox fp0,fp1
+# Instruction { size: 10, operation: FETOX, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fetox.s (a0),fp1
+# Instruction { size: 4, operation: FETOX, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+
+
 > fsin fp3
 # Instruction { size: 10, operation: FSIN, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
 

@@ -5078,9 +5078,107 @@ mod tests {
             &[" fcosh.s (a0),fp1"],
         );
     }
+    //  fdiv fp0,fp1
+    #[test]
+    fn test_decode_0359_fdiv_fp0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x00, 0xa0],
+            Instruction {
+                size: 10,
+                operation: FDIV,
+                operands: [FR(FP0), FR(FP1)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fdiv fp0,fp1"],
+        );
+    }
+    //  fdiv.s (a0),fp1
+    #[test]
+    fn test_decode_0360_fdiv_s_a0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x10, 0x44, 0xa0],
+            Instruction {
+                size: 4,
+                operation: FDIV,
+                operands: [ARIND(A0), FR(FP1)],
+                extra: FloatFormat(FPF_SINGLE),
+            },
+            &[" fdiv.s (a0),fp1"],
+        );
+    }
+    //  fsdiv.s (a0),fp1
+    #[test]
+    fn test_decode_0361_fsdiv_s_a0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x10, 0x44, 0xe0],
+            Instruction {
+                size: 4,
+                operation: FSDIV,
+                operands: [ARIND(A0), FR(FP1)],
+                extra: FloatFormat(FPF_SINGLE),
+            },
+            &[" fsdiv.s (a0),fp1"],
+        );
+    }
+    //  fddiv.s (a0),fp1
+    #[test]
+    fn test_decode_0362_fddiv_s_a0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x10, 0x44, 0xe4],
+            Instruction {
+                size: 4,
+                operation: FDDIV,
+                operands: [ARIND(A0), FR(FP1)],
+                extra: FloatFormat(FPF_SINGLE),
+            },
+            &[" fddiv.s (a0),fp1"],
+        );
+    }
+    //  fetox fp3
+    #[test]
+    fn test_decode_0363_fetox_fp3() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x0d, 0x90],
+            Instruction {
+                size: 10,
+                operation: FETOX,
+                operands: [FR(FP3), FR(FP3)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fetox fp3"],
+        );
+    }
+    //  fetox fp0,fp1
+    #[test]
+    fn test_decode_0364_fetox_fp0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x00, 0x90],
+            Instruction {
+                size: 10,
+                operation: FETOX,
+                operands: [FR(FP0), FR(FP1)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fetox fp0,fp1"],
+        );
+    }
+    //  fetox.s (a0),fp1
+    #[test]
+    fn test_decode_0365_fetox_s_a0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x10, 0x44, 0x90],
+            Instruction {
+                size: 4,
+                operation: FETOX,
+                operands: [ARIND(A0), FR(FP1)],
+                extra: FloatFormat(FPF_SINGLE),
+            },
+            &[" fetox.s (a0),fp1"],
+        );
+    }
     //  fsin fp3
     #[test]
-    fn test_decode_0359_fsin_fp3() {
+    fn test_decode_0366_fsin_fp3() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x0d, 0x8e],
             Instruction {
@@ -5094,7 +5192,7 @@ mod tests {
     }
     //  fsin fp0,fp1
     #[test]
-    fn test_decode_0360_fsin_fp0_fp1() {
+    fn test_decode_0367_fsin_fp0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x00, 0x8e],
             Instruction {
@@ -5108,7 +5206,7 @@ mod tests {
     }
     //  fsin.s (a0),fp1
     #[test]
-    fn test_decode_0361_fsin_s_a0_fp1() {
+    fn test_decode_0368_fsin_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0x8e],
             Instruction {
@@ -5122,7 +5220,7 @@ mod tests {
     }
     //  lab: fdbgt d6,lab
     #[test]
-    fn test_decode_0362_lab_fdbgt_d6_lab() {
+    fn test_decode_0369_lab_fdbgt_d6_lab() {
         test_decoding_result_ok(
             &[0xf2, 0x4e, 0x00, 0x12, 0xff, 0xfc],
             Instruction {

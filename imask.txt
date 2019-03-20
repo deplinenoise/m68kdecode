@@ -439,6 +439,12 @@ FCOSH           1111_0010_00mm_mrrr 0R0s_ssdd_d001_1001 let (sz, src, dst, extra
 
 FDBCC           1111_0010_0100_1rrr 0000_0000_000c_cccc sz=2; src=cs.data_reg_op(r); dst=PCDISP(4, simple_disp(cs.pull16() as i16 as i32)); extra=cs.fpcc(c);
 
+FDIV            1111_0010_00mm_mrrr 0R0s_ssdd_d010_0000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+FSDIV           1111_0010_00mm_mrrr 0R0s_ssdd_d110_0000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+FDDIV           1111_0010_00mm_mrrr 0R0s_ssdd_d110_0100 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+
+FETOX           1111_0010_00mm_mrrr 0R0s_ssdd_d001_0000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+
 FSIN            1111_0010_00mm_mrrr 0R0s_ssdd_d000_1110 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
 
 

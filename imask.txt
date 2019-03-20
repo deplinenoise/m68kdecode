@@ -429,6 +429,9 @@ FASIN           1111_0010_00mm_mrrr 0R0s_ssdd_d000_1100 let (sz, src, dst, extra
 FATAN           1111_0010_00mm_mrrr 0R0s_ssdd_d000_1010 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
 FATANH          1111_0010_00mm_mrrr 0R0s_ssdd_d000_1101 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
 
+FBCC            1111_0010_10cc_cccc sz=2; src = PCDISP(2, simple_disp(cs.pull16() as i16 as i32)); dst=NoOperand; extra=cs.fpcc(c);
+FBCC            1111_0010_11cc_cccc sz=4; src = PCDISP(2, simple_disp(cs.pull32() as i32)); dst=NoOperand; extra=cs.fpcc(c);
+
 FSIN            1111_0010_00mm_mrrr 0R0s_ssdd_d000_1110 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
 
 #define FABS  ENCFT(0,1,1,0,0,0)

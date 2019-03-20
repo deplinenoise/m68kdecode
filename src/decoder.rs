@@ -121,6 +121,7 @@ pub enum Operation {
     FASIN,
     FATAN,
     FATANH,
+    FBCC,
     FSIN,
 }
 #[allow(non_snake_case)]
@@ -4264,6 +4265,32 @@ pub fn decode_group_1111(
                 extra: extra,
             });
         }
+    }
+    if (w0 & 0b1111111111000000) == 0b1111001010000000 {
+        let c = get_bits(w0, 0, 6);
+        let sz = 2;
+        let src = PCDISP(2, simple_disp(cs.pull16() as i16 as i32));
+        let dst = NoOperand;
+        let extra = cs.fpcc(c);
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: FBCC,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111111111000000) == 0b1111001011000000 {
+        let c = get_bits(w0, 0, 6);
+        let sz = 4;
+        let src = PCDISP(2, simple_disp(cs.pull32() as i32));
+        let dst = NoOperand;
+        let extra = cs.fpcc(c);
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: FBCC,
+            operands: [src, dst],
+            extra: extra,
+        });
     }
     if (w0 & 0b1111111111000000) == 0b1111001000000000 && cs.has_words(1) {
         let w1 = cs.peek_word(0);

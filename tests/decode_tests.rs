@@ -4546,4 +4546,466 @@ mod tests {
             &[" fsin.s (a0),fp1"],
         );
     }
+    //  lab: fbne.l lab
+    #[test]
+    fn test_decode_0321_lab_fbne_l_lab() {
+        test_decoding_result_ok(
+            &[0xf2, 0xce, 0xff, 0xff, 0xff, 0xfe],
+            Instruction {
+                size: 4,
+                operation: FBCC,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: FPCondition(FPCC_NE),
+            },
+            &[" lab: fbne.l lab"],
+        );
+    }
+    //  lab: fbf.w lab
+    #[test]
+    fn test_decode_0322_lab_fbf_w_lab() {
+        test_decoding_result_ok(
+            &[0xf2, 0x80, 0xff, 0xfe],
+            Instruction {
+                size: 2,
+                operation: FBCC,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: FPCondition(FPCC_F),
+            },
+            &[" lab: fbf.w lab"],
+        );
+    }
+    //  lab: fbeq.w lab
+    #[test]
+    fn test_decode_0323_lab_fbeq_w_lab() {
+        test_decoding_result_ok(
+            &[0xf2, 0x81, 0xff, 0xfe],
+            Instruction {
+                size: 2,
+                operation: FBCC,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: FPCondition(FPCC_EQ),
+            },
+            &[" lab: fbeq.w lab"],
+        );
+    }
+    //  lab: fbogt.w lab
+    #[test]
+    fn test_decode_0324_lab_fbogt_w_lab() {
+        test_decoding_result_ok(
+            &[0xf2, 0x82, 0xff, 0xfe],
+            Instruction {
+                size: 2,
+                operation: FBCC,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: FPCondition(FPCC_OGT),
+            },
+            &[" lab: fbogt.w lab"],
+        );
+    }
+    //  lab: fboge.w lab
+    #[test]
+    fn test_decode_0325_lab_fboge_w_lab() {
+        test_decoding_result_ok(
+            &[0xf2, 0x83, 0xff, 0xfe],
+            Instruction {
+                size: 2,
+                operation: FBCC,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: FPCondition(FPCC_OGE),
+            },
+            &[" lab: fboge.w lab"],
+        );
+    }
+    //  lab: fbolt.w lab
+    #[test]
+    fn test_decode_0326_lab_fbolt_w_lab() {
+        test_decoding_result_ok(
+            &[0xf2, 0x84, 0xff, 0xfe],
+            Instruction {
+                size: 2,
+                operation: FBCC,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: FPCondition(FPCC_OLT),
+            },
+            &[" lab: fbolt.w lab"],
+        );
+    }
+    //  lab: fbole.w lab
+    #[test]
+    fn test_decode_0327_lab_fbole_w_lab() {
+        test_decoding_result_ok(
+            &[0xf2, 0x85, 0xff, 0xfe],
+            Instruction {
+                size: 2,
+                operation: FBCC,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: FPCondition(FPCC_OLE),
+            },
+            &[" lab: fbole.w lab"],
+        );
+    }
+    //  lab: fbogl.w lab
+    #[test]
+    fn test_decode_0328_lab_fbogl_w_lab() {
+        test_decoding_result_ok(
+            &[0xf2, 0x86, 0xff, 0xfe],
+            Instruction {
+                size: 2,
+                operation: FBCC,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: FPCondition(FPCC_OGL),
+            },
+            &[" lab: fbogl.w lab"],
+        );
+    }
+    //  lab: fbor.w lab
+    #[test]
+    fn test_decode_0329_lab_fbor_w_lab() {
+        test_decoding_result_ok(
+            &[0xf2, 0x87, 0xff, 0xfe],
+            Instruction {
+                size: 2,
+                operation: FBCC,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: FPCondition(FPCC_OR),
+            },
+            &[" lab: fbor.w lab"],
+        );
+    }
+    //  lab: fbun.w lab
+    #[test]
+    fn test_decode_0330_lab_fbun_w_lab() {
+        test_decoding_result_ok(
+            &[0xf2, 0x88, 0xff, 0xfe],
+            Instruction {
+                size: 2,
+                operation: FBCC,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: FPCondition(FPCC_UN),
+            },
+            &[" lab: fbun.w lab"],
+        );
+    }
+    //  lab: fbueq.w lab
+    #[test]
+    fn test_decode_0331_lab_fbueq_w_lab() {
+        test_decoding_result_ok(
+            &[0xf2, 0x89, 0xff, 0xfe],
+            Instruction {
+                size: 2,
+                operation: FBCC,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: FPCondition(FPCC_UEQ),
+            },
+            &[" lab: fbueq.w lab"],
+        );
+    }
+    //  lab: fbugt.w lab
+    #[test]
+    fn test_decode_0332_lab_fbugt_w_lab() {
+        test_decoding_result_ok(
+            &[0xf2, 0x8a, 0xff, 0xfe],
+            Instruction {
+                size: 2,
+                operation: FBCC,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: FPCondition(FPCC_UGT),
+            },
+            &[" lab: fbugt.w lab"],
+        );
+    }
+    //  lab: fbuge.w lab
+    #[test]
+    fn test_decode_0333_lab_fbuge_w_lab() {
+        test_decoding_result_ok(
+            &[0xf2, 0x8b, 0xff, 0xfe],
+            Instruction {
+                size: 2,
+                operation: FBCC,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: FPCondition(FPCC_UGE),
+            },
+            &[" lab: fbuge.w lab"],
+        );
+    }
+    //  lab: fbult.w lab
+    #[test]
+    fn test_decode_0334_lab_fbult_w_lab() {
+        test_decoding_result_ok(
+            &[0xf2, 0x8c, 0xff, 0xfe],
+            Instruction {
+                size: 2,
+                operation: FBCC,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: FPCondition(FPCC_ULT),
+            },
+            &[" lab: fbult.w lab"],
+        );
+    }
+    //  lab: fbule.w lab
+    #[test]
+    fn test_decode_0335_lab_fbule_w_lab() {
+        test_decoding_result_ok(
+            &[0xf2, 0x8d, 0xff, 0xfe],
+            Instruction {
+                size: 2,
+                operation: FBCC,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: FPCondition(FPCC_ULE),
+            },
+            &[" lab: fbule.w lab"],
+        );
+    }
+    //  lab: fbne.w lab
+    #[test]
+    fn test_decode_0336_lab_fbne_w_lab() {
+        test_decoding_result_ok(
+            &[0xf2, 0x8e, 0xff, 0xfe],
+            Instruction {
+                size: 2,
+                operation: FBCC,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: FPCondition(FPCC_NE),
+            },
+            &[" lab: fbne.w lab"],
+        );
+    }
+    //  lab: fbt.w lab
+    #[test]
+    fn test_decode_0337_lab_fbt_w_lab() {
+        test_decoding_result_ok(
+            &[0xf2, 0x8f, 0xff, 0xfe],
+            Instruction {
+                size: 2,
+                operation: FBCC,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: FPCondition(FPCC_T),
+            },
+            &[" lab: fbt.w lab"],
+        );
+    }
+    //  lab: fbsf.w lab
+    #[test]
+    fn test_decode_0338_lab_fbsf_w_lab() {
+        test_decoding_result_ok(
+            &[0xf2, 0x90, 0xff, 0xfe],
+            Instruction {
+                size: 2,
+                operation: FBCC,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: FPCondition(FPCC_SF),
+            },
+            &[" lab: fbsf.w lab"],
+        );
+    }
+    //  lab: fbseq.w lab
+    #[test]
+    fn test_decode_0339_lab_fbseq_w_lab() {
+        test_decoding_result_ok(
+            &[0xf2, 0x91, 0xff, 0xfe],
+            Instruction {
+                size: 2,
+                operation: FBCC,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: FPCondition(FPCC_SEQ),
+            },
+            &[" lab: fbseq.w lab"],
+        );
+    }
+    //  lab: fbgt.w lab
+    #[test]
+    fn test_decode_0340_lab_fbgt_w_lab() {
+        test_decoding_result_ok(
+            &[0xf2, 0x92, 0xff, 0xfe],
+            Instruction {
+                size: 2,
+                operation: FBCC,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: FPCondition(FPCC_GT),
+            },
+            &[" lab: fbgt.w lab"],
+        );
+    }
+    //  lab: fbge.w lab
+    #[test]
+    fn test_decode_0341_lab_fbge_w_lab() {
+        test_decoding_result_ok(
+            &[0xf2, 0x93, 0xff, 0xfe],
+            Instruction {
+                size: 2,
+                operation: FBCC,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: FPCondition(FPCC_GE),
+            },
+            &[" lab: fbge.w lab"],
+        );
+    }
+    //  lab: fblt.w lab
+    #[test]
+    fn test_decode_0342_lab_fblt_w_lab() {
+        test_decoding_result_ok(
+            &[0xf2, 0x94, 0xff, 0xfe],
+            Instruction {
+                size: 2,
+                operation: FBCC,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: FPCondition(FPCC_LT),
+            },
+            &[" lab: fblt.w lab"],
+        );
+    }
+    //  lab: fble.w lab
+    #[test]
+    fn test_decode_0343_lab_fble_w_lab() {
+        test_decoding_result_ok(
+            &[0xf2, 0x95, 0xff, 0xfe],
+            Instruction {
+                size: 2,
+                operation: FBCC,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: FPCondition(FPCC_LE),
+            },
+            &[" lab: fble.w lab"],
+        );
+    }
+    //  lab: fbgl.w lab
+    #[test]
+    fn test_decode_0344_lab_fbgl_w_lab() {
+        test_decoding_result_ok(
+            &[0xf2, 0x96, 0xff, 0xfe],
+            Instruction {
+                size: 2,
+                operation: FBCC,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: FPCondition(FPCC_GL),
+            },
+            &[" lab: fbgl.w lab"],
+        );
+    }
+    //  lab: fbgle.w lab
+    #[test]
+    fn test_decode_0345_lab_fbgle_w_lab() {
+        test_decoding_result_ok(
+            &[0xf2, 0x97, 0xff, 0xfe],
+            Instruction {
+                size: 2,
+                operation: FBCC,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: FPCondition(FPCC_GLE),
+            },
+            &[" lab: fbgle.w lab"],
+        );
+    }
+    //  lab: fbngle.w lab
+    #[test]
+    fn test_decode_0346_lab_fbngle_w_lab() {
+        test_decoding_result_ok(
+            &[0xf2, 0x98, 0xff, 0xfe],
+            Instruction {
+                size: 2,
+                operation: FBCC,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: FPCondition(FPCC_NGLE),
+            },
+            &[" lab: fbngle.w lab"],
+        );
+    }
+    //  lab: fbngl.w lab
+    #[test]
+    fn test_decode_0347_lab_fbngl_w_lab() {
+        test_decoding_result_ok(
+            &[0xf2, 0x99, 0xff, 0xfe],
+            Instruction {
+                size: 2,
+                operation: FBCC,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: FPCondition(FPCC_NGL),
+            },
+            &[" lab: fbngl.w lab"],
+        );
+    }
+    //  lab: fbnle.w lab
+    #[test]
+    fn test_decode_0348_lab_fbnle_w_lab() {
+        test_decoding_result_ok(
+            &[0xf2, 0x9a, 0xff, 0xfe],
+            Instruction {
+                size: 2,
+                operation: FBCC,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: FPCondition(FPCC_NLE),
+            },
+            &[" lab: fbnle.w lab"],
+        );
+    }
+    //  lab: fbnlt.w lab
+    #[test]
+    fn test_decode_0349_lab_fbnlt_w_lab() {
+        test_decoding_result_ok(
+            &[0xf2, 0x9b, 0xff, 0xfe],
+            Instruction {
+                size: 2,
+                operation: FBCC,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: FPCondition(FPCC_NLT),
+            },
+            &[" lab: fbnlt.w lab"],
+        );
+    }
+    //  lab: fbnge.w lab
+    #[test]
+    fn test_decode_0350_lab_fbnge_w_lab() {
+        test_decoding_result_ok(
+            &[0xf2, 0x9c, 0xff, 0xfe],
+            Instruction {
+                size: 2,
+                operation: FBCC,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: FPCondition(FPCC_NGE),
+            },
+            &[" lab: fbnge.w lab"],
+        );
+    }
+    //  lab: fbngt.w lab
+    #[test]
+    fn test_decode_0351_lab_fbngt_w_lab() {
+        test_decoding_result_ok(
+            &[0xf2, 0x9d, 0xff, 0xfe],
+            Instruction {
+                size: 2,
+                operation: FBCC,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: FPCondition(FPCC_NGT),
+            },
+            &[" lab: fbngt.w lab"],
+        );
+    }
+    //  lab: fbsne.w lab
+    #[test]
+    fn test_decode_0352_lab_fbsne_w_lab() {
+        test_decoding_result_ok(
+            &[0xf2, 0x9e, 0xff, 0xfe],
+            Instruction {
+                size: 2,
+                operation: FBCC,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: FPCondition(FPCC_SNE),
+            },
+            &[" lab: fbsne.w lab"],
+        );
+    }
+    //  lab: fbst.w lab
+    #[test]
+    fn test_decode_0353_lab_fbst_w_lab() {
+        test_decoding_result_ok(
+            &[0xf2, 0x9f, 0xff, 0xfe],
+            Instruction {
+                size: 2,
+                operation: FBCC,
+                operands: [PCDISP(2, simple_disp(-2)), NoOperand],
+                extra: FPCondition(FPCC_ST),
+            },
+            &[" lab: fbst.w lab"],
+        );
+    }
 }

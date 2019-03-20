@@ -123,6 +123,45 @@ pub enum ConditionCode {
 
 #[derive(Debug, PartialEq)]
 #[allow(non_camel_case_types)]
+pub enum FPConditionCode {
+    FPCC_F    = 0b000000, // False
+    FPCC_EQ   = 0b000001, // Equal
+    FPCC_OGT  = 0b000010, // Ordered Greater Than
+    FPCC_OGE  = 0b000011, // Ordered Greater Than or Equal
+    FPCC_OLT  = 0b000100, // Ordered Less Than
+    FPCC_OLE  = 0b000101, // Ordered Less Than or Equal
+    FPCC_OGL  = 0b000110, // Ordered Greater Than or Less Than
+    FPCC_OR   = 0b000111, // Ordered
+    FPCC_UN   = 0b001000, // Unordered
+    FPCC_UEQ  = 0b001001, // Unordered or Equal
+    FPCC_UGT  = 0b001010, // Unordered or Greater Than
+    FPCC_UGE  = 0b001011, // Unordered or Greater Than or Equal
+    FPCC_ULT  = 0b001100, // Unordered or Less Than
+    FPCC_ULE  = 0b001101, // Unordered or Less Than or Equal
+    FPCC_NE   = 0b001110, // Not Equal
+    FPCC_T    = 0b001111, // True
+    FPCC_SF   = 0b010000, // Signaling False
+    FPCC_SEQ  = 0b010001, // Signaling Equal
+    FPCC_GT   = 0b010010, // Greater Than
+    FPCC_GE   = 0b010011, // Greater Than or Equal
+    FPCC_LT   = 0b010100, // Less Than
+    FPCC_LE   = 0b010101, // Less Than or Equal
+    FPCC_GL   = 0b010110, // Greater Than or Less Than
+    FPCC_GLE  = 0b010111, // Greater Than or Less Than or Equal
+    FPCC_NGLE = 0b011000, // Not (Greater Than or Less Than or Equal)
+    FPCC_NGL  = 0b011001, // Not (Greater Than or Less Than)
+    FPCC_NLE  = 0b011010, // Not (Less Than or Equal)
+    FPCC_NLT  = 0b011011, // Not (Less Than)
+    FPCC_NGE  = 0b011100, // Not (Greater Than or Equal)
+    FPCC_NGT  = 0b011101, // Not (Greater Than)
+    FPCC_SNE  = 0b011110, // Signaling Not Equal
+    FPCC_ST   = 0b011111, // Signaling True
+}
+
+pub use FPConditionCode::*;
+
+#[derive(Debug, PartialEq)]
+#[allow(non_camel_case_types)]
 pub enum FPFormat {
     FPF_LONG_INT,
     FPF_SINGLE,
@@ -141,6 +180,7 @@ pub enum InstructionExtra {
     NoExtra,
     Bitfield(BitfieldData, BitfieldData),
     Condition(ConditionCode),
+    FPCondition(FPConditionCode),
     PackAdjustment(u16),
     FloatFormat(FPFormat),
 }

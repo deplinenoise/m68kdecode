@@ -1050,3 +1050,102 @@
 
 > fsin.s (a0),fp1
 # Instruction { size: 4, operation: FSIN, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+
+> lab: fbne.l lab
+# Instruction { size: 4, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_NE) }
+
+> lab: fbf.w lab
+# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_F) }
+
+> lab: fbeq.w lab
+# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_EQ) }
+
+> lab: fbogt.w lab
+# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_OGT) }
+
+> lab: fboge.w lab
+# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_OGE) }
+
+> lab: fbolt.w lab
+# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_OLT) }
+
+> lab: fbole.w lab
+# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_OLE) }
+
+> lab: fbogl.w lab
+# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_OGL) }
+
+> lab: fbor.w lab
+# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_OR) }
+
+> lab: fbun.w lab
+# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_UN) }
+
+> lab: fbueq.w lab
+# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_UEQ) }
+
+> lab: fbugt.w lab
+# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_UGT) }
+
+> lab: fbuge.w lab
+# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_UGE) }
+
+> lab: fbult.w lab
+# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_ULT) }
+
+> lab: fbule.w lab
+# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_ULE) }
+
+> lab: fbne.w lab
+# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_NE) }
+
+> lab: fbt.w lab
+# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_T) }
+
+> lab: fbsf.w lab
+# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_SF) }
+
+> lab: fbseq.w lab
+# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_SEQ) }
+
+> lab: fbgt.w lab
+# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_GT) }
+
+> lab: fbge.w lab
+# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_GE) }
+
+> lab: fblt.w lab
+# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_LT) }
+
+> lab: fble.w lab
+# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_LE) }
+
+> lab: fbgl.w lab
+# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_GL) }
+
+> lab: fbgle.w lab
+# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_GLE) }
+
+> lab: fbngle.w lab
+# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_NGLE) }
+
+> lab: fbngl.w lab
+# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_NGL) }
+
+> lab: fbnle.w lab
+# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_NLE) }
+
+> lab: fbnlt.w lab
+# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_NLT) }
+
+> lab: fbnge.w lab
+# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_NGE) }
+
+> lab: fbngt.w lab
+# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_NGT) }
+
+> lab: fbsne.w lab
+# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_SNE) }
+
+> lab: fbst.w lab
+# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_ST) }

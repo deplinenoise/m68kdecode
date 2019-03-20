@@ -335,5 +335,42 @@ impl<'a> CodeStream<'a> {
             (10, FR(self.float_reg(s)), FR(self.float_reg(d)), FloatFormat(FPF_EXTENDED_REAL))
         }
     }
+
+    pub fn fpcc(&self, c: u16) -> InstructionExtra {
+        FPCondition(match c {
+            0b000000 => FPCC_F     , // False
+            0b000001 => FPCC_EQ    , // Equal
+            0b000010 => FPCC_OGT   , // Ordered Greater Than
+            0b000011 => FPCC_OGE   , // Ordered Greater Than or Equal
+            0b000100 => FPCC_OLT   , // Ordered Less Than
+            0b000101 => FPCC_OLE   , // Ordered Less Than or Equal
+            0b000110 => FPCC_OGL   , // Ordered Greater Than or Less Than
+            0b000111 => FPCC_OR    , // Ordered
+            0b001000 => FPCC_UN    , // Unordered
+            0b001001 => FPCC_UEQ   , // Unordered or Equal
+            0b001010 => FPCC_UGT   , // Unordered or Greater Than
+            0b001011 => FPCC_UGE   , // Unordered or Greater Than or Equal
+            0b001100 => FPCC_ULT   , // Unordered or Less Than
+            0b001101 => FPCC_ULE   , // Unordered or Less Than or Equal
+            0b001110 => FPCC_NE    , // Not Equal
+            0b001111 => FPCC_T     , // True
+            0b010000 => FPCC_SF    , // Signaling False
+            0b010001 => FPCC_SEQ   , // Signaling Equal
+            0b010010 => FPCC_GT    , // Greater Than
+            0b010011 => FPCC_GE    , // Greater Than or Equal
+            0b010100 => FPCC_LT    , // Less Than
+            0b010101 => FPCC_LE    , // Less Than or Equal
+            0b010110 => FPCC_GL    , // Greater Than or Less Than
+            0b010111 => FPCC_GLE   , // Greater Than or Less Than or Equal
+            0b011000 => FPCC_NGLE  , // Not (Greater Than or Less Than or Equal)
+            0b011001 => FPCC_NGL   , // Not (Greater Than or Less Than)
+            0b011010 => FPCC_NLE   , // Not (Less Than or Equal)
+            0b011011 => FPCC_NLT   , // Not (Less Than)
+            0b011100 => FPCC_NGE   , // Not (Greater Than or Equal)
+            0b011101 => FPCC_NGT   , // Not (Greater Than)
+            0b011110 => FPCC_SNE   , // Signaling Not Equal
+            _        => FPCC_ST    , // Signaling True
+        })
+    }
 }
 

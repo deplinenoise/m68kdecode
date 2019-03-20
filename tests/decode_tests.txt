@@ -975,3 +975,24 @@
 
 > fdabs fp1
 # Instruction { size: 10, operation: FDABS, operands: [ FR(FP1), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fabs.l (a0),fp1
+# Instruction { size: 4, operation: FABS, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_LONG_INT) }
+
+> fabs.s (a0),fp1
+# Instruction { size: 4, operation: FABS, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+
+> fabs.d (a0),fp1
+# Instruction { size: 8, operation: FABS, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_DOUBLE) }
+
+> fabs.w (a0),fp1
+# Instruction { size: 2, operation: FABS, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_WORD_INT) }
+
+> fabs.b (a0),fp1
+# Instruction { size: 1, operation: FABS, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_BYTE_INT) }
+
+> fabs.x (a0),fp1
+# Instruction { size: 10, operation: FABS, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fabs.p (a0),fp1
+# Instruction { size: 12, operation: FABS, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_PACKED_DECIMAL_REAL) }

@@ -320,11 +320,16 @@ impl<'a> CodeStream<'a> {
         if m_r == 1 {
             let (sz, fpform) = match s {
                 0b000 => (4, FPF_LONG_INT),
-                _ => (1, FPF_BYTE_INT),
+                0b001 => (4, FPF_SINGLE),
+                0b010 => (10, FPF_EXTENDED_REAL),
+                0b011 => (12, FPF_PACKED_DECIMAL_REAL),
+                0b100 => (2, FPF_WORD_INT),
+                0b101 => (8, FPF_DOUBLE),
+                0b110 => (1, FPF_BYTE_INT),
+                _     => { self.error = Some(Reserved); (0, FPF_BYTE_INT) },
             };
-            let ea = self.ea(rg, md, sz);
 
-            (sz, ea, FR(self.float_reg(d)), FloatFormat(fpform))
+            (sz, self.ea(rg, md, sz), FR(self.float_reg(d)), FloatFormat(fpform))
         }
         else {
             (10, FR(self.float_reg(s)), FR(self.float_reg(s)), FloatFormat(FPF_EXTENDED_REAL))

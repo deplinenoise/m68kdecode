@@ -4196,4 +4196,102 @@ mod tests {
             &[" fdabs fp1"],
         );
     }
+    //  fabs.l (a0),fp1
+    #[test]
+    fn test_decode_0296_fabs_l_a0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x10, 0x40, 0x98],
+            Instruction {
+                size: 4,
+                operation: FABS,
+                operands: [ARIND(A0), FR(FP1)],
+                extra: FloatFormat(FPF_LONG_INT),
+            },
+            &[" fabs.l (a0),fp1"],
+        );
+    }
+    //  fabs.s (a0),fp1
+    #[test]
+    fn test_decode_0297_fabs_s_a0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x10, 0x44, 0x98],
+            Instruction {
+                size: 4,
+                operation: FABS,
+                operands: [ARIND(A0), FR(FP1)],
+                extra: FloatFormat(FPF_SINGLE),
+            },
+            &[" fabs.s (a0),fp1"],
+        );
+    }
+    //  fabs.d (a0),fp1
+    #[test]
+    fn test_decode_0298_fabs_d_a0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x10, 0x54, 0x98],
+            Instruction {
+                size: 8,
+                operation: FABS,
+                operands: [ARIND(A0), FR(FP1)],
+                extra: FloatFormat(FPF_DOUBLE),
+            },
+            &[" fabs.d (a0),fp1"],
+        );
+    }
+    //  fabs.w (a0),fp1
+    #[test]
+    fn test_decode_0299_fabs_w_a0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x10, 0x50, 0x98],
+            Instruction {
+                size: 2,
+                operation: FABS,
+                operands: [ARIND(A0), FR(FP1)],
+                extra: FloatFormat(FPF_WORD_INT),
+            },
+            &[" fabs.w (a0),fp1"],
+        );
+    }
+    //  fabs.b (a0),fp1
+    #[test]
+    fn test_decode_0300_fabs_b_a0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x10, 0x58, 0x98],
+            Instruction {
+                size: 1,
+                operation: FABS,
+                operands: [ARIND(A0), FR(FP1)],
+                extra: FloatFormat(FPF_BYTE_INT),
+            },
+            &[" fabs.b (a0),fp1"],
+        );
+    }
+    //  fabs.x (a0),fp1
+    #[test]
+    fn test_decode_0301_fabs_x_a0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x10, 0x48, 0x98],
+            Instruction {
+                size: 10,
+                operation: FABS,
+                operands: [ARIND(A0), FR(FP1)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fabs.x (a0),fp1"],
+        );
+    }
+    //  fabs.p (a0),fp1
+    #[test]
+    fn test_decode_0302_fabs_p_a0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x10, 0x4c, 0x98],
+            Instruction {
+                size: 12,
+                operation: FABS,
+                operands: [ARIND(A0), FR(FP1)],
+                extra: FloatFormat(FPF_PACKED_DECIMAL_REAL),
+            },
+            &[" fabs.p (a0),fp1"],
+        );
+    }
 }

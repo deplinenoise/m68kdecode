@@ -4504,4 +4504,46 @@ mod tests {
             &[" fatanh.s (a0),fp1"],
         );
     }
+    //  fsin fp3
+    #[test]
+    fn test_decode_0318_fsin_fp3() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x0d, 0x8e],
+            Instruction {
+                size: 10,
+                operation: FSIN,
+                operands: [FR(FP3), FR(FP3)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fsin fp3"],
+        );
+    }
+    //  fsin fp0,fp1
+    #[test]
+    fn test_decode_0319_fsin_fp0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x00, 0x8e],
+            Instruction {
+                size: 10,
+                operation: FSIN,
+                operands: [FR(FP0), FR(FP1)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fsin fp0,fp1"],
+        );
+    }
+    //  fsin.s (a0),fp1
+    #[test]
+    fn test_decode_0320_fsin_s_a0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x10, 0x44, 0x8e],
+            Instruction {
+                size: 4,
+                operation: FSIN,
+                operands: [ARIND(A0), FR(FP1)],
+                extra: FloatFormat(FPF_SINGLE),
+            },
+            &[" fsin.s (a0),fp1"],
+        );
+    }
 }

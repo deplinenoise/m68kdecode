@@ -1032,3 +1032,12 @@
 
 > fatan.s (a0),fp1
 # Instruction { size: 4, operation: FATAN, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+
+> fatanh fp3
+# Instruction { size: 10, operation: FATANH, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fatanh fp0,fp1
+# Instruction { size: 10, operation: FATANH, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fatanh.s (a0),fp1
+# Instruction { size: 4, operation: FATANH, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }

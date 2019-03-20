@@ -970,3 +970,8 @@
 > fabs fp1
 # Instruction { size: 10, operation: FABS, operands: [ FR(FP1), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
 
+> fsabs fp1
+# Instruction { size: 10, operation: FSABS, operands: [ FR(FP1), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fdabs fp1
+# Instruction { size: 10, operation: FDABS, operands: [ FR(FP1), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }

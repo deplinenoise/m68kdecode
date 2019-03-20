@@ -4168,4 +4168,32 @@ mod tests {
             &[" fabs fp1"],
         );
     }
+    //  fsabs fp1
+    #[test]
+    fn test_decode_0294_fsabs_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x04, 0xd8],
+            Instruction {
+                size: 10,
+                operation: FSABS,
+                operands: [FR(FP1), FR(FP1)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fsabs fp1"],
+        );
+    }
+    //  fdabs fp1
+    #[test]
+    fn test_decode_0295_fdabs_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x04, 0xdc],
+            Instruction {
+                size: 10,
+                operation: FDABS,
+                operands: [FR(FP1), FR(FP1)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fdabs fp1"],
+        );
+    }
 }

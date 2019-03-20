@@ -4294,4 +4294,18 @@ mod tests {
             &[" fabs.p (a0),fp1"],
         );
     }
+    //  fabs fp3,fp1
+    #[test]
+    fn test_decode_0303_fabs_fp3_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x0c, 0x98],
+            Instruction {
+                size: 10,
+                operation: FABS,
+                operands: [FR(FP3), FR(FP1)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fabs fp3,fp1"],
+        );
+    }
 }

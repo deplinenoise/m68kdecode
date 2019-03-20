@@ -996,3 +996,6 @@
 
 > fabs.p (a0),fp1
 # Instruction { size: 12, operation: FABS, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_PACKED_DECIMAL_REAL) }
+
+> fabs fp3,fp1
+# Instruction { size: 10, operation: FABS, operands: [ FR(FP3), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }

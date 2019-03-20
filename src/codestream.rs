@@ -332,7 +332,7 @@ impl<'a> CodeStream<'a> {
             (sz, self.ea(rg, md, sz), FR(self.float_reg(d)), FloatFormat(fpform))
         }
         else {
-            (10, FR(self.float_reg(s)), FR(self.float_reg(s)), FloatFormat(FPF_EXTENDED_REAL))
+            (10, FR(self.float_reg(s)), FR(self.float_reg(d)), FloatFormat(FPF_EXTENDED_REAL))
         }
     }
 }

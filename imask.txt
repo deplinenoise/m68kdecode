@@ -435,6 +435,7 @@ FBCC            1111_0010_11cc_cccc sz=4; src = PCDISP(2, simple_disp(cs.pull32(
 FCMP            1111_0010_00mm_mrrr 0R0s_ssdd_d011_1000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
 
 FCOS            1111_0010_00mm_mrrr 0R0s_ssdd_d001_1101 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+FCOSH           1111_0010_00mm_mrrr 0R0s_ssdd_d001_1001 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
 
 FSIN            1111_0010_00mm_mrrr 0R0s_ssdd_d000_1110 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
 

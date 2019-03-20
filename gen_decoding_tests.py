@@ -21,6 +21,7 @@ with open(infilename, 'r') as f:
         asm_lines = []
         result_lines = []
 
+        cpu = '68040'
         while True:
             l = f.readline()
             if len(l) == 0:
@@ -33,6 +34,8 @@ with open(infilename, 'r') as f:
                 asm_lines.append(l[1:])
             elif l.startswith('# '):
                 result_lines.append(l[1:])
+            elif l.startswith('! '):
+                cpu = l[2:]
             else:
                 stderr.write('bad input line: {}'.format(l))
         
@@ -44,7 +47,7 @@ with open(infilename, 'r') as f:
                     of.write(line)
                     of.write('\n')
             
-            if subprocess.call([vasm, '-m68020', 'test.asm', '-quiet', '-Fbin', '-o', 'test.out']) != 0:
+            if subprocess.call([vasm, '-m' + cpu, 'test.asm', '-quiet', '-Fbin', '-o', 'test.out']) != 0:
                 sys.stderr.write('vasm failed for:')
                 for l in asm_lines:
                     sys.stderr.write(l)

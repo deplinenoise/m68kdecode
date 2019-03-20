@@ -118,10 +118,6 @@ def gen_decoders(of, insns):
     of.write('#[allow(non_snake_case)]\n')
     of.write('#[allow(unused_mut)]\n')
     of.write('pub fn decode_group_{0:04b}(w0: u16, cs: &mut CodeStream) -> Result<DecodedInstruction, DecodingError> {{\n'.format(group))
-    of.write('  let sz;\n')
-    of.write('  let src;\n')
-    of.write('  let dst;\n')
-    of.write('  let mut extra = NoExtra;\n')
 
     for i in insns:
         of.write('if (w0 & 0b{:016b}) == 0b{:016b} '.format(i.masks[0], i.instruction_patterns[0]))
@@ -151,7 +147,21 @@ def gen_decoders(of, insns):
 
         expr = re.sub(R_PREDICATE, "", i.result)
 
-        of.write(expr + '\n')
+        have_extra = False
+
+        for sub_expr in expr.split(';'):
+            sub_expr = sub_expr.strip();
+            if len(sub_expr) == 0:
+                continue
+            if not sub_expr.startswith('let'):
+                of.write('let ')
+            if sub_expr.find('extra') != -1:
+                have_extra = True
+            of.write(sub_expr)
+            of.write(';\n')
+
+        if not have_extra:
+            of.write('let extra = NoExtra;\n')
 
         if expr.find('return') == -1:
             of.write('return cs.check_overflow(Instruction {{ size: sz, operation: {}, operands: [ src, dst ], extra: extra }});\n'.format(i.name))

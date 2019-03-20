@@ -111,6 +111,9 @@ pub enum Operation {
     ROXR,
     ROL,
     ROR,
+    FABS,
+    FSABS,
+    FDABS,
 }
 #[allow(non_snake_case)]
 #[allow(unused_mut)]
@@ -118,14 +121,11 @@ pub fn decode_group_0000(
     w0: u16,
     cs: &mut CodeStream,
 ) -> Result<DecodedInstruction, DecodingError> {
-    let sz;
-    let src;
-    let dst;
-    let mut extra = NoExtra;
     if (w0 & 0b1111111111111111) == 0b0000001000111100 {
-        sz = 1;
-        src = cs.imm8();
-        dst = Implied;
+        let sz = 1;
+        let src = cs.imm8();
+        let dst = Implied;
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ANDITOCCR,
@@ -134,9 +134,10 @@ pub fn decode_group_0000(
         });
     }
     if (w0 & 0b1111111111111111) == 0b0000001001111100 {
-        sz = 2;
-        src = cs.imm16();
-        dst = Implied;
+        let sz = 2;
+        let src = cs.imm16();
+        let dst = Implied;
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ANDITOSR,
@@ -145,9 +146,10 @@ pub fn decode_group_0000(
         });
     }
     if (w0 & 0b1111111111111111) == 0b0000101000111100 {
-        sz = 1;
-        src = cs.imm8();
-        dst = Implied;
+        let sz = 1;
+        let src = cs.imm8();
+        let dst = Implied;
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: EORITOCCR,
@@ -156,9 +158,10 @@ pub fn decode_group_0000(
         });
     }
     if (w0 & 0b1111111111111111) == 0b0000101001111100 {
-        sz = 2;
-        src = cs.imm16();
-        dst = Implied;
+        let sz = 2;
+        let src = cs.imm16();
+        let dst = Implied;
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: EORITOSR,
@@ -167,9 +170,10 @@ pub fn decode_group_0000(
         });
     }
     if (w0 & 0b1111111111111111) == 0b0000000000111100 {
-        sz = 1;
-        src = cs.imm8();
-        dst = Implied;
+        let sz = 1;
+        let src = cs.imm8();
+        let dst = Implied;
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ORITOCCR,
@@ -178,9 +182,10 @@ pub fn decode_group_0000(
         });
     }
     if (w0 & 0b1111111111111111) == 0b0000000001111100 {
-        sz = 2;
-        src = cs.imm16();
-        dst = Implied;
+        let sz = 2;
+        let src = cs.imm16();
+        let dst = Implied;
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ORITOSR,
@@ -192,9 +197,10 @@ pub fn decode_group_0000(
         let d = get_bits(w0, 9, 3);
         let s = get_bits(w0, 6, 1);
         let a = get_bits(w0, 0, 3);
-        sz = 1 << (s + 1);
-        src = ARIND(cs.address_reg(a));
-        dst = cs.data_reg_op(d);
+        let sz = 1 << (s + 1);
+        let src = ARIND(cs.address_reg(a));
+        let dst = cs.data_reg_op(d);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: MOVEP,
@@ -206,9 +212,10 @@ pub fn decode_group_0000(
         let d = get_bits(w0, 9, 3);
         let s = get_bits(w0, 6, 1);
         let a = get_bits(w0, 0, 3);
-        sz = 1 << (s + 1);
-        src = DR(cs.data_reg(d));
-        dst = ARIND(cs.address_reg(a));
+        let sz = 1 << (s + 1);
+        let src = DR(cs.data_reg(d));
+        let dst = ARIND(cs.address_reg(a));
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: MOVEP,
@@ -220,9 +227,10 @@ pub fn decode_group_0000(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.data_reg_op(d);
-        dst = cs.ea(r, m, 4);
+        let sz = 4;
+        let src = cs.data_reg_op(d);
+        let dst = cs.ea(r, m, 4);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: BTST,
@@ -234,9 +242,10 @@ pub fn decode_group_0000(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.data_reg_op(d);
-        dst = cs.ea(r, m, 4);
+        let sz = 4;
+        let src = cs.data_reg_op(d);
+        let dst = cs.ea(r, m, 4);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: BCHG,
@@ -248,9 +257,10 @@ pub fn decode_group_0000(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.data_reg_op(d);
-        dst = cs.ea(r, m, 4);
+        let sz = 4;
+        let src = cs.data_reg_op(d);
+        let dst = cs.ea(r, m, 4);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: BCLR,
@@ -262,9 +272,10 @@ pub fn decode_group_0000(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.data_reg_op(d);
-        dst = cs.ea(r, m, 4);
+        let sz = 4;
+        let src = cs.data_reg_op(d);
+        let dst = cs.ea(r, m, 4);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: BSET,
@@ -279,9 +290,10 @@ pub fn decode_group_0000(
             let r = get_bits(w0, 0, 3);
             let n = get_bits(w1, 0, 9);
             cs.skip_words(1);
-            sz = 1;
-            src = IMM16(n);
-            dst = cs.ea(r, m, 1);
+            let sz = 1;
+            let src = IMM16(n);
+            let dst = cs.ea(r, m, 1);
+            let extra = NoExtra;
             return cs.check_overflow(Instruction {
                 size: sz,
                 operation: BTST,
@@ -297,9 +309,10 @@ pub fn decode_group_0000(
             let r = get_bits(w0, 0, 3);
             let n = get_bits(w1, 0, 9);
             cs.skip_words(1);
-            sz = 1;
-            src = IMM16(n);
-            dst = cs.ea(r, m, 1);
+            let sz = 1;
+            let src = IMM16(n);
+            let dst = cs.ea(r, m, 1);
+            let extra = NoExtra;
             return cs.check_overflow(Instruction {
                 size: sz,
                 operation: BCHG,
@@ -315,9 +328,10 @@ pub fn decode_group_0000(
             let r = get_bits(w0, 0, 3);
             let n = get_bits(w1, 0, 9);
             cs.skip_words(1);
-            sz = 1;
-            src = IMM16(n);
-            dst = cs.ea(r, m, 1);
+            let sz = 1;
+            let src = IMM16(n);
+            let dst = cs.ea(r, m, 1);
+            let extra = NoExtra;
             return cs.check_overflow(Instruction {
                 size: sz,
                 operation: BCLR,
@@ -333,9 +347,10 @@ pub fn decode_group_0000(
             let r = get_bits(w0, 0, 3);
             let n = get_bits(w1, 0, 9);
             cs.skip_words(1);
-            sz = 1;
-            src = IMM16(n);
-            dst = cs.ea(r, m, 1);
+            let sz = 1;
+            let src = IMM16(n);
+            let dst = cs.ea(r, m, 1);
+            let extra = NoExtra;
             return cs.check_overflow(Instruction {
                 size: sz,
                 operation: BSET,
@@ -347,9 +362,10 @@ pub fn decode_group_0000(
     if (w0 & 0b1111111111110000) == 0b0000011011000000 {
         let d = get_bits(w0, 3, 1);
         let r = get_bits(w0, 0, 3);
-        sz = 0;
-        src = cs.dar(d, r);
-        dst = NoOperand;
+        let sz = 0;
+        let src = cs.dar(d, r);
+        let dst = NoOperand;
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: RTM,
@@ -360,9 +376,10 @@ pub fn decode_group_0000(
     if (w0 & 0b1111111111000000) == 0b0000011011000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 0;
-        src = cs.imm8();
-        dst = cs.ea(r, m, 0);
+        let sz = 0;
+        let src = cs.imm8();
+        let dst = cs.ea(r, m, 0);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: CALLM,
@@ -373,9 +390,10 @@ pub fn decode_group_0000(
     if (w0 & 0b1111111111000000) == 0b0000011000000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = cs.imm8();
-        dst = cs.ea(r, m, 1);
+        let sz = 1;
+        let src = cs.imm8();
+        let dst = cs.ea(r, m, 1);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ADDI,
@@ -386,9 +404,10 @@ pub fn decode_group_0000(
     if (w0 & 0b1111111111000000) == 0b0000011001000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.imm16();
-        dst = cs.ea(r, m, 2);
+        let sz = 2;
+        let src = cs.imm16();
+        let dst = cs.ea(r, m, 2);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ADDI,
@@ -399,9 +418,10 @@ pub fn decode_group_0000(
     if (w0 & 0b1111111111000000) == 0b0000011010000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.imm32();
-        dst = cs.ea(r, m, 4);
+        let sz = 4;
+        let src = cs.imm32();
+        let dst = cs.ea(r, m, 4);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ADDI,
@@ -412,9 +432,10 @@ pub fn decode_group_0000(
     if (w0 & 0b1111111111000000) == 0b0000010000000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = cs.imm8();
-        dst = cs.ea(r, m, 1);
+        let sz = 1;
+        let src = cs.imm8();
+        let dst = cs.ea(r, m, 1);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: SUBI,
@@ -425,9 +446,10 @@ pub fn decode_group_0000(
     if (w0 & 0b1111111111000000) == 0b0000010001000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.imm16();
-        dst = cs.ea(r, m, 2);
+        let sz = 2;
+        let src = cs.imm16();
+        let dst = cs.ea(r, m, 2);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: SUBI,
@@ -438,9 +460,10 @@ pub fn decode_group_0000(
     if (w0 & 0b1111111111000000) == 0b0000010010000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.imm32();
-        dst = cs.ea(r, m, 4);
+        let sz = 4;
+        let src = cs.imm32();
+        let dst = cs.ea(r, m, 4);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: SUBI,
@@ -451,9 +474,10 @@ pub fn decode_group_0000(
     if (w0 & 0b1111111111000000) == 0b0000001000000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = cs.imm8();
-        dst = cs.ea(r, m, 1);
+        let sz = 1;
+        let src = cs.imm8();
+        let dst = cs.ea(r, m, 1);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ANDI,
@@ -464,9 +488,10 @@ pub fn decode_group_0000(
     if (w0 & 0b1111111111000000) == 0b0000001001000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.imm16();
-        dst = cs.ea(r, m, 2);
+        let sz = 2;
+        let src = cs.imm16();
+        let dst = cs.ea(r, m, 2);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ANDI,
@@ -477,9 +502,10 @@ pub fn decode_group_0000(
     if (w0 & 0b1111111111000000) == 0b0000001010000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.imm32();
-        dst = cs.ea(r, m, 4);
+        let sz = 4;
+        let src = cs.imm32();
+        let dst = cs.ea(r, m, 4);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ANDI,
@@ -490,9 +516,10 @@ pub fn decode_group_0000(
     if (w0 & 0b1111111111000000) == 0b0000000000000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = cs.imm8();
-        dst = cs.ea(r, m, 1);
+        let sz = 1;
+        let src = cs.imm8();
+        let dst = cs.ea(r, m, 1);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ORI,
@@ -503,9 +530,10 @@ pub fn decode_group_0000(
     if (w0 & 0b1111111111000000) == 0b0000000001000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.imm16();
-        dst = cs.ea(r, m, 2);
+        let sz = 2;
+        let src = cs.imm16();
+        let dst = cs.ea(r, m, 2);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ORI,
@@ -516,9 +544,10 @@ pub fn decode_group_0000(
     if (w0 & 0b1111111111000000) == 0b0000000010000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.imm32();
-        dst = cs.ea(r, m, 4);
+        let sz = 4;
+        let src = cs.imm32();
+        let dst = cs.ea(r, m, 4);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ORI,
@@ -535,9 +564,10 @@ pub fn decode_group_0000(
             let a = get_bits(w1, 15, 1);
             let d = get_bits(w1, 12, 3);
             cs.skip_words(1);
-            sz = 1 << s;
-            src = cs.ea(r, m, sz);
-            dst = cs.dar(a, d);
+            let sz = 1 << s;
+            let src = cs.ea(r, m, sz);
+            let dst = cs.dar(a, d);
+            let extra = NoExtra;
             return cs.check_overflow(Instruction {
                 size: sz,
                 operation: CMP2,
@@ -555,9 +585,10 @@ pub fn decode_group_0000(
             let a = get_bits(w1, 15, 1);
             let d = get_bits(w1, 12, 3);
             cs.skip_words(1);
-            sz = 1 << s;
-            src = cs.ea(r, m, sz);
-            dst = cs.dar(a, d);
+            let sz = 1 << s;
+            let src = cs.ea(r, m, sz);
+            let dst = cs.dar(a, d);
+            let extra = NoExtra;
             return cs.check_overflow(Instruction {
                 size: sz,
                 operation: CHK2,
@@ -569,9 +600,10 @@ pub fn decode_group_0000(
     if (w0 & 0b1111111111000000) == 0b0000101000000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = cs.imm8();
-        dst = cs.ea(r, m, 1);
+        let sz = 1;
+        let src = cs.imm8();
+        let dst = cs.ea(r, m, 1);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: EORI,
@@ -582,9 +614,10 @@ pub fn decode_group_0000(
     if (w0 & 0b1111111111000000) == 0b0000101001000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.imm16();
-        dst = cs.ea(r, m, 2);
+        let sz = 2;
+        let src = cs.imm16();
+        let dst = cs.ea(r, m, 2);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: EORI,
@@ -595,9 +628,10 @@ pub fn decode_group_0000(
     if (w0 & 0b1111111111000000) == 0b0000101010000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.imm32();
-        dst = cs.ea(r, m, 4);
+        let sz = 4;
+        let src = cs.imm32();
+        let dst = cs.ea(r, m, 4);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: EORI,
@@ -608,9 +642,10 @@ pub fn decode_group_0000(
     if (w0 & 0b1111111111000000) == 0b0000110000000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = cs.imm8();
-        dst = cs.ea(r, m, 1);
+        let sz = 1;
+        let src = cs.imm8();
+        let dst = cs.ea(r, m, 1);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: CMPI,
@@ -621,9 +656,10 @@ pub fn decode_group_0000(
     if (w0 & 0b1111111111000000) == 0b0000110001000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.imm16();
-        dst = cs.ea(r, m, 2);
+        let sz = 2;
+        let src = cs.imm16();
+        let dst = cs.ea(r, m, 2);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: CMPI,
@@ -634,9 +670,10 @@ pub fn decode_group_0000(
     if (w0 & 0b1111111111000000) == 0b0000110010000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.imm32();
-        dst = cs.ea(r, m, 4);
+        let sz = 4;
+        let src = cs.imm32();
+        let dst = cs.ea(r, m, 4);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: CMPI,
@@ -652,9 +689,10 @@ pub fn decode_group_0000(
             let a = get_bits(w1, 15, 1);
             let d = get_bits(w1, 12, 3);
             cs.skip_words(1);
-            sz = 1;
-            dst = cs.dar(a, d);
-            src = cs.ea(r, m, 1);
+            let sz = 1;
+            let dst = cs.dar(a, d);
+            let src = cs.ea(r, m, 1);
+            let extra = NoExtra;
             return cs.check_overflow(Instruction {
                 size: sz,
                 operation: MOVES,
@@ -671,9 +709,10 @@ pub fn decode_group_0000(
             let a = get_bits(w1, 15, 1);
             let d = get_bits(w1, 12, 3);
             cs.skip_words(1);
-            sz = 2;
-            dst = cs.dar(a, d);
-            src = cs.ea(r, m, 2);
+            let sz = 2;
+            let dst = cs.dar(a, d);
+            let src = cs.ea(r, m, 2);
+            let extra = NoExtra;
             return cs.check_overflow(Instruction {
                 size: sz,
                 operation: MOVES,
@@ -690,9 +729,10 @@ pub fn decode_group_0000(
             let a = get_bits(w1, 15, 1);
             let d = get_bits(w1, 12, 3);
             cs.skip_words(1);
-            sz = 4;
-            dst = cs.dar(a, d);
-            src = cs.ea(r, m, 4);
+            let sz = 4;
+            let dst = cs.dar(a, d);
+            let src = cs.ea(r, m, 4);
+            let extra = NoExtra;
             return cs.check_overflow(Instruction {
                 size: sz,
                 operation: MOVES,
@@ -709,9 +749,10 @@ pub fn decode_group_0000(
             let a = get_bits(w1, 15, 1);
             let d = get_bits(w1, 12, 3);
             cs.skip_words(1);
-            sz = 1;
-            src = cs.dar(a, d);
-            dst = cs.ea(r, m, 1);
+            let sz = 1;
+            let src = cs.dar(a, d);
+            let dst = cs.ea(r, m, 1);
+            let extra = NoExtra;
             return cs.check_overflow(Instruction {
                 size: sz,
                 operation: MOVES,
@@ -728,9 +769,10 @@ pub fn decode_group_0000(
             let a = get_bits(w1, 15, 1);
             let d = get_bits(w1, 12, 3);
             cs.skip_words(1);
-            sz = 2;
-            src = cs.dar(a, d);
-            dst = cs.ea(r, m, 2);
+            let sz = 2;
+            let src = cs.dar(a, d);
+            let dst = cs.ea(r, m, 2);
+            let extra = NoExtra;
             return cs.check_overflow(Instruction {
                 size: sz,
                 operation: MOVES,
@@ -747,9 +789,10 @@ pub fn decode_group_0000(
             let a = get_bits(w1, 15, 1);
             let d = get_bits(w1, 12, 3);
             cs.skip_words(1);
-            sz = 4;
-            src = cs.dar(a, d);
-            dst = cs.ea(r, m, 4);
+            let sz = 4;
+            let src = cs.dar(a, d);
+            let dst = cs.ea(r, m, 4);
+            let extra = NoExtra;
             return cs.check_overflow(Instruction {
                 size: sz,
                 operation: MOVES,
@@ -761,9 +804,10 @@ pub fn decode_group_0000(
     if (w0 & 0b1111111111110000) == 0b0000011011000000 {
         let a = get_bits(w0, 3, 1);
         let r = get_bits(w0, 0, 3);
-        sz = 0;
-        src = cs.dar(a, r);
-        dst = NoOperand;
+        let sz = 0;
+        let src = cs.dar(a, r);
+        let dst = NoOperand;
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: RTM,
@@ -779,18 +823,15 @@ pub fn decode_group_0001(
     w0: u16,
     cs: &mut CodeStream,
 ) -> Result<DecodedInstruction, DecodingError> {
-    let sz;
-    let src;
-    let dst;
-    let mut extra = NoExtra;
     if (w0 & 0b1111000000000000) == 0b0001000000000000 {
         let R = get_bits(w0, 9, 3);
         let M = get_bits(w0, 6, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = cs.ea(r, m, 1);
-        dst = cs.ea(R, M, 1);
+        let sz = 1;
+        let src = cs.ea(r, m, 1);
+        let dst = cs.ea(R, M, 1);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: MOVE,
@@ -806,17 +847,14 @@ pub fn decode_group_0010(
     w0: u16,
     cs: &mut CodeStream,
 ) -> Result<DecodedInstruction, DecodingError> {
-    let sz;
-    let src;
-    let dst;
-    let mut extra = NoExtra;
     if (w0 & 0b1111000111000000) == 0b0010000001000000 {
         let R = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.ea(r, m, 4);
-        dst = cs.ea(R, 0b001, 4);
+        let sz = 4;
+        let src = cs.ea(r, m, 4);
+        let dst = cs.ea(R, 0b001, 4);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: MOVEA,
@@ -829,9 +867,10 @@ pub fn decode_group_0010(
         let M = get_bits(w0, 6, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.ea(r, m, 4);
-        dst = cs.ea(R, M, 4);
+        let sz = 4;
+        let src = cs.ea(r, m, 4);
+        let dst = cs.ea(R, M, 4);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: MOVE,
@@ -847,17 +886,14 @@ pub fn decode_group_0011(
     w0: u16,
     cs: &mut CodeStream,
 ) -> Result<DecodedInstruction, DecodingError> {
-    let sz;
-    let src;
-    let dst;
-    let mut extra = NoExtra;
     if (w0 & 0b1111000111000000) == 0b0011000001000000 {
         let R = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.ea(r, m, 2);
-        dst = cs.ea(R, 0b001, 2);
+        let sz = 2;
+        let src = cs.ea(r, m, 2);
+        let dst = cs.ea(R, 0b001, 2);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: MOVEA,
@@ -870,9 +906,10 @@ pub fn decode_group_0011(
         let M = get_bits(w0, 6, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.ea(r, m, 2);
-        dst = cs.ea(R, M, 2);
+        let sz = 2;
+        let src = cs.ea(r, m, 2);
+        let dst = cs.ea(R, M, 2);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: MOVE,
@@ -888,14 +925,11 @@ pub fn decode_group_0100(
     w0: u16,
     cs: &mut CodeStream,
 ) -> Result<DecodedInstruction, DecodingError> {
-    let sz;
-    let src;
-    let dst;
-    let mut extra = NoExtra;
     if (w0 & 0b1111111111111111) == 0b0100101011111010 {
-        sz = 0;
-        src = NoOperand;
-        dst = NoOperand;
+        let sz = 0;
+        let src = NoOperand;
+        let dst = NoOperand;
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: BGND,
@@ -904,9 +938,10 @@ pub fn decode_group_0100(
         });
     }
     if (w0 & 0b1111111111111111) == 0b0100101011111100 {
-        sz = 0;
-        src = NoOperand;
-        dst = NoOperand;
+        let sz = 0;
+        let src = NoOperand;
+        let dst = NoOperand;
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ILLEGAL,
@@ -915,9 +950,10 @@ pub fn decode_group_0100(
         });
     }
     if (w0 & 0b1111111111111111) == 0b0100111001110001 {
-        sz = 0;
-        src = NoOperand;
-        dst = NoOperand;
+        let sz = 0;
+        let src = NoOperand;
+        let dst = NoOperand;
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: NOP,
@@ -926,9 +962,10 @@ pub fn decode_group_0100(
         });
     }
     if (w0 & 0b1111111111111111) == 0b0100111001110000 {
-        sz = 0;
-        src = NoOperand;
-        dst = NoOperand;
+        let sz = 0;
+        let src = NoOperand;
+        let dst = NoOperand;
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: RESET,
@@ -937,9 +974,10 @@ pub fn decode_group_0100(
         });
     }
     if (w0 & 0b1111111111111111) == 0b0100111001110100 {
-        sz = 0;
-        src = cs.imm16();
-        dst = NoOperand;
+        let sz = 0;
+        let src = cs.imm16();
+        let dst = NoOperand;
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: RTD,
@@ -948,9 +986,10 @@ pub fn decode_group_0100(
         });
     }
     if (w0 & 0b1111111111111111) == 0b0100111001110011 {
-        sz = 0;
-        src = NoOperand;
-        dst = NoOperand;
+        let sz = 0;
+        let src = NoOperand;
+        let dst = NoOperand;
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: RTE,
@@ -959,9 +998,10 @@ pub fn decode_group_0100(
         });
     }
     if (w0 & 0b1111111111111111) == 0b0100111001110111 {
-        sz = 0;
-        src = NoOperand;
-        dst = NoOperand;
+        let sz = 0;
+        let src = NoOperand;
+        let dst = NoOperand;
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: RTR,
@@ -970,9 +1010,10 @@ pub fn decode_group_0100(
         });
     }
     if (w0 & 0b1111111111111111) == 0b0100111001110101 {
-        sz = 0;
-        src = NoOperand;
-        dst = NoOperand;
+        let sz = 0;
+        let src = NoOperand;
+        let dst = NoOperand;
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: RTS,
@@ -981,9 +1022,10 @@ pub fn decode_group_0100(
         });
     }
     if (w0 & 0b1111111111111111) == 0b0100111001110010 {
-        sz = 0;
-        src = cs.imm16();
-        dst = NoOperand;
+        let sz = 0;
+        let src = cs.imm16();
+        let dst = NoOperand;
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: STOP,
@@ -992,9 +1034,10 @@ pub fn decode_group_0100(
         });
     }
     if (w0 & 0b1111111111111111) == 0b0100111001110110 {
-        sz = 0;
-        src = NoOperand;
-        dst = NoOperand;
+        let sz = 0;
+        let src = NoOperand;
+        let dst = NoOperand;
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: TRAPV,
@@ -1004,9 +1047,10 @@ pub fn decode_group_0100(
     }
     if (w0 & 0b1111111111111000) == 0b0100100001000000 {
         let r = get_bits(w0, 0, 3);
-        sz = 0;
-        src = cs.data_reg_op(r);
-        dst = NoOperand;
+        let sz = 0;
+        let src = cs.data_reg_op(r);
+        let dst = NoOperand;
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: SWAP,
@@ -1016,9 +1060,10 @@ pub fn decode_group_0100(
     }
     if (w0 & 0b1111111111111000) == 0b0100100001001000 {
         let n = get_bits(w0, 0, 3);
-        sz = 0;
-        src = IMM8(n as u8);
-        dst = NoOperand;
+        let sz = 0;
+        let src = IMM8(n as u8);
+        let dst = NoOperand;
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: BKPT,
@@ -1028,9 +1073,10 @@ pub fn decode_group_0100(
     }
     if (w0 & 0b1111111111111000) == 0b0100100010000000 {
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.data_reg_op(r);
-        dst = NoOperand;
+        let sz = 2;
+        let src = cs.data_reg_op(r);
+        let dst = NoOperand;
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: EXTW,
@@ -1040,9 +1086,10 @@ pub fn decode_group_0100(
     }
     if (w0 & 0b1111111111111000) == 0b0100100011000000 {
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.data_reg_op(r);
-        dst = NoOperand;
+        let sz = 4;
+        let src = cs.data_reg_op(r);
+        let dst = NoOperand;
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: EXTL,
@@ -1052,9 +1099,10 @@ pub fn decode_group_0100(
     }
     if (w0 & 0b1111111111111000) == 0b0100100111000000 {
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.data_reg_op(r);
-        dst = NoOperand;
+        let sz = 4;
+        let src = cs.data_reg_op(r);
+        let dst = NoOperand;
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: EXTBL,
@@ -1066,9 +1114,10 @@ pub fn decode_group_0100(
         let n = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.ea(r, m, 4);
-        dst = cs.address_reg_op(n);
+        let sz = 4;
+        let src = cs.ea(r, m, 4);
+        let dst = cs.address_reg_op(n);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: LEA,
@@ -1078,9 +1127,10 @@ pub fn decode_group_0100(
     }
     if (w0 & 0b1111111111111000) == 0b0100111001010000 {
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.address_reg_op(r);
-        dst = cs.imm16();
+        let sz = 2;
+        let src = cs.address_reg_op(r);
+        let dst = cs.imm16();
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: LINK,
@@ -1090,9 +1140,10 @@ pub fn decode_group_0100(
     }
     if (w0 & 0b1111111111111000) == 0b0100100000001000 {
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.address_reg_op(r);
-        dst = cs.imm32();
+        let sz = 4;
+        let src = cs.address_reg_op(r);
+        let dst = cs.imm32();
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: LINK,
@@ -1102,9 +1153,10 @@ pub fn decode_group_0100(
     }
     if (w0 & 0b1111111111111000) == 0b0100111001011000 {
         let r = get_bits(w0, 0, 3);
-        sz = 0;
-        src = cs.address_reg_op(r);
-        dst = NoOperand;
+        let sz = 0;
+        let src = cs.address_reg_op(r);
+        let dst = NoOperand;
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: UNLK,
@@ -1114,9 +1166,10 @@ pub fn decode_group_0100(
     }
     if (w0 & 0b1111111111110000) == 0b0100111001000000 {
         let v = get_bits(w0, 0, 4);
-        sz = 0;
-        src = IMM8(v as u8);
-        dst = NoOperand;
+        let sz = 0;
+        let src = IMM8(v as u8);
+        let dst = NoOperand;
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: TRAP,
@@ -1133,9 +1186,10 @@ pub fn decode_group_0100(
             let R = get_bits(w1, 0, 3);
             if R != q {
                 cs.skip_words(1);
-                sz = 4;
-                src = cs.ea(r, m, 4);
-                dst = DPAIR(cs.data_reg(q), cs.data_reg(R));
+                let sz = 4;
+                let src = cs.ea(r, m, 4);
+                let dst = DPAIR(cs.data_reg(q), cs.data_reg(R));
+                let extra = NoExtra;
                 return cs.check_overflow(Instruction {
                     size: sz,
                     operation: DIVSL,
@@ -1153,9 +1207,10 @@ pub fn decode_group_0100(
             let q = get_bits(w1, 12, 3);
             let R = get_bits(w1, 0, 3);
             cs.skip_words(1);
-            sz = 4;
-            src = cs.ea(r, m, 4);
-            dst = DPAIR(cs.data_reg(q), cs.data_reg(R));
+            let sz = 4;
+            let src = cs.ea(r, m, 4);
+            let dst = DPAIR(cs.data_reg(q), cs.data_reg(R));
+            let extra = NoExtra;
             return cs.check_overflow(Instruction {
                 size: sz,
                 operation: DIVSL,
@@ -1173,9 +1228,10 @@ pub fn decode_group_0100(
             let R = get_bits(w1, 0, 3);
             if R != q {
                 cs.skip_words(1);
-                sz = 4;
-                src = cs.ea(r, m, 4);
-                dst = DPAIR(cs.data_reg(q), cs.data_reg(R));
+                let sz = 4;
+                let src = cs.ea(r, m, 4);
+                let dst = DPAIR(cs.data_reg(q), cs.data_reg(R));
+                let extra = NoExtra;
                 return cs.check_overflow(Instruction {
                     size: sz,
                     operation: DIVSLL,
@@ -1192,9 +1248,10 @@ pub fn decode_group_0100(
             let r = get_bits(w0, 0, 3);
             let q = get_bits(w1, 12, 3);
             cs.skip_words(1);
-            sz = 4;
-            src = cs.ea(r, m, 4);
-            dst = cs.data_reg_op(q);
+            let sz = 4;
+            let src = cs.ea(r, m, 4);
+            let dst = cs.data_reg_op(q);
+            let extra = NoExtra;
             return cs.check_overflow(Instruction {
                 size: sz,
                 operation: DIVSL,
@@ -1212,9 +1269,10 @@ pub fn decode_group_0100(
             let R = get_bits(w1, 0, 3);
             if R != q {
                 cs.skip_words(1);
-                sz = 4;
-                src = cs.ea(r, m, 4);
-                dst = DPAIR(cs.data_reg(q), cs.data_reg(R));
+                let sz = 4;
+                let src = cs.ea(r, m, 4);
+                let dst = DPAIR(cs.data_reg(q), cs.data_reg(R));
+                let extra = NoExtra;
                 return cs.check_overflow(Instruction {
                     size: sz,
                     operation: DIVUL,
@@ -1232,9 +1290,10 @@ pub fn decode_group_0100(
             let q = get_bits(w1, 12, 3);
             let R = get_bits(w1, 0, 3);
             cs.skip_words(1);
-            sz = 4;
-            src = cs.ea(r, m, 4);
-            dst = DPAIR(cs.data_reg(q), cs.data_reg(R));
+            let sz = 4;
+            let src = cs.ea(r, m, 4);
+            let dst = DPAIR(cs.data_reg(q), cs.data_reg(R));
+            let extra = NoExtra;
             return cs.check_overflow(Instruction {
                 size: sz,
                 operation: DIVUL,
@@ -1252,9 +1311,10 @@ pub fn decode_group_0100(
             let R = get_bits(w1, 0, 3);
             if R != q {
                 cs.skip_words(1);
-                sz = 4;
-                src = cs.ea(r, m, 4);
-                dst = DPAIR(cs.data_reg(q), cs.data_reg(R));
+                let sz = 4;
+                let src = cs.ea(r, m, 4);
+                let dst = DPAIR(cs.data_reg(q), cs.data_reg(R));
+                let extra = NoExtra;
                 return cs.check_overflow(Instruction {
                     size: sz,
                     operation: DIVULL,
@@ -1271,9 +1331,10 @@ pub fn decode_group_0100(
             let r = get_bits(w0, 0, 3);
             let q = get_bits(w1, 12, 3);
             cs.skip_words(1);
-            sz = 4;
-            src = cs.ea(r, m, 4);
-            dst = cs.data_reg_op(q);
+            let sz = 4;
+            let src = cs.ea(r, m, 4);
+            let dst = cs.data_reg_op(q);
+            let extra = NoExtra;
             return cs.check_overflow(Instruction {
                 size: sz,
                 operation: DIVUL,
@@ -1285,9 +1346,10 @@ pub fn decode_group_0100(
     if (w0 & 0b1111111111000000) == 0b0100111011000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 0;
-        src = cs.ea(r, m, 0);
-        dst = NoOperand;
+        let sz = 0;
+        let src = cs.ea(r, m, 0);
+        let dst = NoOperand;
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: JMP,
@@ -1298,9 +1360,10 @@ pub fn decode_group_0100(
     if (w0 & 0b1111111111000000) == 0b0100111010000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 0;
-        src = cs.ea(r, m, 0);
-        dst = NoOperand;
+        let sz = 0;
+        let src = cs.ea(r, m, 0);
+        let dst = NoOperand;
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: JSR,
@@ -1315,9 +1378,10 @@ pub fn decode_group_0100(
             let r = get_bits(w0, 0, 3);
             let l = get_bits(w1, 12, 3);
             cs.skip_words(1);
-            sz = 4;
-            src = cs.ea(r, m, 4);
-            dst = cs.data_reg_op(l);
+            let sz = 4;
+            let src = cs.ea(r, m, 4);
+            let dst = cs.data_reg_op(l);
+            let extra = NoExtra;
             return cs.check_overflow(Instruction {
                 size: sz,
                 operation: MULS,
@@ -1334,9 +1398,10 @@ pub fn decode_group_0100(
             let l = get_bits(w1, 12, 3);
             let h = get_bits(w1, 0, 3);
             cs.skip_words(1);
-            sz = 4;
-            src = cs.ea(r, m, 4);
-            dst = DPAIR(cs.data_reg(l), cs.data_reg(h));
+            let sz = 4;
+            let src = cs.ea(r, m, 4);
+            let dst = DPAIR(cs.data_reg(l), cs.data_reg(h));
+            let extra = NoExtra;
             return cs.check_overflow(Instruction {
                 size: sz,
                 operation: MULS,
@@ -1352,9 +1417,10 @@ pub fn decode_group_0100(
             let r = get_bits(w0, 0, 3);
             let l = get_bits(w1, 12, 3);
             cs.skip_words(1);
-            sz = 4;
-            src = cs.ea(r, m, 4);
-            dst = cs.data_reg_op(l);
+            let sz = 4;
+            let src = cs.ea(r, m, 4);
+            let dst = cs.data_reg_op(l);
+            let extra = NoExtra;
             return cs.check_overflow(Instruction {
                 size: sz,
                 operation: MULU,
@@ -1371,9 +1437,10 @@ pub fn decode_group_0100(
             let l = get_bits(w1, 12, 3);
             let h = get_bits(w1, 0, 3);
             cs.skip_words(1);
-            sz = 4;
-            src = cs.ea(r, m, 4);
-            dst = DPAIR(cs.data_reg(l), cs.data_reg(h));
+            let sz = 4;
+            let src = cs.ea(r, m, 4);
+            let dst = DPAIR(cs.data_reg(l), cs.data_reg(h));
+            let extra = NoExtra;
             return cs.check_overflow(Instruction {
                 size: sz,
                 operation: MULU,
@@ -1385,9 +1452,10 @@ pub fn decode_group_0100(
     if (w0 & 0b1111111111000000) == 0b0100100000000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = cs.ea(r, m, 1);
-        dst = NoOperand;
+        let sz = 1;
+        let src = cs.ea(r, m, 1);
+        let dst = NoOperand;
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: NBCD,
@@ -1398,9 +1466,10 @@ pub fn decode_group_0100(
     if (w0 & 0b1111111111000000) == 0b0100000011000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = Implied;
-        dst = cs.ea(r, m, 2);
+        let sz = 2;
+        let src = Implied;
+        let dst = cs.ea(r, m, 2);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: MOVEFROMSR,
@@ -1411,9 +1480,10 @@ pub fn decode_group_0100(
     if (w0 & 0b1111111111000000) == 0b0100011011000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.ea(r, m, 2);
-        dst = Implied;
+        let sz = 2;
+        let src = cs.ea(r, m, 2);
+        let dst = Implied;
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: MOVETOSR,
@@ -1423,9 +1493,10 @@ pub fn decode_group_0100(
     }
     if (w0 & 0b1111111111111000) == 0b0100111001100000 {
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.address_reg_op(r);
-        dst = Implied;
+        let sz = 4;
+        let src = cs.address_reg_op(r);
+        let dst = Implied;
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: MOVETOUSP,
@@ -1435,9 +1506,10 @@ pub fn decode_group_0100(
     }
     if (w0 & 0b1111111111111000) == 0b0100111001101000 {
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = Implied;
-        dst = cs.address_reg_op(r);
+        let sz = 4;
+        let src = Implied;
+        let dst = cs.address_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: MOVEFROMUSP,
@@ -1448,9 +1520,10 @@ pub fn decode_group_0100(
     if (w0 & 0b1111111111000000) == 0b0100001011000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = Implied;
-        dst = cs.ea(r, m, 2);
+        let sz = 2;
+        let src = Implied;
+        let dst = cs.ea(r, m, 2);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: MOVEFROMCCR,
@@ -1461,9 +1534,10 @@ pub fn decode_group_0100(
     if (w0 & 0b1111111111000000) == 0b0100010011000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.ea(r, m, 2);
-        dst = Implied;
+        let sz = 2;
+        let src = cs.ea(r, m, 2);
+        let dst = Implied;
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: MOVETOCCR,
@@ -1474,9 +1548,10 @@ pub fn decode_group_0100(
     if (w0 & 0b1111111111000000) == 0b0100100001000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.ea(r, m, 4);
-        dst = Implied;
+        let sz = 4;
+        let src = cs.ea(r, m, 4);
+        let dst = Implied;
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: PEA,
@@ -1487,9 +1562,10 @@ pub fn decode_group_0100(
     if (w0 & 0b1111111111000000) == 0b0100101011000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = cs.ea(r, m, 1);
-        dst = NoOperand;
+        let sz = 1;
+        let src = cs.ea(r, m, 1);
+        let dst = NoOperand;
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: TAS,
@@ -1501,9 +1577,10 @@ pub fn decode_group_0100(
         let s = get_bits(w0, 6, 1);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2 << s;
-        src = REGLIST(cs.pull16());
-        dst = cs.ea(r, m, sz);
+        let sz = 2 << s;
+        let src = REGLIST(cs.pull16());
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: MOVEM,
@@ -1515,9 +1592,10 @@ pub fn decode_group_0100(
         let s = get_bits(w0, 6, 1);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2 << s;
-        dst = REGLIST(cs.pull16());
-        src = cs.ea(r, m, sz);
+        let sz = 2 << s;
+        let dst = REGLIST(cs.pull16());
+        let src = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: MOVEM,
@@ -1528,9 +1606,10 @@ pub fn decode_group_0100(
     if (w0 & 0b1111111111000000) == 0b0100001000000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = Implied;
-        dst = cs.ea(r, m, sz);
+        let sz = 1;
+        let src = Implied;
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: CLR,
@@ -1541,9 +1620,10 @@ pub fn decode_group_0100(
     if (w0 & 0b1111111111000000) == 0b0100001001000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = Implied;
-        dst = cs.ea(r, m, sz);
+        let sz = 2;
+        let src = Implied;
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: CLR,
@@ -1554,9 +1634,10 @@ pub fn decode_group_0100(
     if (w0 & 0b1111111111000000) == 0b0100001010000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = Implied;
-        dst = cs.ea(r, m, sz);
+        let sz = 4;
+        let src = Implied;
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: CLR,
@@ -1567,9 +1648,10 @@ pub fn decode_group_0100(
     if (w0 & 0b1111111111000000) == 0b0100010000000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = Implied;
-        dst = cs.ea(r, m, sz);
+        let sz = 1;
+        let src = Implied;
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: NEG,
@@ -1580,9 +1662,10 @@ pub fn decode_group_0100(
     if (w0 & 0b1111111111000000) == 0b0100010001000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = Implied;
-        dst = cs.ea(r, m, sz);
+        let sz = 2;
+        let src = Implied;
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: NEG,
@@ -1593,9 +1676,10 @@ pub fn decode_group_0100(
     if (w0 & 0b1111111111000000) == 0b0100010010000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = Implied;
-        dst = cs.ea(r, m, sz);
+        let sz = 4;
+        let src = Implied;
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: NEG,
@@ -1606,9 +1690,10 @@ pub fn decode_group_0100(
     if (w0 & 0b1111111111000000) == 0b0100000000000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = Implied;
-        dst = cs.ea(r, m, sz);
+        let sz = 1;
+        let src = Implied;
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: NEGX,
@@ -1619,9 +1704,10 @@ pub fn decode_group_0100(
     if (w0 & 0b1111111111000000) == 0b0100000001000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = Implied;
-        dst = cs.ea(r, m, sz);
+        let sz = 2;
+        let src = Implied;
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: NEGX,
@@ -1632,9 +1718,10 @@ pub fn decode_group_0100(
     if (w0 & 0b1111111111000000) == 0b0100000010000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = Implied;
-        dst = cs.ea(r, m, sz);
+        let sz = 4;
+        let src = Implied;
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: NEGX,
@@ -1645,9 +1732,10 @@ pub fn decode_group_0100(
     if (w0 & 0b1111111111000000) == 0b0100011000000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = Implied;
-        dst = cs.ea(r, m, sz);
+        let sz = 1;
+        let src = Implied;
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: NOT,
@@ -1658,9 +1746,10 @@ pub fn decode_group_0100(
     if (w0 & 0b1111111111000000) == 0b0100011001000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = Implied;
-        dst = cs.ea(r, m, sz);
+        let sz = 2;
+        let src = Implied;
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: NOT,
@@ -1671,9 +1760,10 @@ pub fn decode_group_0100(
     if (w0 & 0b1111111111000000) == 0b0100011010000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = Implied;
-        dst = cs.ea(r, m, sz);
+        let sz = 4;
+        let src = Implied;
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: NOT,
@@ -1684,9 +1774,10 @@ pub fn decode_group_0100(
     if (w0 & 0b1111111111000000) == 0b0100101000000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = Implied;
-        dst = cs.ea(r, m, sz);
+        let sz = 1;
+        let src = Implied;
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: TST,
@@ -1697,9 +1788,10 @@ pub fn decode_group_0100(
     if (w0 & 0b1111111111000000) == 0b0100101001000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = Implied;
-        dst = cs.ea(r, m, sz);
+        let sz = 2;
+        let src = Implied;
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: TST,
@@ -1710,9 +1802,10 @@ pub fn decode_group_0100(
     if (w0 & 0b1111111111000000) == 0b0100101010000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = Implied;
-        dst = cs.ea(r, m, sz);
+        let sz = 4;
+        let src = Implied;
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: TST,
@@ -1724,9 +1817,10 @@ pub fn decode_group_0100(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.ea(r, m, sz);
-        dst = cs.data_reg_op(d);
+        let sz = 2;
+        let src = cs.ea(r, m, sz);
+        let dst = cs.data_reg_op(d);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: CHK,
@@ -1738,9 +1832,10 @@ pub fn decode_group_0100(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.ea(r, m, sz);
-        dst = cs.data_reg_op(d);
+        let sz = 4;
+        let src = cs.ea(r, m, sz);
+        let dst = cs.data_reg_op(d);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: CHK,
@@ -1756,17 +1851,13 @@ pub fn decode_group_0101(
     w0: u16,
     cs: &mut CodeStream,
 ) -> Result<DecodedInstruction, DecodingError> {
-    let sz;
-    let src;
-    let dst;
-    let mut extra = NoExtra;
     if (w0 & 0b1111000011111000) == 0b0101000011001000 {
         let c = get_bits(w0, 8, 4);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.data_reg_op(r);
-        dst = PCDISP(2, simple_disp(cs.pull16() as i16 as i32));
-        extra = cs.cc(c);
+        let sz = 2;
+        let src = cs.data_reg_op(r);
+        let dst = PCDISP(2, simple_disp(cs.pull16() as i16 as i32));
+        let extra = cs.cc(c);
         return cs.check_overflow(Instruction {
             size: sz,
             operation: DBCC,
@@ -1778,9 +1869,10 @@ pub fn decode_group_0101(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = cs.quick_const(d);
-        dst = cs.ea(r, m, sz);
+        let sz = 1;
+        let src = cs.quick_const(d);
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ADDQ,
@@ -1792,9 +1884,10 @@ pub fn decode_group_0101(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.quick_const(d);
-        dst = cs.ea(r, m, sz);
+        let sz = 2;
+        let src = cs.quick_const(d);
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ADDQ,
@@ -1806,9 +1899,10 @@ pub fn decode_group_0101(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.quick_const(d);
-        dst = cs.ea(r, m, sz);
+        let sz = 4;
+        let src = cs.quick_const(d);
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ADDQ,
@@ -1820,9 +1914,10 @@ pub fn decode_group_0101(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = cs.quick_const(d);
-        dst = cs.ea(r, m, sz);
+        let sz = 1;
+        let src = cs.quick_const(d);
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: SUBQ,
@@ -1834,9 +1929,10 @@ pub fn decode_group_0101(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.quick_const(d);
-        dst = cs.ea(r, m, sz);
+        let sz = 2;
+        let src = cs.quick_const(d);
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: SUBQ,
@@ -1848,9 +1944,10 @@ pub fn decode_group_0101(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.quick_const(d);
-        dst = cs.ea(r, m, sz);
+        let sz = 4;
+        let src = cs.quick_const(d);
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: SUBQ,
@@ -1860,10 +1957,10 @@ pub fn decode_group_0101(
     }
     if (w0 & 0b1111000011111111) == 0b0101000011111100 {
         let c = get_bits(w0, 8, 4);
-        sz = 0;
-        src = NoOperand;
-        dst = NoOperand;
-        extra = cs.cc(c);
+        let sz = 0;
+        let src = NoOperand;
+        let dst = NoOperand;
+        let extra = cs.cc(c);
         return cs.check_overflow(Instruction {
             size: sz,
             operation: TRAPCC,
@@ -1873,10 +1970,10 @@ pub fn decode_group_0101(
     }
     if (w0 & 0b1111000011111111) == 0b0101000011111010 {
         let c = get_bits(w0, 8, 4);
-        sz = 2;
-        src = cs.imm16();
-        dst = NoOperand;
-        extra = cs.cc(c);
+        let sz = 2;
+        let src = cs.imm16();
+        let dst = NoOperand;
+        let extra = cs.cc(c);
         return cs.check_overflow(Instruction {
             size: sz,
             operation: TRAPCC,
@@ -1886,10 +1983,10 @@ pub fn decode_group_0101(
     }
     if (w0 & 0b1111000011111111) == 0b0101000011111011 {
         let c = get_bits(w0, 8, 4);
-        sz = 4;
-        src = cs.imm32();
-        dst = NoOperand;
-        extra = cs.cc(c);
+        let sz = 4;
+        let src = cs.imm32();
+        let dst = NoOperand;
+        let extra = cs.cc(c);
         return cs.check_overflow(Instruction {
             size: sz,
             operation: TRAPCC,
@@ -1901,10 +1998,10 @@ pub fn decode_group_0101(
         let c = get_bits(w0, 8, 4);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = Implied;
-        dst = cs.ea(r, m, 1);
-        extra = cs.cc(c);
+        let sz = 1;
+        let src = Implied;
+        let dst = cs.ea(r, m, 1);
+        let extra = cs.cc(c);
         return cs.check_overflow(Instruction {
             size: sz,
             operation: SCC,
@@ -1920,14 +2017,11 @@ pub fn decode_group_0110(
     w0: u16,
     cs: &mut CodeStream,
 ) -> Result<DecodedInstruction, DecodingError> {
-    let sz;
-    let src;
-    let dst;
-    let mut extra = NoExtra;
     if (w0 & 0b1111111111111111) == 0b0110000000000000 {
-        sz = 2;
-        src = PCDISP(2, simple_disp(cs.pull16() as i16 as i32));
-        dst = NoOperand;
+        let sz = 2;
+        let src = PCDISP(2, simple_disp(cs.pull16() as i16 as i32));
+        let dst = NoOperand;
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: BRA,
@@ -1936,9 +2030,10 @@ pub fn decode_group_0110(
         });
     }
     if (w0 & 0b1111111111111111) == 0b0110000011111111 {
-        sz = 4;
-        src = PCDISP(2, simple_disp(cs.pull32() as i32));
-        dst = NoOperand;
+        let sz = 4;
+        let src = PCDISP(2, simple_disp(cs.pull32() as i32));
+        let dst = NoOperand;
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: BRA,
@@ -1948,9 +2043,10 @@ pub fn decode_group_0110(
     }
     if (w0 & 0b1111111100000000) == 0b0110000000000000 {
         let d = get_bits(w0, 0, 8);
-        sz = 1;
-        src = PCDISP(2, simple_disp(d as i8 as i32));
-        dst = NoOperand;
+        let sz = 1;
+        let src = PCDISP(2, simple_disp(d as i8 as i32));
+        let dst = NoOperand;
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: BRA,
@@ -1959,9 +2055,10 @@ pub fn decode_group_0110(
         });
     }
     if (w0 & 0b1111111111111111) == 0b0110000100000000 {
-        sz = 2;
-        src = PCDISP(2, simple_disp(cs.pull16() as i16 as i32));
-        dst = NoOperand;
+        let sz = 2;
+        let src = PCDISP(2, simple_disp(cs.pull16() as i16 as i32));
+        let dst = NoOperand;
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: BSR,
@@ -1970,9 +2067,10 @@ pub fn decode_group_0110(
         });
     }
     if (w0 & 0b1111111111111111) == 0b0110000111111111 {
-        sz = 4;
-        src = PCDISP(2, simple_disp(cs.pull32() as i32));
-        dst = NoOperand;
+        let sz = 4;
+        let src = PCDISP(2, simple_disp(cs.pull32() as i32));
+        let dst = NoOperand;
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: BSR,
@@ -1982,9 +2080,10 @@ pub fn decode_group_0110(
     }
     if (w0 & 0b1111111100000000) == 0b0110000100000000 {
         let d = get_bits(w0, 0, 8);
-        sz = 1;
-        src = PCDISP(2, simple_disp(d as i8 as i32));
-        dst = NoOperand;
+        let sz = 1;
+        let src = PCDISP(2, simple_disp(d as i8 as i32));
+        let dst = NoOperand;
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: BSR,
@@ -1994,10 +2093,10 @@ pub fn decode_group_0110(
     }
     if (w0 & 0b1111000011111111) == 0b0110000000000000 {
         let c = get_bits(w0, 8, 4);
-        sz = 2;
-        src = PCDISP(2, simple_disp(cs.pull16() as i16 as i32));
-        dst = NoOperand;
-        extra = cs.cc(c);
+        let sz = 2;
+        let src = PCDISP(2, simple_disp(cs.pull16() as i16 as i32));
+        let dst = NoOperand;
+        let extra = cs.cc(c);
         return cs.check_overflow(Instruction {
             size: sz,
             operation: BCC,
@@ -2007,10 +2106,10 @@ pub fn decode_group_0110(
     }
     if (w0 & 0b1111000011111111) == 0b0110000011111111 {
         let c = get_bits(w0, 8, 4);
-        sz = 4;
-        src = PCDISP(2, simple_disp(cs.pull32() as i32));
-        dst = NoOperand;
-        extra = cs.cc(c);
+        let sz = 4;
+        let src = PCDISP(2, simple_disp(cs.pull32() as i32));
+        let dst = NoOperand;
+        let extra = cs.cc(c);
         return cs.check_overflow(Instruction {
             size: sz,
             operation: BCC,
@@ -2021,10 +2120,10 @@ pub fn decode_group_0110(
     if (w0 & 0b1111000000000000) == 0b0110000000000000 {
         let c = get_bits(w0, 8, 4);
         let d = get_bits(w0, 0, 8);
-        sz = 1;
-        src = PCDISP(2, simple_disp(d as i8 as i32));
-        dst = NoOperand;
-        extra = cs.cc(c);
+        let sz = 1;
+        let src = PCDISP(2, simple_disp(d as i8 as i32));
+        let dst = NoOperand;
+        let extra = cs.cc(c);
         return cs.check_overflow(Instruction {
             size: sz,
             operation: BCC,
@@ -2040,16 +2139,13 @@ pub fn decode_group_0111(
     w0: u16,
     cs: &mut CodeStream,
 ) -> Result<DecodedInstruction, DecodingError> {
-    let sz;
-    let src;
-    let dst;
-    let mut extra = NoExtra;
     if (w0 & 0b1111000100000000) == 0b0111000000000000 {
         let r = get_bits(w0, 9, 3);
         let n = get_bits(w0, 0, 8);
-        sz = 4;
-        src = IMM8(n as u8);
-        dst = cs.data_reg_op(r);
+        let sz = 4;
+        let src = IMM8(n as u8);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: MOVEQ,
@@ -2065,17 +2161,13 @@ pub fn decode_group_1000(
     w0: u16,
     cs: &mut CodeStream,
 ) -> Result<DecodedInstruction, DecodingError> {
-    let sz;
-    let src;
-    let dst;
-    let mut extra = NoExtra;
     if (w0 & 0b1111000111111000) == 0b1000000101000000 {
         let y = get_bits(w0, 9, 3);
         let x = get_bits(w0, 0, 3);
-        sz = 0;
-        src = cs.data_reg_op(x);
-        dst = cs.data_reg_op(y);
-        extra = PackAdjustment(cs.pull16());
+        let sz = 0;
+        let src = cs.data_reg_op(x);
+        let dst = cs.data_reg_op(y);
+        let extra = PackAdjustment(cs.pull16());
         return cs.check_overflow(Instruction {
             size: sz,
             operation: PACK,
@@ -2086,10 +2178,10 @@ pub fn decode_group_1000(
     if (w0 & 0b1111000111111000) == 0b1000000101001000 {
         let y = get_bits(w0, 9, 3);
         let x = get_bits(w0, 0, 3);
-        sz = 0;
-        src = ARDEC(cs.address_reg(x));
-        dst = ARDEC(cs.address_reg(y));
-        extra = PackAdjustment(cs.pull16());
+        let sz = 0;
+        let src = ARDEC(cs.address_reg(x));
+        let dst = ARDEC(cs.address_reg(y));
+        let extra = PackAdjustment(cs.pull16());
         return cs.check_overflow(Instruction {
             size: sz,
             operation: PACK,
@@ -2100,10 +2192,10 @@ pub fn decode_group_1000(
     if (w0 & 0b1111000111111000) == 0b1000000110000000 {
         let y = get_bits(w0, 9, 3);
         let x = get_bits(w0, 0, 3);
-        sz = 0;
-        src = cs.data_reg_op(x);
-        dst = cs.data_reg_op(y);
-        extra = PackAdjustment(cs.pull16());
+        let sz = 0;
+        let src = cs.data_reg_op(x);
+        let dst = cs.data_reg_op(y);
+        let extra = PackAdjustment(cs.pull16());
         return cs.check_overflow(Instruction {
             size: sz,
             operation: UNPK,
@@ -2114,10 +2206,10 @@ pub fn decode_group_1000(
     if (w0 & 0b1111000111111000) == 0b1000000110001000 {
         let y = get_bits(w0, 9, 3);
         let x = get_bits(w0, 0, 3);
-        sz = 0;
-        src = ARDEC(cs.address_reg(x));
-        dst = ARDEC(cs.address_reg(y));
-        extra = PackAdjustment(cs.pull16());
+        let sz = 0;
+        let src = ARDEC(cs.address_reg(x));
+        let dst = ARDEC(cs.address_reg(y));
+        let extra = PackAdjustment(cs.pull16());
         return cs.check_overflow(Instruction {
             size: sz,
             operation: UNPK,
@@ -2128,9 +2220,10 @@ pub fn decode_group_1000(
     if (w0 & 0b1111000111111000) == 0b1000000100000000 {
         let y = get_bits(w0, 9, 3);
         let x = get_bits(w0, 0, 3);
-        sz = 1;
-        src = cs.data_reg_op(x);
-        dst = cs.data_reg_op(y);
+        let sz = 1;
+        let src = cs.data_reg_op(x);
+        let dst = cs.data_reg_op(y);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: SBCD,
@@ -2141,9 +2234,10 @@ pub fn decode_group_1000(
     if (w0 & 0b1111000111111000) == 0b1000000100001000 {
         let y = get_bits(w0, 9, 3);
         let x = get_bits(w0, 0, 3);
-        sz = 1;
-        src = ARDEC(cs.address_reg(x));
-        dst = ARDEC(cs.address_reg(y));
+        let sz = 1;
+        let src = ARDEC(cs.address_reg(x));
+        let dst = ARDEC(cs.address_reg(y));
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: SBCD,
@@ -2155,9 +2249,10 @@ pub fn decode_group_1000(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.ea(r, m, 2);
-        dst = cs.data_reg_op(d);
+        let sz = 2;
+        let src = cs.ea(r, m, 2);
+        let dst = cs.data_reg_op(d);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: DIVS,
@@ -2169,9 +2264,10 @@ pub fn decode_group_1000(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.ea(r, m, 2);
-        dst = cs.data_reg_op(d);
+        let sz = 2;
+        let src = cs.ea(r, m, 2);
+        let dst = cs.data_reg_op(d);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: DIVU,
@@ -2183,9 +2279,10 @@ pub fn decode_group_1000(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = cs.ea(r, m, sz);
-        dst = cs.data_reg_op(d);
+        let sz = 1;
+        let src = cs.ea(r, m, sz);
+        let dst = cs.data_reg_op(d);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: OR,
@@ -2197,9 +2294,10 @@ pub fn decode_group_1000(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.ea(r, m, sz);
-        dst = cs.data_reg_op(d);
+        let sz = 2;
+        let src = cs.ea(r, m, sz);
+        let dst = cs.data_reg_op(d);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: OR,
@@ -2211,9 +2309,10 @@ pub fn decode_group_1000(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.ea(r, m, sz);
-        dst = cs.data_reg_op(d);
+        let sz = 4;
+        let src = cs.ea(r, m, sz);
+        let dst = cs.data_reg_op(d);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: OR,
@@ -2225,9 +2324,10 @@ pub fn decode_group_1000(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = cs.data_reg_op(d);
-        dst = cs.ea(r, m, sz);
+        let sz = 1;
+        let src = cs.data_reg_op(d);
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: OR,
@@ -2239,9 +2339,10 @@ pub fn decode_group_1000(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.data_reg_op(d);
-        dst = cs.ea(r, m, sz);
+        let sz = 2;
+        let src = cs.data_reg_op(d);
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: OR,
@@ -2253,9 +2354,10 @@ pub fn decode_group_1000(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.data_reg_op(d);
-        dst = cs.ea(r, m, sz);
+        let sz = 4;
+        let src = cs.data_reg_op(d);
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: OR,
@@ -2271,16 +2373,13 @@ pub fn decode_group_1001(
     w0: u16,
     cs: &mut CodeStream,
 ) -> Result<DecodedInstruction, DecodingError> {
-    let sz;
-    let src;
-    let dst;
-    let mut extra = NoExtra;
     if (w0 & 0b1111000111111000) == 0b1001000100000000 {
         let x = get_bits(w0, 9, 3);
         let y = get_bits(w0, 0, 3);
-        sz = 1;
-        src = cs.data_reg_op(y);
-        dst = cs.data_reg_op(x);
+        let sz = 1;
+        let src = cs.data_reg_op(y);
+        let dst = cs.data_reg_op(x);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: SUBX,
@@ -2291,9 +2390,10 @@ pub fn decode_group_1001(
     if (w0 & 0b1111000111111000) == 0b1001000101000000 {
         let x = get_bits(w0, 9, 3);
         let y = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.data_reg_op(y);
-        dst = cs.data_reg_op(x);
+        let sz = 2;
+        let src = cs.data_reg_op(y);
+        let dst = cs.data_reg_op(x);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: SUBX,
@@ -2304,9 +2404,10 @@ pub fn decode_group_1001(
     if (w0 & 0b1111000111111000) == 0b1001000110000000 {
         let x = get_bits(w0, 9, 3);
         let y = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.data_reg_op(y);
-        dst = cs.data_reg_op(x);
+        let sz = 4;
+        let src = cs.data_reg_op(y);
+        let dst = cs.data_reg_op(x);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: SUBX,
@@ -2317,9 +2418,10 @@ pub fn decode_group_1001(
     if (w0 & 0b1111000111111000) == 0b1001000100001000 {
         let x = get_bits(w0, 9, 3);
         let y = get_bits(w0, 0, 3);
-        sz = 1;
-        src = ARDEC(cs.address_reg(y));
-        dst = ARDEC(cs.address_reg(x));
+        let sz = 1;
+        let src = ARDEC(cs.address_reg(y));
+        let dst = ARDEC(cs.address_reg(x));
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: SUBX,
@@ -2330,9 +2432,10 @@ pub fn decode_group_1001(
     if (w0 & 0b1111000111111000) == 0b1001000101001000 {
         let x = get_bits(w0, 9, 3);
         let y = get_bits(w0, 0, 3);
-        sz = 2;
-        src = ARDEC(cs.address_reg(y));
-        dst = ARDEC(cs.address_reg(x));
+        let sz = 2;
+        let src = ARDEC(cs.address_reg(y));
+        let dst = ARDEC(cs.address_reg(x));
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: SUBX,
@@ -2343,9 +2446,10 @@ pub fn decode_group_1001(
     if (w0 & 0b1111000111111000) == 0b1001000110001000 {
         let x = get_bits(w0, 9, 3);
         let y = get_bits(w0, 0, 3);
-        sz = 4;
-        src = ARDEC(cs.address_reg(y));
-        dst = ARDEC(cs.address_reg(x));
+        let sz = 4;
+        let src = ARDEC(cs.address_reg(y));
+        let dst = ARDEC(cs.address_reg(x));
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: SUBX,
@@ -2357,9 +2461,10 @@ pub fn decode_group_1001(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = cs.ea(r, m, sz);
-        dst = cs.data_reg_op(d);
+        let sz = 1;
+        let src = cs.ea(r, m, sz);
+        let dst = cs.data_reg_op(d);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: SUB,
@@ -2371,9 +2476,10 @@ pub fn decode_group_1001(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.ea(r, m, sz);
-        dst = cs.data_reg_op(d);
+        let sz = 2;
+        let src = cs.ea(r, m, sz);
+        let dst = cs.data_reg_op(d);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: SUB,
@@ -2385,9 +2491,10 @@ pub fn decode_group_1001(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.ea(r, m, sz);
-        dst = cs.data_reg_op(d);
+        let sz = 4;
+        let src = cs.ea(r, m, sz);
+        let dst = cs.data_reg_op(d);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: SUB,
@@ -2399,9 +2506,10 @@ pub fn decode_group_1001(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = cs.data_reg_op(d);
-        dst = cs.ea(r, m, sz);
+        let sz = 1;
+        let src = cs.data_reg_op(d);
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: SUB,
@@ -2413,9 +2521,10 @@ pub fn decode_group_1001(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.data_reg_op(d);
-        dst = cs.ea(r, m, sz);
+        let sz = 2;
+        let src = cs.data_reg_op(d);
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: SUB,
@@ -2427,9 +2536,10 @@ pub fn decode_group_1001(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.data_reg_op(d);
-        dst = cs.ea(r, m, sz);
+        let sz = 4;
+        let src = cs.data_reg_op(d);
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: SUB,
@@ -2445,17 +2555,14 @@ pub fn decode_group_1011(
     w0: u16,
     cs: &mut CodeStream,
 ) -> Result<DecodedInstruction, DecodingError> {
-    let sz;
-    let src;
-    let dst;
-    let mut extra = NoExtra;
     if (w0 & 0b1111000111000000) == 0b1011000011000000 {
         let a = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.ea(r, m, sz);
-        dst = cs.address_reg_op(a);
+        let sz = 2;
+        let src = cs.ea(r, m, sz);
+        let dst = cs.address_reg_op(a);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: CMPA,
@@ -2467,9 +2574,10 @@ pub fn decode_group_1011(
         let a = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.ea(r, m, sz);
-        dst = cs.address_reg_op(a);
+        let sz = 4;
+        let src = cs.ea(r, m, sz);
+        let dst = cs.address_reg_op(a);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: CMPA,
@@ -2480,9 +2588,10 @@ pub fn decode_group_1011(
     if (w0 & 0b1111000111111000) == 0b1011000100001000 {
         let x = get_bits(w0, 9, 3);
         let y = get_bits(w0, 0, 3);
-        sz = 1;
-        src = ARINC(cs.address_reg(y));
-        dst = ARINC(cs.address_reg(x));
+        let sz = 1;
+        let src = ARINC(cs.address_reg(y));
+        let dst = ARINC(cs.address_reg(x));
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: CMPM,
@@ -2493,9 +2602,10 @@ pub fn decode_group_1011(
     if (w0 & 0b1111000111111000) == 0b1011000101001000 {
         let x = get_bits(w0, 9, 3);
         let y = get_bits(w0, 0, 3);
-        sz = 2;
-        src = ARINC(cs.address_reg(y));
-        dst = ARINC(cs.address_reg(x));
+        let sz = 2;
+        let src = ARINC(cs.address_reg(y));
+        let dst = ARINC(cs.address_reg(x));
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: CMPM,
@@ -2506,9 +2616,10 @@ pub fn decode_group_1011(
     if (w0 & 0b1111000111111000) == 0b1011000110001000 {
         let x = get_bits(w0, 9, 3);
         let y = get_bits(w0, 0, 3);
-        sz = 4;
-        src = ARINC(cs.address_reg(y));
-        dst = ARINC(cs.address_reg(x));
+        let sz = 4;
+        let src = ARINC(cs.address_reg(y));
+        let dst = ARINC(cs.address_reg(x));
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: CMPM,
@@ -2520,9 +2631,10 @@ pub fn decode_group_1011(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = cs.ea(r, m, sz);
-        dst = cs.data_reg_op(d);
+        let sz = 1;
+        let src = cs.ea(r, m, sz);
+        let dst = cs.data_reg_op(d);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: CMP,
@@ -2534,9 +2646,10 @@ pub fn decode_group_1011(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.ea(r, m, sz);
-        dst = cs.data_reg_op(d);
+        let sz = 2;
+        let src = cs.ea(r, m, sz);
+        let dst = cs.data_reg_op(d);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: CMP,
@@ -2548,9 +2661,10 @@ pub fn decode_group_1011(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.ea(r, m, sz);
-        dst = cs.data_reg_op(d);
+        let sz = 4;
+        let src = cs.ea(r, m, sz);
+        let dst = cs.data_reg_op(d);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: CMP,
@@ -2562,9 +2676,10 @@ pub fn decode_group_1011(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = cs.data_reg_op(d);
-        dst = cs.ea(r, m, sz);
+        let sz = 1;
+        let src = cs.data_reg_op(d);
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: EOR,
@@ -2576,9 +2691,10 @@ pub fn decode_group_1011(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.data_reg_op(d);
-        dst = cs.ea(r, m, sz);
+        let sz = 2;
+        let src = cs.data_reg_op(d);
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: EOR,
@@ -2590,9 +2706,10 @@ pub fn decode_group_1011(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.data_reg_op(d);
-        dst = cs.ea(r, m, sz);
+        let sz = 4;
+        let src = cs.data_reg_op(d);
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: EOR,
@@ -2608,16 +2725,13 @@ pub fn decode_group_1100(
     w0: u16,
     cs: &mut CodeStream,
 ) -> Result<DecodedInstruction, DecodingError> {
-    let sz;
-    let src;
-    let dst;
-    let mut extra = NoExtra;
     if (w0 & 0b1111000111111000) == 0b1100000100000000 {
         let y = get_bits(w0, 9, 3);
         let x = get_bits(w0, 0, 3);
-        sz = 1;
-        src = cs.data_reg_op(x);
-        dst = cs.data_reg_op(y);
+        let sz = 1;
+        let src = cs.data_reg_op(x);
+        let dst = cs.data_reg_op(y);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ABCD,
@@ -2628,9 +2742,10 @@ pub fn decode_group_1100(
     if (w0 & 0b1111000111111000) == 0b1100000100001000 {
         let y = get_bits(w0, 9, 3);
         let x = get_bits(w0, 0, 3);
-        sz = 1;
-        src = ARDEC(cs.address_reg(x));
-        dst = ARDEC(cs.address_reg(y));
+        let sz = 1;
+        let src = ARDEC(cs.address_reg(x));
+        let dst = ARDEC(cs.address_reg(y));
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ABCD,
@@ -2642,9 +2757,10 @@ pub fn decode_group_1100(
         let p = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.ea(r, m, 2);
-        dst = cs.data_reg_op(p);
+        let sz = 2;
+        let src = cs.ea(r, m, 2);
+        let dst = cs.data_reg_op(p);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: MULU,
@@ -2656,9 +2772,10 @@ pub fn decode_group_1100(
         let p = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.ea(r, m, 2);
-        dst = cs.data_reg_op(p);
+        let sz = 2;
+        let src = cs.ea(r, m, 2);
+        let dst = cs.data_reg_op(p);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: MULS,
@@ -2669,9 +2786,10 @@ pub fn decode_group_1100(
     if (w0 & 0b1111000111111000) == 0b1100000101000000 {
         let x = get_bits(w0, 9, 3);
         let y = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.data_reg_op(x);
-        dst = cs.data_reg_op(y);
+        let sz = 4;
+        let src = cs.data_reg_op(x);
+        let dst = cs.data_reg_op(y);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: EXG,
@@ -2682,9 +2800,10 @@ pub fn decode_group_1100(
     if (w0 & 0b1111000111111000) == 0b1100000101001000 {
         let x = get_bits(w0, 9, 3);
         let y = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.address_reg_op(x);
-        dst = cs.address_reg_op(y);
+        let sz = 4;
+        let src = cs.address_reg_op(x);
+        let dst = cs.address_reg_op(y);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: EXG,
@@ -2695,9 +2814,10 @@ pub fn decode_group_1100(
     if (w0 & 0b1111000111111000) == 0b1100000110001000 {
         let x = get_bits(w0, 9, 3);
         let y = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.data_reg_op(x);
-        dst = cs.address_reg_op(y);
+        let sz = 4;
+        let src = cs.data_reg_op(x);
+        let dst = cs.address_reg_op(y);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: EXG,
@@ -2709,9 +2829,10 @@ pub fn decode_group_1100(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = cs.ea(r, m, sz);
-        dst = cs.data_reg_op(d);
+        let sz = 1;
+        let src = cs.ea(r, m, sz);
+        let dst = cs.data_reg_op(d);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: AND,
@@ -2723,9 +2844,10 @@ pub fn decode_group_1100(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.ea(r, m, sz);
-        dst = cs.data_reg_op(d);
+        let sz = 2;
+        let src = cs.ea(r, m, sz);
+        let dst = cs.data_reg_op(d);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: AND,
@@ -2737,9 +2859,10 @@ pub fn decode_group_1100(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.ea(r, m, sz);
-        dst = cs.data_reg_op(d);
+        let sz = 4;
+        let src = cs.ea(r, m, sz);
+        let dst = cs.data_reg_op(d);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: AND,
@@ -2751,9 +2874,10 @@ pub fn decode_group_1100(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = cs.data_reg_op(d);
-        dst = cs.ea(r, m, sz);
+        let sz = 1;
+        let src = cs.data_reg_op(d);
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: AND,
@@ -2765,9 +2889,10 @@ pub fn decode_group_1100(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.data_reg_op(d);
-        dst = cs.ea(r, m, sz);
+        let sz = 2;
+        let src = cs.data_reg_op(d);
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: AND,
@@ -2779,9 +2904,10 @@ pub fn decode_group_1100(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.data_reg_op(d);
-        dst = cs.ea(r, m, sz);
+        let sz = 4;
+        let src = cs.data_reg_op(d);
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: AND,
@@ -2797,16 +2923,13 @@ pub fn decode_group_1101(
     w0: u16,
     cs: &mut CodeStream,
 ) -> Result<DecodedInstruction, DecodingError> {
-    let sz;
-    let src;
-    let dst;
-    let mut extra = NoExtra;
     if (w0 & 0b1111000111111000) == 0b1101000100000000 {
         let x = get_bits(w0, 9, 3);
         let y = get_bits(w0, 0, 3);
-        sz = 1;
-        src = cs.data_reg_op(y);
-        dst = cs.data_reg_op(x);
+        let sz = 1;
+        let src = cs.data_reg_op(y);
+        let dst = cs.data_reg_op(x);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ADDX,
@@ -2817,9 +2940,10 @@ pub fn decode_group_1101(
     if (w0 & 0b1111000111111000) == 0b1101000101000000 {
         let x = get_bits(w0, 9, 3);
         let y = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.data_reg_op(y);
-        dst = cs.data_reg_op(x);
+        let sz = 2;
+        let src = cs.data_reg_op(y);
+        let dst = cs.data_reg_op(x);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ADDX,
@@ -2830,9 +2954,10 @@ pub fn decode_group_1101(
     if (w0 & 0b1111000111111000) == 0b1101000110000000 {
         let x = get_bits(w0, 9, 3);
         let y = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.data_reg_op(y);
-        dst = cs.data_reg_op(x);
+        let sz = 4;
+        let src = cs.data_reg_op(y);
+        let dst = cs.data_reg_op(x);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ADDX,
@@ -2843,9 +2968,10 @@ pub fn decode_group_1101(
     if (w0 & 0b1111000111111000) == 0b1101000100001000 {
         let x = get_bits(w0, 9, 3);
         let y = get_bits(w0, 0, 3);
-        sz = 1;
-        src = ARDEC(cs.address_reg(y));
-        dst = ARDEC(cs.address_reg(x));
+        let sz = 1;
+        let src = ARDEC(cs.address_reg(y));
+        let dst = ARDEC(cs.address_reg(x));
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ADDX,
@@ -2856,9 +2982,10 @@ pub fn decode_group_1101(
     if (w0 & 0b1111000111111000) == 0b1101000101001000 {
         let x = get_bits(w0, 9, 3);
         let y = get_bits(w0, 0, 3);
-        sz = 2;
-        src = ARDEC(cs.address_reg(y));
-        dst = ARDEC(cs.address_reg(x));
+        let sz = 2;
+        let src = ARDEC(cs.address_reg(y));
+        let dst = ARDEC(cs.address_reg(x));
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ADDX,
@@ -2869,9 +2996,10 @@ pub fn decode_group_1101(
     if (w0 & 0b1111000111111000) == 0b1101000110001000 {
         let x = get_bits(w0, 9, 3);
         let y = get_bits(w0, 0, 3);
-        sz = 4;
-        src = ARDEC(cs.address_reg(y));
-        dst = ARDEC(cs.address_reg(x));
+        let sz = 4;
+        let src = ARDEC(cs.address_reg(y));
+        let dst = ARDEC(cs.address_reg(x));
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ADDX,
@@ -2883,9 +3011,10 @@ pub fn decode_group_1101(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = cs.ea(r, m, sz);
-        dst = cs.data_reg_op(d);
+        let sz = 1;
+        let src = cs.ea(r, m, sz);
+        let dst = cs.data_reg_op(d);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ADD,
@@ -2897,9 +3026,10 @@ pub fn decode_group_1101(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.ea(r, m, sz);
-        dst = cs.data_reg_op(d);
+        let sz = 2;
+        let src = cs.ea(r, m, sz);
+        let dst = cs.data_reg_op(d);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ADD,
@@ -2911,9 +3041,10 @@ pub fn decode_group_1101(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.ea(r, m, sz);
-        dst = cs.data_reg_op(d);
+        let sz = 4;
+        let src = cs.ea(r, m, sz);
+        let dst = cs.data_reg_op(d);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ADD,
@@ -2925,9 +3056,10 @@ pub fn decode_group_1101(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = cs.data_reg_op(d);
-        dst = cs.ea(r, m, sz);
+        let sz = 1;
+        let src = cs.data_reg_op(d);
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ADD,
@@ -2939,9 +3071,10 @@ pub fn decode_group_1101(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.data_reg_op(d);
-        dst = cs.ea(r, m, sz);
+        let sz = 2;
+        let src = cs.data_reg_op(d);
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ADD,
@@ -2953,9 +3086,10 @@ pub fn decode_group_1101(
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.data_reg_op(d);
-        dst = cs.ea(r, m, sz);
+        let sz = 4;
+        let src = cs.data_reg_op(d);
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ADD,
@@ -2971,10 +3105,6 @@ pub fn decode_group_1110(
     w0: u16,
     cs: &mut CodeStream,
 ) -> Result<DecodedInstruction, DecodingError> {
-    let sz;
-    let src;
-    let dst;
-    let mut extra = NoExtra;
     if (w0 & 0b1111111111000000) == 0b1110101011000000 && cs.has_words(1) {
         let w1 = cs.peek_word(0);
         if (w1 & 0b1111000000000000) == 0b0000000000000000 {
@@ -2985,10 +3115,10 @@ pub fn decode_group_1110(
             let W = get_bits(w1, 5, 1);
             let w = get_bits(w1, 0, 5);
             cs.skip_words(1);
-            extra = cs.bitfield(O, o, W, w);
-            sz = 0;
-            src = NoOperand;
-            dst = cs.ea(r, m, 0);
+            let extra = cs.bitfield(O, o, W, w);
+            let sz = 0;
+            let src = NoOperand;
+            let dst = cs.ea(r, m, 0);
             return cs.check_overflow(Instruction {
                 size: sz,
                 operation: BFCHG,
@@ -3007,10 +3137,10 @@ pub fn decode_group_1110(
             let W = get_bits(w1, 5, 1);
             let w = get_bits(w1, 0, 5);
             cs.skip_words(1);
-            extra = cs.bitfield(O, o, W, w);
-            sz = 0;
-            src = NoOperand;
-            dst = cs.ea(r, m, 0);
+            let extra = cs.bitfield(O, o, W, w);
+            let sz = 0;
+            let src = NoOperand;
+            let dst = cs.ea(r, m, 0);
             return cs.check_overflow(Instruction {
                 size: sz,
                 operation: BFCLR,
@@ -3030,10 +3160,10 @@ pub fn decode_group_1110(
             let W = get_bits(w1, 5, 1);
             let w = get_bits(w1, 0, 5);
             cs.skip_words(1);
-            extra = cs.bitfield(O, o, W, w);
-            sz = 0;
-            src = cs.ea(r, m, 0);
-            dst = cs.data_reg_op(d);
+            let extra = cs.bitfield(O, o, W, w);
+            let sz = 0;
+            let src = cs.ea(r, m, 0);
+            let dst = cs.data_reg_op(d);
             return cs.check_overflow(Instruction {
                 size: sz,
                 operation: BFEXTS,
@@ -3053,10 +3183,10 @@ pub fn decode_group_1110(
             let W = get_bits(w1, 5, 1);
             let w = get_bits(w1, 0, 5);
             cs.skip_words(1);
-            extra = cs.bitfield(O, o, W, w);
-            sz = 0;
-            src = cs.ea(r, m, 0);
-            dst = cs.data_reg_op(d);
+            let extra = cs.bitfield(O, o, W, w);
+            let sz = 0;
+            let src = cs.ea(r, m, 0);
+            let dst = cs.data_reg_op(d);
             return cs.check_overflow(Instruction {
                 size: sz,
                 operation: BFEXTU,
@@ -3076,10 +3206,10 @@ pub fn decode_group_1110(
             let W = get_bits(w1, 5, 1);
             let w = get_bits(w1, 0, 5);
             cs.skip_words(1);
-            extra = cs.bitfield(O, o, W, w);
-            sz = 0;
-            src = cs.ea(r, m, 0);
-            dst = cs.data_reg_op(d);
+            let extra = cs.bitfield(O, o, W, w);
+            let sz = 0;
+            let src = cs.ea(r, m, 0);
+            let dst = cs.data_reg_op(d);
             return cs.check_overflow(Instruction {
                 size: sz,
                 operation: BFFFO,
@@ -3099,10 +3229,10 @@ pub fn decode_group_1110(
             let W = get_bits(w1, 5, 1);
             let w = get_bits(w1, 0, 5);
             cs.skip_words(1);
-            extra = cs.bitfield(O, o, W, w);
-            sz = 0;
-            src = cs.data_reg_op(d);
-            dst = cs.ea(r, m, 0);
+            let extra = cs.bitfield(O, o, W, w);
+            let sz = 0;
+            let src = cs.data_reg_op(d);
+            let dst = cs.ea(r, m, 0);
             return cs.check_overflow(Instruction {
                 size: sz,
                 operation: BFINS,
@@ -3121,10 +3251,10 @@ pub fn decode_group_1110(
             let W = get_bits(w1, 5, 1);
             let w = get_bits(w1, 0, 5);
             cs.skip_words(1);
-            extra = cs.bitfield(O, o, W, w);
-            sz = 0;
-            src = NoOperand;
-            dst = cs.ea(r, m, 0);
+            let extra = cs.bitfield(O, o, W, w);
+            let sz = 0;
+            let src = NoOperand;
+            let dst = cs.ea(r, m, 0);
             return cs.check_overflow(Instruction {
                 size: sz,
                 operation: BFSET,
@@ -3143,10 +3273,10 @@ pub fn decode_group_1110(
             let W = get_bits(w1, 5, 1);
             let w = get_bits(w1, 0, 5);
             cs.skip_words(1);
-            extra = cs.bitfield(O, o, W, w);
-            sz = 0;
-            src = NoOperand;
-            dst = cs.ea(r, m, 0);
+            let extra = cs.bitfield(O, o, W, w);
+            let sz = 0;
+            let src = NoOperand;
+            let dst = cs.ea(r, m, 0);
             return cs.check_overflow(Instruction {
                 size: sz,
                 operation: BFTST,
@@ -3158,9 +3288,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000100000000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = IMM8(c as u8);
-        dst = cs.data_reg_op(r);
+        let sz = 1;
+        let src = IMM8(c as u8);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ASL,
@@ -3171,9 +3302,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000101000000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = IMM8(c as u8);
-        dst = cs.data_reg_op(r);
+        let sz = 2;
+        let src = IMM8(c as u8);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ASL,
@@ -3184,9 +3316,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000110000000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = IMM8(c as u8);
-        dst = cs.data_reg_op(r);
+        let sz = 4;
+        let src = IMM8(c as u8);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ASL,
@@ -3197,9 +3330,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000000000000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = IMM8(c as u8);
-        dst = cs.data_reg_op(r);
+        let sz = 1;
+        let src = IMM8(c as u8);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ASR,
@@ -3210,9 +3344,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000001000000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = IMM8(c as u8);
-        dst = cs.data_reg_op(r);
+        let sz = 2;
+        let src = IMM8(c as u8);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ASR,
@@ -3223,9 +3358,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000010000000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = IMM8(c as u8);
-        dst = cs.data_reg_op(r);
+        let sz = 4;
+        let src = IMM8(c as u8);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ASR,
@@ -3236,9 +3372,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000100100000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = cs.data_reg_op(c);
-        dst = cs.data_reg_op(r);
+        let sz = 1;
+        let src = cs.data_reg_op(c);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ASL,
@@ -3249,9 +3386,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000101100000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.data_reg_op(c);
-        dst = cs.data_reg_op(r);
+        let sz = 2;
+        let src = cs.data_reg_op(c);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ASL,
@@ -3262,9 +3400,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000110100000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.data_reg_op(c);
-        dst = cs.data_reg_op(r);
+        let sz = 4;
+        let src = cs.data_reg_op(c);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ASL,
@@ -3275,9 +3414,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000000100000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = cs.data_reg_op(c);
-        dst = cs.data_reg_op(r);
+        let sz = 1;
+        let src = cs.data_reg_op(c);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ASR,
@@ -3288,9 +3428,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000001100000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.data_reg_op(c);
-        dst = cs.data_reg_op(r);
+        let sz = 2;
+        let src = cs.data_reg_op(c);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ASR,
@@ -3301,9 +3442,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000010100000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.data_reg_op(c);
-        dst = cs.data_reg_op(r);
+        let sz = 4;
+        let src = cs.data_reg_op(c);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ASR,
@@ -3314,9 +3456,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000100001000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = IMM8(c as u8);
-        dst = cs.data_reg_op(r);
+        let sz = 1;
+        let src = IMM8(c as u8);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: LSL,
@@ -3327,9 +3470,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000101001000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = IMM8(c as u8);
-        dst = cs.data_reg_op(r);
+        let sz = 2;
+        let src = IMM8(c as u8);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: LSL,
@@ -3340,9 +3484,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000110001000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = IMM8(c as u8);
-        dst = cs.data_reg_op(r);
+        let sz = 4;
+        let src = IMM8(c as u8);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: LSL,
@@ -3353,9 +3498,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000000001000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = IMM8(c as u8);
-        dst = cs.data_reg_op(r);
+        let sz = 1;
+        let src = IMM8(c as u8);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: LSR,
@@ -3366,9 +3512,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000001001000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = IMM8(c as u8);
-        dst = cs.data_reg_op(r);
+        let sz = 2;
+        let src = IMM8(c as u8);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: LSR,
@@ -3379,9 +3526,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000010001000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = IMM8(c as u8);
-        dst = cs.data_reg_op(r);
+        let sz = 4;
+        let src = IMM8(c as u8);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: LSR,
@@ -3392,9 +3540,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000100101000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = cs.data_reg_op(c);
-        dst = cs.data_reg_op(r);
+        let sz = 1;
+        let src = cs.data_reg_op(c);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: LSL,
@@ -3405,9 +3554,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000101101000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.data_reg_op(c);
-        dst = cs.data_reg_op(r);
+        let sz = 2;
+        let src = cs.data_reg_op(c);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: LSL,
@@ -3418,9 +3568,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000110101000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.data_reg_op(c);
-        dst = cs.data_reg_op(r);
+        let sz = 4;
+        let src = cs.data_reg_op(c);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: LSL,
@@ -3431,9 +3582,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000000101000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = cs.data_reg_op(c);
-        dst = cs.data_reg_op(r);
+        let sz = 1;
+        let src = cs.data_reg_op(c);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: LSR,
@@ -3444,9 +3596,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000001101000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.data_reg_op(c);
-        dst = cs.data_reg_op(r);
+        let sz = 2;
+        let src = cs.data_reg_op(c);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: LSR,
@@ -3457,9 +3610,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000010101000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.data_reg_op(c);
-        dst = cs.data_reg_op(r);
+        let sz = 4;
+        let src = cs.data_reg_op(c);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: LSR,
@@ -3470,9 +3624,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000100010000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = IMM8(c as u8);
-        dst = cs.data_reg_op(r);
+        let sz = 1;
+        let src = IMM8(c as u8);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ROXL,
@@ -3483,9 +3638,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000101010000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = IMM8(c as u8);
-        dst = cs.data_reg_op(r);
+        let sz = 2;
+        let src = IMM8(c as u8);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ROXL,
@@ -3496,9 +3652,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000110010000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = IMM8(c as u8);
-        dst = cs.data_reg_op(r);
+        let sz = 4;
+        let src = IMM8(c as u8);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ROXL,
@@ -3509,9 +3666,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000000010000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = IMM8(c as u8);
-        dst = cs.data_reg_op(r);
+        let sz = 1;
+        let src = IMM8(c as u8);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ROXR,
@@ -3522,9 +3680,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000001010000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = IMM8(c as u8);
-        dst = cs.data_reg_op(r);
+        let sz = 2;
+        let src = IMM8(c as u8);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ROXR,
@@ -3535,9 +3694,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000010010000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = IMM8(c as u8);
-        dst = cs.data_reg_op(r);
+        let sz = 4;
+        let src = IMM8(c as u8);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ROXR,
@@ -3548,9 +3708,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000100110000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = cs.data_reg_op(c);
-        dst = cs.data_reg_op(r);
+        let sz = 1;
+        let src = cs.data_reg_op(c);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ROXL,
@@ -3561,9 +3722,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000101110000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.data_reg_op(c);
-        dst = cs.data_reg_op(r);
+        let sz = 2;
+        let src = cs.data_reg_op(c);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ROXL,
@@ -3574,9 +3736,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000110110000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.data_reg_op(c);
-        dst = cs.data_reg_op(r);
+        let sz = 4;
+        let src = cs.data_reg_op(c);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ROXL,
@@ -3587,9 +3750,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000000110000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = cs.data_reg_op(c);
-        dst = cs.data_reg_op(r);
+        let sz = 1;
+        let src = cs.data_reg_op(c);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ROXR,
@@ -3600,9 +3764,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000001110000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.data_reg_op(c);
-        dst = cs.data_reg_op(r);
+        let sz = 2;
+        let src = cs.data_reg_op(c);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ROXR,
@@ -3613,9 +3778,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000010110000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.data_reg_op(c);
-        dst = cs.data_reg_op(r);
+        let sz = 4;
+        let src = cs.data_reg_op(c);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ROXR,
@@ -3626,9 +3792,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000100011000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = IMM8(c as u8);
-        dst = cs.data_reg_op(r);
+        let sz = 1;
+        let src = IMM8(c as u8);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ROL,
@@ -3639,9 +3806,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000101011000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = IMM8(c as u8);
-        dst = cs.data_reg_op(r);
+        let sz = 2;
+        let src = IMM8(c as u8);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ROL,
@@ -3652,9 +3820,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000110011000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = IMM8(c as u8);
-        dst = cs.data_reg_op(r);
+        let sz = 4;
+        let src = IMM8(c as u8);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ROL,
@@ -3665,9 +3834,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000000011000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = IMM8(c as u8);
-        dst = cs.data_reg_op(r);
+        let sz = 1;
+        let src = IMM8(c as u8);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ROR,
@@ -3678,9 +3848,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000001011000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = IMM8(c as u8);
-        dst = cs.data_reg_op(r);
+        let sz = 2;
+        let src = IMM8(c as u8);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ROR,
@@ -3691,9 +3862,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000010011000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = IMM8(c as u8);
-        dst = cs.data_reg_op(r);
+        let sz = 4;
+        let src = IMM8(c as u8);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ROR,
@@ -3704,9 +3876,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000100111000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = cs.data_reg_op(c);
-        dst = cs.data_reg_op(r);
+        let sz = 1;
+        let src = cs.data_reg_op(c);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ROL,
@@ -3717,9 +3890,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000101111000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.data_reg_op(c);
-        dst = cs.data_reg_op(r);
+        let sz = 2;
+        let src = cs.data_reg_op(c);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ROL,
@@ -3730,9 +3904,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000110111000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.data_reg_op(c);
-        dst = cs.data_reg_op(r);
+        let sz = 4;
+        let src = cs.data_reg_op(c);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ROL,
@@ -3743,9 +3918,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000000111000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 1;
-        src = cs.data_reg_op(c);
-        dst = cs.data_reg_op(r);
+        let sz = 1;
+        let src = cs.data_reg_op(c);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ROR,
@@ -3756,9 +3932,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000001111000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = cs.data_reg_op(c);
-        dst = cs.data_reg_op(r);
+        let sz = 2;
+        let src = cs.data_reg_op(c);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ROR,
@@ -3769,9 +3946,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111000111111000) == 0b1110000010111000 {
         let c = get_bits(w0, 9, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 4;
-        src = cs.data_reg_op(c);
-        dst = cs.data_reg_op(r);
+        let sz = 4;
+        let src = cs.data_reg_op(c);
+        let dst = cs.data_reg_op(r);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ROR,
@@ -3782,9 +3960,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111111111000000) == 0b1110000111000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = Implied;
-        dst = cs.ea(r, m, sz);
+        let sz = 2;
+        let src = Implied;
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ASL,
@@ -3795,9 +3974,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111111111000000) == 0b1110000011000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = Implied;
-        dst = cs.ea(r, m, sz);
+        let sz = 2;
+        let src = Implied;
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ASR,
@@ -3808,9 +3988,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111111111000000) == 0b1110001111000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = Implied;
-        dst = cs.ea(r, m, sz);
+        let sz = 2;
+        let src = Implied;
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: LSL,
@@ -3821,9 +4002,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111111111000000) == 0b1110001011000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = Implied;
-        dst = cs.ea(r, m, sz);
+        let sz = 2;
+        let src = Implied;
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: LSR,
@@ -3834,9 +4016,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111111111000000) == 0b1110010111000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = Implied;
-        dst = cs.ea(r, m, sz);
+        let sz = 2;
+        let src = Implied;
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ROXL,
@@ -3847,9 +4030,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111111111000000) == 0b1110010011000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = Implied;
-        dst = cs.ea(r, m, sz);
+        let sz = 2;
+        let src = Implied;
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ROXR,
@@ -3860,9 +4044,10 @@ pub fn decode_group_1110(
     if (w0 & 0b1111111111000000) == 0b1110011111000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = Implied;
-        dst = cs.ea(r, m, sz);
+        let sz = 2;
+        let src = Implied;
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ROL,
@@ -3873,15 +4058,78 @@ pub fn decode_group_1110(
     if (w0 & 0b1111111111000000) == 0b1110011011000000 {
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        sz = 2;
-        src = Implied;
-        dst = cs.ea(r, m, sz);
+        let sz = 2;
+        let src = Implied;
+        let dst = cs.ea(r, m, sz);
+        let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ROR,
             operands: [src, dst],
             extra: extra,
         });
+    }
+    return Err(NotImplemented);
+}
+#[allow(non_snake_case)]
+#[allow(unused_mut)]
+pub fn decode_group_1111(
+    w0: u16,
+    cs: &mut CodeStream,
+) -> Result<DecodedInstruction, DecodingError> {
+    if (w0 & 0b1111111111000000) == 0b1111001000000000 && cs.has_words(1) {
+        let w1 = cs.peek_word(0);
+        if (w1 & 0b1010000001111111) == 0b0000000000011000 {
+            let m = get_bits(w0, 3, 3);
+            let r = get_bits(w0, 0, 3);
+            let R = get_bits(w1, 14, 1);
+            let s = get_bits(w1, 10, 3);
+            let d = get_bits(w1, 7, 3);
+            cs.skip_words(1);
+            let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+            return cs.check_overflow(Instruction {
+                size: sz,
+                operation: FABS,
+                operands: [src, dst],
+                extra: extra,
+            });
+        }
+    }
+    if (w0 & 0b1111111111000000) == 0b1111001000000000 && cs.has_words(1) {
+        let w1 = cs.peek_word(0);
+        if (w1 & 0b1010000001111111) == 0b0000000001011000 {
+            let m = get_bits(w0, 3, 3);
+            let r = get_bits(w0, 0, 3);
+            let R = get_bits(w1, 14, 1);
+            let s = get_bits(w1, 10, 3);
+            let d = get_bits(w1, 7, 3);
+            cs.skip_words(1);
+            let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+            return cs.check_overflow(Instruction {
+                size: sz,
+                operation: FSABS,
+                operands: [src, dst],
+                extra: extra,
+            });
+        }
+    }
+    if (w0 & 0b1111111111000000) == 0b1111001000000000 && cs.has_words(1) {
+        let w1 = cs.peek_word(0);
+        if (w1 & 0b1010000001111111) == 0b0000000001011100 {
+            let m = get_bits(w0, 3, 3);
+            let r = get_bits(w0, 0, 3);
+            let R = get_bits(w1, 14, 1);
+            let s = get_bits(w1, 10, 3);
+            let d = get_bits(w1, 7, 3);
+            cs.skip_words(1);
+            let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+            return cs.check_overflow(Instruction {
+                size: sz,
+                operation: FDABS,
+                operands: [src, dst],
+                extra: extra,
+            });
+        }
     }
     return Err(NotImplemented);
 }
@@ -3903,6 +4151,7 @@ pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingErr
         0b1100 => decode_group_1100(w0, &mut cs),
         0b1101 => decode_group_1101(w0, &mut cs),
         0b1110 => decode_group_1110(w0, &mut cs),
+        0b1111 => decode_group_1111(w0, &mut cs),
         _ => Err(NotImplemented),
     }
 }

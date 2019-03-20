@@ -15,8 +15,15 @@ pub enum AddressRegister {
     A0, A1, A2, A3, A4, A5, A6, A7,
 }
 
+#[derive(Debug, PartialEq)]
+#[repr(u8)]
+pub enum FloatingRegister { 
+    FP0, FP1, FP2, FP3, FP4, FP5, FP6, FP7,
+}
+
 pub use DataRegister::*;
 pub use AddressRegister::*;
+pub use FloatingRegister::*;
 
 #[derive(Debug, PartialEq)]
 pub enum MemoryIndirection {
@@ -76,6 +83,7 @@ pub enum Operand {
     ABS32(u32),
     DR(DataRegister),
     AR(AddressRegister),
+    FR(FloatingRegister),
     ARIND(AddressRegister),
     ARINC(AddressRegister),
     ARDEC(AddressRegister),
@@ -114,11 +122,27 @@ pub enum ConditionCode {
 }
 
 #[derive(Debug, PartialEq)]
+#[allow(non_camel_case_types)]
+pub enum FPFormat {
+    FPF_LONG_INT,
+    FPF_SINGLE,
+    FPF_EXTENDED_REAL,
+    FPF_PACKED_DECIMAL_REAL,
+    FPF_WORD_INT,
+    FPF_DOUBLE,
+    FPF_BYTE_INT
+}
+
+pub use FPFormat::*;
+
+
+#[derive(Debug, PartialEq)]
 pub enum InstructionExtra {
     NoExtra,
     Bitfield(BitfieldData, BitfieldData),
     Condition(ConditionCode),
     PackAdjustment(u16),
+    FloatFormat(FPFormat),
 }
 
 #[derive(Debug, PartialEq)]

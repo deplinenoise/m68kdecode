@@ -196,15 +196,19 @@
 > subi.l #$12345678,-(a0)
 # Instruction { size: 4, operation: SUBI, operands: [ IMM32(0x12345678), ARDEC(A0) ], extra: NoExtra }
 
+! 68020
 > rtm d3
 # Instruction { size: 0, operation: RTM, operands: [ DR(D3), NoOperand ], extra: NoExtra }
 
+! 68020
 > rtm a1
 # Instruction { size: 0, operation: RTM, operands: [ AR(A1), NoOperand ], extra: NoExtra }
 
+! 68020
 > callm #3,(a1)
 # Instruction { size: 0, operation: CALLM, operands: [ IMM8(3), ARIND(A1) ], extra: NoExtra }
 
+! 68020
 > callm #99,$12345678
 # Instruction { size: 0, operation: CALLM, operands: [ IMM8(99), ABS32(0x12345678) ], extra: NoExtra }
 
@@ -962,4 +966,7 @@
 
 > moveq #127,d5
 # Instruction { size: 4, operation: MOVEQ, operands: [ IMM8(0x7f), DR(D5) ], extra: NoExtra }
+
+> fabs fp1
+# Instruction { size: 10, operation: FABS, operands: [ FR(FP1), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
 

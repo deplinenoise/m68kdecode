@@ -93,6 +93,23 @@ impl<'a> CodeStream<'a> {
         }
     }
 
+    pub fn float_reg(&mut self, r: u16) -> FloatingRegister {
+        match r {
+            0 => FP0,
+            1 => FP1,
+            2 => FP2,
+            3 => FP3,
+            4 => FP4,
+            5 => FP5,
+            6 => FP6,
+            7 => FP7,
+            _ => {
+                self.error = Some(BadRegister);
+                FP0
+            }
+        }
+    }
+
     pub fn data_reg_op(&mut self, r: u16) -> Operand {
         DR(self.data_reg(r))
     }
@@ -297,6 +314,21 @@ impl<'a> CodeStream<'a> {
 
     pub fn quick_const(&self, i: u16) -> Operand {
         IMM8(if i == 0 { 8 } else { i as u8 })
+    }
+
+    pub fn decode_fp(&mut self, rg: u16, md: u16, m_r: u16, s: u16, d: u16) -> (i32, Operand, Operand, InstructionExtra) {
+        if m_r == 1 {
+            let (sz, fpform) = match s {
+                0b000 => (4, FPF_LONG_INT),
+                _ => (1, FPF_BYTE_INT),
+            };
+            let ea = self.ea(rg, md, sz);
+
+            (sz, ea, FR(self.float_reg(d)), FloatFormat(fpform))
+        }
+        else {
+            (10, FR(self.float_reg(s)), FR(self.float_reg(s)), FloatFormat(FPF_EXTENDED_REAL))
+        }
     }
 }
 

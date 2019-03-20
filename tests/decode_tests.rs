@@ -4378,4 +4378,46 @@ mod tests {
             &[" fdadd.d (a6),fp1"],
         );
     }
+    //  fasin fp3
+    #[test]
+    fn test_decode_0309_fasin_fp3() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x0d, 0x8c],
+            Instruction {
+                size: 10,
+                operation: FASIN,
+                operands: [FR(FP3), FR(FP3)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fasin fp3"],
+        );
+    }
+    //  fasin fp0,fp1
+    #[test]
+    fn test_decode_0310_fasin_fp0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x00, 0x8c],
+            Instruction {
+                size: 10,
+                operation: FASIN,
+                operands: [FR(FP0), FR(FP1)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fasin fp0,fp1"],
+        );
+    }
+    //  fasin.s (a0),fp1
+    #[test]
+    fn test_decode_0311_fasin_s_a0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x10, 0x44, 0x8c],
+            Instruction {
+                size: 4,
+                operation: FASIN,
+                operands: [ARIND(A0), FR(FP1)],
+                extra: FloatFormat(FPF_SINGLE),
+            },
+            &[" fasin.s (a0),fp1"],
+        );
+    }
 }

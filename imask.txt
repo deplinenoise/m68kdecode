@@ -425,6 +425,8 @@ FADD            1111_0010_00mm_mrrr 0R0s_ssdd_d010_0010 let (sz, src, dst, extra
 FSADD           1111_0010_00mm_mrrr 0R0s_ssdd_d110_0010 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
 FDADD           1111_0010_00mm_mrrr 0R0s_ssdd_d110_0110 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
 
+FASIN           1111_0010_00mm_mrrr 0R0s_ssdd_d000_1100 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+
 #define FABS  ENCFT(0,1,1,0,0,0)
 #define FACOS ENCFT(0,1,1,1,0,0)
 #define FADD  ENCFT(1,0,0,0,1,0)

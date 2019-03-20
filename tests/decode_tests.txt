@@ -1014,3 +1014,12 @@
 
 > fdadd.d (a6),fp1
 # Instruction { size: 8, operation: FDADD, operands: [ ARIND(A6), FR(FP1) ], extra: FloatFormat(FPF_DOUBLE) }
+
+> fasin fp3
+# Instruction { size: 10, operation: FASIN, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fasin fp0,fp1
+# Instruction { size: 10, operation: FASIN, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fasin.s (a0),fp1
+# Instruction { size: 4, operation: FASIN, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }

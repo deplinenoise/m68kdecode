@@ -5302,9 +5302,51 @@ mod tests {
             &[" fgetman.s (a0),fp1"],
         );
     }
+    //  fint fp3
+    #[test]
+    fn test_decode_0375_fint_fp3() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x0d, 0x81],
+            Instruction {
+                size: 10,
+                operation: FINT,
+                operands: [FR(FP3), FR(FP3)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fint fp3"],
+        );
+    }
+    //  fint fp0,fp1
+    #[test]
+    fn test_decode_0376_fint_fp0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x00, 0x81],
+            Instruction {
+                size: 10,
+                operation: FINT,
+                operands: [FR(FP0), FR(FP1)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fint fp0,fp1"],
+        );
+    }
+    //  fint.s (a0),fp1
+    #[test]
+    fn test_decode_0377_fint_s_a0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x10, 0x44, 0x81],
+            Instruction {
+                size: 4,
+                operation: FINT,
+                operands: [ARIND(A0), FR(FP1)],
+                extra: FloatFormat(FPF_SINGLE),
+            },
+            &[" fint.s (a0),fp1"],
+        );
+    }
     //  lab: fdbgt d6,lab
     #[test]
-    fn test_decode_0375_lab_fdbgt_d6_lab() {
+    fn test_decode_0378_lab_fdbgt_d6_lab() {
         test_decoding_result_ok(
             &[0xf2, 0x4e, 0x00, 0x12, 0xff, 0xfc],
             Instruction {
@@ -5318,7 +5360,7 @@ mod tests {
     }
     //  fsin fp3
     #[test]
-    fn test_decode_0376_fsin_fp3() {
+    fn test_decode_0379_fsin_fp3() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x0d, 0x8e],
             Instruction {
@@ -5332,7 +5374,7 @@ mod tests {
     }
     //  fsin fp0,fp1
     #[test]
-    fn test_decode_0377_fsin_fp0_fp1() {
+    fn test_decode_0380_fsin_fp0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x00, 0x8e],
             Instruction {
@@ -5346,7 +5388,7 @@ mod tests {
     }
     //  fsin.s (a0),fp1
     #[test]
-    fn test_decode_0378_fsin_s_a0_fp1() {
+    fn test_decode_0381_fsin_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0x8e],
             Instruction {

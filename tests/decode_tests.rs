@@ -5176,9 +5176,149 @@ mod tests {
             &[" fetox.s (a0),fp1"],
         );
     }
+    //  fetoxm1 fp3
+    #[test]
+    fn test_decode_0366_fetoxm1_fp3() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x0d, 0x88],
+            Instruction {
+                size: 10,
+                operation: FETOXM1,
+                operands: [FR(FP3), FR(FP3)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fetoxm1 fp3"],
+        );
+    }
+    //  fetoxm1 fp0,fp1
+    #[test]
+    fn test_decode_0367_fetoxm1_fp0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x00, 0x88],
+            Instruction {
+                size: 10,
+                operation: FETOXM1,
+                operands: [FR(FP0), FR(FP1)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fetoxm1 fp0,fp1"],
+        );
+    }
+    //  fetoxm1.s (a0),fp1
+    #[test]
+    fn test_decode_0368_fetoxm1_s_a0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x10, 0x44, 0x88],
+            Instruction {
+                size: 4,
+                operation: FETOXM1,
+                operands: [ARIND(A0), FR(FP1)],
+                extra: FloatFormat(FPF_SINGLE),
+            },
+            &[" fetoxm1.s (a0),fp1"],
+        );
+    }
+    //  fgetexp fp3
+    #[test]
+    fn test_decode_0369_fgetexp_fp3() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x0d, 0x9e],
+            Instruction {
+                size: 10,
+                operation: FGETEXP,
+                operands: [FR(FP3), FR(FP3)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fgetexp fp3"],
+        );
+    }
+    //  fgetexp fp0,fp1
+    #[test]
+    fn test_decode_0370_fgetexp_fp0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x00, 0x9e],
+            Instruction {
+                size: 10,
+                operation: FGETEXP,
+                operands: [FR(FP0), FR(FP1)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fgetexp fp0,fp1"],
+        );
+    }
+    //  fgetexp.s (a0),fp1
+    #[test]
+    fn test_decode_0371_fgetexp_s_a0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x10, 0x44, 0x9e],
+            Instruction {
+                size: 4,
+                operation: FGETEXP,
+                operands: [ARIND(A0), FR(FP1)],
+                extra: FloatFormat(FPF_SINGLE),
+            },
+            &[" fgetexp.s (a0),fp1"],
+        );
+    }
+    //  fgetman fp3
+    #[test]
+    fn test_decode_0372_fgetman_fp3() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x0d, 0x9f],
+            Instruction {
+                size: 10,
+                operation: FGETMAN,
+                operands: [FR(FP3), FR(FP3)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fgetman fp3"],
+        );
+    }
+    //  fgetman fp0,fp1
+    #[test]
+    fn test_decode_0373_fgetman_fp0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x00, 0x9f],
+            Instruction {
+                size: 10,
+                operation: FGETMAN,
+                operands: [FR(FP0), FR(FP1)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fgetman fp0,fp1"],
+        );
+    }
+    //  fgetman.s (a0),fp1
+    #[test]
+    fn test_decode_0374_fgetman_s_a0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x10, 0x44, 0x9f],
+            Instruction {
+                size: 4,
+                operation: FGETMAN,
+                operands: [ARIND(A0), FR(FP1)],
+                extra: FloatFormat(FPF_SINGLE),
+            },
+            &[" fgetman.s (a0),fp1"],
+        );
+    }
+    //  lab: fdbgt d6,lab
+    #[test]
+    fn test_decode_0375_lab_fdbgt_d6_lab() {
+        test_decoding_result_ok(
+            &[0xf2, 0x4e, 0x00, 0x12, 0xff, 0xfc],
+            Instruction {
+                size: 2,
+                operation: FDBCC,
+                operands: [DR(D6), PCDISP(4, simple_disp(-4))],
+                extra: FPCondition(FPCC_GT),
+            },
+            &[" lab: fdbgt d6,lab"],
+        );
+    }
     //  fsin fp3
     #[test]
-    fn test_decode_0366_fsin_fp3() {
+    fn test_decode_0376_fsin_fp3() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x0d, 0x8e],
             Instruction {
@@ -5192,7 +5332,7 @@ mod tests {
     }
     //  fsin fp0,fp1
     #[test]
-    fn test_decode_0367_fsin_fp0_fp1() {
+    fn test_decode_0377_fsin_fp0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x00, 0x8e],
             Instruction {
@@ -5206,7 +5346,7 @@ mod tests {
     }
     //  fsin.s (a0),fp1
     #[test]
-    fn test_decode_0368_fsin_s_a0_fp1() {
+    fn test_decode_0378_fsin_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0x8e],
             Instruction {
@@ -5216,20 +5356,6 @@ mod tests {
                 extra: FloatFormat(FPF_SINGLE),
             },
             &[" fsin.s (a0),fp1"],
-        );
-    }
-    //  lab: fdbgt d6,lab
-    #[test]
-    fn test_decode_0369_lab_fdbgt_d6_lab() {
-        test_decoding_result_ok(
-            &[0xf2, 0x4e, 0x00, 0x12, 0xff, 0xfc],
-            Instruction {
-                size: 2,
-                operation: FDBCC,
-                operands: [DR(D6), PCDISP(4, simple_disp(-4))],
-                extra: FPCondition(FPCC_GT),
-            },
-            &[" lab: fdbgt d6,lab"],
         );
     }
 }

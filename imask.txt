@@ -444,6 +444,13 @@ FSDIV           1111_0010_00mm_mrrr 0R0s_ssdd_d110_0000 let (sz, src, dst, extra
 FDDIV           1111_0010_00mm_mrrr 0R0s_ssdd_d110_0100 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
 
 FETOX           1111_0010_00mm_mrrr 0R0s_ssdd_d001_0000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+FETOXM1         1111_0010_00mm_mrrr 0R0s_ssdd_d000_1000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+
+FGETEXP         1111_0010_00mm_mrrr 0R0s_ssdd_d001_1110 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+FGETMAN         1111_0010_00mm_mrrr 0R0s_ssdd_d001_1111 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+FGETMAN         1111_0010_00mm_mrrr 0R0s_ssdd_d001_1111 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+
+FINT            1111_0010_00mm_mrrr 0R0s_ssdd_d000_0001 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
 
 FSIN            1111_0010_00mm_mrrr 0R0s_ssdd_d000_1110 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
 

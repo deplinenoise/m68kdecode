@@ -1186,6 +1186,35 @@
 > fetox.s (a0),fp1
 # Instruction { size: 4, operation: FETOX, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
 
+> fetoxm1 fp3
+# Instruction { size: 10, operation: FETOXM1, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fetoxm1 fp0,fp1
+# Instruction { size: 10, operation: FETOXM1, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fetoxm1.s (a0),fp1
+# Instruction { size: 4, operation: FETOXM1, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+
+> fgetexp fp3
+# Instruction { size: 10, operation: FGETEXP, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fgetexp fp0,fp1
+# Instruction { size: 10, operation: FGETEXP, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fgetexp.s (a0),fp1
+# Instruction { size: 4, operation: FGETEXP, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+
+> fgetman fp3
+# Instruction { size: 10, operation: FGETMAN, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fgetman fp0,fp1
+# Instruction { size: 10, operation: FGETMAN, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fgetman.s (a0),fp1
+# Instruction { size: 4, operation: FGETMAN, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+
+> lab: fdbgt d6,lab
+# Instruction { size: 2, operation: FDBCC, operands: [ DR(D6), PCDISP(4, simple_disp(-4)) ], extra: FPCondition(FPCC_GT) }
 
 > fsin fp3
 # Instruction { size: 10, operation: FSIN, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
@@ -1195,7 +1224,4 @@
 
 > fsin.s (a0),fp1
 # Instruction { size: 4, operation: FSIN, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
-
-> lab: fdbgt d6,lab
-# Instruction { size: 2, operation: FDBCC, operands: [ DR(D6), PCDISP(4, simple_disp(-4)) ], extra: FPCondition(FPCC_GT) }
 

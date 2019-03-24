@@ -321,16 +321,17 @@ impl<'a> CodeStream<'a> {
         IMM8(if i == 0 { 8 } else { i as u8 })
     }
 
-    pub fn decode_fp(&mut self, rg: u16, md: u16, m_r: u16, s: u16, d: u16) -> (i32, Operand, Operand, InstructionExtra) {
+    pub fn decode_fp(&mut self, rg: u16, md: u16, m_r: u16, s: u16, d: u16, k: u16) -> (i32, Operand, Operand, InstructionExtra) {
         if m_r == 1 {
             let (sz, fpform) = match s {
                 0b000 => (4, FPF_LONG_INT),
                 0b001 => (4, FPF_SINGLE),
                 0b010 => (10, FPF_EXTENDED_REAL),
-                0b011 => (12, FPF_PACKED_DECIMAL_REAL),
+                0b011 => (12, FPF_PACKED_DECIMAL_REAL_STATIC((((k << 1) as i8) >> 1) as i32)),
                 0b100 => (2, FPF_WORD_INT),
                 0b101 => (8, FPF_DOUBLE),
                 0b110 => (1, FPF_BYTE_INT),
+                0b111 => (12, FPF_PACKED_DECIMAL_REAL_DYNAMIC(self.data_reg(k >> 4))),
                 _     => { self.error = Some(Reserved); (0, FPF_BYTE_INT) },
             };
 

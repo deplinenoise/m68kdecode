@@ -995,7 +995,7 @@
 # Instruction { size: 10, operation: FABS, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
 
 > fabs.p (a0),fp1
-# Instruction { size: 12, operation: FABS, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_PACKED_DECIMAL_REAL) }
+# Instruction { size: 12, operation: FABS, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_PACKED_DECIMAL_REAL_STATIC(0)) }
 
 > fabs fp3,fp1
 # Instruction { size: 10, operation: FABS, operands: [ FR(FP3), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
@@ -1278,6 +1278,36 @@
 
 > lab: fdbgt d6,lab
 # Instruction { size: 2, operation: FDBCC, operands: [ DR(D6), PCDISP(4, simple_disp(-4)) ], extra: FPCondition(FPCC_GT) }
+
+> fmove fp3,fp5
+# Instruction { size: 10, operation: FMOVE, operands: [ FR(FP3), FR(FP5) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fmove.x (a0),fp5
+# Instruction { size: 10, operation: FMOVE, operands: [ ARIND(A0), FR(FP5) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fmove.s (a0),fp5
+# Instruction { size: 4, operation: FMOVE, operands: [ ARIND(A0), FR(FP5) ], extra: FloatFormat(FPF_SINGLE) }
+
+> fsmove.d (a0),fp5
+# Instruction { size: 8, operation: FSMOVE, operands: [ ARIND(A0), FR(FP5) ], extra: FloatFormat(FPF_DOUBLE) }
+
+> fdmove.p (a0),fp5
+# Instruction { size: 12, operation: FDMOVE, operands: [ ARIND(A0), FR(FP5) ], extra: FloatFormat(FPF_PACKED_DECIMAL_REAL_STATIC(0)) }
+
+> fmove.s fp4,(a1)
+# Instruction { size: 4, operation: FMOVE, operands: [ FR(FP4), ARIND(A1) ], extra: FloatFormat(FPF_SINGLE) }
+
+> fmove.p fp4,(a1){#12}
+# Instruction { size: 12, operation: FMOVE, operands: [ FR(FP4), ARIND(A1) ], extra: FloatFormat(FPF_PACKED_DECIMAL_REAL_STATIC(12)) }
+
+> fmove.p fp4,(a1){#-64}
+# Instruction { size: 12, operation: FMOVE, operands: [ FR(FP4), ARIND(A1) ], extra: FloatFormat(FPF_PACKED_DECIMAL_REAL_STATIC(-64)) }
+
+> fmove.p fp4,(a1){#63}
+# Instruction { size: 12, operation: FMOVE, operands: [ FR(FP4), ARIND(A1) ], extra: FloatFormat(FPF_PACKED_DECIMAL_REAL_STATIC(63)) }
+
+> fmove.p fp4,(a1){d3}
+# Instruction { size: 12, operation: FMOVE, operands: [ FR(FP4), ARIND(A1) ], extra: FloatFormat(FPF_PACKED_DECIMAL_REAL_DYNAMIC(D3)) }
 
 > fsin fp3
 # Instruction { size: 10, operation: FSIN, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }

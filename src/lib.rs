@@ -166,7 +166,8 @@ pub enum FPFormat {
     FPF_LONG_INT,
     FPF_SINGLE,
     FPF_EXTENDED_REAL,
-    FPF_PACKED_DECIMAL_REAL,
+    FPF_PACKED_DECIMAL_REAL_STATIC(i32), // Includes fmove K-factor
+    FPF_PACKED_DECIMAL_REAL_DYNAMIC(DataRegister), // Includes fmove K-factor
     FPF_WORD_INT,
     FPF_DOUBLE,
     FPF_BYTE_INT

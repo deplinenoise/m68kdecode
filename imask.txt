@@ -417,56 +417,60 @@ ROR             1110_0110_11mm_mrrr sz=2; src=Implied; dst=cs.ea(r, m, sz);
 
 FMOVECR         1111_0010_0000_0000 0101_11dd_dooo_oooo sz=10; src=IMM8(o as u8); dst=cs.float_reg_op(d);
 
-FABS            1111_0010_00mm_mrrr 0R0s_ssdd_d001_1000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
-FSABS           1111_0010_00mm_mrrr 0R0s_ssdd_d101_1000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
-FDABS           1111_0010_00mm_mrrr 0R0s_ssdd_d101_1100 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+FABS            1111_0010_00mm_mrrr 0R0s_ssdd_d001_1000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FSABS           1111_0010_00mm_mrrr 0R0s_ssdd_d101_1000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FDABS           1111_0010_00mm_mrrr 0R0s_ssdd_d101_1100 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
 
-FACOS           1111_0010_00mm_mrrr 0R0s_ssdd_d001_1100 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+FACOS           1111_0010_00mm_mrrr 0R0s_ssdd_d001_1100 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
 
-FADD            1111_0010_00mm_mrrr 0R0s_ssdd_d010_0010 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
-FSADD           1111_0010_00mm_mrrr 0R0s_ssdd_d110_0010 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
-FDADD           1111_0010_00mm_mrrr 0R0s_ssdd_d110_0110 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+FADD            1111_0010_00mm_mrrr 0R0s_ssdd_d010_0010 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FSADD           1111_0010_00mm_mrrr 0R0s_ssdd_d110_0010 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FDADD           1111_0010_00mm_mrrr 0R0s_ssdd_d110_0110 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
 
-FASIN           1111_0010_00mm_mrrr 0R0s_ssdd_d000_1100 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
-FATAN           1111_0010_00mm_mrrr 0R0s_ssdd_d000_1010 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
-FATANH          1111_0010_00mm_mrrr 0R0s_ssdd_d000_1101 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+FASIN           1111_0010_00mm_mrrr 0R0s_ssdd_d000_1100 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FATAN           1111_0010_00mm_mrrr 0R0s_ssdd_d000_1010 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FATANH          1111_0010_00mm_mrrr 0R0s_ssdd_d000_1101 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
 
 FBCC            1111_0010_10cc_cccc sz=2; src = PCDISP(2, simple_disp(cs.pull16() as i16 as i32)); dst=NoOperand; extra=cs.fpcc(c);
 FBCC            1111_0010_11cc_cccc sz=4; src = PCDISP(2, simple_disp(cs.pull32() as i32)); dst=NoOperand; extra=cs.fpcc(c);
 
-FCMP            1111_0010_00mm_mrrr 0R0s_ssdd_d011_1000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+FCMP            1111_0010_00mm_mrrr 0R0s_ssdd_d011_1000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
 
-FCOS            1111_0010_00mm_mrrr 0R0s_ssdd_d001_1101 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
-FCOSH           1111_0010_00mm_mrrr 0R0s_ssdd_d001_1001 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+FCOS            1111_0010_00mm_mrrr 0R0s_ssdd_d001_1101 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FCOSH           1111_0010_00mm_mrrr 0R0s_ssdd_d001_1001 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
 
 FDBCC           1111_0010_0100_1rrr 0000_0000_000c_cccc sz=2; src=cs.data_reg_op(r); dst=PCDISP(4, simple_disp(cs.pull16() as i16 as i32)); extra=cs.fpcc(c);
 
-FDIV            1111_0010_00mm_mrrr 0R0s_ssdd_d010_0000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
-FSDIV           1111_0010_00mm_mrrr 0R0s_ssdd_d110_0000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
-FDDIV           1111_0010_00mm_mrrr 0R0s_ssdd_d110_0100 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+FDIV            1111_0010_00mm_mrrr 0R0s_ssdd_d010_0000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FSDIV           1111_0010_00mm_mrrr 0R0s_ssdd_d110_0000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FDDIV           1111_0010_00mm_mrrr 0R0s_ssdd_d110_0100 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
 
-FETOX           1111_0010_00mm_mrrr 0R0s_ssdd_d001_0000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
-FETOXM1         1111_0010_00mm_mrrr 0R0s_ssdd_d000_1000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+FETOX           1111_0010_00mm_mrrr 0R0s_ssdd_d001_0000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FETOXM1         1111_0010_00mm_mrrr 0R0s_ssdd_d000_1000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
 
-FGETEXP         1111_0010_00mm_mrrr 0R0s_ssdd_d001_1110 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
-FGETMAN         1111_0010_00mm_mrrr 0R0s_ssdd_d001_1111 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
-FGETMAN         1111_0010_00mm_mrrr 0R0s_ssdd_d001_1111 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+FGETEXP         1111_0010_00mm_mrrr 0R0s_ssdd_d001_1110 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FGETMAN         1111_0010_00mm_mrrr 0R0s_ssdd_d001_1111 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FGETMAN         1111_0010_00mm_mrrr 0R0s_ssdd_d001_1111 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
 
-FINT            1111_0010_00mm_mrrr 0R0s_ssdd_d000_0001 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
-FINTRZ          1111_0010_00mm_mrrr 0R0s_ssdd_d000_0011 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+FINT            1111_0010_00mm_mrrr 0R0s_ssdd_d000_0001 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FINTRZ          1111_0010_00mm_mrrr 0R0s_ssdd_d000_0011 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
 
-FLOG10          1111_0010_00mm_mrrr 0R0s_ssdd_d001_0101 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
-FLOG2           1111_0010_00mm_mrrr 0R0s_ssdd_d001_0110 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
-FLOGN           1111_0010_00mm_mrrr 0R0s_ssdd_d001_0100 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
-FLOGNP1         1111_0010_00mm_mrrr 0R0s_ssdd_d000_0110 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+FLOG10          1111_0010_00mm_mrrr 0R0s_ssdd_d001_0101 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FLOG2           1111_0010_00mm_mrrr 0R0s_ssdd_d001_0110 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FLOGN           1111_0010_00mm_mrrr 0R0s_ssdd_d001_0100 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FLOGNP1         1111_0010_00mm_mrrr 0R0s_ssdd_d000_0110 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
 
-FMOD            1111_0010_00mm_mrrr 0R0s_ssdd_d010_0001 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+FMOD            1111_0010_00mm_mrrr 0R0s_ssdd_d010_0001 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
 
-#FMOVE           1111_0010_00mm_mrrr 0R0s_ssdd_d000_0000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
-#FSMOVE          1111_0010_00mm_mrrr 0R0s_ssdd_d100_0000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
-#FDMOVE          1111_0010_00mm_mrrr 0R0s_ssdd_d100_0100 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+# fmove: register to EA encoding; note swapped src/dst
+FMOVE           1111_0010_00mm_mrrr 011s_ssdd_dkkk_kkkk let (sz, dst, src, extra) = cs.decode_fp(r, m, 1, s, d, k);
 
-FSIN            1111_0010_00mm_mrrr 0R0s_ssdd_d000_1110 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+# fmove: EA to register encoding
+FMOVE           1111_0010_00mm_mrrr 0R0s_ssdd_d000_0000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FSMOVE          1111_0010_00mm_mrrr 0R0s_ssdd_d100_0000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FDMOVE          1111_0010_00mm_mrrr 0R0s_ssdd_d100_0100 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+
+FSIN            1111_0010_00mm_mrrr 0R0s_ssdd_d000_1110 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
 
 
 #define FABS  ENCFT(0,1,1,0,0,0)

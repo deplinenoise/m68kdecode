@@ -6464,4 +6464,46 @@ mod tests {
             &[" ftentox.s (a0),fp1"],
         );
     }
+    //  ftrapgt
+    #[test]
+    fn test_decode_0458_ftrapgt() {
+        test_decoding_result_ok(
+            &[0xf2, 0x7c, 0x00, 0x12],
+            Instruction {
+                size: 0,
+                operation: FTRAPCC,
+                operands: [Implied, NoOperand],
+                extra: FPCondition(FPCC_GT),
+            },
+            &[" ftrapgt"],
+        );
+    }
+    //  ftrapeq.w #123
+    #[test]
+    fn test_decode_0459_ftrapeq_w_123() {
+        test_decoding_result_ok(
+            &[0xf2, 0x7a, 0x00, 0x01, 0x00, 0x7b],
+            Instruction {
+                size: 2,
+                operation: FTRAPCC,
+                operands: [Implied, IMM16(123)],
+                extra: FPCondition(FPCC_EQ),
+            },
+            &[" ftrapeq.w #123"],
+        );
+    }
+    //  ftrapne.l #1234567
+    #[test]
+    fn test_decode_0460_ftrapne_l_1234567() {
+        test_decoding_result_ok(
+            &[0xf2, 0x7b, 0x00, 0x0e, 0x00, 0x12, 0xd6, 0x87],
+            Instruction {
+                size: 4,
+                operation: FTRAPCC,
+                operands: [Implied, IMM32(1234567)],
+                extra: FPCondition(FPCC_NE),
+            },
+            &[" ftrapne.l #1234567"],
+        );
+    }
 }

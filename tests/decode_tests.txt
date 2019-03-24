@@ -1464,3 +1464,12 @@
 
 > ftentox.s (a0),fp1
 # Instruction { size: 4, operation: FTENTOX, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+
+> ftrapgt
+# Instruction { size: 0, operation: FTRAPCC, operands: [ Implied, NoOperand ], extra: FPCondition(FPCC_GT) }
+
+> ftrapeq.w #123
+# Instruction { size: 2, operation: FTRAPCC, operands: [ Implied, IMM16(123) ], extra: FPCondition(FPCC_EQ) }
+
+> ftrapne.l #1234567
+# Instruction { size: 4, operation: FTRAPCC, operands: [ Implied, IMM32(1234567) ], extra: FPCondition(FPCC_NE) }

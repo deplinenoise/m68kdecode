@@ -490,6 +490,13 @@ FREM            1111_0010_00mm_mrrr 0R0s_ssdd_d010_0101 let (sz, src, dst, extra
 
 FSCALE          1111_0010_00mm_mrrr 0R0s_ssdd_d010_0110 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
 
+# 010 — The instruction is followed by a word operand.
+FTRAPCC         1111_0010_0111_1010 0000_0000_00cc_cccc sz=2; src=Implied; dst=cs.imm16(); extra=cs.fpcc(c);
+# 011 — The instruction is followed by a long-word operand.
+FTRAPCC         1111_0010_0111_1011 0000_0000_00cc_cccc sz=4; src=Implied; dst=cs.imm32(); extra=cs.fpcc(c);
+# 100 — The instruction has no operand.
+FTRAPCC         1111_0010_0111_1100 0000_0000_00cc_cccc sz=0; src=Implied; dst=NoOperand; extra=cs.fpcc(c);
+
 FSCC            1111_0010_01mm_mrrr 0000_0000_00cc_cccc sz=1; src=Implied; dst=cs.ea(r, m, 1); extra=cs.fpcc(c);
 
 FSGLDIV         1111_0010_00mm_mrrr 0R0s_ssdd_d010_0100 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);

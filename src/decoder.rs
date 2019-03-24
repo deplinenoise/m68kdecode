@@ -154,6 +154,7 @@ pub enum Operation {
     FDNEG,
     FREM,
     FSCALE,
+    FSCC,
     FSIN,
 }
 #[allow(non_snake_case)]
@@ -4929,6 +4930,25 @@ pub fn decode_group_1111(
             return cs.check_overflow(Instruction {
                 size: sz,
                 operation: FSCALE,
+                operands: [src, dst],
+                extra: extra,
+            });
+        }
+    }
+    if (w0 & 0b1111111111000000) == 0b1111001001000000 && cs.has_words(1) {
+        let w1 = cs.peek_word(0);
+        if (w1 & 0b1111111111000000) == 0b0000000000000000 {
+            let m = get_bits(w0, 3, 3);
+            let r = get_bits(w0, 0, 3);
+            let c = get_bits(w1, 0, 6);
+            cs.skip_words(1);
+            let sz = 1;
+            let src = Implied;
+            let dst = cs.ea(r, m, 1);
+            let extra = cs.fpcc(c);
+            return cs.check_overflow(Instruction {
+                size: sz,
+                operation: FSCC,
                 operands: [src, dst],
                 extra: extra,
             });

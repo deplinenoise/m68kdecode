@@ -6380,4 +6380,46 @@ mod tests {
             &[" ftan.s (a0),fp1"],
         );
     }
+    //  ftanh fp3
+    #[test]
+    fn test_decode_0452_ftanh_fp3() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x0d, 0x89],
+            Instruction {
+                size: 10,
+                operation: FTANH,
+                operands: [FR(FP3), FR(FP3)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" ftanh fp3"],
+        );
+    }
+    //  ftanh fp0,fp1
+    #[test]
+    fn test_decode_0453_ftanh_fp0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x00, 0x89],
+            Instruction {
+                size: 10,
+                operation: FTANH,
+                operands: [FR(FP0), FR(FP1)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" ftanh fp0,fp1"],
+        );
+    }
+    //  ftanh.s (a0),fp1
+    #[test]
+    fn test_decode_0454_ftanh_s_a0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x10, 0x44, 0x89],
+            Instruction {
+                size: 4,
+                operation: FTANH,
+                operands: [ARIND(A0), FR(FP1)],
+                extra: FloatFormat(FPF_SINGLE),
+            },
+            &[" ftanh.s (a0),fp1"],
+        );
+    }
 }

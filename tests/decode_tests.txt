@@ -1445,3 +1445,13 @@
 > ftan.s (a0),fp1
 # Instruction { size: 4, operation: FTAN, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
 
+
+> ftanh fp3
+# Instruction { size: 10, operation: FTANH, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> ftanh fp0,fp1
+# Instruction { size: 10, operation: FTANH, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> ftanh.s (a0),fp1
+# Instruction { size: 4, operation: FTANH, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+

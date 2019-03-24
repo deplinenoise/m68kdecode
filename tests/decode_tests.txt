@@ -1309,6 +1309,24 @@
 > fmove.p fp4,(a1){d3}
 # Instruction { size: 12, operation: FMOVE, operands: [ FR(FP4), ARIND(A1) ], extra: FloatFormat(FPF_PACKED_DECIMAL_REAL_DYNAMIC(D3)) }
 
+> fmovem.x fp0-fp4,-(a3)
+# Instruction { size: 10, operation: FMOVEM, operands: [ REGLIST(0b11111), ARDEC(A3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fmovem.x d7,-(a3)
+# Instruction { size: 10, operation: FMOVEM, operands: [ DR(D7), ARDEC(A3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fmovem.x d7,(a3)
+# Instruction { size: 10, operation: FMOVEM, operands: [ DR(D7), ARIND(A3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fmovem.x (a3),d7
+# Instruction { size: 10, operation: FMOVEM, operands: [ ARIND(A3), DR(D7) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fmovem.x (a3)+,d7
+# Instruction { size: 10, operation: FMOVEM, operands: [ ARINC(A3), DR(D7) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fmovem.x (a3)+,fp0/fp6
+# Instruction { size: 10, operation: FMOVEM, operands: [ ARINC(A3), REGLIST(0b1000_0010) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
 > fsin fp3
 # Instruction { size: 10, operation: FSIN, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
 

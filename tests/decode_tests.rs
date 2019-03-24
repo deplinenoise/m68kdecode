@@ -5750,9 +5750,93 @@ mod tests {
             &[" fmove.p fp4,(a1){d3}"],
         );
     }
+    //  fmovem.x fp0-fp4,-(a3)
+    #[test]
+    fn test_decode_0407_fmovem_x_fp0_fp4_a3_() {
+        test_decoding_result_ok(
+            &[0xf2, 0x23, 0xe0, 0x1f],
+            Instruction {
+                size: 10,
+                operation: FMOVEM,
+                operands: [REGLIST(0b11111), ARDEC(A3)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fmovem.x fp0-fp4,-(a3)"],
+        );
+    }
+    //  fmovem.x d7,-(a3)
+    #[test]
+    fn test_decode_0408_fmovem_x_d7_a3_() {
+        test_decoding_result_ok(
+            &[0xf2, 0x23, 0xe8, 0x70],
+            Instruction {
+                size: 10,
+                operation: FMOVEM,
+                operands: [DR(D7), ARDEC(A3)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fmovem.x d7,-(a3)"],
+        );
+    }
+    //  fmovem.x d7,(a3)
+    #[test]
+    fn test_decode_0409_fmovem_x_d7_a3_() {
+        test_decoding_result_ok(
+            &[0xf2, 0x13, 0xf8, 0x70],
+            Instruction {
+                size: 10,
+                operation: FMOVEM,
+                operands: [DR(D7), ARIND(A3)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fmovem.x d7,(a3)"],
+        );
+    }
+    //  fmovem.x (a3),d7
+    #[test]
+    fn test_decode_0410_fmovem_x_a3_d7() {
+        test_decoding_result_ok(
+            &[0xf2, 0x13, 0xd8, 0x70],
+            Instruction {
+                size: 10,
+                operation: FMOVEM,
+                operands: [ARIND(A3), DR(D7)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fmovem.x (a3),d7"],
+        );
+    }
+    //  fmovem.x (a3)+,d7
+    #[test]
+    fn test_decode_0411_fmovem_x_a3_d7() {
+        test_decoding_result_ok(
+            &[0xf2, 0x1b, 0xd8, 0x70],
+            Instruction {
+                size: 10,
+                operation: FMOVEM,
+                operands: [ARINC(A3), DR(D7)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fmovem.x (a3)+,d7"],
+        );
+    }
+    //  fmovem.x (a3)+,fp0/fp6
+    #[test]
+    fn test_decode_0412_fmovem_x_a3_fp0_fp6() {
+        test_decoding_result_ok(
+            &[0xf2, 0x1b, 0xd0, 0x82],
+            Instruction {
+                size: 10,
+                operation: FMOVEM,
+                operands: [ARINC(A3), REGLIST(0b1000_0010)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fmovem.x (a3)+,fp0/fp6"],
+        );
+    }
     //  fsin fp3
     #[test]
-    fn test_decode_0407_fsin_fp3() {
+    fn test_decode_0413_fsin_fp3() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x0d, 0x8e],
             Instruction {
@@ -5766,7 +5850,7 @@ mod tests {
     }
     //  fsin fp0,fp1
     #[test]
-    fn test_decode_0408_fsin_fp0_fp1() {
+    fn test_decode_0414_fsin_fp0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x00, 0x8e],
             Instruction {
@@ -5780,7 +5864,7 @@ mod tests {
     }
     //  fsin.s (a0),fp1
     #[test]
-    fn test_decode_0409_fsin_s_a0_fp1() {
+    fn test_decode_0415_fsin_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0x8e],
             Instruction {

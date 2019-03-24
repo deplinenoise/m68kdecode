@@ -470,6 +470,12 @@ FMOVE           1111_0010_00mm_mrrr 0R0s_ssdd_d000_0000 let (sz, src, dst, extra
 FSMOVE          1111_0010_00mm_mrrr 0R0s_ssdd_d100_0000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
 FDMOVE          1111_0010_00mm_mrrr 0R0s_ssdd_d100_0100 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
 
+# 00 — Static register list, predecrement addressing mode.
+# 01 — Dynamic register list, predecrement addressing mode.
+# 10 — Static register list, postincrement or control addressing mode.
+# 11 — Dynamic register list, postincrement or control addressing mode.
+FMOVEM          1111_0010_00mm_mrrr 11Do_o000_MMMM_MMMM let (sz, src, dst, extra) = cs.decode_fp_movem(r, m, D, M, o);
+
 FSIN            1111_0010_00mm_mrrr 0R0s_ssdd_d000_1110 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
 
 

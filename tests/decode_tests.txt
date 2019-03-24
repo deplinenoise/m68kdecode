@@ -1354,6 +1354,9 @@
 > fdneg.s (a0),fp1
 # Instruction { size: 4, operation: FDNEG, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
 
+> fnop
+# Instruction { size: 0, operation: FNOP, operands: [ NoOperand, NoOperand ], extra: NoExtra }
+
 > fsin fp3
 # Instruction { size: 10, operation: FSIN, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
 

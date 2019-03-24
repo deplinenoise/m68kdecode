@@ -122,6 +122,7 @@ pub enum Operation {
     FASIN,
     FATAN,
     FATANH,
+    FNOP,
     FBCC,
     FCMP,
     FCOS,
@@ -4308,6 +4309,22 @@ pub fn decode_group_1111(
             return cs.check_overflow(Instruction {
                 size: sz,
                 operation: FATANH,
+                operands: [src, dst],
+                extra: extra,
+            });
+        }
+    }
+    if (w0 & 0b1111111111111111) == 0b1111001010000000 && cs.has_words(1) {
+        let w1 = cs.peek_word(0);
+        if (w1 & 0b1111111111111111) == 0b0000000000000000 {
+            cs.skip_words(1);
+            let sz = 0;
+            let src = NoOperand;
+            let dst = NoOperand;
+            let extra = NoExtra;
+            return cs.check_overflow(Instruction {
+                size: sz,
+                operation: FNOP,
                 operands: [src, dst],
                 extra: extra,
             });

@@ -488,6 +488,8 @@ FDNEG           1111_0010_00mm_mrrr 0R0s_ssdd_d101_1110 let (sz, src, dst, extra
 
 FREM            1111_0010_00mm_mrrr 0R0s_ssdd_d010_0101 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
 
+FSCALE          1111_0010_00mm_mrrr 0R0s_ssdd_d010_0110 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+
 FSIN            1111_0010_00mm_mrrr 0R0s_ssdd_d000_1110 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
 
 

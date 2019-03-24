@@ -6422,4 +6422,46 @@ mod tests {
             &[" ftanh.s (a0),fp1"],
         );
     }
+    //  ftentox fp3
+    #[test]
+    fn test_decode_0455_ftentox_fp3() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x0d, 0x92],
+            Instruction {
+                size: 10,
+                operation: FTENTOX,
+                operands: [FR(FP3), FR(FP3)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" ftentox fp3"],
+        );
+    }
+    //  ftentox fp0,fp1
+    #[test]
+    fn test_decode_0456_ftentox_fp0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x00, 0x92],
+            Instruction {
+                size: 10,
+                operation: FTENTOX,
+                operands: [FR(FP0), FR(FP1)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" ftentox fp0,fp1"],
+        );
+    }
+    //  ftentox.s (a0),fp1
+    #[test]
+    fn test_decode_0457_ftentox_s_a0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x10, 0x44, 0x92],
+            Instruction {
+                size: 4,
+                operation: FTENTOX,
+                operands: [ARIND(A0), FR(FP1)],
+                extra: FloatFormat(FPF_SINGLE),
+            },
+            &[" ftentox.s (a0),fp1"],
+        );
+    }
 }

@@ -513,6 +513,8 @@ FTAN            1111_0010_00mm_mrrr 0R0s_ssdd_d000_1111 let (sz, src, dst, extra
 
 FTANH           1111_0010_00mm_mrrr 0R0s_ssdd_d000_1001 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
 
+FTENTOX         1111_0010_00mm_mrrr 0R0s_ssdd_d001_0010 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+
 #define FABS  ENCFT(0,1,1,0,0,0)
 #define FACOS ENCFT(0,1,1,1,0,0)
 #define FADD  ENCFT(1,0,0,0,1,0)

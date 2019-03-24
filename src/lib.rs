@@ -91,6 +91,7 @@ pub enum Operand {
     PCDISP(u8, Displacement),
     DISP(Displacement),
     DPAIR(DataRegister, DataRegister),
+    FPAIR(FloatingRegister, FloatingRegister),
     REGLIST(u16),
 }
 

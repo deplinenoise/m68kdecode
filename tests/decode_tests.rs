@@ -6142,4 +6142,32 @@ mod tests {
             &[" fsin.s (a0),fp1"],
         );
     }
+    //  fsincos fp0,fp1:fp2
+    #[test]
+    fn test_decode_0435_fsincos_fp0_fp1_fp2() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x01, 0x31],
+            Instruction {
+                size: 10,
+                operation: FSINCOS,
+                operands: [FR(FP0), FPAIR(FP2, FP1)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fsincos fp0,fp1:fp2"],
+        );
+    }
+    //  fsincos.s (a0),fp1:fp2
+    #[test]
+    fn test_decode_0436_fsincos_s_a0_fp1_fp2() {
+        test_decoding_result_ok(
+            &[0xf2, 0x10, 0x45, 0x31],
+            Instruction {
+                size: 4,
+                operation: FSINCOS,
+                operands: [ARIND(A0), FPAIR(FP2, FP1)],
+                extra: FloatFormat(FPF_SINGLE),
+            },
+            &[" fsincos.s (a0),fp1:fp2"],
+        );
+    }
 }

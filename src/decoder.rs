@@ -158,6 +158,7 @@ pub enum Operation {
     FSGLDIV,
     FSGLMUL,
     FSIN,
+    FSINCOS,
 }
 #[allow(non_snake_case)]
 #[allow(unused_mut)]
@@ -5005,6 +5006,26 @@ pub fn decode_group_1111(
             return cs.check_overflow(Instruction {
                 size: sz,
                 operation: FSIN,
+                operands: [src, dst],
+                extra: extra,
+            });
+        }
+    }
+    if (w0 & 0b1111111111000000) == 0b1111001000000000 && cs.has_words(1) {
+        let w1 = cs.peek_word(0);
+        if (w1 & 0b1010000001111000) == 0b0000000000110000 {
+            let m = get_bits(w0, 3, 3);
+            let r = get_bits(w0, 0, 3);
+            let R = get_bits(w1, 14, 1);
+            let s = get_bits(w1, 10, 3);
+            let S = get_bits(w1, 7, 3);
+            let C = get_bits(w1, 0, 3);
+            cs.skip_words(1);
+            let (sz, src, _dst, extra) = cs.decode_fp(r, m, R, s, S, 0);
+            let dst = FPAIR(cs.float_reg(S), cs.float_reg(C));
+            return cs.check_overflow(Instruction {
+                size: sz,
+                operation: FSINCOS,
                 operands: [src, dst],
                 extra: extra,
             });

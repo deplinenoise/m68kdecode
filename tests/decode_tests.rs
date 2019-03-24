@@ -6072,9 +6072,37 @@ mod tests {
             &[" fsgldiv.s (a0),fp1"],
         );
     }
+    //  fsglmul fp0,fp1
+    #[test]
+    fn test_decode_0430_fsglmul_fp0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x00, 0xa7],
+            Instruction {
+                size: 10,
+                operation: FSGLMUL,
+                operands: [FR(FP0), FR(FP1)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fsglmul fp0,fp1"],
+        );
+    }
+    //  fsglmul.s (a0),fp1
+    #[test]
+    fn test_decode_0431_fsglmul_s_a0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x10, 0x44, 0xa7],
+            Instruction {
+                size: 4,
+                operation: FSGLMUL,
+                operands: [ARIND(A0), FR(FP1)],
+                extra: FloatFormat(FPF_SINGLE),
+            },
+            &[" fsglmul.s (a0),fp1"],
+        );
+    }
     //  fsin fp3
     #[test]
-    fn test_decode_0430_fsin_fp3() {
+    fn test_decode_0432_fsin_fp3() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x0d, 0x8e],
             Instruction {
@@ -6088,7 +6116,7 @@ mod tests {
     }
     //  fsin fp0,fp1
     #[test]
-    fn test_decode_0431_fsin_fp0_fp1() {
+    fn test_decode_0433_fsin_fp0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x00, 0x8e],
             Instruction {
@@ -6102,7 +6130,7 @@ mod tests {
     }
     //  fsin.s (a0),fp1
     #[test]
-    fn test_decode_0432_fsin_s_a0_fp1() {
+    fn test_decode_0434_fsin_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0x8e],
             Instruction {

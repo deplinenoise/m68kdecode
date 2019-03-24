@@ -6212,4 +6212,74 @@ mod tests {
             &[" fsinh.s (a0),fp1"],
         );
     }
+    //  fsqrt fp3
+    #[test]
+    fn test_decode_0440_fsqrt_fp3() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x0d, 0x84],
+            Instruction {
+                size: 10,
+                operation: FSQRT,
+                operands: [FR(FP3), FR(FP3)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fsqrt fp3"],
+        );
+    }
+    //  fsqrt fp0,fp1
+    #[test]
+    fn test_decode_0441_fsqrt_fp0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x00, 0x84],
+            Instruction {
+                size: 10,
+                operation: FSQRT,
+                operands: [FR(FP0), FR(FP1)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fsqrt fp0,fp1"],
+        );
+    }
+    //  fsqrt.s (a0),fp1
+    #[test]
+    fn test_decode_0442_fsqrt_s_a0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x10, 0x44, 0x84],
+            Instruction {
+                size: 4,
+                operation: FSQRT,
+                operands: [ARIND(A0), FR(FP1)],
+                extra: FloatFormat(FPF_SINGLE),
+            },
+            &[" fsqrt.s (a0),fp1"],
+        );
+    }
+    //  fssqrt fp3
+    #[test]
+    fn test_decode_0443_fssqrt_fp3() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x0d, 0xc1],
+            Instruction {
+                size: 10,
+                operation: FSSQRT,
+                operands: [FR(FP3), FR(FP3)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fssqrt fp3"],
+        );
+    }
+    //  fdsqrt fp3
+    #[test]
+    fn test_decode_0444_fdsqrt_fp3() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x0d, 0xc5],
+            Instruction {
+                size: 10,
+                operation: FDSQRT,
+                operands: [FR(FP3), FR(FP3)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fdsqrt fp3"],
+        );
+    }
 }

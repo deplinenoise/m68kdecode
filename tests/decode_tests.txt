@@ -1398,3 +1398,12 @@
 
 > fsincos.s (a0),fp1:fp2
 # Instruction { size: 4, operation: FSINCOS, operands: [ ARIND(A0), FPAIR(FP2,FP1) ], extra: FloatFormat(FPF_SINGLE) }
+
+> fsinh fp3
+# Instruction { size: 10, operation: FSINH, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fsinh fp0,fp1
+# Instruction { size: 10, operation: FSINH, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fsinh.s (a0),fp1
+# Instruction { size: 4, operation: FSINH, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }

@@ -6170,4 +6170,46 @@ mod tests {
             &[" fsincos.s (a0),fp1:fp2"],
         );
     }
+    //  fsinh fp3
+    #[test]
+    fn test_decode_0437_fsinh_fp3() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x0d, 0x82],
+            Instruction {
+                size: 10,
+                operation: FSINH,
+                operands: [FR(FP3), FR(FP3)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fsinh fp3"],
+        );
+    }
+    //  fsinh fp0,fp1
+    #[test]
+    fn test_decode_0438_fsinh_fp0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x00, 0x82],
+            Instruction {
+                size: 10,
+                operation: FSINH,
+                operands: [FR(FP0), FR(FP1)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fsinh fp0,fp1"],
+        );
+    }
+    //  fsinh.s (a0),fp1
+    #[test]
+    fn test_decode_0439_fsinh_s_a0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x10, 0x44, 0x82],
+            Instruction {
+                size: 4,
+                operation: FSINH,
+                operands: [ARIND(A0), FR(FP1)],
+                extra: FloatFormat(FPF_SINGLE),
+            },
+            &[" fsinh.s (a0),fp1"],
+        );
+    }
 }

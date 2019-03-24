@@ -1479,3 +1479,12 @@
 
 > ftst fp7
 # Instruction { size: 10, operation: FTST, operands: [ FR(FP7), NoOperand ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> ftwotox fp3
+# Instruction { size: 10, operation: FTWOTOX, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> ftwotox fp0,fp1
+# Instruction { size: 10, operation: FTWOTOX, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> ftwotox.s (a0),fp1
+# Instruction { size: 4, operation: FTWOTOX, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }

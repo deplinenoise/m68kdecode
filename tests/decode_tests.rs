@@ -6534,4 +6534,46 @@ mod tests {
             &[" ftst fp7"],
         );
     }
+    //  ftwotox fp3
+    #[test]
+    fn test_decode_0463_ftwotox_fp3() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x0d, 0x91],
+            Instruction {
+                size: 10,
+                operation: FTWOTOX,
+                operands: [FR(FP3), FR(FP3)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" ftwotox fp3"],
+        );
+    }
+    //  ftwotox fp0,fp1
+    #[test]
+    fn test_decode_0464_ftwotox_fp0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x00, 0x91],
+            Instruction {
+                size: 10,
+                operation: FTWOTOX,
+                operands: [FR(FP0), FR(FP1)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" ftwotox fp0,fp1"],
+        );
+    }
+    //  ftwotox.s (a0),fp1
+    #[test]
+    fn test_decode_0465_ftwotox_s_a0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x10, 0x44, 0x91],
+            Instruction {
+                size: 4,
+                operation: FTWOTOX,
+                operands: [ARIND(A0), FR(FP1)],
+                extra: FloatFormat(FPF_SINGLE),
+            },
+            &[" ftwotox.s (a0),fp1"],
+        );
+    }
 }

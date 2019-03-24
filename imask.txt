@@ -524,6 +524,8 @@ FTENTOX         1111_0010_00mm_mrrr 0R0s_ssdd_d001_0010 let (sz, src, dst, extra
 
 FTST            1111_0010_00mm_mrrr 0R0s_ssdd_d011_1010 let (sz, src, _dst, extra) = cs.decode_fp(r, m, R, s, d, 0); dst=NoOperand;
 
+FTWOTOX         1111_0010_00mm_mrrr 0R0s_ssdd_d001_0001 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+
 #define FABS  ENCFT(0,1,1,0,0,0)
 #define FACOS ENCFT(0,1,1,1,0,0)
 #define FADD  ENCFT(1,0,0,0,1,0)

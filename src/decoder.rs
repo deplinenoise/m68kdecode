@@ -111,6 +111,7 @@ pub enum Operation {
     ROXR,
     ROL,
     ROR,
+    FMOVECR,
     FABS,
     FSABS,
     FDABS,
@@ -134,6 +135,12 @@ pub enum Operation {
     FGETEXP,
     FGETMAN,
     FINT,
+    FINTRZ,
+    FLOG10,
+    FLOG2,
+    FLOGN,
+    FLOGNP1,
+    FMOD,
     FSIN,
 }
 #[allow(non_snake_case)]
@@ -4098,6 +4105,24 @@ pub fn decode_group_1111(
     w0: u16,
     cs: &mut CodeStream,
 ) -> Result<DecodedInstruction, DecodingError> {
+    if (w0 & 0b1111111111111111) == 0b1111001000000000 && cs.has_words(1) {
+        let w1 = cs.peek_word(0);
+        if (w1 & 0b1111110000000000) == 0b0101110000000000 {
+            let d = get_bits(w1, 7, 3);
+            let o = get_bits(w1, 0, 7);
+            cs.skip_words(1);
+            let sz = 10;
+            let src = IMM8(o as u8);
+            let dst = cs.float_reg_op(d);
+            let extra = NoExtra;
+            return cs.check_overflow(Instruction {
+                size: sz,
+                operation: FMOVECR,
+                operands: [src, dst],
+                extra: extra,
+            });
+        }
+    }
     if (w0 & 0b1111111111000000) == 0b1111001000000000 && cs.has_words(1) {
         let w1 = cs.peek_word(0);
         if (w1 & 0b1010000001111111) == 0b0000000000011000 {
@@ -4533,6 +4558,114 @@ pub fn decode_group_1111(
             return cs.check_overflow(Instruction {
                 size: sz,
                 operation: FINT,
+                operands: [src, dst],
+                extra: extra,
+            });
+        }
+    }
+    if (w0 & 0b1111111111000000) == 0b1111001000000000 && cs.has_words(1) {
+        let w1 = cs.peek_word(0);
+        if (w1 & 0b1010000001111111) == 0b0000000000000011 {
+            let m = get_bits(w0, 3, 3);
+            let r = get_bits(w0, 0, 3);
+            let R = get_bits(w1, 14, 1);
+            let s = get_bits(w1, 10, 3);
+            let d = get_bits(w1, 7, 3);
+            cs.skip_words(1);
+            let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+            return cs.check_overflow(Instruction {
+                size: sz,
+                operation: FINTRZ,
+                operands: [src, dst],
+                extra: extra,
+            });
+        }
+    }
+    if (w0 & 0b1111111111000000) == 0b1111001000000000 && cs.has_words(1) {
+        let w1 = cs.peek_word(0);
+        if (w1 & 0b1010000001111111) == 0b0000000000010101 {
+            let m = get_bits(w0, 3, 3);
+            let r = get_bits(w0, 0, 3);
+            let R = get_bits(w1, 14, 1);
+            let s = get_bits(w1, 10, 3);
+            let d = get_bits(w1, 7, 3);
+            cs.skip_words(1);
+            let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+            return cs.check_overflow(Instruction {
+                size: sz,
+                operation: FLOG10,
+                operands: [src, dst],
+                extra: extra,
+            });
+        }
+    }
+    if (w0 & 0b1111111111000000) == 0b1111001000000000 && cs.has_words(1) {
+        let w1 = cs.peek_word(0);
+        if (w1 & 0b1010000001111111) == 0b0000000000010110 {
+            let m = get_bits(w0, 3, 3);
+            let r = get_bits(w0, 0, 3);
+            let R = get_bits(w1, 14, 1);
+            let s = get_bits(w1, 10, 3);
+            let d = get_bits(w1, 7, 3);
+            cs.skip_words(1);
+            let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+            return cs.check_overflow(Instruction {
+                size: sz,
+                operation: FLOG2,
+                operands: [src, dst],
+                extra: extra,
+            });
+        }
+    }
+    if (w0 & 0b1111111111000000) == 0b1111001000000000 && cs.has_words(1) {
+        let w1 = cs.peek_word(0);
+        if (w1 & 0b1010000001111111) == 0b0000000000010100 {
+            let m = get_bits(w0, 3, 3);
+            let r = get_bits(w0, 0, 3);
+            let R = get_bits(w1, 14, 1);
+            let s = get_bits(w1, 10, 3);
+            let d = get_bits(w1, 7, 3);
+            cs.skip_words(1);
+            let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+            return cs.check_overflow(Instruction {
+                size: sz,
+                operation: FLOGN,
+                operands: [src, dst],
+                extra: extra,
+            });
+        }
+    }
+    if (w0 & 0b1111111111000000) == 0b1111001000000000 && cs.has_words(1) {
+        let w1 = cs.peek_word(0);
+        if (w1 & 0b1010000001111111) == 0b0000000000000110 {
+            let m = get_bits(w0, 3, 3);
+            let r = get_bits(w0, 0, 3);
+            let R = get_bits(w1, 14, 1);
+            let s = get_bits(w1, 10, 3);
+            let d = get_bits(w1, 7, 3);
+            cs.skip_words(1);
+            let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+            return cs.check_overflow(Instruction {
+                size: sz,
+                operation: FLOGNP1,
+                operands: [src, dst],
+                extra: extra,
+            });
+        }
+    }
+    if (w0 & 0b1111111111000000) == 0b1111001000000000 && cs.has_words(1) {
+        let w1 = cs.peek_word(0);
+        if (w1 & 0b1010000001111111) == 0b0000000000100001 {
+            let m = get_bits(w0, 3, 3);
+            let r = get_bits(w0, 0, 3);
+            let R = get_bits(w1, 14, 1);
+            let s = get_bits(w1, 10, 3);
+            let d = get_bits(w1, 7, 3);
+            cs.skip_words(1);
+            let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+            return cs.check_overflow(Instruction {
+                size: sz,
+                operation: FMOD,
                 operands: [src, dst],
                 extra: extra,
             });

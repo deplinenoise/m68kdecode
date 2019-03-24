@@ -415,6 +415,8 @@ ROR             1110_0110_11mm_mrrr sz=2; src=Implied; dst=cs.ea(r, m, sz);
 # Group 1111: Coprocessor interface, MC68040 and CPU32 extensions
 #====================================================================================================
 
+FMOVECR         1111_0010_0000_0000 0101_11dd_dooo_oooo sz=10; src=IMM8(o as u8); dst=cs.float_reg_op(d);
+
 FABS            1111_0010_00mm_mrrr 0R0s_ssdd_d001_1000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
 FSABS           1111_0010_00mm_mrrr 0R0s_ssdd_d101_1000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
 FDABS           1111_0010_00mm_mrrr 0R0s_ssdd_d101_1100 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
@@ -451,6 +453,18 @@ FGETMAN         1111_0010_00mm_mrrr 0R0s_ssdd_d001_1111 let (sz, src, dst, extra
 FGETMAN         1111_0010_00mm_mrrr 0R0s_ssdd_d001_1111 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
 
 FINT            1111_0010_00mm_mrrr 0R0s_ssdd_d000_0001 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+FINTRZ          1111_0010_00mm_mrrr 0R0s_ssdd_d000_0011 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+
+FLOG10          1111_0010_00mm_mrrr 0R0s_ssdd_d001_0101 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+FLOG2           1111_0010_00mm_mrrr 0R0s_ssdd_d001_0110 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+FLOGN           1111_0010_00mm_mrrr 0R0s_ssdd_d001_0100 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+FLOGNP1         1111_0010_00mm_mrrr 0R0s_ssdd_d000_0110 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+
+FMOD            1111_0010_00mm_mrrr 0R0s_ssdd_d010_0001 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+
+#FMOVE           1111_0010_00mm_mrrr 0R0s_ssdd_d000_0000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+#FSMOVE          1111_0010_00mm_mrrr 0R0s_ssdd_d100_0000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
+#FDMOVE          1111_0010_00mm_mrrr 0R0s_ssdd_d100_0100 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
 
 FSIN            1111_0010_00mm_mrrr 0R0s_ssdd_d000_1110 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d);
 

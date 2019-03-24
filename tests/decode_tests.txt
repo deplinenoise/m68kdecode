@@ -1222,6 +1222,60 @@
 > fint.s (a0),fp1
 # Instruction { size: 4, operation: FINT, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
 
+> fintrz fp3
+# Instruction { size: 10, operation: FINTRZ, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fintrz fp0,fp1
+# Instruction { size: 10, operation: FINTRZ, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fintrz.s (a0),fp1
+# Instruction { size: 4, operation: FINTRZ, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+
+> flog10 fp3
+# Instruction { size: 10, operation: FLOG10, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> flog10 fp0,fp1
+# Instruction { size: 10, operation: FLOG10, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> flog10.s (a0),fp1
+# Instruction { size: 4, operation: FLOG10, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+
+> flog2 fp3
+# Instruction { size: 10, operation: FLOG2, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> flog2 fp0,fp1
+# Instruction { size: 10, operation: FLOG2, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> flog2.s (a0),fp1
+# Instruction { size: 4, operation: FLOG2, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+
+> flogn fp3
+# Instruction { size: 10, operation: FLOGN, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> flogn fp0,fp1
+# Instruction { size: 10, operation: FLOGN, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> flogn.s (a0),fp1
+# Instruction { size: 4, operation: FLOGN, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+
+> flognp1 fp3
+# Instruction { size: 10, operation: FLOGNP1, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> flognp1 fp0,fp1
+# Instruction { size: 10, operation: FLOGNP1, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> flognp1.s (a0),fp1
+# Instruction { size: 4, operation: FLOGNP1, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+
+> fmod fp0,fp1
+# Instruction { size: 10, operation: FMOD, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fmod.s (a0),fp1
+# Instruction { size: 4, operation: FMOD, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+
+> fmovecr #30,fp1
+# Instruction { size: 10, operation: FMOVECR, operands: [ IMM8(30), FR(FP1) ], extra: NoExtra }
+
 > lab: fdbgt d6,lab
 # Instruction { size: 2, operation: FDBCC, operands: [ DR(D6), PCDISP(4, simple_disp(-4)) ], extra: FPCondition(FPCC_GT) }
 

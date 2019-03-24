@@ -6506,4 +6506,32 @@ mod tests {
             &[" ftrapne.l #1234567"],
         );
     }
+    //  ftst.l (a0)
+    #[test]
+    fn test_decode_0461_ftst_l_a0_() {
+        test_decoding_result_ok(
+            &[0xf2, 0x10, 0x40, 0x3a],
+            Instruction {
+                size: 4,
+                operation: FTST,
+                operands: [ARIND(A0), NoOperand],
+                extra: FloatFormat(FPF_LONG_INT),
+            },
+            &[" ftst.l (a0)"],
+        );
+    }
+    //  ftst fp7
+    #[test]
+    fn test_decode_0462_ftst_fp7() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x1c, 0x3a],
+            Instruction {
+                size: 10,
+                operation: FTST,
+                operands: [FR(FP7), NoOperand],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" ftst fp7"],
+        );
+    }
 }

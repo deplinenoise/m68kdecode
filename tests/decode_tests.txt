@@ -1473,3 +1473,9 @@
 
 > ftrapne.l #1234567
 # Instruction { size: 4, operation: FTRAPCC, operands: [ Implied, IMM32(1234567) ], extra: FPCondition(FPCC_NE) }
+
+> ftst.l (a0)
+# Instruction { size: 4, operation: FTST, operands: [ ARIND(A0), NoOperand ], extra: FloatFormat(FPF_LONG_INT) }
+
+> ftst fp7
+# Instruction { size: 10, operation: FTST, operands: [ FR(FP7), NoOperand ], extra: FloatFormat(FPF_EXTENDED_REAL) }

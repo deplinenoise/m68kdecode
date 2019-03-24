@@ -476,6 +476,10 @@ FDMOVE          1111_0010_00mm_mrrr 0R0s_ssdd_d100_0100 let (sz, src, dst, extra
 # 11 — Dynamic register list, postincrement or control addressing mode.
 FMOVEM          1111_0010_00mm_mrrr 11Do_o000_MMMM_MMMM let (sz, src, dst, extra) = cs.decode_fp_movem(r, m, D, M, o);
 
+FMUL            1111_0010_00mm_mrrr 0R0s_ssdd_d010_0011 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FSMUL           1111_0010_00mm_mrrr 0R0s_ssdd_d110_0011 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FDMUL           1111_0010_00mm_mrrr 0R0s_ssdd_d110_0111 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+
 FSIN            1111_0010_00mm_mrrr 0R0s_ssdd_d000_1110 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
 
 

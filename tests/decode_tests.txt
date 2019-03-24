@@ -1327,6 +1327,19 @@
 > fmovem.x (a3)+,fp0/fp6
 # Instruction { size: 10, operation: FMOVEM, operands: [ ARINC(A3), REGLIST(0b1000_0010) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
 
+> fmul fp0,fp1
+# Instruction { size: 10, operation: FMUL, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fmul.s (a0),fp1
+# Instruction { size: 4, operation: FMUL, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+
+> fsmul.s (a0),fp1
+# Instruction { size: 4, operation: FSMUL, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+
+> fdmul.s (a0),fp1
+# Instruction { size: 4, operation: FDMUL, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+
+
 > fsin fp3
 # Instruction { size: 10, operation: FSIN, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
 

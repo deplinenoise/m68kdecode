@@ -379,16 +379,16 @@ impl<'a> CodeStream<'a> {
         })
     }
 
-    pub fn decode_fp_movem(&mut self, r: u16, m: u16, D: u16, M: u16, mode: u16) -> (i32, Operand, Operand, InstructionExtra) {
+    pub fn decode_fp_movem(&mut self, r: u16, m: u16, direction: u16, mask: u16, mode: u16) -> (i32, Operand, Operand, InstructionExtra) {
 
         let ea = self.ea(r, m, 10);
 
         let regs = match mode & 1 {
-            0 => REGLIST(M),
-            _ => self.data_reg_op(M >> 4),
+            0 => REGLIST(mask),
+            _ => self.data_reg_op(mask >> 4),
         };
 
-        match D {
+        match direction {
             0 => (10, ea, regs, FloatFormat(FPF_EXTENDED_REAL)), // move from memory to float registers
             _ => (10, regs, ea, FloatFormat(FPF_EXTENDED_REAL)), // move from registers to memory
         }

@@ -505,6 +505,10 @@ FSQRT           1111_0010_00mm_mrrr 0R0s_ssdd_d000_0100 let (sz, src, dst, extra
 FSSQRT          1111_0010_00mm_mrrr 0R0s_ssdd_d100_0001 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
 FDSQRT          1111_0010_00mm_mrrr 0R0s_ssdd_d100_0101 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
 
+FSUB            1111_0010_00mm_mrrr 0R0s_ssdd_d010_1000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FSSUB           1111_0010_00mm_mrrr 0R0s_ssdd_d110_1000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FDSUB           1111_0010_00mm_mrrr 0R0s_ssdd_d110_1100 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+
 #define FABS  ENCFT(0,1,1,0,0,0)
 #define FACOS ENCFT(0,1,1,1,0,0)
 #define FADD  ENCFT(1,0,0,0,1,0)

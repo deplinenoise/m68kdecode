@@ -1422,3 +1422,16 @@
 
 > fdsqrt fp3
 # Instruction { size: 10, operation: FDSQRT, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fsub fp0,fp1
+# Instruction { size: 10, operation: FSUB, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fsub.s (a0),fp1
+# Instruction { size: 4, operation: FSUB, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+
+> fssub.x (a0),fp1
+# Instruction { size: 10, operation: FSSUB, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fdsub.l (a0),fp1
+# Instruction { size: 4, operation: FDSUB, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_LONG_INT) }
+

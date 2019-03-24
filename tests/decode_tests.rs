@@ -6282,4 +6282,60 @@ mod tests {
             &[" fdsqrt fp3"],
         );
     }
+    //  fsub fp0,fp1
+    #[test]
+    fn test_decode_0445_fsub_fp0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x00, 0xa8],
+            Instruction {
+                size: 10,
+                operation: FSUB,
+                operands: [FR(FP0), FR(FP1)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fsub fp0,fp1"],
+        );
+    }
+    //  fsub.s (a0),fp1
+    #[test]
+    fn test_decode_0446_fsub_s_a0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x10, 0x44, 0xa8],
+            Instruction {
+                size: 4,
+                operation: FSUB,
+                operands: [ARIND(A0), FR(FP1)],
+                extra: FloatFormat(FPF_SINGLE),
+            },
+            &[" fsub.s (a0),fp1"],
+        );
+    }
+    //  fssub.x (a0),fp1
+    #[test]
+    fn test_decode_0447_fssub_x_a0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x10, 0x48, 0xe8],
+            Instruction {
+                size: 10,
+                operation: FSSUB,
+                operands: [ARIND(A0), FR(FP1)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fssub.x (a0),fp1"],
+        );
+    }
+    //  fdsub.l (a0),fp1
+    #[test]
+    fn test_decode_0448_fdsub_l_a0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x10, 0x40, 0xec],
+            Instruction {
+                size: 4,
+                operation: FDSUB,
+                operands: [ARIND(A0), FR(FP1)],
+                extra: FloatFormat(FPF_LONG_INT),
+            },
+            &[" fdsub.l (a0),fp1"],
+        );
+    }
 }

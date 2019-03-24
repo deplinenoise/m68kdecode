@@ -492,6 +492,8 @@ FSCALE          1111_0010_00mm_mrrr 0R0s_ssdd_d010_0110 let (sz, src, dst, extra
 
 FSCC            1111_0010_01mm_mrrr 0000_0000_00cc_cccc sz=1; src=Implied; dst=cs.ea(r, m, 1); extra=cs.fpcc(c);
 
+FSGLDIV         1111_0010_00mm_mrrr 0R0s_ssdd_d010_0100 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+
 FSIN            1111_0010_00mm_mrrr 0R0s_ssdd_d000_1110 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
 
 

@@ -1372,6 +1372,12 @@
 > fsgt (a0)
 # Instruction { size: 1, operation: FSCC, operands: [ Implied, ARIND(A0) ], extra: FPCondition(FPCC_GT) }
 
+> fsgldiv fp0,fp1
+# Instruction { size: 10, operation: FSGLDIV, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fsgldiv.s (a0),fp1
+# Instruction { size: 4, operation: FSGLDIV, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+
 > fsin fp3
 # Instruction { size: 10, operation: FSIN, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
 

@@ -5890,9 +5890,79 @@ mod tests {
             &[" fdmul.s (a0),fp1"],
         );
     }
+    //  fneg fp3
+    #[test]
+    fn test_decode_0417_fneg_fp3() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x0d, 0x9a],
+            Instruction {
+                size: 10,
+                operation: FNEG,
+                operands: [FR(FP3), FR(FP3)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fneg fp3"],
+        );
+    }
+    //  fneg fp0,fp1
+    #[test]
+    fn test_decode_0418_fneg_fp0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x00, 0x00, 0x9a],
+            Instruction {
+                size: 10,
+                operation: FNEG,
+                operands: [FR(FP0), FR(FP1)],
+                extra: FloatFormat(FPF_EXTENDED_REAL),
+            },
+            &[" fneg fp0,fp1"],
+        );
+    }
+    //  fneg.s (a0),fp1
+    #[test]
+    fn test_decode_0419_fneg_s_a0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x10, 0x44, 0x9a],
+            Instruction {
+                size: 4,
+                operation: FNEG,
+                operands: [ARIND(A0), FR(FP1)],
+                extra: FloatFormat(FPF_SINGLE),
+            },
+            &[" fneg.s (a0),fp1"],
+        );
+    }
+    //  fsneg.s (a0),fp1
+    #[test]
+    fn test_decode_0420_fsneg_s_a0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x10, 0x44, 0xda],
+            Instruction {
+                size: 4,
+                operation: FSNEG,
+                operands: [ARIND(A0), FR(FP1)],
+                extra: FloatFormat(FPF_SINGLE),
+            },
+            &[" fsneg.s (a0),fp1"],
+        );
+    }
+    //  fdneg.s (a0),fp1
+    #[test]
+    fn test_decode_0421_fdneg_s_a0_fp1() {
+        test_decoding_result_ok(
+            &[0xf2, 0x10, 0x44, 0xde],
+            Instruction {
+                size: 4,
+                operation: FDNEG,
+                operands: [ARIND(A0), FR(FP1)],
+                extra: FloatFormat(FPF_SINGLE),
+            },
+            &[" fdneg.s (a0),fp1"],
+        );
+    }
     //  fsin fp3
     #[test]
-    fn test_decode_0417_fsin_fp3() {
+    fn test_decode_0422_fsin_fp3() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x0d, 0x8e],
             Instruction {
@@ -5906,7 +5976,7 @@ mod tests {
     }
     //  fsin fp0,fp1
     #[test]
-    fn test_decode_0418_fsin_fp0_fp1() {
+    fn test_decode_0423_fsin_fp0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x00, 0x8e],
             Instruction {
@@ -5920,7 +5990,7 @@ mod tests {
     }
     //  fsin.s (a0),fp1
     #[test]
-    fn test_decode_0419_fsin_s_a0_fp1() {
+    fn test_decode_0424_fsin_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0x8e],
             Instruction {

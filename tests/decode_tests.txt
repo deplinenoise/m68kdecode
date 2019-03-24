@@ -1339,6 +1339,20 @@
 > fdmul.s (a0),fp1
 # Instruction { size: 4, operation: FDMUL, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
 
+> fneg fp3
+# Instruction { size: 10, operation: FNEG, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fneg fp0,fp1
+# Instruction { size: 10, operation: FNEG, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+
+> fneg.s (a0),fp1
+# Instruction { size: 4, operation: FNEG, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+
+> fsneg.s (a0),fp1
+# Instruction { size: 4, operation: FSNEG, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+
+> fdneg.s (a0),fp1
+# Instruction { size: 4, operation: FDNEG, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
 
 > fsin fp3
 # Instruction { size: 10, operation: FSIN, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }

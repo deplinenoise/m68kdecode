@@ -480,6 +480,10 @@ FMUL            1111_0010_00mm_mrrr 0R0s_ssdd_d010_0011 let (sz, src, dst, extra
 FSMUL           1111_0010_00mm_mrrr 0R0s_ssdd_d110_0011 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
 FDMUL           1111_0010_00mm_mrrr 0R0s_ssdd_d110_0111 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
 
+FNEG            1111_0010_00mm_mrrr 0R0s_ssdd_d001_1010 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FSNEG           1111_0010_00mm_mrrr 0R0s_ssdd_d101_1010 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FDNEG           1111_0010_00mm_mrrr 0R0s_ssdd_d101_1110 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+
 FSIN            1111_0010_00mm_mrrr 0R0s_ssdd_d000_1110 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
 
 

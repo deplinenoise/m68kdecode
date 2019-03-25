@@ -182,6 +182,7 @@ with open(outfile, "w") as of:
     of.write('use codestream::*;\n')
 
     seen_insn_names = {}
+    of.write('/// Instruction names.\n');
     of.write('#[derive(Debug, PartialEq)]\npub enum Operation {\n');
     for i in instructions:
         if not seen_insn_names.has_key(i.name):

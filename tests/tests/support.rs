@@ -12,8 +12,11 @@ pub fn test_decoding_result_ok(bytes: &[u8], expected: Instruction, asm: &[&str]
                 println!("{}", l);
             }
             assert!(false);
-        },
-        Ok(DecodedInstruction { bytes_used, instruction }) => {
+        }
+        Ok(DecodedInstruction {
+            bytes_used,
+            instruction,
+        }) => {
             assert!(bytes_used == bytes.len() as u32);
             if instruction != expected {
                 println!("Expected: {:?}", expected);
@@ -23,7 +26,7 @@ pub fn test_decoding_result_ok(bytes: &[u8], expected: Instruction, asm: &[&str]
                 }
                 assert!(false);
             }
-        },
+        }
     }
 }
 
@@ -31,7 +34,9 @@ pub fn test_decoding_result_err(bytes: &[u8], expected: DecodingError, asm: &[&s
     let r = decode_instruction(&bytes);
     match r {
         Err(e) => {
-            if e == expected { return; }
+            if e == expected {
+                return;
+            }
         }
         _ => (),
     };
@@ -43,4 +48,3 @@ pub fn test_decoding_result_err(bytes: &[u8], expected: DecodingError, asm: &[&s
     }
     assert!(false);
 }
-

@@ -65,6 +65,17 @@ with open(outfilename, "w") as of:
     of.write('  use m68kdecode::*;\n')
     of.write('  mod support;\n')
     of.write('  use support::*;\n')
+    of.write('  use m68kdecode::DataRegister::*;\n')
+    of.write('  use m68kdecode::AddressRegister::*;\n')
+    of.write('  use m68kdecode::FloatingRegister::*;\n')
+    of.write('  use m68kdecode::MemoryIndirection::*;\n')
+    of.write('  use m68kdecode::FPConditionCode::*;\n')
+    of.write('  use m68kdecode::ConditionCode::*;\n')
+    of.write('  use m68kdecode::FPFormat::*;\n')
+    of.write('  use m68kdecode::Operand::*;\n')
+    of.write('  use m68kdecode::InstructionExtra::*;\n')
+    of.write('  use m68kdecode::BitfieldData::*;\n')
+    of.write('  use m68kdecode::Operation::*;\n')
 
     testnum = 1
     for t in tests:

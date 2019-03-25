@@ -1,3 +1,6 @@
+use crate::InstructionExtra::*;
+use crate::Operand::*;
+use crate::Operation::*;
 use crate::*;
 use codestream::*;
 /// Instruction names.

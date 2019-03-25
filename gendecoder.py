@@ -179,6 +179,9 @@ def gen_decoders(of, insns):
     
 with open(outfile, "w") as of:
     of.write('use crate::*;\n')
+    of.write('use crate::Operand::*;\n')
+    of.write('use crate::InstructionExtra::*;\n')
+    of.write('use crate::Operation::*;\n')
     of.write('use codestream::*;\n')
 
     seen_insn_names = {}

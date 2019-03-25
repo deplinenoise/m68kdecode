@@ -1,5 +1,15 @@
 use crate::*;
 use crate::DecodingError::*;
+use crate::AddressRegister::*;
+use crate::DataRegister::*;
+use crate::FloatingRegister::*;
+use crate::MemoryIndirection::*;
+use crate::FPConditionCode::*;
+use crate::ConditionCode::*;
+use crate::FPFormat::*;
+use crate::Operand::*;
+use crate::InstructionExtra::*;
+use crate::BitfieldData::*;
 
 pub fn get_bits(word: u16, first: i32, length: i32) -> u16 {
     let s = word >> first;

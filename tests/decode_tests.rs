@@ -2,6 +2,17 @@
 mod tests {
     use m68kdecode::*;
     mod support;
+    use m68kdecode::AddressRegister::*;
+    use m68kdecode::BitfieldData::*;
+    use m68kdecode::ConditionCode::*;
+    use m68kdecode::DataRegister::*;
+    use m68kdecode::FPConditionCode::*;
+    use m68kdecode::FPFormat::*;
+    use m68kdecode::FloatingRegister::*;
+    use m68kdecode::InstructionExtra::*;
+    use m68kdecode::MemoryIndirection::*;
+    use m68kdecode::Operand::*;
+    use m68kdecode::Operation::*;
     use support::*;
     //  move.b d0,d1
     #[test]

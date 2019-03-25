@@ -28,10 +28,6 @@ pub enum FloatingRegister {
     FP0, FP1, FP2, FP3, FP4, FP5, FP6, FP7,
 }
 
-pub use DataRegister::*;
-pub use AddressRegister::*;
-pub use FloatingRegister::*;
-
 /// Indicates how memory indexing is to be performed for 68020+ double memory operands.
 #[derive(Debug, PartialEq)]
 pub enum MemoryIndirection {
@@ -44,8 +40,6 @@ pub enum MemoryIndirection {
     /// Memory post-indexed indirection (indexer applies to outer array).
     IndirectPostIndexed,
 }
-
-pub use MemoryIndirection::*;
 
 /// Indicates how indexing is to be performed.
 #[derive(Debug, PartialEq)]
@@ -242,8 +236,6 @@ pub enum FPConditionCode {
     FPCC_ST   = 0b011111,
 }
 
-pub use FPConditionCode::*;
-
 /// Indicates the floating point format in memory for a FPU operation
 #[derive(Debug, PartialEq)]
 #[allow(non_camel_case_types)]
@@ -267,9 +259,6 @@ pub enum FPFormat {
     /// The memory operand is an 8-bit integer.
     FPF_BYTE_INT
 }
-
-pub use FPFormat::*;
-
 
 /// Additional attributes for an instruction that don't fit anywhere else.
 #[derive(Debug, PartialEq)]
@@ -303,12 +292,6 @@ pub struct Instruction {
     pub extra: InstructionExtra,
 }
 
-pub use Operation::*;
-pub use Operand::*;
-pub use InstructionExtra::*;
-pub use BitfieldData::*;
-pub use ConditionCode::*;
-
 /// Represents the result of decoding an instruction from a byte stream.
 #[derive(Debug,PartialEq)]
 pub struct DecodedInstruction {
@@ -338,7 +321,7 @@ pub fn simple_disp(disp: i32) -> Displacement {
         base_displacement: disp,
         outer_displacement: 0,
         indexer: Indexer::NoIndexer,
-        indirection: NoIndirection,
+        indirection: MemoryIndirection::NoIndirection,
     }
 }
 
@@ -349,7 +332,7 @@ pub fn dr_disp_scale(dr: DataRegister, disp: i32, scale: u8) -> Displacement {
         base_displacement: disp,
         outer_displacement: 0,
         indexer: Indexer::DR(dr, scale),
-        indirection: NoIndirection,
+        indirection: MemoryIndirection::NoIndirection,
     }
 }
 

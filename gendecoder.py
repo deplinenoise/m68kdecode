@@ -199,7 +199,7 @@ with open(outfile, "w") as of:
         has_group[group] = True
         gen_decoders(of, insns)
 
-    of.write('pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {\n')
+    of.write('pub fn decode_instruction_generated(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {\n')
     of.write('  let mut cs = CodeStream::new(code);\n')
     of.write('  let w0 = cs.pull16();\n')
     of.write('  match w0 >> 12 {\n')

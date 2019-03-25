@@ -3,7 +3,7 @@
 mod decoder;
 mod codestream;
 
-pub use decoder::*;
+pub use decoder::Operation;
 
 /// One of the 8 data registers.
 #[derive(Debug, PartialEq)]
@@ -359,4 +359,9 @@ pub fn dr_disp_scale(dr: DataRegister, disp: i32, scale: u8) -> Displacement {
 /// register.
 pub fn dr_disp(dr: DataRegister, disp: i32) -> Displacement {
     dr_disp_scale(dr, disp, 0)
+}
+
+/// Attempt to decode a single M68000 instruction starting at `code[0]`
+pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {
+    decoder::decode_instruction_generated(code)
 }

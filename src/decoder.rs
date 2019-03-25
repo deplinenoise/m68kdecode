@@ -5270,7 +5270,7 @@ fn decode_group_1111(w0: u16, cs: &mut CodeStream) -> Result<DecodedInstruction,
     }
     return Err(NotImplemented);
 }
-pub fn decode_instruction(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {
+pub fn decode_instruction_generated(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {
     let mut cs = CodeStream::new(code);
     let w0 = cs.pull16();
     match w0 >> 12 {

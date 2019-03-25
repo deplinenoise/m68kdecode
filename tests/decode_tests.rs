@@ -962,7 +962,7 @@ mod tests {
     fn test_decode_0066_cas_d0_d1_a0_() {
         test_decoding_result_err(
             &[0x0c, 0xd0, 0x00, 0x40],
-            NotImplemented,
+            DecodingError::NotImplemented,
             &[" cas d0,d1,(a0)"],
         );
     }
@@ -971,7 +971,7 @@ mod tests {
     fn test_decode_0067_cas2_d0_d1_d2_d3_a0_a1_() {
         test_decoding_result_err(
             &[0x0c, 0xfc, 0x80, 0x80, 0x90, 0xc1],
-            NotImplemented,
+            DecodingError::NotImplemented,
             &[" cas2 d0:d1,d2:d3,(a0):(a1)"],
         );
     }

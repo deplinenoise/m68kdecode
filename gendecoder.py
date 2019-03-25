@@ -174,7 +174,7 @@ def gen_decoders(of, insns):
 
         of.write('}\n')
 
-    of.write('  return Err(NotImplemented);\n')
+    of.write('  return Err(DecodingError::NotImplemented);\n')
     of.write('}\n')
     
 with open(outfile, "w") as of:
@@ -207,7 +207,7 @@ with open(outfile, "w") as of:
         if not has_group.has_key(group):
             continue
         of.write('    0b{0:04b} => decode_group_{0:04b}(w0, &mut cs),\n'.format(group))
-    of.write('    _ => Err(NotImplemented)\n')
+    of.write('    _ => Err(DecodingError::NotImplemented)\n')
     of.write('  }\n')
 
     of.write('}\n')

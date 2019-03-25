@@ -871,7 +871,7 @@ fn decode_group_0000(w0: u16, cs: &mut CodeStream) -> Result<DecodedInstruction,
             extra: extra,
         });
     }
-    return Err(NotImplemented);
+    return Err(DecodingError::NotImplemented);
 }
 #[allow(non_snake_case)]
 #[allow(unused_mut)]
@@ -892,7 +892,7 @@ fn decode_group_0001(w0: u16, cs: &mut CodeStream) -> Result<DecodedInstruction,
             extra: extra,
         });
     }
-    return Err(NotImplemented);
+    return Err(DecodingError::NotImplemented);
 }
 #[allow(non_snake_case)]
 #[allow(unused_mut)]
@@ -928,7 +928,7 @@ fn decode_group_0010(w0: u16, cs: &mut CodeStream) -> Result<DecodedInstruction,
             extra: extra,
         });
     }
-    return Err(NotImplemented);
+    return Err(DecodingError::NotImplemented);
 }
 #[allow(non_snake_case)]
 #[allow(unused_mut)]
@@ -964,7 +964,7 @@ fn decode_group_0011(w0: u16, cs: &mut CodeStream) -> Result<DecodedInstruction,
             extra: extra,
         });
     }
-    return Err(NotImplemented);
+    return Err(DecodingError::NotImplemented);
 }
 #[allow(non_snake_case)]
 #[allow(unused_mut)]
@@ -1887,7 +1887,7 @@ fn decode_group_0100(w0: u16, cs: &mut CodeStream) -> Result<DecodedInstruction,
             extra: extra,
         });
     }
-    return Err(NotImplemented);
+    return Err(DecodingError::NotImplemented);
 }
 #[allow(non_snake_case)]
 #[allow(unused_mut)]
@@ -2050,7 +2050,7 @@ fn decode_group_0101(w0: u16, cs: &mut CodeStream) -> Result<DecodedInstruction,
             extra: extra,
         });
     }
-    return Err(NotImplemented);
+    return Err(DecodingError::NotImplemented);
 }
 #[allow(non_snake_case)]
 #[allow(unused_mut)]
@@ -2169,7 +2169,7 @@ fn decode_group_0110(w0: u16, cs: &mut CodeStream) -> Result<DecodedInstruction,
             extra: extra,
         });
     }
-    return Err(NotImplemented);
+    return Err(DecodingError::NotImplemented);
 }
 #[allow(non_snake_case)]
 #[allow(unused_mut)]
@@ -2188,7 +2188,7 @@ fn decode_group_0111(w0: u16, cs: &mut CodeStream) -> Result<DecodedInstruction,
             extra: extra,
         });
     }
-    return Err(NotImplemented);
+    return Err(DecodingError::NotImplemented);
 }
 #[allow(non_snake_case)]
 #[allow(unused_mut)]
@@ -2397,7 +2397,7 @@ fn decode_group_1000(w0: u16, cs: &mut CodeStream) -> Result<DecodedInstruction,
             extra: extra,
         });
     }
-    return Err(NotImplemented);
+    return Err(DecodingError::NotImplemented);
 }
 #[allow(non_snake_case)]
 #[allow(unused_mut)]
@@ -2576,7 +2576,7 @@ fn decode_group_1001(w0: u16, cs: &mut CodeStream) -> Result<DecodedInstruction,
             extra: extra,
         });
     }
-    return Err(NotImplemented);
+    return Err(DecodingError::NotImplemented);
 }
 #[allow(non_snake_case)]
 #[allow(unused_mut)]
@@ -2743,7 +2743,7 @@ fn decode_group_1011(w0: u16, cs: &mut CodeStream) -> Result<DecodedInstruction,
             extra: extra,
         });
     }
-    return Err(NotImplemented);
+    return Err(DecodingError::NotImplemented);
 }
 #[allow(non_snake_case)]
 #[allow(unused_mut)]
@@ -2938,7 +2938,7 @@ fn decode_group_1100(w0: u16, cs: &mut CodeStream) -> Result<DecodedInstruction,
             extra: extra,
         });
     }
-    return Err(NotImplemented);
+    return Err(DecodingError::NotImplemented);
 }
 #[allow(non_snake_case)]
 #[allow(unused_mut)]
@@ -3117,7 +3117,7 @@ fn decode_group_1101(w0: u16, cs: &mut CodeStream) -> Result<DecodedInstruction,
             extra: extra,
         });
     }
-    return Err(NotImplemented);
+    return Err(DecodingError::NotImplemented);
 }
 #[allow(non_snake_case)]
 #[allow(unused_mut)]
@@ -4086,7 +4086,7 @@ fn decode_group_1110(w0: u16, cs: &mut CodeStream) -> Result<DecodedInstruction,
             extra: extra,
         });
     }
-    return Err(NotImplemented);
+    return Err(DecodingError::NotImplemented);
 }
 #[allow(non_snake_case)]
 #[allow(unused_mut)]
@@ -5268,7 +5268,7 @@ fn decode_group_1111(w0: u16, cs: &mut CodeStream) -> Result<DecodedInstruction,
             });
         }
     }
-    return Err(NotImplemented);
+    return Err(DecodingError::NotImplemented);
 }
 pub fn decode_instruction_generated(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {
     let mut cs = CodeStream::new(code);
@@ -5289,6 +5289,6 @@ pub fn decode_instruction_generated(code: &[u8]) -> Result<DecodedInstruction, D
         0b1101 => decode_group_1101(w0, &mut cs),
         0b1110 => decode_group_1110(w0, &mut cs),
         0b1111 => decode_group_1111(w0, &mut cs),
-        _ => Err(NotImplemented),
+        _ => Err(DecodingError::NotImplemented),
     }
 }

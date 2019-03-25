@@ -332,8 +332,6 @@ pub enum DecodingError {
     /// A reserved case was hit in the instruction encoding.
     Reserved,
 }
-pub use DecodingError::*;
-
 /// Convenience function (for tests and decoding cases) to generate a simple displacement value.
 pub fn simple_disp(disp: i32) -> Displacement {
     Displacement {

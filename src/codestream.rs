@@ -1,4 +1,5 @@
 use crate::*;
+use crate::DecodingError::*;
 
 pub fn get_bits(word: u16, first: i32, length: i32) -> u16 {
     let s = word >> first;

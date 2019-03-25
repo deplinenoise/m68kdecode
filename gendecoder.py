@@ -117,7 +117,7 @@ def gen_decoders(of, insns):
 
     of.write('#[allow(non_snake_case)]\n')
     of.write('#[allow(unused_mut)]\n')
-    of.write('pub fn decode_group_{0:04b}(w0: u16, cs: &mut CodeStream) -> Result<DecodedInstruction, DecodingError> {{\n'.format(group))
+    of.write('fn decode_group_{0:04b}(w0: u16, cs: &mut CodeStream) -> Result<DecodedInstruction, DecodingError> {{\n'.format(group))
 
     for i in insns:
         of.write('if (w0 & 0b{:016b}) == 0b{:016b} '.format(i.masks[0], i.instruction_patterns[0]))

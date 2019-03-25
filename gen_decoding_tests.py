@@ -63,6 +63,8 @@ with open(outfilename, "w") as of:
     of.write('// auto-generated from decoding_tests.txt by gen_decoding_tests.py\n')
     of.write('mod tests {\n')
     of.write('  use m68kdecode::*;\n')
+    of.write('  mod support;\n')
+    of.write('  use support::*;\n')
 
     testnum = 1
     for t in tests:

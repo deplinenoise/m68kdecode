@@ -2772,9 +2772,37 @@ mod tests {
             &[" sub.l d3,(a2)"],
         );
     }
+    //  suba.w d3,a2
+    #[test]
+    fn test_decode_0194_suba_w_d3_a2() {
+        test_decoding_result_ok(
+            &[0x94, 0xc3],
+            Instruction {
+                size: 2,
+                operation: SUBA,
+                operands: [DR(D3), AR(A2)],
+                extra: NoExtra,
+            },
+            &[" suba.w d3,a2"],
+        );
+    }
+    //  suba.l d3,a2
+    #[test]
+    fn test_decode_0195_suba_l_d3_a2() {
+        test_decoding_result_ok(
+            &[0x95, 0xc3],
+            Instruction {
+                size: 4,
+                operation: SUBA,
+                operands: [DR(D3), AR(A2)],
+                extra: NoExtra,
+            },
+            &[" suba.l d3,a2"],
+        );
+    }
     //  cmpa.w (a1),a2
     #[test]
-    fn test_decode_0194_cmpa_w_a1_a2() {
+    fn test_decode_0196_cmpa_w_a1_a2() {
         test_decoding_result_ok(
             &[0xb4, 0xd1],
             Instruction {
@@ -2788,7 +2816,7 @@ mod tests {
     }
     //  cmpa.l (a1),a2
     #[test]
-    fn test_decode_0195_cmpa_l_a1_a2() {
+    fn test_decode_0197_cmpa_l_a1_a2() {
         test_decoding_result_ok(
             &[0xb5, 0xd1],
             Instruction {
@@ -2802,7 +2830,7 @@ mod tests {
     }
     //  cmpm.b (a0)+,(a2)+
     #[test]
-    fn test_decode_0196_cmpm_b_a0_a2_() {
+    fn test_decode_0198_cmpm_b_a0_a2_() {
         test_decoding_result_ok(
             &[0xb5, 0x08],
             Instruction {
@@ -2816,7 +2844,7 @@ mod tests {
     }
     //  cmpm.w (a0)+,(a2)+
     #[test]
-    fn test_decode_0197_cmpm_w_a0_a2_() {
+    fn test_decode_0199_cmpm_w_a0_a2_() {
         test_decoding_result_ok(
             &[0xb5, 0x48],
             Instruction {
@@ -2830,7 +2858,7 @@ mod tests {
     }
     //  cmpm.l (a0)+,(a2)+
     #[test]
-    fn test_decode_0198_cmpm_l_a0_a2_() {
+    fn test_decode_0200_cmpm_l_a0_a2_() {
         test_decoding_result_ok(
             &[0xb5, 0x88],
             Instruction {
@@ -2844,7 +2872,7 @@ mod tests {
     }
     //  cmp.b (a0)+,d7
     #[test]
-    fn test_decode_0199_cmp_b_a0_d7() {
+    fn test_decode_0201_cmp_b_a0_d7() {
         test_decoding_result_ok(
             &[0xbe, 0x18],
             Instruction {
@@ -2858,7 +2886,7 @@ mod tests {
     }
     //  cmp.w (a0)+,d7
     #[test]
-    fn test_decode_0200_cmp_w_a0_d7() {
+    fn test_decode_0202_cmp_w_a0_d7() {
         test_decoding_result_ok(
             &[0xbe, 0x58],
             Instruction {
@@ -2872,7 +2900,7 @@ mod tests {
     }
     //  cmp.l (a0)+,d7
     #[test]
-    fn test_decode_0201_cmp_l_a0_d7() {
+    fn test_decode_0203_cmp_l_a0_d7() {
         test_decoding_result_ok(
             &[0xbe, 0x98],
             Instruction {
@@ -2886,7 +2914,7 @@ mod tests {
     }
     //  eor.b d7,(a0)+
     #[test]
-    fn test_decode_0202_eor_b_d7_a0_() {
+    fn test_decode_0204_eor_b_d7_a0_() {
         test_decoding_result_ok(
             &[0xbf, 0x18],
             Instruction {
@@ -2900,7 +2928,7 @@ mod tests {
     }
     //  eor.w d7,(a0)+
     #[test]
-    fn test_decode_0203_eor_w_d7_a0_() {
+    fn test_decode_0205_eor_w_d7_a0_() {
         test_decoding_result_ok(
             &[0xbf, 0x58],
             Instruction {
@@ -2914,7 +2942,7 @@ mod tests {
     }
     //  eor.l d7,-(a0)
     #[test]
-    fn test_decode_0204_eor_l_d7_a0_() {
+    fn test_decode_0206_eor_l_d7_a0_() {
         test_decoding_result_ok(
             &[0xbf, 0xa0],
             Instruction {
@@ -2929,7 +2957,7 @@ mod tests {
     //  lab:
     //    bra.s lab
     #[test]
-    fn test_decode_0205_lab_() {
+    fn test_decode_0207_lab_() {
         test_decoding_result_ok(
             &[0x60, 0xfe],
             Instruction {
@@ -2944,7 +2972,7 @@ mod tests {
     //  lab:
     //    bra.w lab
     #[test]
-    fn test_decode_0206_lab_() {
+    fn test_decode_0208_lab_() {
         test_decoding_result_ok(
             &[0x60, 0x00, 0xff, 0xfe],
             Instruction {
@@ -2959,7 +2987,7 @@ mod tests {
     //  lab:
     //    bra.l lab
     #[test]
-    fn test_decode_0207_lab_() {
+    fn test_decode_0209_lab_() {
         test_decoding_result_ok(
             &[0x60, 0xff, 0xff, 0xff, 0xff, 0xfe],
             Instruction {
@@ -2974,7 +3002,7 @@ mod tests {
     //  lab:
     //    bsr.s lab
     #[test]
-    fn test_decode_0208_lab_() {
+    fn test_decode_0210_lab_() {
         test_decoding_result_ok(
             &[0x61, 0xfe],
             Instruction {
@@ -2989,7 +3017,7 @@ mod tests {
     //  lab:
     //    bsr.w lab
     #[test]
-    fn test_decode_0209_lab_() {
+    fn test_decode_0211_lab_() {
         test_decoding_result_ok(
             &[0x61, 0x00, 0xff, 0xfe],
             Instruction {
@@ -3004,7 +3032,7 @@ mod tests {
     //  lab:
     //    bsr.l lab
     #[test]
-    fn test_decode_0210_lab_() {
+    fn test_decode_0212_lab_() {
         test_decoding_result_ok(
             &[0x61, 0xff, 0xff, 0xff, 0xff, 0xfe],
             Instruction {
@@ -3019,7 +3047,7 @@ mod tests {
     //  lab:
     //    bne.s lab
     #[test]
-    fn test_decode_0211_lab_() {
+    fn test_decode_0213_lab_() {
         test_decoding_result_ok(
             &[0x66, 0xfe],
             Instruction {
@@ -3034,7 +3062,7 @@ mod tests {
     //  lab:
     //    beq.w lab
     #[test]
-    fn test_decode_0212_lab_() {
+    fn test_decode_0214_lab_() {
         test_decoding_result_ok(
             &[0x67, 0x00, 0xff, 0xfe],
             Instruction {
@@ -3049,7 +3077,7 @@ mod tests {
     //  lab:
     //    bcs.l lab
     #[test]
-    fn test_decode_0213_lab_() {
+    fn test_decode_0215_lab_() {
         test_decoding_result_ok(
             &[0x65, 0xff, 0xff, 0xff, 0xff, 0xfe],
             Instruction {
@@ -3063,7 +3091,7 @@ mod tests {
     }
     //  pack d0,d1,#12
     #[test]
-    fn test_decode_0214_pack_d0_d1_12() {
+    fn test_decode_0216_pack_d0_d1_12() {
         test_decoding_result_ok(
             &[0x83, 0x40, 0x00, 0x0c],
             Instruction {
@@ -3077,7 +3105,7 @@ mod tests {
     }
     //  unpk d0,d1,#12
     #[test]
-    fn test_decode_0215_unpk_d0_d1_12() {
+    fn test_decode_0217_unpk_d0_d1_12() {
         test_decoding_result_ok(
             &[0x83, 0x80, 0x00, 0x0c],
             Instruction {
@@ -3091,7 +3119,7 @@ mod tests {
     }
     //  pack -(a0),-(a1),#37
     #[test]
-    fn test_decode_0216_pack_a0_a1_37() {
+    fn test_decode_0218_pack_a0_a1_37() {
         test_decoding_result_ok(
             &[0x83, 0x48, 0x00, 0x25],
             Instruction {
@@ -3105,7 +3133,7 @@ mod tests {
     }
     //  unpk -(a0),-(a1),#37
     #[test]
-    fn test_decode_0217_unpk_a0_a1_37() {
+    fn test_decode_0219_unpk_a0_a1_37() {
         test_decoding_result_ok(
             &[0x83, 0x88, 0x00, 0x25],
             Instruction {
@@ -3119,7 +3147,7 @@ mod tests {
     }
     //  sbcd -(a0),-(a1)
     #[test]
-    fn test_decode_0218_sbcd_a0_a1_() {
+    fn test_decode_0220_sbcd_a0_a1_() {
         test_decoding_result_ok(
             &[0x83, 0x08],
             Instruction {
@@ -3133,7 +3161,7 @@ mod tests {
     }
     //  sbcd d3,d4
     #[test]
-    fn test_decode_0219_sbcd_d3_d4() {
+    fn test_decode_0221_sbcd_d3_d4() {
         test_decoding_result_ok(
             &[0x89, 0x03],
             Instruction {
@@ -3147,7 +3175,7 @@ mod tests {
     }
     //  or.b (a0)+,d0
     #[test]
-    fn test_decode_0220_or_b_a0_d0() {
+    fn test_decode_0222_or_b_a0_d0() {
         test_decoding_result_ok(
             &[0x80, 0x18],
             Instruction {
@@ -3161,7 +3189,7 @@ mod tests {
     }
     //  or.w (a0)+,d0
     #[test]
-    fn test_decode_0221_or_w_a0_d0() {
+    fn test_decode_0223_or_w_a0_d0() {
         test_decoding_result_ok(
             &[0x80, 0x58],
             Instruction {
@@ -3175,7 +3203,7 @@ mod tests {
     }
     //  or.l (a0)+,d0
     #[test]
-    fn test_decode_0222_or_l_a0_d0() {
+    fn test_decode_0224_or_l_a0_d0() {
         test_decoding_result_ok(
             &[0x80, 0x98],
             Instruction {
@@ -3189,7 +3217,7 @@ mod tests {
     }
     //  or.b d0,(a0)+
     #[test]
-    fn test_decode_0223_or_b_d0_a0_() {
+    fn test_decode_0225_or_b_d0_a0_() {
         test_decoding_result_ok(
             &[0x81, 0x18],
             Instruction {
@@ -3203,7 +3231,7 @@ mod tests {
     }
     //  or.w d0,(a0)+
     #[test]
-    fn test_decode_0224_or_w_d0_a0_() {
+    fn test_decode_0226_or_w_d0_a0_() {
         test_decoding_result_ok(
             &[0x81, 0x58],
             Instruction {
@@ -3217,7 +3245,7 @@ mod tests {
     }
     //  or.l d0,(a0)+
     #[test]
-    fn test_decode_0225_or_l_d0_a0_() {
+    fn test_decode_0227_or_l_d0_a0_() {
         test_decoding_result_ok(
             &[0x81, 0x98],
             Instruction {
@@ -3231,7 +3259,7 @@ mod tests {
     }
     //  exg d0,d5
     #[test]
-    fn test_decode_0226_exg_d0_d5() {
+    fn test_decode_0228_exg_d0_d5() {
         test_decoding_result_ok(
             &[0xc1, 0x45],
             Instruction {
@@ -3245,7 +3273,7 @@ mod tests {
     }
     //  exg a0,a5
     #[test]
-    fn test_decode_0227_exg_a0_a5() {
+    fn test_decode_0229_exg_a0_a5() {
         test_decoding_result_ok(
             &[0xc1, 0x4d],
             Instruction {
@@ -3259,7 +3287,7 @@ mod tests {
     }
     //  exg d3,a5
     #[test]
-    fn test_decode_0228_exg_d3_a5() {
+    fn test_decode_0230_exg_d3_a5() {
         test_decoding_result_ok(
             &[0xc7, 0x8d],
             Instruction {
@@ -3273,7 +3301,7 @@ mod tests {
     }
     //  and.b (a0)+,d0
     #[test]
-    fn test_decode_0229_and_b_a0_d0() {
+    fn test_decode_0231_and_b_a0_d0() {
         test_decoding_result_ok(
             &[0xc0, 0x18],
             Instruction {
@@ -3287,7 +3315,7 @@ mod tests {
     }
     //  and.w (a0)+,d0
     #[test]
-    fn test_decode_0230_and_w_a0_d0() {
+    fn test_decode_0232_and_w_a0_d0() {
         test_decoding_result_ok(
             &[0xc0, 0x58],
             Instruction {
@@ -3301,7 +3329,7 @@ mod tests {
     }
     //  and.l (a0)+,d0
     #[test]
-    fn test_decode_0231_and_l_a0_d0() {
+    fn test_decode_0233_and_l_a0_d0() {
         test_decoding_result_ok(
             &[0xc0, 0x98],
             Instruction {
@@ -3315,7 +3343,7 @@ mod tests {
     }
     //  and.b d0,(a0)+
     #[test]
-    fn test_decode_0232_and_b_d0_a0_() {
+    fn test_decode_0234_and_b_d0_a0_() {
         test_decoding_result_ok(
             &[0xc1, 0x18],
             Instruction {
@@ -3329,7 +3357,7 @@ mod tests {
     }
     //  and.w d0,(a0)+
     #[test]
-    fn test_decode_0233_and_w_d0_a0_() {
+    fn test_decode_0235_and_w_d0_a0_() {
         test_decoding_result_ok(
             &[0xc1, 0x58],
             Instruction {
@@ -3343,7 +3371,7 @@ mod tests {
     }
     //  and.l d0,(a0)+
     #[test]
-    fn test_decode_0234_and_l_d0_a0_() {
+    fn test_decode_0236_and_l_d0_a0_() {
         test_decoding_result_ok(
             &[0xc1, 0x98],
             Instruction {
@@ -3357,7 +3385,7 @@ mod tests {
     }
     //  asl.b #3,d7
     #[test]
-    fn test_decode_0235_asl_b_3_d7() {
+    fn test_decode_0237_asl_b_3_d7() {
         test_decoding_result_ok(
             &[0xe7, 0x07],
             Instruction {
@@ -3371,7 +3399,7 @@ mod tests {
     }
     //  asl.w #3,d7
     #[test]
-    fn test_decode_0236_asl_w_3_d7() {
+    fn test_decode_0238_asl_w_3_d7() {
         test_decoding_result_ok(
             &[0xe7, 0x47],
             Instruction {
@@ -3385,7 +3413,7 @@ mod tests {
     }
     //  asl.l #3,d7
     #[test]
-    fn test_decode_0237_asl_l_3_d7() {
+    fn test_decode_0239_asl_l_3_d7() {
         test_decoding_result_ok(
             &[0xe7, 0x87],
             Instruction {
@@ -3399,7 +3427,7 @@ mod tests {
     }
     //  asr.b #3,d7
     #[test]
-    fn test_decode_0238_asr_b_3_d7() {
+    fn test_decode_0240_asr_b_3_d7() {
         test_decoding_result_ok(
             &[0xe6, 0x07],
             Instruction {
@@ -3413,7 +3441,7 @@ mod tests {
     }
     //  asr.w #3,d7
     #[test]
-    fn test_decode_0239_asr_w_3_d7() {
+    fn test_decode_0241_asr_w_3_d7() {
         test_decoding_result_ok(
             &[0xe6, 0x47],
             Instruction {
@@ -3427,7 +3455,7 @@ mod tests {
     }
     //  asr.l #3,d7
     #[test]
-    fn test_decode_0240_asr_l_3_d7() {
+    fn test_decode_0242_asr_l_3_d7() {
         test_decoding_result_ok(
             &[0xe6, 0x87],
             Instruction {
@@ -3441,7 +3469,7 @@ mod tests {
     }
     //  asl.b d1,d7
     #[test]
-    fn test_decode_0241_asl_b_d1_d7() {
+    fn test_decode_0243_asl_b_d1_d7() {
         test_decoding_result_ok(
             &[0xe3, 0x27],
             Instruction {
@@ -3455,7 +3483,7 @@ mod tests {
     }
     //  asl.w d1,d7
     #[test]
-    fn test_decode_0242_asl_w_d1_d7() {
+    fn test_decode_0244_asl_w_d1_d7() {
         test_decoding_result_ok(
             &[0xe3, 0x67],
             Instruction {
@@ -3469,7 +3497,7 @@ mod tests {
     }
     //  asl.l d1,d7
     #[test]
-    fn test_decode_0243_asl_l_d1_d7() {
+    fn test_decode_0245_asl_l_d1_d7() {
         test_decoding_result_ok(
             &[0xe3, 0xa7],
             Instruction {
@@ -3483,7 +3511,7 @@ mod tests {
     }
     //  asr.b d1,d7
     #[test]
-    fn test_decode_0244_asr_b_d1_d7() {
+    fn test_decode_0246_asr_b_d1_d7() {
         test_decoding_result_ok(
             &[0xe2, 0x27],
             Instruction {
@@ -3497,7 +3525,7 @@ mod tests {
     }
     //  asr.w d1,d7
     #[test]
-    fn test_decode_0245_asr_w_d1_d7() {
+    fn test_decode_0247_asr_w_d1_d7() {
         test_decoding_result_ok(
             &[0xe2, 0x67],
             Instruction {
@@ -3511,7 +3539,7 @@ mod tests {
     }
     //  asr.l d1,d7
     #[test]
-    fn test_decode_0246_asr_l_d1_d7() {
+    fn test_decode_0248_asr_l_d1_d7() {
         test_decoding_result_ok(
             &[0xe2, 0xa7],
             Instruction {
@@ -3525,7 +3553,7 @@ mod tests {
     }
     //  asl.w (a0)
     #[test]
-    fn test_decode_0247_asl_w_a0_() {
+    fn test_decode_0249_asl_w_a0_() {
         test_decoding_result_ok(
             &[0xe1, 0xd0],
             Instruction {
@@ -3539,7 +3567,7 @@ mod tests {
     }
     //  asr.w (a0)
     #[test]
-    fn test_decode_0248_asr_w_a0_() {
+    fn test_decode_0250_asr_w_a0_() {
         test_decoding_result_ok(
             &[0xe0, 0xd0],
             Instruction {
@@ -3553,7 +3581,7 @@ mod tests {
     }
     //  lsl.b #3,d7
     #[test]
-    fn test_decode_0249_lsl_b_3_d7() {
+    fn test_decode_0251_lsl_b_3_d7() {
         test_decoding_result_ok(
             &[0xe7, 0x0f],
             Instruction {
@@ -3567,7 +3595,7 @@ mod tests {
     }
     //  lsl.w #3,d7
     #[test]
-    fn test_decode_0250_lsl_w_3_d7() {
+    fn test_decode_0252_lsl_w_3_d7() {
         test_decoding_result_ok(
             &[0xe7, 0x4f],
             Instruction {
@@ -3581,7 +3609,7 @@ mod tests {
     }
     //  lsl.l #3,d7
     #[test]
-    fn test_decode_0251_lsl_l_3_d7() {
+    fn test_decode_0253_lsl_l_3_d7() {
         test_decoding_result_ok(
             &[0xe7, 0x8f],
             Instruction {
@@ -3595,7 +3623,7 @@ mod tests {
     }
     //  lsr.b #3,d7
     #[test]
-    fn test_decode_0252_lsr_b_3_d7() {
+    fn test_decode_0254_lsr_b_3_d7() {
         test_decoding_result_ok(
             &[0xe6, 0x0f],
             Instruction {
@@ -3609,7 +3637,7 @@ mod tests {
     }
     //  lsr.w #3,d7
     #[test]
-    fn test_decode_0253_lsr_w_3_d7() {
+    fn test_decode_0255_lsr_w_3_d7() {
         test_decoding_result_ok(
             &[0xe6, 0x4f],
             Instruction {
@@ -3623,7 +3651,7 @@ mod tests {
     }
     //  lsr.l #3,d7
     #[test]
-    fn test_decode_0254_lsr_l_3_d7() {
+    fn test_decode_0256_lsr_l_3_d7() {
         test_decoding_result_ok(
             &[0xe6, 0x8f],
             Instruction {
@@ -3637,7 +3665,7 @@ mod tests {
     }
     //  lsl.b d1,d7
     #[test]
-    fn test_decode_0255_lsl_b_d1_d7() {
+    fn test_decode_0257_lsl_b_d1_d7() {
         test_decoding_result_ok(
             &[0xe3, 0x2f],
             Instruction {
@@ -3651,7 +3679,7 @@ mod tests {
     }
     //  lsl.w d1,d7
     #[test]
-    fn test_decode_0256_lsl_w_d1_d7() {
+    fn test_decode_0258_lsl_w_d1_d7() {
         test_decoding_result_ok(
             &[0xe3, 0x6f],
             Instruction {
@@ -3665,7 +3693,7 @@ mod tests {
     }
     //  lsl.l d1,d7
     #[test]
-    fn test_decode_0257_lsl_l_d1_d7() {
+    fn test_decode_0259_lsl_l_d1_d7() {
         test_decoding_result_ok(
             &[0xe3, 0xaf],
             Instruction {
@@ -3679,7 +3707,7 @@ mod tests {
     }
     //  lsr.b d1,d7
     #[test]
-    fn test_decode_0258_lsr_b_d1_d7() {
+    fn test_decode_0260_lsr_b_d1_d7() {
         test_decoding_result_ok(
             &[0xe2, 0x2f],
             Instruction {
@@ -3693,7 +3721,7 @@ mod tests {
     }
     //  lsr.w d1,d7
     #[test]
-    fn test_decode_0259_lsr_w_d1_d7() {
+    fn test_decode_0261_lsr_w_d1_d7() {
         test_decoding_result_ok(
             &[0xe2, 0x6f],
             Instruction {
@@ -3707,7 +3735,7 @@ mod tests {
     }
     //  lsr.l d1,d7
     #[test]
-    fn test_decode_0260_lsr_l_d1_d7() {
+    fn test_decode_0262_lsr_l_d1_d7() {
         test_decoding_result_ok(
             &[0xe2, 0xaf],
             Instruction {
@@ -3721,7 +3749,7 @@ mod tests {
     }
     //  lsl.w (a0)
     #[test]
-    fn test_decode_0261_lsl_w_a0_() {
+    fn test_decode_0263_lsl_w_a0_() {
         test_decoding_result_ok(
             &[0xe3, 0xd0],
             Instruction {
@@ -3735,7 +3763,7 @@ mod tests {
     }
     //  lsr.w (a0)
     #[test]
-    fn test_decode_0262_lsr_w_a0_() {
+    fn test_decode_0264_lsr_w_a0_() {
         test_decoding_result_ok(
             &[0xe2, 0xd0],
             Instruction {
@@ -3749,7 +3777,7 @@ mod tests {
     }
     //  roxl.b #3,d7
     #[test]
-    fn test_decode_0263_roxl_b_3_d7() {
+    fn test_decode_0265_roxl_b_3_d7() {
         test_decoding_result_ok(
             &[0xe7, 0x17],
             Instruction {
@@ -3763,7 +3791,7 @@ mod tests {
     }
     //  roxl.w #3,d7
     #[test]
-    fn test_decode_0264_roxl_w_3_d7() {
+    fn test_decode_0266_roxl_w_3_d7() {
         test_decoding_result_ok(
             &[0xe7, 0x57],
             Instruction {
@@ -3777,7 +3805,7 @@ mod tests {
     }
     //  roxl.l #3,d7
     #[test]
-    fn test_decode_0265_roxl_l_3_d7() {
+    fn test_decode_0267_roxl_l_3_d7() {
         test_decoding_result_ok(
             &[0xe7, 0x97],
             Instruction {
@@ -3791,7 +3819,7 @@ mod tests {
     }
     //  roxr.b #3,d7
     #[test]
-    fn test_decode_0266_roxr_b_3_d7() {
+    fn test_decode_0268_roxr_b_3_d7() {
         test_decoding_result_ok(
             &[0xe6, 0x17],
             Instruction {
@@ -3805,7 +3833,7 @@ mod tests {
     }
     //  roxr.w #3,d7
     #[test]
-    fn test_decode_0267_roxr_w_3_d7() {
+    fn test_decode_0269_roxr_w_3_d7() {
         test_decoding_result_ok(
             &[0xe6, 0x57],
             Instruction {
@@ -3819,7 +3847,7 @@ mod tests {
     }
     //  roxr.l #3,d7
     #[test]
-    fn test_decode_0268_roxr_l_3_d7() {
+    fn test_decode_0270_roxr_l_3_d7() {
         test_decoding_result_ok(
             &[0xe6, 0x97],
             Instruction {
@@ -3833,7 +3861,7 @@ mod tests {
     }
     //  roxl.b d1,d7
     #[test]
-    fn test_decode_0269_roxl_b_d1_d7() {
+    fn test_decode_0271_roxl_b_d1_d7() {
         test_decoding_result_ok(
             &[0xe3, 0x37],
             Instruction {
@@ -3847,7 +3875,7 @@ mod tests {
     }
     //  roxl.w d1,d7
     #[test]
-    fn test_decode_0270_roxl_w_d1_d7() {
+    fn test_decode_0272_roxl_w_d1_d7() {
         test_decoding_result_ok(
             &[0xe3, 0x77],
             Instruction {
@@ -3861,7 +3889,7 @@ mod tests {
     }
     //  roxl.l d1,d7
     #[test]
-    fn test_decode_0271_roxl_l_d1_d7() {
+    fn test_decode_0273_roxl_l_d1_d7() {
         test_decoding_result_ok(
             &[0xe3, 0xb7],
             Instruction {
@@ -3875,7 +3903,7 @@ mod tests {
     }
     //  roxr.b d1,d7
     #[test]
-    fn test_decode_0272_roxr_b_d1_d7() {
+    fn test_decode_0274_roxr_b_d1_d7() {
         test_decoding_result_ok(
             &[0xe2, 0x37],
             Instruction {
@@ -3889,7 +3917,7 @@ mod tests {
     }
     //  roxr.w d1,d7
     #[test]
-    fn test_decode_0273_roxr_w_d1_d7() {
+    fn test_decode_0275_roxr_w_d1_d7() {
         test_decoding_result_ok(
             &[0xe2, 0x77],
             Instruction {
@@ -3903,7 +3931,7 @@ mod tests {
     }
     //  roxr.l d1,d7
     #[test]
-    fn test_decode_0274_roxr_l_d1_d7() {
+    fn test_decode_0276_roxr_l_d1_d7() {
         test_decoding_result_ok(
             &[0xe2, 0xb7],
             Instruction {
@@ -3917,7 +3945,7 @@ mod tests {
     }
     //  roxl.w (a0)
     #[test]
-    fn test_decode_0275_roxl_w_a0_() {
+    fn test_decode_0277_roxl_w_a0_() {
         test_decoding_result_ok(
             &[0xe5, 0xd0],
             Instruction {
@@ -3931,7 +3959,7 @@ mod tests {
     }
     //  roxr.w (a0)
     #[test]
-    fn test_decode_0276_roxr_w_a0_() {
+    fn test_decode_0278_roxr_w_a0_() {
         test_decoding_result_ok(
             &[0xe4, 0xd0],
             Instruction {
@@ -3945,7 +3973,7 @@ mod tests {
     }
     //  rol.b #3,d7
     #[test]
-    fn test_decode_0277_rol_b_3_d7() {
+    fn test_decode_0279_rol_b_3_d7() {
         test_decoding_result_ok(
             &[0xe7, 0x1f],
             Instruction {
@@ -3959,7 +3987,7 @@ mod tests {
     }
     //  rol.w #3,d7
     #[test]
-    fn test_decode_0278_rol_w_3_d7() {
+    fn test_decode_0280_rol_w_3_d7() {
         test_decoding_result_ok(
             &[0xe7, 0x5f],
             Instruction {
@@ -3973,7 +4001,7 @@ mod tests {
     }
     //  rol.l #3,d7
     #[test]
-    fn test_decode_0279_rol_l_3_d7() {
+    fn test_decode_0281_rol_l_3_d7() {
         test_decoding_result_ok(
             &[0xe7, 0x9f],
             Instruction {
@@ -3987,7 +4015,7 @@ mod tests {
     }
     //  ror.b #3,d7
     #[test]
-    fn test_decode_0280_ror_b_3_d7() {
+    fn test_decode_0282_ror_b_3_d7() {
         test_decoding_result_ok(
             &[0xe6, 0x1f],
             Instruction {
@@ -4001,7 +4029,7 @@ mod tests {
     }
     //  ror.w #3,d7
     #[test]
-    fn test_decode_0281_ror_w_3_d7() {
+    fn test_decode_0283_ror_w_3_d7() {
         test_decoding_result_ok(
             &[0xe6, 0x5f],
             Instruction {
@@ -4015,7 +4043,7 @@ mod tests {
     }
     //  ror.l #3,d7
     #[test]
-    fn test_decode_0282_ror_l_3_d7() {
+    fn test_decode_0284_ror_l_3_d7() {
         test_decoding_result_ok(
             &[0xe6, 0x9f],
             Instruction {
@@ -4029,7 +4057,7 @@ mod tests {
     }
     //  rol.b d1,d7
     #[test]
-    fn test_decode_0283_rol_b_d1_d7() {
+    fn test_decode_0285_rol_b_d1_d7() {
         test_decoding_result_ok(
             &[0xe3, 0x3f],
             Instruction {
@@ -4043,7 +4071,7 @@ mod tests {
     }
     //  rol.w d1,d7
     #[test]
-    fn test_decode_0284_rol_w_d1_d7() {
+    fn test_decode_0286_rol_w_d1_d7() {
         test_decoding_result_ok(
             &[0xe3, 0x7f],
             Instruction {
@@ -4057,7 +4085,7 @@ mod tests {
     }
     //  rol.l d1,d7
     #[test]
-    fn test_decode_0285_rol_l_d1_d7() {
+    fn test_decode_0287_rol_l_d1_d7() {
         test_decoding_result_ok(
             &[0xe3, 0xbf],
             Instruction {
@@ -4071,7 +4099,7 @@ mod tests {
     }
     //  ror.b d1,d7
     #[test]
-    fn test_decode_0286_ror_b_d1_d7() {
+    fn test_decode_0288_ror_b_d1_d7() {
         test_decoding_result_ok(
             &[0xe2, 0x3f],
             Instruction {
@@ -4085,7 +4113,7 @@ mod tests {
     }
     //  ror.w d1,d7
     #[test]
-    fn test_decode_0287_ror_w_d1_d7() {
+    fn test_decode_0289_ror_w_d1_d7() {
         test_decoding_result_ok(
             &[0xe2, 0x7f],
             Instruction {
@@ -4099,7 +4127,7 @@ mod tests {
     }
     //  ror.l d1,d7
     #[test]
-    fn test_decode_0288_ror_l_d1_d7() {
+    fn test_decode_0290_ror_l_d1_d7() {
         test_decoding_result_ok(
             &[0xe2, 0xbf],
             Instruction {
@@ -4113,7 +4141,7 @@ mod tests {
     }
     //  rol.w (a0)
     #[test]
-    fn test_decode_0289_rol_w_a0_() {
+    fn test_decode_0291_rol_w_a0_() {
         test_decoding_result_ok(
             &[0xe7, 0xd0],
             Instruction {
@@ -4127,7 +4155,7 @@ mod tests {
     }
     //  ror.w (a0)
     #[test]
-    fn test_decode_0290_ror_w_a0_() {
+    fn test_decode_0292_ror_w_a0_() {
         test_decoding_result_ok(
             &[0xe6, 0xd0],
             Instruction {
@@ -4141,7 +4169,7 @@ mod tests {
     }
     //  moveq #-1,d2
     #[test]
-    fn test_decode_0291_moveq_1_d2() {
+    fn test_decode_0293_moveq_1_d2() {
         test_decoding_result_ok(
             &[0x74, 0xff],
             Instruction {
@@ -4155,7 +4183,7 @@ mod tests {
     }
     //  moveq #127,d5
     #[test]
-    fn test_decode_0292_moveq_127_d5() {
+    fn test_decode_0294_moveq_127_d5() {
         test_decoding_result_ok(
             &[0x7a, 0x7f],
             Instruction {
@@ -4169,7 +4197,7 @@ mod tests {
     }
     //  fabs fp1
     #[test]
-    fn test_decode_0293_fabs_fp1() {
+    fn test_decode_0295_fabs_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x04, 0x98],
             Instruction {
@@ -4183,7 +4211,7 @@ mod tests {
     }
     //  fsabs fp1
     #[test]
-    fn test_decode_0294_fsabs_fp1() {
+    fn test_decode_0296_fsabs_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x04, 0xd8],
             Instruction {
@@ -4197,7 +4225,7 @@ mod tests {
     }
     //  fdabs fp1
     #[test]
-    fn test_decode_0295_fdabs_fp1() {
+    fn test_decode_0297_fdabs_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x04, 0xdc],
             Instruction {
@@ -4211,7 +4239,7 @@ mod tests {
     }
     //  fabs.l (a0),fp1
     #[test]
-    fn test_decode_0296_fabs_l_a0_fp1() {
+    fn test_decode_0298_fabs_l_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x40, 0x98],
             Instruction {
@@ -4225,7 +4253,7 @@ mod tests {
     }
     //  fabs.s (a0),fp1
     #[test]
-    fn test_decode_0297_fabs_s_a0_fp1() {
+    fn test_decode_0299_fabs_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0x98],
             Instruction {
@@ -4239,7 +4267,7 @@ mod tests {
     }
     //  fabs.d (a0),fp1
     #[test]
-    fn test_decode_0298_fabs_d_a0_fp1() {
+    fn test_decode_0300_fabs_d_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x54, 0x98],
             Instruction {
@@ -4253,7 +4281,7 @@ mod tests {
     }
     //  fabs.w (a0),fp1
     #[test]
-    fn test_decode_0299_fabs_w_a0_fp1() {
+    fn test_decode_0301_fabs_w_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x50, 0x98],
             Instruction {
@@ -4267,7 +4295,7 @@ mod tests {
     }
     //  fabs.b (a0),fp1
     #[test]
-    fn test_decode_0300_fabs_b_a0_fp1() {
+    fn test_decode_0302_fabs_b_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x58, 0x98],
             Instruction {
@@ -4281,7 +4309,7 @@ mod tests {
     }
     //  fabs.x (a0),fp1
     #[test]
-    fn test_decode_0301_fabs_x_a0_fp1() {
+    fn test_decode_0303_fabs_x_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x48, 0x98],
             Instruction {
@@ -4295,7 +4323,7 @@ mod tests {
     }
     //  fabs.p (a0),fp1
     #[test]
-    fn test_decode_0302_fabs_p_a0_fp1() {
+    fn test_decode_0304_fabs_p_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x4c, 0x98],
             Instruction {
@@ -4309,7 +4337,7 @@ mod tests {
     }
     //  fabs fp3,fp1
     #[test]
-    fn test_decode_0303_fabs_fp3_fp1() {
+    fn test_decode_0305_fabs_fp3_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x0c, 0x98],
             Instruction {
@@ -4323,7 +4351,7 @@ mod tests {
     }
     //  facos fp0,fp1
     #[test]
-    fn test_decode_0304_facos_fp0_fp1() {
+    fn test_decode_0306_facos_fp0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x00, 0x9c],
             Instruction {
@@ -4337,7 +4365,7 @@ mod tests {
     }
     //  facos.s (a6),fp1
     #[test]
-    fn test_decode_0305_facos_s_a6_fp1() {
+    fn test_decode_0307_facos_s_a6_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x16, 0x44, 0x9c],
             Instruction {
@@ -4351,7 +4379,7 @@ mod tests {
     }
     //  fadd fp0,fp1
     #[test]
-    fn test_decode_0306_fadd_fp0_fp1() {
+    fn test_decode_0308_fadd_fp0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x00, 0xa2],
             Instruction {
@@ -4365,7 +4393,7 @@ mod tests {
     }
     //  fsadd.s (a6),fp1
     #[test]
-    fn test_decode_0307_fsadd_s_a6_fp1() {
+    fn test_decode_0309_fsadd_s_a6_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x16, 0x44, 0xe2],
             Instruction {
@@ -4379,7 +4407,7 @@ mod tests {
     }
     //  fdadd.d (a6),fp1
     #[test]
-    fn test_decode_0308_fdadd_d_a6_fp1() {
+    fn test_decode_0310_fdadd_d_a6_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x16, 0x54, 0xe6],
             Instruction {
@@ -4393,7 +4421,7 @@ mod tests {
     }
     //  fasin fp3
     #[test]
-    fn test_decode_0309_fasin_fp3() {
+    fn test_decode_0311_fasin_fp3() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x0d, 0x8c],
             Instruction {
@@ -4407,7 +4435,7 @@ mod tests {
     }
     //  fasin fp0,fp1
     #[test]
-    fn test_decode_0310_fasin_fp0_fp1() {
+    fn test_decode_0312_fasin_fp0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x00, 0x8c],
             Instruction {
@@ -4421,7 +4449,7 @@ mod tests {
     }
     //  fasin.s (a0),fp1
     #[test]
-    fn test_decode_0311_fasin_s_a0_fp1() {
+    fn test_decode_0313_fasin_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0x8c],
             Instruction {
@@ -4435,7 +4463,7 @@ mod tests {
     }
     //  fatan fp3
     #[test]
-    fn test_decode_0312_fatan_fp3() {
+    fn test_decode_0314_fatan_fp3() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x0d, 0x8a],
             Instruction {
@@ -4449,7 +4477,7 @@ mod tests {
     }
     //  fatan fp0,fp1
     #[test]
-    fn test_decode_0313_fatan_fp0_fp1() {
+    fn test_decode_0315_fatan_fp0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x00, 0x8a],
             Instruction {
@@ -4463,7 +4491,7 @@ mod tests {
     }
     //  fatan.s (a0),fp1
     #[test]
-    fn test_decode_0314_fatan_s_a0_fp1() {
+    fn test_decode_0316_fatan_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0x8a],
             Instruction {
@@ -4477,7 +4505,7 @@ mod tests {
     }
     //  fatanh fp3
     #[test]
-    fn test_decode_0315_fatanh_fp3() {
+    fn test_decode_0317_fatanh_fp3() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x0d, 0x8d],
             Instruction {
@@ -4491,7 +4519,7 @@ mod tests {
     }
     //  fatanh fp0,fp1
     #[test]
-    fn test_decode_0316_fatanh_fp0_fp1() {
+    fn test_decode_0318_fatanh_fp0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x00, 0x8d],
             Instruction {
@@ -4505,7 +4533,7 @@ mod tests {
     }
     //  fatanh.s (a0),fp1
     #[test]
-    fn test_decode_0317_fatanh_s_a0_fp1() {
+    fn test_decode_0319_fatanh_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0x8d],
             Instruction {
@@ -4519,7 +4547,7 @@ mod tests {
     }
     //  lab: fbne.l lab
     #[test]
-    fn test_decode_0318_lab_fbne_l_lab() {
+    fn test_decode_0320_lab_fbne_l_lab() {
         test_decoding_result_ok(
             &[0xf2, 0xce, 0xff, 0xff, 0xff, 0xfe],
             Instruction {
@@ -4533,7 +4561,7 @@ mod tests {
     }
     //  lab: fbf.w lab
     #[test]
-    fn test_decode_0319_lab_fbf_w_lab() {
+    fn test_decode_0321_lab_fbf_w_lab() {
         test_decoding_result_ok(
             &[0xf2, 0x80, 0xff, 0xfe],
             Instruction {
@@ -4547,7 +4575,7 @@ mod tests {
     }
     //  lab: fbeq.w lab
     #[test]
-    fn test_decode_0320_lab_fbeq_w_lab() {
+    fn test_decode_0322_lab_fbeq_w_lab() {
         test_decoding_result_ok(
             &[0xf2, 0x81, 0xff, 0xfe],
             Instruction {
@@ -4561,7 +4589,7 @@ mod tests {
     }
     //  lab: fbogt.w lab
     #[test]
-    fn test_decode_0321_lab_fbogt_w_lab() {
+    fn test_decode_0323_lab_fbogt_w_lab() {
         test_decoding_result_ok(
             &[0xf2, 0x82, 0xff, 0xfe],
             Instruction {
@@ -4575,7 +4603,7 @@ mod tests {
     }
     //  lab: fboge.w lab
     #[test]
-    fn test_decode_0322_lab_fboge_w_lab() {
+    fn test_decode_0324_lab_fboge_w_lab() {
         test_decoding_result_ok(
             &[0xf2, 0x83, 0xff, 0xfe],
             Instruction {
@@ -4589,7 +4617,7 @@ mod tests {
     }
     //  lab: fbolt.w lab
     #[test]
-    fn test_decode_0323_lab_fbolt_w_lab() {
+    fn test_decode_0325_lab_fbolt_w_lab() {
         test_decoding_result_ok(
             &[0xf2, 0x84, 0xff, 0xfe],
             Instruction {
@@ -4603,7 +4631,7 @@ mod tests {
     }
     //  lab: fbole.w lab
     #[test]
-    fn test_decode_0324_lab_fbole_w_lab() {
+    fn test_decode_0326_lab_fbole_w_lab() {
         test_decoding_result_ok(
             &[0xf2, 0x85, 0xff, 0xfe],
             Instruction {
@@ -4617,7 +4645,7 @@ mod tests {
     }
     //  lab: fbogl.w lab
     #[test]
-    fn test_decode_0325_lab_fbogl_w_lab() {
+    fn test_decode_0327_lab_fbogl_w_lab() {
         test_decoding_result_ok(
             &[0xf2, 0x86, 0xff, 0xfe],
             Instruction {
@@ -4631,7 +4659,7 @@ mod tests {
     }
     //  lab: fbor.w lab
     #[test]
-    fn test_decode_0326_lab_fbor_w_lab() {
+    fn test_decode_0328_lab_fbor_w_lab() {
         test_decoding_result_ok(
             &[0xf2, 0x87, 0xff, 0xfe],
             Instruction {
@@ -4645,7 +4673,7 @@ mod tests {
     }
     //  lab: fbun.w lab
     #[test]
-    fn test_decode_0327_lab_fbun_w_lab() {
+    fn test_decode_0329_lab_fbun_w_lab() {
         test_decoding_result_ok(
             &[0xf2, 0x88, 0xff, 0xfe],
             Instruction {
@@ -4659,7 +4687,7 @@ mod tests {
     }
     //  lab: fbueq.w lab
     #[test]
-    fn test_decode_0328_lab_fbueq_w_lab() {
+    fn test_decode_0330_lab_fbueq_w_lab() {
         test_decoding_result_ok(
             &[0xf2, 0x89, 0xff, 0xfe],
             Instruction {
@@ -4673,7 +4701,7 @@ mod tests {
     }
     //  lab: fbugt.w lab
     #[test]
-    fn test_decode_0329_lab_fbugt_w_lab() {
+    fn test_decode_0331_lab_fbugt_w_lab() {
         test_decoding_result_ok(
             &[0xf2, 0x8a, 0xff, 0xfe],
             Instruction {
@@ -4687,7 +4715,7 @@ mod tests {
     }
     //  lab: fbuge.w lab
     #[test]
-    fn test_decode_0330_lab_fbuge_w_lab() {
+    fn test_decode_0332_lab_fbuge_w_lab() {
         test_decoding_result_ok(
             &[0xf2, 0x8b, 0xff, 0xfe],
             Instruction {
@@ -4701,7 +4729,7 @@ mod tests {
     }
     //  lab: fbult.w lab
     #[test]
-    fn test_decode_0331_lab_fbult_w_lab() {
+    fn test_decode_0333_lab_fbult_w_lab() {
         test_decoding_result_ok(
             &[0xf2, 0x8c, 0xff, 0xfe],
             Instruction {
@@ -4715,7 +4743,7 @@ mod tests {
     }
     //  lab: fbule.w lab
     #[test]
-    fn test_decode_0332_lab_fbule_w_lab() {
+    fn test_decode_0334_lab_fbule_w_lab() {
         test_decoding_result_ok(
             &[0xf2, 0x8d, 0xff, 0xfe],
             Instruction {
@@ -4729,7 +4757,7 @@ mod tests {
     }
     //  lab: fbne.w lab
     #[test]
-    fn test_decode_0333_lab_fbne_w_lab() {
+    fn test_decode_0335_lab_fbne_w_lab() {
         test_decoding_result_ok(
             &[0xf2, 0x8e, 0xff, 0xfe],
             Instruction {
@@ -4743,7 +4771,7 @@ mod tests {
     }
     //  lab: fbt.w lab
     #[test]
-    fn test_decode_0334_lab_fbt_w_lab() {
+    fn test_decode_0336_lab_fbt_w_lab() {
         test_decoding_result_ok(
             &[0xf2, 0x8f, 0xff, 0xfe],
             Instruction {
@@ -4757,7 +4785,7 @@ mod tests {
     }
     //  lab: fbsf.w lab
     #[test]
-    fn test_decode_0335_lab_fbsf_w_lab() {
+    fn test_decode_0337_lab_fbsf_w_lab() {
         test_decoding_result_ok(
             &[0xf2, 0x90, 0xff, 0xfe],
             Instruction {
@@ -4771,7 +4799,7 @@ mod tests {
     }
     //  lab: fbseq.w lab
     #[test]
-    fn test_decode_0336_lab_fbseq_w_lab() {
+    fn test_decode_0338_lab_fbseq_w_lab() {
         test_decoding_result_ok(
             &[0xf2, 0x91, 0xff, 0xfe],
             Instruction {
@@ -4785,7 +4813,7 @@ mod tests {
     }
     //  lab: fbgt.w lab
     #[test]
-    fn test_decode_0337_lab_fbgt_w_lab() {
+    fn test_decode_0339_lab_fbgt_w_lab() {
         test_decoding_result_ok(
             &[0xf2, 0x92, 0xff, 0xfe],
             Instruction {
@@ -4799,7 +4827,7 @@ mod tests {
     }
     //  lab: fbge.w lab
     #[test]
-    fn test_decode_0338_lab_fbge_w_lab() {
+    fn test_decode_0340_lab_fbge_w_lab() {
         test_decoding_result_ok(
             &[0xf2, 0x93, 0xff, 0xfe],
             Instruction {
@@ -4813,7 +4841,7 @@ mod tests {
     }
     //  lab: fblt.w lab
     #[test]
-    fn test_decode_0339_lab_fblt_w_lab() {
+    fn test_decode_0341_lab_fblt_w_lab() {
         test_decoding_result_ok(
             &[0xf2, 0x94, 0xff, 0xfe],
             Instruction {
@@ -4827,7 +4855,7 @@ mod tests {
     }
     //  lab: fble.w lab
     #[test]
-    fn test_decode_0340_lab_fble_w_lab() {
+    fn test_decode_0342_lab_fble_w_lab() {
         test_decoding_result_ok(
             &[0xf2, 0x95, 0xff, 0xfe],
             Instruction {
@@ -4841,7 +4869,7 @@ mod tests {
     }
     //  lab: fbgl.w lab
     #[test]
-    fn test_decode_0341_lab_fbgl_w_lab() {
+    fn test_decode_0343_lab_fbgl_w_lab() {
         test_decoding_result_ok(
             &[0xf2, 0x96, 0xff, 0xfe],
             Instruction {
@@ -4855,7 +4883,7 @@ mod tests {
     }
     //  lab: fbgle.w lab
     #[test]
-    fn test_decode_0342_lab_fbgle_w_lab() {
+    fn test_decode_0344_lab_fbgle_w_lab() {
         test_decoding_result_ok(
             &[0xf2, 0x97, 0xff, 0xfe],
             Instruction {
@@ -4869,7 +4897,7 @@ mod tests {
     }
     //  lab: fbngle.w lab
     #[test]
-    fn test_decode_0343_lab_fbngle_w_lab() {
+    fn test_decode_0345_lab_fbngle_w_lab() {
         test_decoding_result_ok(
             &[0xf2, 0x98, 0xff, 0xfe],
             Instruction {
@@ -4883,7 +4911,7 @@ mod tests {
     }
     //  lab: fbngl.w lab
     #[test]
-    fn test_decode_0344_lab_fbngl_w_lab() {
+    fn test_decode_0346_lab_fbngl_w_lab() {
         test_decoding_result_ok(
             &[0xf2, 0x99, 0xff, 0xfe],
             Instruction {
@@ -4897,7 +4925,7 @@ mod tests {
     }
     //  lab: fbnle.w lab
     #[test]
-    fn test_decode_0345_lab_fbnle_w_lab() {
+    fn test_decode_0347_lab_fbnle_w_lab() {
         test_decoding_result_ok(
             &[0xf2, 0x9a, 0xff, 0xfe],
             Instruction {
@@ -4911,7 +4939,7 @@ mod tests {
     }
     //  lab: fbnlt.w lab
     #[test]
-    fn test_decode_0346_lab_fbnlt_w_lab() {
+    fn test_decode_0348_lab_fbnlt_w_lab() {
         test_decoding_result_ok(
             &[0xf2, 0x9b, 0xff, 0xfe],
             Instruction {
@@ -4925,7 +4953,7 @@ mod tests {
     }
     //  lab: fbnge.w lab
     #[test]
-    fn test_decode_0347_lab_fbnge_w_lab() {
+    fn test_decode_0349_lab_fbnge_w_lab() {
         test_decoding_result_ok(
             &[0xf2, 0x9c, 0xff, 0xfe],
             Instruction {
@@ -4939,7 +4967,7 @@ mod tests {
     }
     //  lab: fbngt.w lab
     #[test]
-    fn test_decode_0348_lab_fbngt_w_lab() {
+    fn test_decode_0350_lab_fbngt_w_lab() {
         test_decoding_result_ok(
             &[0xf2, 0x9d, 0xff, 0xfe],
             Instruction {
@@ -4953,7 +4981,7 @@ mod tests {
     }
     //  lab: fbsne.w lab
     #[test]
-    fn test_decode_0349_lab_fbsne_w_lab() {
+    fn test_decode_0351_lab_fbsne_w_lab() {
         test_decoding_result_ok(
             &[0xf2, 0x9e, 0xff, 0xfe],
             Instruction {
@@ -4967,7 +4995,7 @@ mod tests {
     }
     //  lab: fbst.w lab
     #[test]
-    fn test_decode_0350_lab_fbst_w_lab() {
+    fn test_decode_0352_lab_fbst_w_lab() {
         test_decoding_result_ok(
             &[0xf2, 0x9f, 0xff, 0xfe],
             Instruction {
@@ -4981,7 +5009,7 @@ mod tests {
     }
     //  fcmp fp2,fp4
     #[test]
-    fn test_decode_0351_fcmp_fp2_fp4() {
+    fn test_decode_0353_fcmp_fp2_fp4() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x0a, 0x38],
             Instruction {
@@ -4995,7 +5023,7 @@ mod tests {
     }
     //  fcmp.s (a0),fp4
     #[test]
-    fn test_decode_0352_fcmp_s_a0_fp4() {
+    fn test_decode_0354_fcmp_s_a0_fp4() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x46, 0x38],
             Instruction {
@@ -5009,7 +5037,7 @@ mod tests {
     }
     //  fcos fp3
     #[test]
-    fn test_decode_0353_fcos_fp3() {
+    fn test_decode_0355_fcos_fp3() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x0d, 0x9d],
             Instruction {
@@ -5023,7 +5051,7 @@ mod tests {
     }
     //  fcos fp0,fp1
     #[test]
-    fn test_decode_0354_fcos_fp0_fp1() {
+    fn test_decode_0356_fcos_fp0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x00, 0x9d],
             Instruction {
@@ -5037,7 +5065,7 @@ mod tests {
     }
     //  fcos.s (a0),fp1
     #[test]
-    fn test_decode_0355_fcos_s_a0_fp1() {
+    fn test_decode_0357_fcos_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0x9d],
             Instruction {
@@ -5051,7 +5079,7 @@ mod tests {
     }
     //  fcosh fp3
     #[test]
-    fn test_decode_0356_fcosh_fp3() {
+    fn test_decode_0358_fcosh_fp3() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x0d, 0x99],
             Instruction {
@@ -5065,7 +5093,7 @@ mod tests {
     }
     //  fcosh fp0,fp1
     #[test]
-    fn test_decode_0357_fcosh_fp0_fp1() {
+    fn test_decode_0359_fcosh_fp0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x00, 0x99],
             Instruction {
@@ -5079,7 +5107,7 @@ mod tests {
     }
     //  fcosh.s (a0),fp1
     #[test]
-    fn test_decode_0358_fcosh_s_a0_fp1() {
+    fn test_decode_0360_fcosh_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0x99],
             Instruction {
@@ -5093,7 +5121,7 @@ mod tests {
     }
     //  fdiv fp0,fp1
     #[test]
-    fn test_decode_0359_fdiv_fp0_fp1() {
+    fn test_decode_0361_fdiv_fp0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x00, 0xa0],
             Instruction {
@@ -5107,7 +5135,7 @@ mod tests {
     }
     //  fdiv.s (a0),fp1
     #[test]
-    fn test_decode_0360_fdiv_s_a0_fp1() {
+    fn test_decode_0362_fdiv_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0xa0],
             Instruction {
@@ -5121,7 +5149,7 @@ mod tests {
     }
     //  fsdiv.s (a0),fp1
     #[test]
-    fn test_decode_0361_fsdiv_s_a0_fp1() {
+    fn test_decode_0363_fsdiv_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0xe0],
             Instruction {
@@ -5135,7 +5163,7 @@ mod tests {
     }
     //  fddiv.s (a0),fp1
     #[test]
-    fn test_decode_0362_fddiv_s_a0_fp1() {
+    fn test_decode_0364_fddiv_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0xe4],
             Instruction {
@@ -5149,7 +5177,7 @@ mod tests {
     }
     //  fetox fp3
     #[test]
-    fn test_decode_0363_fetox_fp3() {
+    fn test_decode_0365_fetox_fp3() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x0d, 0x90],
             Instruction {
@@ -5163,7 +5191,7 @@ mod tests {
     }
     //  fetox fp0,fp1
     #[test]
-    fn test_decode_0364_fetox_fp0_fp1() {
+    fn test_decode_0366_fetox_fp0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x00, 0x90],
             Instruction {
@@ -5177,7 +5205,7 @@ mod tests {
     }
     //  fetox.s (a0),fp1
     #[test]
-    fn test_decode_0365_fetox_s_a0_fp1() {
+    fn test_decode_0367_fetox_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0x90],
             Instruction {
@@ -5191,7 +5219,7 @@ mod tests {
     }
     //  fetoxm1 fp3
     #[test]
-    fn test_decode_0366_fetoxm1_fp3() {
+    fn test_decode_0368_fetoxm1_fp3() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x0d, 0x88],
             Instruction {
@@ -5205,7 +5233,7 @@ mod tests {
     }
     //  fetoxm1 fp0,fp1
     #[test]
-    fn test_decode_0367_fetoxm1_fp0_fp1() {
+    fn test_decode_0369_fetoxm1_fp0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x00, 0x88],
             Instruction {
@@ -5219,7 +5247,7 @@ mod tests {
     }
     //  fetoxm1.s (a0),fp1
     #[test]
-    fn test_decode_0368_fetoxm1_s_a0_fp1() {
+    fn test_decode_0370_fetoxm1_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0x88],
             Instruction {
@@ -5233,7 +5261,7 @@ mod tests {
     }
     //  fgetexp fp3
     #[test]
-    fn test_decode_0369_fgetexp_fp3() {
+    fn test_decode_0371_fgetexp_fp3() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x0d, 0x9e],
             Instruction {
@@ -5247,7 +5275,7 @@ mod tests {
     }
     //  fgetexp fp0,fp1
     #[test]
-    fn test_decode_0370_fgetexp_fp0_fp1() {
+    fn test_decode_0372_fgetexp_fp0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x00, 0x9e],
             Instruction {
@@ -5261,7 +5289,7 @@ mod tests {
     }
     //  fgetexp.s (a0),fp1
     #[test]
-    fn test_decode_0371_fgetexp_s_a0_fp1() {
+    fn test_decode_0373_fgetexp_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0x9e],
             Instruction {
@@ -5275,7 +5303,7 @@ mod tests {
     }
     //  fgetman fp3
     #[test]
-    fn test_decode_0372_fgetman_fp3() {
+    fn test_decode_0374_fgetman_fp3() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x0d, 0x9f],
             Instruction {
@@ -5289,7 +5317,7 @@ mod tests {
     }
     //  fgetman fp0,fp1
     #[test]
-    fn test_decode_0373_fgetman_fp0_fp1() {
+    fn test_decode_0375_fgetman_fp0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x00, 0x9f],
             Instruction {
@@ -5303,7 +5331,7 @@ mod tests {
     }
     //  fgetman.s (a0),fp1
     #[test]
-    fn test_decode_0374_fgetman_s_a0_fp1() {
+    fn test_decode_0376_fgetman_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0x9f],
             Instruction {
@@ -5317,7 +5345,7 @@ mod tests {
     }
     //  fint fp3
     #[test]
-    fn test_decode_0375_fint_fp3() {
+    fn test_decode_0377_fint_fp3() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x0d, 0x81],
             Instruction {
@@ -5331,7 +5359,7 @@ mod tests {
     }
     //  fint fp0,fp1
     #[test]
-    fn test_decode_0376_fint_fp0_fp1() {
+    fn test_decode_0378_fint_fp0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x00, 0x81],
             Instruction {
@@ -5345,7 +5373,7 @@ mod tests {
     }
     //  fint.s (a0),fp1
     #[test]
-    fn test_decode_0377_fint_s_a0_fp1() {
+    fn test_decode_0379_fint_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0x81],
             Instruction {
@@ -5359,7 +5387,7 @@ mod tests {
     }
     //  fintrz fp3
     #[test]
-    fn test_decode_0378_fintrz_fp3() {
+    fn test_decode_0380_fintrz_fp3() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x0d, 0x83],
             Instruction {
@@ -5373,7 +5401,7 @@ mod tests {
     }
     //  fintrz fp0,fp1
     #[test]
-    fn test_decode_0379_fintrz_fp0_fp1() {
+    fn test_decode_0381_fintrz_fp0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x00, 0x83],
             Instruction {
@@ -5387,7 +5415,7 @@ mod tests {
     }
     //  fintrz.s (a0),fp1
     #[test]
-    fn test_decode_0380_fintrz_s_a0_fp1() {
+    fn test_decode_0382_fintrz_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0x83],
             Instruction {
@@ -5401,7 +5429,7 @@ mod tests {
     }
     //  flog10 fp3
     #[test]
-    fn test_decode_0381_flog10_fp3() {
+    fn test_decode_0383_flog10_fp3() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x0d, 0x95],
             Instruction {
@@ -5415,7 +5443,7 @@ mod tests {
     }
     //  flog10 fp0,fp1
     #[test]
-    fn test_decode_0382_flog10_fp0_fp1() {
+    fn test_decode_0384_flog10_fp0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x00, 0x95],
             Instruction {
@@ -5429,7 +5457,7 @@ mod tests {
     }
     //  flog10.s (a0),fp1
     #[test]
-    fn test_decode_0383_flog10_s_a0_fp1() {
+    fn test_decode_0385_flog10_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0x95],
             Instruction {
@@ -5443,7 +5471,7 @@ mod tests {
     }
     //  flog2 fp3
     #[test]
-    fn test_decode_0384_flog2_fp3() {
+    fn test_decode_0386_flog2_fp3() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x0d, 0x96],
             Instruction {
@@ -5457,7 +5485,7 @@ mod tests {
     }
     //  flog2 fp0,fp1
     #[test]
-    fn test_decode_0385_flog2_fp0_fp1() {
+    fn test_decode_0387_flog2_fp0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x00, 0x96],
             Instruction {
@@ -5471,7 +5499,7 @@ mod tests {
     }
     //  flog2.s (a0),fp1
     #[test]
-    fn test_decode_0386_flog2_s_a0_fp1() {
+    fn test_decode_0388_flog2_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0x96],
             Instruction {
@@ -5485,7 +5513,7 @@ mod tests {
     }
     //  flogn fp3
     #[test]
-    fn test_decode_0387_flogn_fp3() {
+    fn test_decode_0389_flogn_fp3() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x0d, 0x94],
             Instruction {
@@ -5499,7 +5527,7 @@ mod tests {
     }
     //  flogn fp0,fp1
     #[test]
-    fn test_decode_0388_flogn_fp0_fp1() {
+    fn test_decode_0390_flogn_fp0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x00, 0x94],
             Instruction {
@@ -5513,7 +5541,7 @@ mod tests {
     }
     //  flogn.s (a0),fp1
     #[test]
-    fn test_decode_0389_flogn_s_a0_fp1() {
+    fn test_decode_0391_flogn_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0x94],
             Instruction {
@@ -5527,7 +5555,7 @@ mod tests {
     }
     //  flognp1 fp3
     #[test]
-    fn test_decode_0390_flognp1_fp3() {
+    fn test_decode_0392_flognp1_fp3() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x0d, 0x86],
             Instruction {
@@ -5541,7 +5569,7 @@ mod tests {
     }
     //  flognp1 fp0,fp1
     #[test]
-    fn test_decode_0391_flognp1_fp0_fp1() {
+    fn test_decode_0393_flognp1_fp0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x00, 0x86],
             Instruction {
@@ -5555,7 +5583,7 @@ mod tests {
     }
     //  flognp1.s (a0),fp1
     #[test]
-    fn test_decode_0392_flognp1_s_a0_fp1() {
+    fn test_decode_0394_flognp1_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0x86],
             Instruction {
@@ -5569,7 +5597,7 @@ mod tests {
     }
     //  fmod fp0,fp1
     #[test]
-    fn test_decode_0393_fmod_fp0_fp1() {
+    fn test_decode_0395_fmod_fp0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x00, 0xa1],
             Instruction {
@@ -5583,7 +5611,7 @@ mod tests {
     }
     //  fmod.s (a0),fp1
     #[test]
-    fn test_decode_0394_fmod_s_a0_fp1() {
+    fn test_decode_0396_fmod_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0xa1],
             Instruction {
@@ -5597,7 +5625,7 @@ mod tests {
     }
     //  fmovecr #30,fp1
     #[test]
-    fn test_decode_0395_fmovecr_30_fp1() {
+    fn test_decode_0397_fmovecr_30_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x5c, 0x9e],
             Instruction {
@@ -5611,7 +5639,7 @@ mod tests {
     }
     //  lab: fdbgt d6,lab
     #[test]
-    fn test_decode_0396_lab_fdbgt_d6_lab() {
+    fn test_decode_0398_lab_fdbgt_d6_lab() {
         test_decoding_result_ok(
             &[0xf2, 0x4e, 0x00, 0x12, 0xff, 0xfc],
             Instruction {
@@ -5625,7 +5653,7 @@ mod tests {
     }
     //  fmove fp3,fp5
     #[test]
-    fn test_decode_0397_fmove_fp3_fp5() {
+    fn test_decode_0399_fmove_fp3_fp5() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x0e, 0x80],
             Instruction {
@@ -5639,7 +5667,7 @@ mod tests {
     }
     //  fmove.x (a0),fp5
     #[test]
-    fn test_decode_0398_fmove_x_a0_fp5() {
+    fn test_decode_0400_fmove_x_a0_fp5() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x4a, 0x80],
             Instruction {
@@ -5653,7 +5681,7 @@ mod tests {
     }
     //  fmove.s (a0),fp5
     #[test]
-    fn test_decode_0399_fmove_s_a0_fp5() {
+    fn test_decode_0401_fmove_s_a0_fp5() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x46, 0x80],
             Instruction {
@@ -5667,7 +5695,7 @@ mod tests {
     }
     //  fsmove.d (a0),fp5
     #[test]
-    fn test_decode_0400_fsmove_d_a0_fp5() {
+    fn test_decode_0402_fsmove_d_a0_fp5() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x56, 0xc0],
             Instruction {
@@ -5681,7 +5709,7 @@ mod tests {
     }
     //  fdmove.p (a0),fp5
     #[test]
-    fn test_decode_0401_fdmove_p_a0_fp5() {
+    fn test_decode_0403_fdmove_p_a0_fp5() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x4e, 0xc4],
             Instruction {
@@ -5695,7 +5723,7 @@ mod tests {
     }
     //  fmove.s fp4,(a1)
     #[test]
-    fn test_decode_0402_fmove_s_fp4_a1_() {
+    fn test_decode_0404_fmove_s_fp4_a1_() {
         test_decoding_result_ok(
             &[0xf2, 0x11, 0x66, 0x00],
             Instruction {
@@ -5709,7 +5737,7 @@ mod tests {
     }
     //  fmove.p fp4,(a1){#12}
     #[test]
-    fn test_decode_0403_fmove_p_fp4_a1_12_() {
+    fn test_decode_0405_fmove_p_fp4_a1_12_() {
         test_decoding_result_ok(
             &[0xf2, 0x11, 0x6e, 0x0c],
             Instruction {
@@ -5723,7 +5751,7 @@ mod tests {
     }
     //  fmove.p fp4,(a1){#-64}
     #[test]
-    fn test_decode_0404_fmove_p_fp4_a1_64_() {
+    fn test_decode_0406_fmove_p_fp4_a1_64_() {
         test_decoding_result_ok(
             &[0xf2, 0x11, 0x6e, 0x40],
             Instruction {
@@ -5737,7 +5765,7 @@ mod tests {
     }
     //  fmove.p fp4,(a1){#63}
     #[test]
-    fn test_decode_0405_fmove_p_fp4_a1_63_() {
+    fn test_decode_0407_fmove_p_fp4_a1_63_() {
         test_decoding_result_ok(
             &[0xf2, 0x11, 0x6e, 0x3f],
             Instruction {
@@ -5751,7 +5779,7 @@ mod tests {
     }
     //  fmove.p fp4,(a1){d3}
     #[test]
-    fn test_decode_0406_fmove_p_fp4_a1_d3_() {
+    fn test_decode_0408_fmove_p_fp4_a1_d3_() {
         test_decoding_result_ok(
             &[0xf2, 0x11, 0x7e, 0x30],
             Instruction {
@@ -5765,7 +5793,7 @@ mod tests {
     }
     //  fmovem.x fp0-fp4,-(a3)
     #[test]
-    fn test_decode_0407_fmovem_x_fp0_fp4_a3_() {
+    fn test_decode_0409_fmovem_x_fp0_fp4_a3_() {
         test_decoding_result_ok(
             &[0xf2, 0x23, 0xe0, 0x1f],
             Instruction {
@@ -5779,7 +5807,7 @@ mod tests {
     }
     //  fmovem.x d7,-(a3)
     #[test]
-    fn test_decode_0408_fmovem_x_d7_a3_() {
+    fn test_decode_0410_fmovem_x_d7_a3_() {
         test_decoding_result_ok(
             &[0xf2, 0x23, 0xe8, 0x70],
             Instruction {
@@ -5793,7 +5821,7 @@ mod tests {
     }
     //  fmovem.x d7,(a3)
     #[test]
-    fn test_decode_0409_fmovem_x_d7_a3_() {
+    fn test_decode_0411_fmovem_x_d7_a3_() {
         test_decoding_result_ok(
             &[0xf2, 0x13, 0xf8, 0x70],
             Instruction {
@@ -5807,7 +5835,7 @@ mod tests {
     }
     //  fmovem.x (a3),d7
     #[test]
-    fn test_decode_0410_fmovem_x_a3_d7() {
+    fn test_decode_0412_fmovem_x_a3_d7() {
         test_decoding_result_ok(
             &[0xf2, 0x13, 0xd8, 0x70],
             Instruction {
@@ -5821,7 +5849,7 @@ mod tests {
     }
     //  fmovem.x (a3)+,d7
     #[test]
-    fn test_decode_0411_fmovem_x_a3_d7() {
+    fn test_decode_0413_fmovem_x_a3_d7() {
         test_decoding_result_ok(
             &[0xf2, 0x1b, 0xd8, 0x70],
             Instruction {
@@ -5835,7 +5863,7 @@ mod tests {
     }
     //  fmovem.x (a3)+,fp0/fp6
     #[test]
-    fn test_decode_0412_fmovem_x_a3_fp0_fp6() {
+    fn test_decode_0414_fmovem_x_a3_fp0_fp6() {
         test_decoding_result_ok(
             &[0xf2, 0x1b, 0xd0, 0x82],
             Instruction {
@@ -5849,7 +5877,7 @@ mod tests {
     }
     //  fmul fp0,fp1
     #[test]
-    fn test_decode_0413_fmul_fp0_fp1() {
+    fn test_decode_0415_fmul_fp0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x00, 0xa3],
             Instruction {
@@ -5863,7 +5891,7 @@ mod tests {
     }
     //  fmul.s (a0),fp1
     #[test]
-    fn test_decode_0414_fmul_s_a0_fp1() {
+    fn test_decode_0416_fmul_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0xa3],
             Instruction {
@@ -5877,7 +5905,7 @@ mod tests {
     }
     //  fsmul.s (a0),fp1
     #[test]
-    fn test_decode_0415_fsmul_s_a0_fp1() {
+    fn test_decode_0417_fsmul_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0xe3],
             Instruction {
@@ -5891,7 +5919,7 @@ mod tests {
     }
     //  fdmul.s (a0),fp1
     #[test]
-    fn test_decode_0416_fdmul_s_a0_fp1() {
+    fn test_decode_0418_fdmul_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0xe7],
             Instruction {
@@ -5905,7 +5933,7 @@ mod tests {
     }
     //  fneg fp3
     #[test]
-    fn test_decode_0417_fneg_fp3() {
+    fn test_decode_0419_fneg_fp3() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x0d, 0x9a],
             Instruction {
@@ -5919,7 +5947,7 @@ mod tests {
     }
     //  fneg fp0,fp1
     #[test]
-    fn test_decode_0418_fneg_fp0_fp1() {
+    fn test_decode_0420_fneg_fp0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x00, 0x9a],
             Instruction {
@@ -5933,7 +5961,7 @@ mod tests {
     }
     //  fneg.s (a0),fp1
     #[test]
-    fn test_decode_0419_fneg_s_a0_fp1() {
+    fn test_decode_0421_fneg_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0x9a],
             Instruction {
@@ -5947,7 +5975,7 @@ mod tests {
     }
     //  fsneg.s (a0),fp1
     #[test]
-    fn test_decode_0420_fsneg_s_a0_fp1() {
+    fn test_decode_0422_fsneg_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0xda],
             Instruction {
@@ -5961,7 +5989,7 @@ mod tests {
     }
     //  fdneg.s (a0),fp1
     #[test]
-    fn test_decode_0421_fdneg_s_a0_fp1() {
+    fn test_decode_0423_fdneg_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0xde],
             Instruction {
@@ -5975,7 +6003,7 @@ mod tests {
     }
     //  fnop
     #[test]
-    fn test_decode_0422_fnop() {
+    fn test_decode_0424_fnop() {
         test_decoding_result_ok(
             &[0xf2, 0x80, 0x00, 0x00],
             Instruction {
@@ -5989,7 +6017,7 @@ mod tests {
     }
     //  frem fp0,fp1
     #[test]
-    fn test_decode_0423_frem_fp0_fp1() {
+    fn test_decode_0425_frem_fp0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x00, 0xa5],
             Instruction {
@@ -6003,7 +6031,7 @@ mod tests {
     }
     //  frem.s (a0),fp1
     #[test]
-    fn test_decode_0424_frem_s_a0_fp1() {
+    fn test_decode_0426_frem_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0xa5],
             Instruction {
@@ -6017,7 +6045,7 @@ mod tests {
     }
     //  fscale fp0,fp1
     #[test]
-    fn test_decode_0425_fscale_fp0_fp1() {
+    fn test_decode_0427_fscale_fp0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x00, 0xa6],
             Instruction {
@@ -6031,7 +6059,7 @@ mod tests {
     }
     //  fscale.s (a0),fp1
     #[test]
-    fn test_decode_0426_fscale_s_a0_fp1() {
+    fn test_decode_0428_fscale_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0xa6],
             Instruction {
@@ -6045,7 +6073,7 @@ mod tests {
     }
     //  fsgt (a0)
     #[test]
-    fn test_decode_0427_fsgt_a0_() {
+    fn test_decode_0429_fsgt_a0_() {
         test_decoding_result_ok(
             &[0xf2, 0x50, 0x00, 0x12],
             Instruction {
@@ -6059,7 +6087,7 @@ mod tests {
     }
     //  fsgldiv fp0,fp1
     #[test]
-    fn test_decode_0428_fsgldiv_fp0_fp1() {
+    fn test_decode_0430_fsgldiv_fp0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x00, 0xa4],
             Instruction {
@@ -6073,7 +6101,7 @@ mod tests {
     }
     //  fsgldiv.s (a0),fp1
     #[test]
-    fn test_decode_0429_fsgldiv_s_a0_fp1() {
+    fn test_decode_0431_fsgldiv_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0xa4],
             Instruction {
@@ -6087,7 +6115,7 @@ mod tests {
     }
     //  fsglmul fp0,fp1
     #[test]
-    fn test_decode_0430_fsglmul_fp0_fp1() {
+    fn test_decode_0432_fsglmul_fp0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x00, 0xa7],
             Instruction {
@@ -6101,7 +6129,7 @@ mod tests {
     }
     //  fsglmul.s (a0),fp1
     #[test]
-    fn test_decode_0431_fsglmul_s_a0_fp1() {
+    fn test_decode_0433_fsglmul_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0xa7],
             Instruction {
@@ -6115,7 +6143,7 @@ mod tests {
     }
     //  fsin fp3
     #[test]
-    fn test_decode_0432_fsin_fp3() {
+    fn test_decode_0434_fsin_fp3() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x0d, 0x8e],
             Instruction {
@@ -6129,7 +6157,7 @@ mod tests {
     }
     //  fsin fp0,fp1
     #[test]
-    fn test_decode_0433_fsin_fp0_fp1() {
+    fn test_decode_0435_fsin_fp0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x00, 0x8e],
             Instruction {
@@ -6143,7 +6171,7 @@ mod tests {
     }
     //  fsin.s (a0),fp1
     #[test]
-    fn test_decode_0434_fsin_s_a0_fp1() {
+    fn test_decode_0436_fsin_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0x8e],
             Instruction {
@@ -6157,7 +6185,7 @@ mod tests {
     }
     //  fsincos fp0,fp1:fp2
     #[test]
-    fn test_decode_0435_fsincos_fp0_fp1_fp2() {
+    fn test_decode_0437_fsincos_fp0_fp1_fp2() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x01, 0x31],
             Instruction {
@@ -6171,7 +6199,7 @@ mod tests {
     }
     //  fsincos.s (a0),fp1:fp2
     #[test]
-    fn test_decode_0436_fsincos_s_a0_fp1_fp2() {
+    fn test_decode_0438_fsincos_s_a0_fp1_fp2() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x45, 0x31],
             Instruction {
@@ -6185,7 +6213,7 @@ mod tests {
     }
     //  fsinh fp3
     #[test]
-    fn test_decode_0437_fsinh_fp3() {
+    fn test_decode_0439_fsinh_fp3() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x0d, 0x82],
             Instruction {
@@ -6199,7 +6227,7 @@ mod tests {
     }
     //  fsinh fp0,fp1
     #[test]
-    fn test_decode_0438_fsinh_fp0_fp1() {
+    fn test_decode_0440_fsinh_fp0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x00, 0x82],
             Instruction {
@@ -6213,7 +6241,7 @@ mod tests {
     }
     //  fsinh.s (a0),fp1
     #[test]
-    fn test_decode_0439_fsinh_s_a0_fp1() {
+    fn test_decode_0441_fsinh_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0x82],
             Instruction {
@@ -6227,7 +6255,7 @@ mod tests {
     }
     //  fsqrt fp3
     #[test]
-    fn test_decode_0440_fsqrt_fp3() {
+    fn test_decode_0442_fsqrt_fp3() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x0d, 0x84],
             Instruction {
@@ -6241,7 +6269,7 @@ mod tests {
     }
     //  fsqrt fp0,fp1
     #[test]
-    fn test_decode_0441_fsqrt_fp0_fp1() {
+    fn test_decode_0443_fsqrt_fp0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x00, 0x84],
             Instruction {
@@ -6255,7 +6283,7 @@ mod tests {
     }
     //  fsqrt.s (a0),fp1
     #[test]
-    fn test_decode_0442_fsqrt_s_a0_fp1() {
+    fn test_decode_0444_fsqrt_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0x84],
             Instruction {
@@ -6269,7 +6297,7 @@ mod tests {
     }
     //  fssqrt fp3
     #[test]
-    fn test_decode_0443_fssqrt_fp3() {
+    fn test_decode_0445_fssqrt_fp3() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x0d, 0xc1],
             Instruction {
@@ -6283,7 +6311,7 @@ mod tests {
     }
     //  fdsqrt fp3
     #[test]
-    fn test_decode_0444_fdsqrt_fp3() {
+    fn test_decode_0446_fdsqrt_fp3() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x0d, 0xc5],
             Instruction {
@@ -6297,7 +6325,7 @@ mod tests {
     }
     //  fsub fp0,fp1
     #[test]
-    fn test_decode_0445_fsub_fp0_fp1() {
+    fn test_decode_0447_fsub_fp0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x00, 0xa8],
             Instruction {
@@ -6311,7 +6339,7 @@ mod tests {
     }
     //  fsub.s (a0),fp1
     #[test]
-    fn test_decode_0446_fsub_s_a0_fp1() {
+    fn test_decode_0448_fsub_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0xa8],
             Instruction {
@@ -6325,7 +6353,7 @@ mod tests {
     }
     //  fssub.x (a0),fp1
     #[test]
-    fn test_decode_0447_fssub_x_a0_fp1() {
+    fn test_decode_0449_fssub_x_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x48, 0xe8],
             Instruction {
@@ -6339,7 +6367,7 @@ mod tests {
     }
     //  fdsub.l (a0),fp1
     #[test]
-    fn test_decode_0448_fdsub_l_a0_fp1() {
+    fn test_decode_0450_fdsub_l_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x40, 0xec],
             Instruction {
@@ -6353,7 +6381,7 @@ mod tests {
     }
     //  ftan fp3
     #[test]
-    fn test_decode_0449_ftan_fp3() {
+    fn test_decode_0451_ftan_fp3() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x0d, 0x8f],
             Instruction {
@@ -6367,7 +6395,7 @@ mod tests {
     }
     //  ftan fp0,fp1
     #[test]
-    fn test_decode_0450_ftan_fp0_fp1() {
+    fn test_decode_0452_ftan_fp0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x00, 0x8f],
             Instruction {
@@ -6381,7 +6409,7 @@ mod tests {
     }
     //  ftan.s (a0),fp1
     #[test]
-    fn test_decode_0451_ftan_s_a0_fp1() {
+    fn test_decode_0453_ftan_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0x8f],
             Instruction {
@@ -6395,7 +6423,7 @@ mod tests {
     }
     //  ftanh fp3
     #[test]
-    fn test_decode_0452_ftanh_fp3() {
+    fn test_decode_0454_ftanh_fp3() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x0d, 0x89],
             Instruction {
@@ -6409,7 +6437,7 @@ mod tests {
     }
     //  ftanh fp0,fp1
     #[test]
-    fn test_decode_0453_ftanh_fp0_fp1() {
+    fn test_decode_0455_ftanh_fp0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x00, 0x89],
             Instruction {
@@ -6423,7 +6451,7 @@ mod tests {
     }
     //  ftanh.s (a0),fp1
     #[test]
-    fn test_decode_0454_ftanh_s_a0_fp1() {
+    fn test_decode_0456_ftanh_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0x89],
             Instruction {
@@ -6437,7 +6465,7 @@ mod tests {
     }
     //  ftentox fp3
     #[test]
-    fn test_decode_0455_ftentox_fp3() {
+    fn test_decode_0457_ftentox_fp3() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x0d, 0x92],
             Instruction {
@@ -6451,7 +6479,7 @@ mod tests {
     }
     //  ftentox fp0,fp1
     #[test]
-    fn test_decode_0456_ftentox_fp0_fp1() {
+    fn test_decode_0458_ftentox_fp0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x00, 0x92],
             Instruction {
@@ -6465,7 +6493,7 @@ mod tests {
     }
     //  ftentox.s (a0),fp1
     #[test]
-    fn test_decode_0457_ftentox_s_a0_fp1() {
+    fn test_decode_0459_ftentox_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0x92],
             Instruction {
@@ -6479,7 +6507,7 @@ mod tests {
     }
     //  ftrapgt
     #[test]
-    fn test_decode_0458_ftrapgt() {
+    fn test_decode_0460_ftrapgt() {
         test_decoding_result_ok(
             &[0xf2, 0x7c, 0x00, 0x12],
             Instruction {
@@ -6493,7 +6521,7 @@ mod tests {
     }
     //  ftrapeq.w #123
     #[test]
-    fn test_decode_0459_ftrapeq_w_123() {
+    fn test_decode_0461_ftrapeq_w_123() {
         test_decoding_result_ok(
             &[0xf2, 0x7a, 0x00, 0x01, 0x00, 0x7b],
             Instruction {
@@ -6507,7 +6535,7 @@ mod tests {
     }
     //  ftrapne.l #1234567
     #[test]
-    fn test_decode_0460_ftrapne_l_1234567() {
+    fn test_decode_0462_ftrapne_l_1234567() {
         test_decoding_result_ok(
             &[0xf2, 0x7b, 0x00, 0x0e, 0x00, 0x12, 0xd6, 0x87],
             Instruction {
@@ -6521,7 +6549,7 @@ mod tests {
     }
     //  ftst.l (a0)
     #[test]
-    fn test_decode_0461_ftst_l_a0_() {
+    fn test_decode_0463_ftst_l_a0_() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x40, 0x3a],
             Instruction {
@@ -6535,7 +6563,7 @@ mod tests {
     }
     //  ftst fp7
     #[test]
-    fn test_decode_0462_ftst_fp7() {
+    fn test_decode_0464_ftst_fp7() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x1c, 0x3a],
             Instruction {
@@ -6549,7 +6577,7 @@ mod tests {
     }
     //  ftwotox fp3
     #[test]
-    fn test_decode_0463_ftwotox_fp3() {
+    fn test_decode_0465_ftwotox_fp3() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x0d, 0x91],
             Instruction {
@@ -6563,7 +6591,7 @@ mod tests {
     }
     //  ftwotox fp0,fp1
     #[test]
-    fn test_decode_0464_ftwotox_fp0_fp1() {
+    fn test_decode_0466_ftwotox_fp0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x00, 0x00, 0x91],
             Instruction {
@@ -6577,7 +6605,7 @@ mod tests {
     }
     //  ftwotox.s (a0),fp1
     #[test]
-    fn test_decode_0465_ftwotox_s_a0_fp1() {
+    fn test_decode_0467_ftwotox_s_a0_fp1() {
         test_decoding_result_ok(
             &[0xf2, 0x10, 0x44, 0x91],
             Instruction {

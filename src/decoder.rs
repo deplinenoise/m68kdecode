@@ -90,6 +90,7 @@ pub enum Operation {
     OR,
     SUBX,
     SUB,
+    SUBA,
     CMPA,
     CMPM,
     CMP,
@@ -2575,6 +2576,36 @@ fn decode_group_1001(w0: u16, cs: &mut CodeStream) -> Result<DecodedInstruction,
         return cs.check_overflow(Instruction {
             size: sz,
             operation: SUB,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111000111000000) == 0b1001000011000000 {
+        let d = get_bits(w0, 9, 3);
+        let m = get_bits(w0, 3, 3);
+        let r = get_bits(w0, 0, 3);
+        let sz = 2;
+        let src = cs.ea(r, m, sz);
+        let dst = cs.address_reg_op(d);
+        let extra = NoExtra;
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: SUBA,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111000111000000) == 0b1001000111000000 {
+        let d = get_bits(w0, 9, 3);
+        let m = get_bits(w0, 3, 3);
+        let r = get_bits(w0, 0, 3);
+        let sz = 4;
+        let src = cs.ea(r, m, sz);
+        let dst = cs.address_reg_op(d);
+        let extra = NoExtra;
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: SUBA,
             operands: [src, dst],
             extra: extra,
         });

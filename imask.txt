@@ -270,6 +270,10 @@ SUB             1001_ddd1_00mm_mrrr sz=1; src=cs.data_reg_op(d); dst=cs.ea(r, m,
 SUB             1001_ddd1_01mm_mrrr sz=2; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz); 
 SUB             1001_ddd1_10mm_mrrr sz=4; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz); 
 
+# SUBA <ea>,Dn
+SUBA            1001_ddd0_11mm_mrrr sz=2; src=cs.ea(r, m, sz); dst=cs.address_reg_op(d);
+SUBA            1001_ddd1_11mm_mrrr sz=4; src=cs.ea(r, m, sz); dst=cs.address_reg_op(d);
+
 #====================================================================================================
 # Group 1010: Reserved/Unassigned
 #====================================================================================================

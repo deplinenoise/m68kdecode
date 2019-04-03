@@ -661,6 +661,12 @@
 > sub.l d3,(a2)
 # Instruction { size: 4, operation: SUB, operands: [ DR(D3), ARIND(A2) ], extra: NoExtra }
 
+> suba.w d3,a2
+# Instruction { size: 2, operation: SUBA, operands: [ DR(D3), AR(A2) ], extra: NoExtra }
+
+> suba.l d3,a2
+# Instruction { size: 4, operation: SUBA, operands: [ DR(D3), AR(A2) ], extra: NoExtra }
+
 > cmpa.w (a1),a2
 # Instruction { size: 2, operation: CMPA, operands: [ ARIND(A1), AR(A2) ], extra: NoExtra }
 

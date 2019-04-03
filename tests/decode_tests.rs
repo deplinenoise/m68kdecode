@@ -6673,4 +6673,32 @@ mod tests {
             &[" movec.l isp,d3"],
         );
     }
+    //  adda.w (a3),a2
+    #[test]
+    fn test_decode_0472_adda_w_a3_a2() {
+        test_decoding_result_ok(
+            &[0xd4, 0xd3],
+            Instruction {
+                size: 2,
+                operation: ADDA,
+                operands: [ARIND(A3), AR(A2)],
+                extra: NoExtra,
+            },
+            &[" adda.w (a3),a2"],
+        );
+    }
+    //  adda.l (a3),a2
+    #[test]
+    fn test_decode_0473_adda_l_a3_a2() {
+        test_decoding_result_ok(
+            &[0xd5, 0xd3],
+            Instruction {
+                size: 4,
+                operation: ADDA,
+                operands: [ARIND(A3), AR(A2)],
+                extra: NoExtra,
+            },
+            &[" adda.l (a3),a2"],
+        );
+    }
 }

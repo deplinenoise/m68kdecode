@@ -1506,3 +1506,10 @@
 
 > movec.l isp,d3
 # Instruction { size: 4, operation: MOVEC, operands: [ CONTROLREG(0x804), DR(D3) ], extra: NoExtra }
+
+> adda.w (a3),a2
+# Instruction { size: 2, operation: ADDA, operands: [ ARIND(A3), AR(A2) ], extra: NoExtra }
+
+> adda.l (a3),a2
+# Instruction { size: 4, operation: ADDA, operands: [ ARIND(A3), AR(A2) ], extra: NoExtra }
+

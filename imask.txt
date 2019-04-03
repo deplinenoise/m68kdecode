@@ -339,10 +339,15 @@ ADDX            1101_xxx1_1000_1yyy sz=4; src=ARDEC(cs.address_reg(y)); dst=ARDE
 ADD             1101_ddd0_00mm_mrrr sz=1; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
 ADD             1101_ddd0_01mm_mrrr sz=2; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
 ADD             1101_ddd0_10mm_mrrr sz=4; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
+
 # ADD Dn,<ea>
 ADD             1101_ddd1_00mm_mrrr sz=1; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz); 
 ADD             1101_ddd1_01mm_mrrr sz=2; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz); 
 ADD             1101_ddd1_10mm_mrrr sz=4; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz); 
+
+# ADDA <ea>,Dn
+ADDA            1101_aaa0_11mm_mrrr sz=2; src=cs.ea(r, m, sz); dst=cs.address_reg_op(a);
+ADDA            1101_aaa1_11mm_mrrr sz=4; src=cs.ea(r, m, sz); dst=cs.address_reg_op(a);
 
 #====================================================================================================
 # Group 1110: Shift, Rotate, Bitfield

@@ -101,6 +101,7 @@ pub enum Operation {
     AND,
     ADDX,
     ADD,
+    ADDA,
     BFCHG,
     BFCLR,
     BFEXTS,
@@ -3186,6 +3187,36 @@ fn decode_group_1101(w0: u16, cs: &mut CodeStream) -> Result<DecodedInstruction,
         return cs.check_overflow(Instruction {
             size: sz,
             operation: ADD,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111000111000000) == 0b1101000011000000 {
+        let a = get_bits(w0, 9, 3);
+        let m = get_bits(w0, 3, 3);
+        let r = get_bits(w0, 0, 3);
+        let sz = 2;
+        let src = cs.ea(r, m, sz);
+        let dst = cs.address_reg_op(a);
+        let extra = NoExtra;
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: ADDA,
+            operands: [src, dst],
+            extra: extra,
+        });
+    }
+    if (w0 & 0b1111000111000000) == 0b1101000111000000 {
+        let a = get_bits(w0, 9, 3);
+        let m = get_bits(w0, 3, 3);
+        let r = get_bits(w0, 0, 3);
+        let sz = 4;
+        let src = cs.ea(r, m, sz);
+        let dst = cs.address_reg_op(a);
+        let extra = NoExtra;
+        return cs.check_overflow(Instruction {
+            size: sz,
+            operation: ADDA,
             operands: [src, dst],
             extra: extra,
         });

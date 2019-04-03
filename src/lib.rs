@@ -117,6 +117,8 @@ pub enum Operand {
     /// A register bitmask for `MOVEM` or `FMOVEM`. The order of registers is reversed depending on
     /// whether the address register is pre-decremented or post-incremented.
     REGLIST(u16),
+    /// A control register
+    CONTROLREG(u16),
 }
 
 /// Describes one leg of a 68020+ bitfield specification

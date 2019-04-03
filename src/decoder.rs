@@ -40,6 +40,7 @@ pub enum Operation {
     RTS,
     STOP,
     TRAPV,
+    MOVEC,
     SWAP,
     BKPT,
     EXTW,
@@ -1092,6 +1093,44 @@ fn decode_group_0100(w0: u16, cs: &mut CodeStream) -> Result<DecodedInstruction,
             operands: [src, dst],
             extra: extra,
         });
+    }
+    if (w0 & 0b1111111111111111) == 0b0100111001111010 && cs.has_words(1) {
+        let w1 = cs.peek_word(0);
+        if (w1 & 0b0000000000000000) == 0b0000000000000000 {
+            let a = get_bits(w1, 15, 1);
+            let r = get_bits(w1, 12, 3);
+            let c = get_bits(w1, 0, 12);
+            cs.skip_words(1);
+            let sz = 4;
+            let src = CONTROLREG(c);
+            let dst = cs.dar(a, r);
+            let extra = NoExtra;
+            return cs.check_overflow(Instruction {
+                size: sz,
+                operation: MOVEC,
+                operands: [src, dst],
+                extra: extra,
+            });
+        }
+    }
+    if (w0 & 0b1111111111111111) == 0b0100111001111011 && cs.has_words(1) {
+        let w1 = cs.peek_word(0);
+        if (w1 & 0b0000000000000000) == 0b0000000000000000 {
+            let a = get_bits(w1, 15, 1);
+            let r = get_bits(w1, 12, 3);
+            let c = get_bits(w1, 0, 12);
+            cs.skip_words(1);
+            let sz = 4;
+            let src = cs.dar(a, r);
+            let dst = CONTROLREG(c);
+            let extra = NoExtra;
+            return cs.check_overflow(Instruction {
+                size: sz,
+                operation: MOVEC,
+                operands: [src, dst],
+                extra: extra,
+            });
+        }
     }
     if (w0 & 0b1111111111111000) == 0b0100100001000000 {
         let r = get_bits(w0, 0, 3);

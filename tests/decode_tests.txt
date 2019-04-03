@@ -1494,3 +1494,15 @@
 
 > ftwotox.s (a0),fp1
 # Instruction { size: 4, operation: FTWOTOX, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+
+> movec.l a3,cacr
+# Instruction { size: 4, operation: MOVEC, operands: [ AR(A3), CONTROLREG(2) ], extra: NoExtra }
+
+> movec.l d3,cacr
+# Instruction { size: 4, operation: MOVEC, operands: [ DR(D3), CONTROLREG(2) ], extra: NoExtra }
+
+> movec.l isp,a3
+# Instruction { size: 4, operation: MOVEC, operands: [ CONTROLREG(0x804), AR(A3) ], extra: NoExtra }
+
+> movec.l isp,d3
+# Instruction { size: 4, operation: MOVEC, operands: [ CONTROLREG(0x804), DR(D3) ], extra: NoExtra }

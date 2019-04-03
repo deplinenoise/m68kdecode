@@ -133,7 +133,6 @@ impl<'a> CodeStream<'a> {
         FR(self.float_reg(r))
     }
 
-
     pub fn ea(&mut self, src_reg: u16, src_mod: u16, size: i32) -> Operand {
         match src_mod {
             0b000 => DR(self.data_reg(src_reg)),

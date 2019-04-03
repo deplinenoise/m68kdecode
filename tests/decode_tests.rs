@@ -6617,4 +6617,60 @@ mod tests {
             &[" ftwotox.s (a0),fp1"],
         );
     }
+    //  movec.l a3,cacr
+    #[test]
+    fn test_decode_0468_movec_l_a3_cacr() {
+        test_decoding_result_ok(
+            &[0x4e, 0x7b, 0xb0, 0x02],
+            Instruction {
+                size: 4,
+                operation: MOVEC,
+                operands: [AR(A3), CONTROLREG(2)],
+                extra: NoExtra,
+            },
+            &[" movec.l a3,cacr"],
+        );
+    }
+    //  movec.l d3,cacr
+    #[test]
+    fn test_decode_0469_movec_l_d3_cacr() {
+        test_decoding_result_ok(
+            &[0x4e, 0x7b, 0x30, 0x02],
+            Instruction {
+                size: 4,
+                operation: MOVEC,
+                operands: [DR(D3), CONTROLREG(2)],
+                extra: NoExtra,
+            },
+            &[" movec.l d3,cacr"],
+        );
+    }
+    //  movec.l isp,a3
+    #[test]
+    fn test_decode_0470_movec_l_isp_a3() {
+        test_decoding_result_ok(
+            &[0x4e, 0x7a, 0xb8, 0x04],
+            Instruction {
+                size: 4,
+                operation: MOVEC,
+                operands: [CONTROLREG(0x804), AR(A3)],
+                extra: NoExtra,
+            },
+            &[" movec.l isp,a3"],
+        );
+    }
+    //  movec.l isp,d3
+    #[test]
+    fn test_decode_0471_movec_l_isp_d3() {
+        test_decoding_result_ok(
+            &[0x4e, 0x7a, 0x38, 0x04],
+            Instruction {
+                size: 4,
+                operation: MOVEC,
+                operands: [CONTROLREG(0x804), DR(D3)],
+                extra: NoExtra,
+            },
+            &[" movec.l isp,d3"],
+        );
+    }
 }

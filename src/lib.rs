@@ -6,7 +6,7 @@ mod codestream;
 pub use decoder::Operation;
 
 /// One of the 8 data registers.
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 #[repr(u8)]
 pub enum DataRegister { 
     D0, D1, D2, D3, D4, D5, D6, D7,
@@ -15,21 +15,21 @@ pub enum DataRegister {
 /// One of the 8 address registers.
 ///
 /// Note that A7 means `USP` in user mode and `SSP`/`ISP` in supervisor mode.
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 #[repr(u8)]
 pub enum AddressRegister { 
     A0, A1, A2, A3, A4, A5, A6, A7,
 }
 
 /// One of the 8 floating point registers.
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 #[repr(u8)]
 pub enum FloatingRegister { 
     FP0, FP1, FP2, FP3, FP4, FP5, FP6, FP7,
 }
 
 /// Indicates how memory indexing is to be performed for 68020+ double memory operands.
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub enum MemoryIndirection {
     /// No memory indirection.
     NoIndirection,
@@ -42,7 +42,7 @@ pub enum MemoryIndirection {
 }
 
 /// Indicates how indexing is to be performed.
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub enum Indexer {
     /// Indexing suppressed
     NoIndexer,
@@ -53,7 +53,7 @@ pub enum Indexer {
 }
 
 /// Indicates how a memory operand effective address is to be computed using displacement.
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct Displacement {
     /// Base displacement. This is always sign-extended to 32-bit by the instruction decoder.
     pub base_displacement: i32,
@@ -66,7 +66,7 @@ pub struct Displacement {
 }
 
 /// Describes one of the two operands in an instruction
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub enum Operand {
     /// No operand present, used for instructions that have fewer than two operands.
     NoOperand,
@@ -122,7 +122,7 @@ pub enum Operand {
 }
 
 /// Describes one leg of a 68020+ bitfield specification
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub enum BitfieldData {
     /// The offset or width is static.
     STATIC(u8),
@@ -131,7 +131,7 @@ pub enum BitfieldData {
 }
 
 /// A CPU condition code from the CCR
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 #[allow(non_camel_case_types)]
 pub enum ConditionCode {
     /// Always True        
@@ -169,7 +169,7 @@ pub enum ConditionCode {
 }
 
 /// A FPU condition code
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 #[allow(non_camel_case_types)]
 pub enum FPConditionCode {
     /// False
@@ -239,7 +239,7 @@ pub enum FPConditionCode {
 }
 
 /// Indicates the floating point format in memory for a FPU operation
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 #[allow(non_camel_case_types)]
 pub enum FPFormat {
     /// The memory operand is a 32-bit integer.
@@ -263,7 +263,7 @@ pub enum FPFormat {
 }
 
 /// Additional attributes for an instruction that don't fit anywhere else.
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub enum InstructionExtra {
     /// No additional attributes available.
     NoExtra,
@@ -282,7 +282,7 @@ pub enum InstructionExtra {
 }
 
 /// Represents an instruction.
-#[derive(Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 pub struct Instruction {
     /// The size of any data movement (the number of bytes read or written).
     pub size: i32,
@@ -295,7 +295,7 @@ pub struct Instruction {
 }
 
 /// Represents the result of decoding an instruction from a byte stream.
-#[derive(Debug,PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct DecodedInstruction {
     /// The number of bytes that were consumed decoding the instruction.
     pub bytes_used: u32,

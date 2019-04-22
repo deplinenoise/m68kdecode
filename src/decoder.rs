@@ -4,7 +4,7 @@ use crate::Operation::*;
 use crate::*;
 use codestream::*;
 /// Instruction names.
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub enum Operation {
     ANDITOCCR,
     ANDITOSR,

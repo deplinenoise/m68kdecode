@@ -186,7 +186,7 @@ with open(outfile, "w") as of:
 
     seen_insn_names = {}
     of.write('/// Instruction names.\n');
-    of.write('#[derive(Debug, PartialEq)]\npub enum Operation {\n');
+    of.write('#[derive(Debug, PartialEq, Clone)]\npub enum Operation {\n');
     for i in instructions:
         if not seen_insn_names.has_key(i.name):
             seen_insn_names[i.name] = True

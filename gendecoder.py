@@ -11,7 +11,8 @@ R_PREDICATE = re.compile('\\?\\(.*?\\)')
 
 lineno = 0
 infile = sys.argv[1]
-outfile = sys.argv[2]
+outfile_c = sys.argv[2]
+outfile_h = sys.argv[3]
 
 class Capture(object):
     def __init__(self, name, bit, length):
@@ -45,7 +46,7 @@ class Instruction(object):
             self.captures.append(c)
 
     def match_expr(self, n):
-        return '(w{} & 0b{:016b}) == 0b{:016b}'.format(n, self.masks[n], self.instruction_patterns[n])
+        return '(w{} & 0x{:02x}) == 0x{:02x}'.format(n, self.masks[n], self.instruction_patterns[n])
 
     def __repr__(self):
         return "{}:\n".format(self.name) +  \
@@ -115,35 +116,38 @@ with open(infile, "r") as inf:
 def gen_decoders(of, insns):
     group = insns[0].instruction_patterns[0] >> 12
 
-    of.write('#[allow(non_snake_case)]\n')
-    of.write('#[allow(unused_mut)]\n')
-    of.write('fn decode_group_{0:04b}(w0: u16, cs: &mut CodeStream) -> Result<DecodedInstruction, DecodingError> {{\n'.format(group))
+    of.write('static m68k_decoding_error decode_group_{0:04b}(uint16_t w0, m68k_code_stream *cs, m68k_decoded_instruction *result) {{\n'.format(group))
+
+    of.write('int sz = 0;\n')
+    of.write('m68k_operand src = { .kind = M68K_NO_OPERAND };\n')
+    of.write('m68k_operand dst = { .kind = M68K_NO_OPERAND };\n')
+    of.write('m68k_extra extra = { .kind = M68K_NO_EXTRA };\n')
 
     for i in insns:
-        of.write('if (w0 & 0b{:016b}) == 0b{:016b} '.format(i.masks[0], i.instruction_patterns[0]))
+        of.write('if (((w0 & 0x{:04x}) == 0x{:04x}) '.format(i.masks[0], i.instruction_patterns[0]))
         if len(i.masks) > 1:
-            of.write('&& cs.has_words({})'.format(len(i.masks) - 1))
-        of.write('{\n')
+            of.write('&& has_words(cs, {})'.format(len(i.masks) - 1))
+        of.write(')\n{\n')
         #of.write('println!("w0 match {}");\n'.format(i.name))
         for n in range(1, len(i.masks)):
-            of.write('let w{} = cs.peek_word({});\n'.format(n, n-1))
+            of.write('uint16_t w{} = peek_word(cs, {});\n'.format(n, n-1))
 
         if len(i.masks) > 1:
-            of.write('if {} {{\n'.format(' && '.join([i.match_expr(n) for n in range(1, len(i.masks))])))
+            of.write('if ({}) {{\n'.format(' && '.join([i.match_expr(n) for n in range(1, len(i.masks))])))
 
         for c in i.captures:
             if c.name != '?':
-                of.write('let {} = get_bits(w{}, {}, {});\n'.format(c.name, c.wordindex, c.bit, c.length))
+                of.write('uint16_t {} = get_bits(w{}, {}, {});\n'.format(c.name, c.wordindex, c.bit, c.length))
                 #of.write('println!("{} = {{}}", {});\n'.format(c.name, c.name))
 
         predicate_nesting = 0
 
         for predicate in re.findall(R_PREDICATE, i.result):
             predicate_nesting = predicate_nesting + 1
-            of.write('if {} {{\n'.format(predicate[2:-1]))
+            of.write('if ({}) {{\n'.format(predicate[2:-1]))
 
         if len(i.masks) > 1:
-            of.write('cs.skip_words({});\n'.format(len(i.masks)-1))
+            of.write('skip_words(cs, {});\n'.format(len(i.masks)-1))
 
         expr = re.sub(R_PREDICATE, "", i.result)
 
@@ -153,18 +157,13 @@ def gen_decoders(of, insns):
             sub_expr = sub_expr.strip();
             if len(sub_expr) == 0:
                 continue
-            if not sub_expr.startswith('let'):
-                of.write('let ')
             if sub_expr.find('extra') != -1:
                 have_extra = True
             of.write(sub_expr)
             of.write(';\n')
 
-        if not have_extra:
-            of.write('let extra = NoExtra;\n')
-
         if expr.find('return') == -1:
-            of.write('return cs.check_overflow(Instruction {{ size: sz, operation: {}, operands: [ src, dst ], extra: extra }});\n'.format(i.name))
+            of.write('return check_overflow(cs, (m68k_instruction) {{ .size = sz, .operation = M68K_{}, .operands = {{ src, dst }}, .extra = extra }}, result);\n'.format(i.name))
 
         for x in range(0, predicate_nesting):
             of.write('}\n')
@@ -174,26 +173,35 @@ def gen_decoders(of, insns):
 
         of.write('}\n')
 
-    of.write('  return Err(DecodingError::NotImplemented);\n')
+    of.write('  return M68K_NOT_IMPLEMENTED;\n')
     of.write('}\n')
-    
-with open(outfile, "w") as of:
-    of.write('use crate::*;\n')
-    of.write('use crate::Operand::*;\n')
-    of.write('use crate::InstructionExtra::*;\n')
-    of.write('use crate::Operation::*;\n')
-    of.write('use codestream::*;\n')
 
+with open(outfile_h, "w") as of:
     seen_insn_names = {}
+    of.write('#pragma once\n')
     of.write('/// Instruction names.\n');
-    of.write('#[derive(Debug, PartialEq, Clone)]\npub enum Operation {\n');
+    of.write('typedef enum m68k_operation {\n');
     for i in instructions:
         if not seen_insn_names.has_key(i.name):
             seen_insn_names[i.name] = True
-            of.write('  {},'.format(i.name))
-    of.write('}\n');
+            of.write('  M68K_{},\n'.format(i.name))
+    of.write('} m68k_operation;\n');
+    of.write('/// Instruction name strings.\n');
+    of.write('extern const char *m68k_operation_names[];\n');
+    
+with open(outfile_c, "w") as of:
+    of.write('#include "{}"\n'.format(outfile_h));
+    of.write('#include "decoder_support.inl"\n')
 
     has_group = {}
+
+    of.write('const char *m68k_operation_names[] = {\n');
+    seen_insn_names = {}
+    for i in instructions:
+        if not seen_insn_names.has_key(i.name):
+            seen_insn_names[i.name] = True
+            of.write('  "{}",\n'.format(i.name))
+    of.write('};\n');
 
     for group in range(0, 16):
         insns = [i for i in instructions if (i.instruction_patterns[0] >> 12) == group]
@@ -202,17 +210,20 @@ with open(outfile, "w") as of:
         has_group[group] = True
         gen_decoders(of, insns)
 
-    of.write('pub fn decode_instruction_generated(code: &[u8]) -> Result<DecodedInstruction, DecodingError> {\n')
-    of.write('  let mut cs = CodeStream::new(code);\n')
-    of.write('  let w0 = cs.pull16();\n')
-    of.write('  match w0 >> 12 {\n')
+    of.write('m68k_decoding_error m68k_decode(const uint8_t *code, uint32_t len, m68k_decoded_instruction *result)\n{\n')
+    of.write('  m68k_code_stream cs;\n')
+    of.write('  m68k_code_stream_init(&cs, code, len);\n')
+    of.write('  uint16_t w0 = pull16(&cs);\n')
+    of.write('  switch(w0 >> 12) {\n')
     for group in range(0, 16):
         if not has_group.has_key(group):
             continue
-        of.write('    0b{0:04b} => decode_group_{0:04b}(w0, &mut cs),\n'.format(group))
-    of.write('    _ => Err(DecodingError::NotImplemented)\n')
+        of.write('    case 0x{0:02x}: return decode_group_{0:04b}(w0, &cs, result);\n'.format(group))
+    of.write('    default: return M68K_NOT_IMPLEMENTED;\n')
     of.write('  }\n')
 
     of.write('}\n')
 
-subprocess.call(['rustfmt', outfile])
+for fn in (outfile_c, outfile_h):
+    if subprocess.call(['astyle', '-q', '-n', '--style=kr', fn]) != 0:
+        sys.exit(1)

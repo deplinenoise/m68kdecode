@@ -61,21 +61,10 @@ with open(infilename, 'r') as f:
     
 with open(outfilename, "w") as of:
     of.write('// auto-generated from decoding_tests.txt by gen_decoding_tests.py\n')
-    of.write('mod tests {\n')
-    of.write('  use m68kdecode::*;\n')
-    of.write('  mod support;\n')
-    of.write('  use support::*;\n')
-    of.write('  use m68kdecode::DataRegister::*;\n')
-    of.write('  use m68kdecode::AddressRegister::*;\n')
-    of.write('  use m68kdecode::FloatingRegister::*;\n')
-    of.write('  use m68kdecode::MemoryIndirection::*;\n')
-    of.write('  use m68kdecode::FPConditionCode::*;\n')
-    of.write('  use m68kdecode::ConditionCode::*;\n')
-    of.write('  use m68kdecode::FPFormat::*;\n')
-    of.write('  use m68kdecode::Operand::*;\n')
-    of.write('  use m68kdecode::InstructionExtra::*;\n')
-    of.write('  use m68kdecode::BitfieldData::*;\n')
-    of.write('  use m68kdecode::Operation::*;\n')
+    of.write('#include "lib.h"\n')
+    of.write('#include "tests/test_support.inl"\n')
+
+    func_names = []
 
     testnum = 1
     for t in tests:
@@ -87,28 +76,51 @@ with open(outfilename, "w") as of:
         name = re.sub(R_NSYMCHAR, '_', asm_lines[0].strip()).lower()
         name = re.sub(R_UNDERSCORES, '_', name)
         name = re.sub(R_LEADING_UNDERSCORE, '', name)
-        of.write('#[test]\n')
-        of.write('fn test_decode_{:04d}_{}() {{\n'.format(testnum, name))
-        if result_lines[0].find('Instruction {') == -1:
-            of.write('test_decoding_result_err(&[')
-        else:
-            of.write('test_decoding_result_ok(&[')
+        func_name = 'test_decode_{:04d}_{}'.format(testnum, name)
+        func_names.append(func_name)
+        of.write('int {}()\n{{\n'.format(func_name))
+        of.write('const uint8_t code_bytes[] = {\n')
         of.write(', '.join(['0x{0:02x}'.format(byt) for byt in code_bytes]))
-        of.write('], ')
+        of.write('};\n')
+
+        is_error_test = result_lines[0].find('{') == -1
+
+        if not is_error_test:
+            of.write('const m68k_instruction expected =')
+        else:
+            of.write('const m68k_decoding_error expected =')
+
         for l in result_lines:
             of.write(l)
             of.write('\n')
-        of.write(', &[')
+
+        of.write(';\n')
+
+
+        if is_error_test:
+            of.write('return test_decoding_result_err(')
+        else:
+            of.write('return test_decoding_result_ok(')
+        of.write('"{}", code_bytes, {}, expected, "'.format(func_name, len(code_bytes)))
         for al in asm_lines:
-            of.write('"{}",\n'.format(al))
-        of.write(']')
-        of.write(');}\n')
+            of.write(al.replace('\n', '\\n'))
+        of.write('");}\n')
 
         testnum = testnum + 1
-    of.write('}\n')
 
-if subprocess.call(['rustfmt', outfilename]) != 0:
-    sys.exit(1)
+    of.write('int main(int argc, char* argv[])\n{\n')
+    of.write('const int test_count = {};\n'.format(len(func_names)))
+    of.write('int pass_count = 0;\n')
+    for fn in func_names:
+        of.write('  pass_count += {}();'.format(fn))
+
+    of.write('printf("%5d / %5d test(s) passed\\n", pass_count, test_count);\n')
+
+    of.write('return pass_count == test_count ? 0 : 1;\n');
+    of.write('}\n')
 
 os.remove('test.asm')
 os.remove('test.out')
+
+if subprocess.call(['astyle', '-q', '-n', '--style=kr', outfilename]) != 0:
+    sys.exit(1)

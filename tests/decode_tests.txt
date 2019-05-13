@@ -1,1515 +1,1524 @@
 > move.b d0,d1
-# Instruction { size: 1, operation: MOVE, operands: [ DR(D0), DR(D1) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_MOVE, .operands = { DR(0), DR(1) } }
 
 > move.b d2,d3
-# Instruction { size: 1, operation: MOVE, operands: [ DR(D2), DR(D3) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_MOVE, .operands = { DR(2), DR(3) } }
 
 > move.b d4,d5
-# Instruction { size: 1, operation: MOVE, operands: [ DR(D4), DR(D5) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_MOVE, .operands = { DR(4), DR(5) } }
 
 > move.b d6,d7
-# Instruction { size: 1, operation: MOVE, operands: [ DR(D6), DR(D7) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_MOVE, .operands = { DR(6), DR(7) } }
 
 > move.w a0,a1
-# Instruction { size: 2, operation: MOVEA, operands: [ AR(A0), AR(A1) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_MOVEA, .operands = { AR(0), AR(1) } }
 
 > move.w a2,a3
-# Instruction { size: 2, operation: MOVEA, operands: [ AR(A2), AR(A3) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_MOVEA, .operands = { AR(2), AR(3) } }
 
 > move.w a4,a5
-# Instruction { size: 2, operation: MOVEA, operands: [ AR(A4), AR(A5) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_MOVEA, .operands = { AR(4), AR(5) } }
 
 > move.w a6,a7
-# Instruction { size: 2, operation: MOVEA, operands: [ AR(A6), AR(A7) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_MOVEA, .operands = { AR(6), AR(7) } }
 
 > move.b 123(a0,d0),d3 
-# Instruction { size: 1, operation: MOVE, operands: [ ARDISP(A0, dr_disp(D0, 123)), DR(D3) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_MOVE, .operands = { ARDISP(0, DR_DISP(0, 123)), DR(3) } }
 
 > move.w 123(a0,d0),d3 
-# Instruction { size: 2, operation: MOVE, operands: [ ARDISP(A0, dr_disp(D0, 123)), DR(D3) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_MOVE, .operands = { ARDISP(0, DR_DISP(0, 123)), DR(3) } }
 
 > move.l 123(a0,d0),d3 
-# Instruction { size: 4, operation: MOVE, operands: [ ARDISP(A0, dr_disp(D0, 123)), DR(D3) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_MOVE, .operands = { ARDISP(0, DR_DISP(0, 123)), DR(3) } }
 
 > move.l 123(a0,d0),a1 
-# Instruction { size: 4, operation: MOVEA, operands: [ ARDISP(A0, dr_disp(D0, 123)), AR(A1) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_MOVEA, .operands = { ARDISP(0, DR_DISP(0, 123)), AR(1) } }
 
 > move.w 123(a0,d0),a1 
-# Instruction { size: 2, operation: MOVEA, operands: [ ARDISP(A0, dr_disp(D0, 123)), AR(A1) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_MOVEA, .operands = { ARDISP(0, DR_DISP(0, 123)), AR(1) } }
 
 > move.b #$12,d7 
-# Instruction { size: 1, operation: MOVE, operands: [ IMM8(0x12), DR(D7) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_MOVE, .operands = { IMM8(0x12), DR(7) } }
 
 > move.w #$1234,d7 
-# Instruction { size: 2, operation: MOVE, operands: [ IMM16(0x1234), DR(D7) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_MOVE, .operands = { IMM16(0x1234), DR(7) } }
 
 > move.l #$12345678,d7 
-# Instruction { size: 4, operation: MOVE, operands: [ IMM32(0x12345678), DR(D7) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_MOVE, .operands = { IMM32(0x12345678), DR(7) } }
 
 > move.l D1,-(A2)
-# Instruction { size: 4, operation: MOVE, operands: [ DR(D1), ARDEC(A2) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_MOVE, .operands = { DR(1), ARDEC(2) } }
 
 > move.l D1,(A2)+
-# Instruction { size: 4, operation: MOVE, operands: [ DR(D1), ARINC(A2) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_MOVE, .operands = { DR(1), ARINC(2) } }
 
 > move.l -(A4),(A2)+
-# Instruction { size: 4, operation: MOVE, operands: [ ARDEC(A4), ARINC(A2) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_MOVE, .operands = { ARDEC(4), ARINC(2) } }
 
 > move.l 4.w,A0
-# Instruction { size: 4, operation: MOVEA, operands: [ ABS16(4), AR(A0) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_MOVEA, .operands = { ABS16(4), AR(0) } }
 
 > move.l $11223344,A0
-# Instruction { size: 4, operation: MOVEA, operands: [ ABS32(0x11223344), AR(A0) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_MOVEA, .operands = { ABS32(0x11223344), AR(0) } }
 
-> move.w #$1234,123(d0)
-# Instruction {
-#   size: 2, operation: MOVE, operands: [ 
+> move.w #$1234,123(d5)
+# {
+#   .size = 2, .operation = M68K_MOVE, .operands = { 
 #     IMM16(0x1234),
-#     DISP(Displacement {
-#       base_displacement: 123,
-#       outer_displacement: 0,
-#       indexer: Indexer::DR(D0, 0),
-#       indirection: NoIndirection,
-#      })
-#    ],
-#    extra: NoExtra
+#     {
+#        .kind = M68K_DISP,
+#        .data = {
+#           .plain_disp = {
+#             .base_displacement = 123,
+#             .outer_displacement = 0,
+#             .indexer_type = M68K_INDEXER_DR,
+#             .indexer_scale = 1,
+#             .indexer_reg = 5,
+#             .indirection_type = M68K_NO_INDIRECTION,
+#           }
+#        }
+#      }
+#    }
 #  }
 
 > move.w -8(pc),d3
-# Instruction {
-#   size: 2, operation: MOVE, operands: [ 
-#     PCDISP(2, Displacement {
-#       base_displacement: -8,
-#       outer_displacement: 0,
-#       indexer: Indexer::NoIndexer,
-#       indirection: NoIndirection,
-#     }),
-#     DR(D3),
-#   ],
-#   extra: NoExtra
+# {
+#   .size = 2, .operation = M68K_MOVE, .operands = { 
+#     { .kind = M68K_PCDISP, .data = { .pc_disp = { .pc_offset = 2, .disp = {
+#       .base_displacement = -8,
+#       .outer_displacement = 0,
+#       .indexer_type = M68K_NO_INDEXER,
+#       .indexer_scale = 1,
+#       .indirection_type = M68K_NO_INDIRECTION,
+#     } } } },
+#     DR(3),
+#   },
 # }
 
 > move.w -8(pc,d2*8),d3
-# Instruction {
-#   size: 2, operation: MOVE, operands: [ 
-#     PCDISP(2, Displacement {
-#       base_displacement: -8,
-#       outer_displacement: 0,
-#       indexer: Indexer::DR(D2, 3),
-#       indirection: NoIndirection,
-#     }),
-#     DR(D3),
-#   ],
-#   extra: NoExtra
+# {
+#   .size = 2, .operation = M68K_MOVE, .operands = { 
+#     { .kind = M68K_PCDISP, .data = { .pc_disp = { .pc_offset = 2, .disp = {
+#       .base_displacement = -8,
+#       .outer_displacement = 0,
+#       .indexer_type = M68K_INDEXER_DR,
+#       .indexer_scale = 8,
+#       .indexer_reg = 2,
+#       .indirection_type = M68K_NO_INDIRECTION,
+#     } } } },
+#     DR(3),
+#   },
 # }
 
 > move.w 123(a1,d2*4),9876(a2,d3*2)
-# Instruction {
-#   size: 2,
-#   operation: MOVE,
-#   operands: [
-#     ARDISP(A1, dr_disp_scale(D2, 123, 2)),
-#     ARDISP(A2, dr_disp_scale(D3, 9876, 1))
-#   ],
-#   extra: NoExtra
+# {
+#   .size = 2,
+#   .operation = M68K_MOVE,
+#   .operands = {
+#     ARDISP(1, DR_DISP_SCALE(2, 123, 4)),
+#     ARDISP(2, DR_DISP_SCALE(3, 9876, 2))
+#   },
 # }
 
 > move.w d0,12345(a0,a1*2)
-# Instruction {
-#   size: 2,
-#   operation: MOVE,
-#   operands: [
-#     DR(D0),
-#     ARDISP(A0, Displacement {
-#       base_displacement: 12345,
-#       outer_displacement: 0,
-#       indexer: Indexer::AR(A1, 1),
-#       indirection: NoIndirection,
-#     })
-#   ],
-#   extra: NoExtra
+# {
+#   .size = 2,
+#   .operation = M68K_MOVE,
+#   .operands = {
+#     DR(0),
+#     ARDISP(0, ((m68k_disp) {
+#       .base_displacement = 12345,
+#       .outer_displacement = 0,
+#       .indexer_type = M68K_INDEXER_AR,
+#       .indexer_reg = 1,
+#       .indexer_scale = 2,
+#       .indirection_type = M68K_NO_INDIRECTION,
+#     }))
+#   },
 # }
 
 > lea (a0),a1
-# Instruction { size: 4, operation: LEA, operands: [ ARIND(A0), AR(A1) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_LEA, .operands = { ARIND(0), AR(1) } }
 
 > lea 8(a0),a1
-# Instruction { size: 4, operation: LEA, operands: [ ARDISP(A0, simple_disp(8)), AR(A1) ], extra: NoExtra  }
+# { .size = 4, .operation = M68K_LEA, .operands = { ARDISP(0, simple_disp(8)), AR(1) }  }
 
 > ori #17,ccr
-# Instruction { size: 1, operation: ORITOCCR, operands: [ IMM8(17), Implied ], extra: NoExtra  }
+# { .size = 1, .operation = M68K_ORITOCCR, .operands = { IMM8(17), IMPLIED }  }
 
 > ori #$1234,sr
-# Instruction { size: 2, operation: ORITOSR, operands: [ IMM16(0x1234), Implied ], extra: NoExtra  }
+# { .size = 2, .operation = M68K_ORITOSR, .operands = { IMM16(0x1234), IMPLIED }  }
 
 > ori.w #$1234,d0
-# Instruction { size: 2, operation: ORI, operands: [ IMM16(0x1234), DR(D0) ], extra: NoExtra  }
+# { .size = 2, .operation = M68K_ORI, .operands = { IMM16(0x1234), DR(0) }  }
 
 > ori.b #$12,d2
-# Instruction { size: 1, operation: ORI, operands: [ IMM8(0x12), DR(D2) ], extra: NoExtra  }
+# { .size = 1, .operation = M68K_ORI, .operands = { IMM8(0x12), DR(2) }  }
 
 > ori.w #$1234,123(a0,d0)
-# Instruction { size: 2, operation: ORI, operands: [ IMM16(0x1234), ARDISP(A0, dr_disp(D0, 123)) ], extra: NoExtra  }
+# { .size = 2, .operation = M68K_ORI, .operands = { IMM16(0x1234), ARDISP(0, DR_DISP(0, 123)) }  }
 
 > ori.l #$12345678,-(a0)
-# Instruction { size: 4, operation: ORI, operands: [ IMM32(0x12345678), ARDEC(A0) ], extra: NoExtra  }
+# { .size = 4, .operation = M68K_ORI, .operands = { IMM32(0x12345678), ARDEC(0) }  }
 
 > andi #17,ccr
-# Instruction { size: 1, operation: ANDITOCCR, operands: [ IMM8(17), Implied ], extra: NoExtra  }
+# { .size = 1, .operation = M68K_ANDITOCCR, .operands = { IMM8(17), IMPLIED }  }
 
 > andi #$1234,sr
-# Instruction { size: 2, operation: ANDITOSR, operands: [ IMM16(0x1234), Implied ], extra: NoExtra  }
+# { .size = 2, .operation = M68K_ANDITOSR, .operands = { IMM16(0x1234), IMPLIED }  }
 
 > andi.w #$1234,d0
-# Instruction { size: 2, operation: ANDI, operands: [ IMM16(0x1234), DR(D0) ], extra: NoExtra  }
+# { .size = 2, .operation = M68K_ANDI, .operands = { IMM16(0x1234), DR(0) }  }
 
 > andi.b #$12,d2
-# Instruction { size: 1, operation: ANDI, operands: [ IMM8(0x12), DR(D2) ], extra: NoExtra  }
+# { .size = 1, .operation = M68K_ANDI, .operands = { IMM8(0x12), DR(2) }  }
 
 > andi.w #$1234,123(a0,d0)
-# Instruction { size: 2, operation: ANDI, operands: [ IMM16(0x1234), ARDISP(A0, dr_disp(D0, 123)) ], extra: NoExtra  }
+# { .size = 2, .operation = M68K_ANDI, .operands = { IMM16(0x1234), ARDISP(0, DR_DISP(0, 123)) }  }
 
 > andi.l #$12345678,-(a0)
-# Instruction { size: 4, operation: ANDI, operands: [ IMM32(0x12345678), ARDEC(A0) ], extra: NoExtra  }
+# { .size = 4, .operation = M68K_ANDI, .operands = { IMM32(0x12345678), ARDEC(0) }  }
 
 > eori #17,ccr
-# Instruction { size: 1, operation: EORITOCCR, operands: [ IMM8(17), Implied ], extra: NoExtra  }
+# { .size = 1, .operation = M68K_EORITOCCR, .operands = { IMM8(17), IMPLIED }  }
 
 > eori #$1234,sr
-# Instruction { size: 2, operation: EORITOSR, operands: [ IMM16(0x1234), Implied ], extra: NoExtra  }
+# { .size = 2, .operation = M68K_EORITOSR, .operands = { IMM16(0x1234), IMPLIED }  }
 
 > eori.w #$1234,d0
-# Instruction { size: 2, operation: EORI, operands: [ IMM16(0x1234), DR(D0) ], extra: NoExtra  }
+# { .size = 2, .operation = M68K_EORI, .operands = { IMM16(0x1234), DR(0) }  }
 
 > eori.b #$12,d2
-# Instruction { size: 1, operation: EORI, operands: [ IMM8(0x12), DR(D2) ], extra: NoExtra  }
+# { .size = 1, .operation = M68K_EORI, .operands = { IMM8(0x12), DR(2) }  }
 
 > eori.w #$1234,123(a0,d0)
-# Instruction { size: 2, operation: EORI, operands: [ IMM16(0x1234), ARDISP(A0, dr_disp(D0, 123)) ], extra: NoExtra  }
+# { .size = 2, .operation = M68K_EORI, .operands = { IMM16(0x1234), ARDISP(0, DR_DISP(0, 123)) } }
 
 > eori.l #$12345678,-(a0)
-# Instruction { size: 4, operation: EORI, operands: [ IMM32(0x12345678), ARDEC(A0) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_EORI, .operands = { IMM32(0x12345678), ARDEC(0) } }
 
 > addi.l #$12345678,-(a0)
-# Instruction { size: 4, operation: ADDI, operands: [ IMM32(0x12345678), ARDEC(A0) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_ADDI, .operands = { IMM32(0x12345678), ARDEC(0) } }
 
 > subi.l #$12345678,-(a0)
-# Instruction { size: 4, operation: SUBI, operands: [ IMM32(0x12345678), ARDEC(A0) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_SUBI, .operands = { IMM32(0x12345678), ARDEC(0) } }
 
 ! 68020
 > rtm d3
-# Instruction { size: 0, operation: RTM, operands: [ DR(D3), NoOperand ], extra: NoExtra }
+# { .size = 0, .operation = M68K_RTM, .operands = { DR(3), NO_OPERAND } }
 
 ! 68020
 > rtm a1
-# Instruction { size: 0, operation: RTM, operands: [ AR(A1), NoOperand ], extra: NoExtra }
+# { .size = 0, .operation = M68K_RTM, .operands = { AR(1), NO_OPERAND } }
 
 ! 68020
 > callm #3,(a1)
-# Instruction { size: 0, operation: CALLM, operands: [ IMM8(3), ARIND(A1) ], extra: NoExtra }
+# { .size = 0, .operation = M68K_CALLM, .operands = { IMM8(3), ARIND(1) } }
 
 ! 68020
 > callm #99,$12345678
-# Instruction { size: 0, operation: CALLM, operands: [ IMM8(99), ABS32(0x12345678) ], extra: NoExtra }
+# { .size = 0, .operation = M68K_CALLM, .operands = { IMM8(99), ABS32(0x12345678) } }
 
 > cmp2.l (a0),d3
-# Instruction { size: 4, operation: CMP2, operands: [ ARIND(A0), DR(D3) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_CMP2, .operands = { ARIND(0), DR(3) } }
 
 > cmp2.b 90(a0,d2),a6
-# Instruction { size: 1, operation: CMP2, operands: [ ARDISP(A0, dr_disp(D2, 90)), AR(A6) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_CMP2, .operands = { ARDISP(0, DR_DISP(2, 90)), AR(6) } }
 
 > chk2.w 90(a0,d2),a6
-# Instruction { size: 2, operation: CHK2, operands: [ ARDISP(A0, dr_disp(D2, 90)), AR(A6) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_CHK2, .operands = { ARDISP(0, DR_DISP(2, 90)), AR(6) } }
 
 > cmpi.b #$a5,90(a0,d2*4)
-# Instruction { size: 1, operation: CMPI, operands: [ IMM8(0xa5), ARDISP(A0, dr_disp_scale(D2, 90, 2)) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_CMPI, .operands = { IMM8(0xa5), ARDISP(0, DR_DISP_SCALE(2, 90, 4)) } }
 
 > cmpi.w #$a512,90(a0,d2*4)
-# Instruction { size: 2, operation: CMPI, operands: [ IMM16(0xa512), ARDISP(A0, dr_disp_scale(D2, 90, 2)) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_CMPI, .operands = { IMM16(0xa512), ARDISP(0, DR_DISP_SCALE(2, 90, 4)) } }
 
 > cmpi.l #$12345678,90(a0,d2*4)
-# Instruction { size: 4, operation: CMPI, operands: [ IMM32(0x12345678), ARDISP(A0, dr_disp_scale(D2, 90, 2)) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_CMPI, .operands = { IMM32(0x12345678), ARDISP(0, DR_DISP_SCALE(2, 90, 4)) } }
 
 > btst #18,d0
-# Instruction { size: 1, operation: BTST, operands: [ IMM16(18), DR(D0) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_BTST, .operands = { IMM16(18), DR(0) } }
 
 > btst #18,(a0)+
-# Instruction { size: 1, operation: BTST, operands: [ IMM16(18), ARINC(A0) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_BTST, .operands = { IMM16(18), ARINC(0) } }
 
 > bclr #18,(a0)+
-# Instruction { size: 1, operation: BCLR, operands: [ IMM16(18), ARINC(A0) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_BCLR, .operands = { IMM16(18), ARINC(0) } }
 
 > bchg #18,(a0)+
-# Instruction { size: 1, operation: BCHG, operands: [ IMM16(18), ARINC(A0) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_BCHG, .operands = { IMM16(18), ARINC(0) } }
 
 > bset #18,(a0)+
-# Instruction { size: 1, operation: BSET, operands: [ IMM16(18), ARINC(A0) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_BSET, .operands = { IMM16(18), ARINC(0) } }
 
 > moves.l a0,(a1)
-# Instruction { size: 4, operation: MOVES, operands: [ AR(A0), ARIND(A1) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_MOVES, .operands = { AR(0), ARIND(1) } }
 
 > moves.b d0,(a1)
-# Instruction { size: 1, operation: MOVES, operands: [ DR(D0), ARIND(A1) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_MOVES, .operands = { DR(0), ARIND(1) } }
 
 > cas d0,d1,(a0)
-# DecodingError::NotImplemented
+# M68K_NOT_IMPLEMENTED
 
 > cas2 d0:d1,d2:d3,(a0):(a1)
-# DecodingError::NotImplemented
+# M68K_NOT_IMPLEMENTED
 
 // doesn't work on all CPUs, assembler freaks out
 // > bgnd
-// # Instruction { size: 0, operation: BGND, operands: [ NoOperand, NoOperand ] }
+// # { .size = 0, .operation = M68K_BGND, .operands = { NO_OPERAND, NO_OPERAND } }
 
 > illegal
-# Instruction { size: 0, operation: ILLEGAL, operands: [ NoOperand, NoOperand ], extra: NoExtra }
+# { .size = 0, .operation = M68K_ILLEGAL, .operands = { NO_OPERAND, NO_OPERAND } }
 
 > nop
-# Instruction { size: 0, operation: NOP, operands: [ NoOperand, NoOperand ], extra: NoExtra }
+# { .size = 0, .operation = M68K_NOP, .operands = { NO_OPERAND, NO_OPERAND } }
 
 > reset
-# Instruction { size: 0, operation: RESET, operands: [ NoOperand, NoOperand ], extra: NoExtra }
+# { .size = 0, .operation = M68K_RESET, .operands = { NO_OPERAND, NO_OPERAND } }
 
 > rtd #578
-# Instruction { size: 0, operation: RTD, operands: [ IMM16(578), NoOperand ], extra: NoExtra }
+# { .size = 0, .operation = M68K_RTD, .operands = { IMM16(578), NO_OPERAND } }
 
 > rte
-# Instruction { size: 0, operation: RTE, operands: [ NoOperand, NoOperand ], extra: NoExtra }
+# { .size = 0, .operation = M68K_RTE, .operands = { NO_OPERAND, NO_OPERAND } }
 
 > rtr
-# Instruction { size: 0, operation: RTR, operands: [ NoOperand, NoOperand ], extra: NoExtra }
+# { .size = 0, .operation = M68K_RTR, .operands = { NO_OPERAND, NO_OPERAND } }
 
 > rts
-# Instruction { size: 0, operation: RTS, operands: [ NoOperand, NoOperand ], extra: NoExtra }
+# { .size = 0, .operation = M68K_RTS, .operands = { NO_OPERAND, NO_OPERAND } }
 
 > stop #123
-# Instruction { size: 0, operation: STOP, operands: [ IMM16(123), NoOperand ], extra: NoExtra }
+# { .size = 0, .operation = M68K_STOP, .operands = { IMM16(123), NO_OPERAND } }
 
 > trapv
-# Instruction { size: 0, operation: TRAPV, operands: [ NoOperand, NoOperand ], extra: NoExtra }
+# { .size = 0, .operation = M68K_TRAPV, .operands = { NO_OPERAND, NO_OPERAND } }
 
 > swap d7
-# Instruction { size: 0, operation: SWAP, operands: [ DR(D7), NoOperand ], extra: NoExtra }
+# { .size = 0, .operation = M68K_SWAP, .operands = { DR(7), NO_OPERAND } }
 
 > bkpt #3
-# Instruction { size: 0, operation: BKPT, operands: [ IMM8(3), NoOperand ], extra: NoExtra }
+# { .size = 0, .operation = M68K_BKPT, .operands = { IMM8(3), NO_OPERAND } }
 
 > ext.w d6
-# Instruction { size: 2, operation: EXTW, operands: [ DR(D6), NoOperand ], extra: NoExtra }
+# { .size = 2, .operation = M68K_EXTW, .operands = { DR(6), NO_OPERAND } }
 
 > ext.l d6
-# Instruction { size: 4, operation: EXTL, operands: [ DR(D6), NoOperand ], extra: NoExtra }
+# { .size = 4, .operation = M68K_EXTL, .operands = { DR(6), NO_OPERAND } }
 
 > extb.l d6
-# Instruction { size: 4, operation: EXTBL, operands: [ DR(D6), NoOperand ], extra: NoExtra }
+# { .size = 4, .operation = M68K_EXTBL, .operands = { DR(6), NO_OPERAND } }
 
 > link.w a0,#1234
-# Instruction { size: 2, operation: LINK, operands: [ AR(A0), IMM16(1234) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_LINK, .operands = { AR(0), IMM16(1234) } }
 
 > link.l a5,#$12345678
-# Instruction { size: 4, operation: LINK, operands: [ AR(A5), IMM32(0x12345678) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_LINK, .operands = { AR(5), IMM32(0x12345678) } }
 
 > unlk a2
-# Instruction { size: 0, operation: UNLK, operands: [ AR(A2), NoOperand ], extra: NoExtra }
+# { .size = 0, .operation = M68K_UNLK, .operands = { AR(2), NO_OPERAND } }
 
 > trap #15
-# Instruction { size: 0, operation: TRAP, operands: [ IMM8(15), NoOperand ], extra: NoExtra }
+# { .size = 0, .operation = M68K_TRAP, .operands = { IMM8(15), NO_OPERAND } }
 
 > divs.w (a1)+,d2
-# Instruction { size: 2, operation: DIVS, operands: [ ARINC(A1), DR(D2) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_DIVS, .operands = { ARINC(1), DR(2) } }
 
 > divs.l d0,d2
-# Instruction { size: 4, operation: DIVSL, operands: [ DR(D0), DR(D2) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_DIVSL, .operands = { DR(0), DR(2) } }
 
 > divs.l d0,d3:d2
-# Instruction { size: 4, operation: DIVSL, operands: [ DR(D0), DPAIR(D2, D3) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_DIVSL, .operands = { DR(0), DPAIR(2, 3) } }
 
 > divsl.l d0,d3:d2
-# Instruction { size: 4, operation: DIVSLL, operands: [ DR(D0), DPAIR(D2, D3) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_DIVSLL, .operands = { DR(0), DPAIR(2, 3) } }
 
 > divu.w (a1)+,d2
-# Instruction { size: 2, operation: DIVU, operands: [ ARINC(A1), DR(D2) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_DIVU, .operands = { ARINC(1), DR(2) } }
 
 > divu.l d0,d2
-# Instruction { size: 4, operation: DIVUL, operands: [ DR(D0), DR(D2) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_DIVUL, .operands = { DR(0), DR(2) } }
 
 > divu.l d0,d3:d2
-# Instruction { size: 4, operation: DIVUL, operands: [ DR(D0), DPAIR(D2, D3) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_DIVUL, .operands = { DR(0), DPAIR(2, 3) } }
 
 > divul.l d0,d3:d2
-# Instruction { size: 4, operation: DIVULL, operands: [ DR(D0), DPAIR(D2, D3) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_DIVULL, .operands = { DR(0), DPAIR(2, 3) } }
 
 > jmp (a0)
-# Instruction { size: 0, operation: JMP, operands: [ ARIND(A0), NoOperand ], extra: NoExtra }
+# { .size = 0, .operation = M68K_JMP, .operands = { ARIND(0), NO_OPERAND } }
 
 > jmp $12345678
-# Instruction { size: 0, operation: JMP, operands: [ ABS32(0x12345678), NoOperand ], extra: NoExtra }
+# { .size = 0, .operation = M68K_JMP, .operands = { ABS32(0x12345678), NO_OPERAND } }
 
 > jmp 123(pc)
-# Instruction {
-#   size: 0, operation: JMP, operands: [ 
-#     PCDISP(2, Displacement {
-#       base_displacement: 123,
-#       outer_displacement: 0,
-#       indexer: Indexer::NoIndexer,
-#       indirection: NoIndirection,
-#     }),
-#     NoOperand,
-#   ],
-#   extra: NoExtra,
+# {
+#   .size = 0, .operation = M68K_JMP, .operands = { 
+#     { .kind = M68K_PCDISP, .data = { .pc_disp = { .pc_offset = 2, .disp = {
+#       .base_displacement = 123,
+#       .outer_displacement = 0,
+#       .indexer_type = M68K_NO_INDEXER,
+#       .indexer_scale = 1,
+#       .indexer_reg = 0,
+#       .indirection_type = M68K_NO_INDIRECTION,
+#     } } } },
+#     NO_OPERAND,
+#   },
 # }
 
 > jsr (a0)
-# Instruction { size: 0, operation: JSR, operands: [ ARIND(A0), NoOperand ], extra: NoExtra }
+# { .size = 0, .operation = M68K_JSR, .operands = { ARIND(0), NO_OPERAND } }
 
 > jsr $12345678
-# Instruction { size: 0, operation: JSR, operands: [ ABS32(0x12345678), NoOperand ], extra: NoExtra }
+# { .size = 0, .operation = M68K_JSR, .operands = { ABS32(0x12345678), NO_OPERAND } }
 
 > jsr 123(pc)
-# Instruction {
-#   size: 0, operation: JSR, operands: [ 
-#     PCDISP(2, Displacement {
-#       base_displacement: 123,
-#       outer_displacement: 0,
-#       indexer: Indexer::NoIndexer,
-#       indirection: NoIndirection,
-#     }),
-#     NoOperand,
-#   ],
-#   extra: NoExtra,
+# {
+#   .size = 0, .operation = M68K_JSR, .operands = { 
+#     { .kind = M68K_PCDISP, .data = { .pc_disp = { .pc_offset = 2, .disp = {
+#       .base_displacement = 123,
+#       .outer_displacement = 0,
+#       .indexer_type = M68K_NO_INDEXER,
+#       .indexer_scale = 1,
+#       .indexer_reg = 0,
+#       .indirection_type = M68K_NO_INDIRECTION,
+#     } } } },
+#     NO_OPERAND,
+#   },
 # }
 
 > muls.w  d0,d1
-# Instruction { size: 2, operation: MULS, operands: [ DR(D0), DR(D1) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_MULS, .operands = { DR(0), DR(1) } }
 
 > muls.l  d0,d1
-# Instruction { size: 4, operation: MULS, operands: [ DR(D0), DR(D1) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_MULS, .operands = { DR(0), DR(1) } }
 
 > muls.l  d0,d2:d1
-# Instruction { size: 4, operation: MULS, operands: [ DR(D0), DPAIR(D1, D2) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_MULS, .operands = { DR(0), DPAIR(1, 2) } }
 
 > mulu.w  d0,d1
-# Instruction { size: 2, operation: MULU, operands: [ DR(D0), DR(D1) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_MULU, .operands = { DR(0), DR(1) } }
 
 > mulu.l  d0,d1
-# Instruction { size: 4, operation: MULU, operands: [ DR(D0), DR(D1) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_MULU, .operands = { DR(0), DR(1) } }
 
 > mulu.l  d0,d2:d1
-# Instruction { size: 4, operation: MULU, operands: [ DR(D0), DPAIR(D1, D2) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_MULU, .operands = { DR(0), DPAIR(1, 2) } }
 
 > nbcd  (a0)+
-# Instruction { size: 1, operation: NBCD, operands: [ ARINC(A0), NoOperand ], extra: NoExtra }
+# { .size = 1, .operation = M68K_NBCD, .operands = { ARINC(0), NO_OPERAND } }
 
 > move sr,d0
-# Instruction { size: 2, operation: MOVEFROMSR, operands: [ Implied, DR(D0) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_MOVEFROMSR, .operands = { IMPLIED, DR(0) } }
 
 > move d0,sr
-# Instruction { size: 2, operation: MOVETOSR, operands: [ DR(D0), Implied ], extra: NoExtra }
+# { .size = 2, .operation = M68K_MOVETOSR, .operands = { DR(0), IMPLIED } }
 
 > move a0,usp
-# Instruction { size: 4, operation: MOVETOUSP, operands: [ AR(A0), Implied ], extra: NoExtra }
+# { .size = 4, .operation = M68K_MOVETOUSP, .operands = { AR(0), IMPLIED } }
 
 > move usp,a3
-# Instruction { size: 4, operation: MOVEFROMUSP, operands: [ Implied, AR(A3) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_MOVEFROMUSP, .operands = { IMPLIED, AR(3) } }
 
 > move d0,ccr
-# Instruction { size: 2, operation: MOVETOCCR, operands: [ DR(D0), Implied ], extra: NoExtra }
+# { .size = 2, .operation = M68K_MOVETOCCR, .operands = { DR(0), IMPLIED } }
 
 > move ccr,d0
-# Instruction { size: 2, operation: MOVEFROMCCR, operands: [ Implied, DR(D0) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_MOVEFROMCCR, .operands = { IMPLIED, DR(0) } }
 
 > pea (a0)
-# Instruction { size: 4, operation: PEA, operands: [ ARIND(A0), Implied ], extra: NoExtra }
+# { .size = 4, .operation = M68K_PEA, .operands = { ARIND(0), IMPLIED } }
 
 > movem.w d0-d4/a0-a2,-(a4)
-# Instruction { size: 2, operation: MOVEM, operands: [ REGLIST(0b1111100011100000), ARDEC(A4) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_MOVEM, .operands = { REGLIST(0b1111100011100000), ARDEC(4) } }
 
 > movem.l (a4)+,d0-d4/a0-a2
-# Instruction { size: 4, operation: MOVEM, operands: [ ARINC(A4), REGLIST(0b0000011100011111) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_MOVEM, .operands = { ARINC(4), REGLIST(0b0000011100011111) } }
 
 > clr.b d0
-# Instruction { size: 1, operation: CLR, operands: [ Implied, DR(D0) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_CLR, .operands = { IMPLIED, DR(0) } }
 
 > clr.w (a0)+
-# Instruction { size: 2, operation: CLR, operands: [ Implied, ARINC(A0) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_CLR, .operands = { IMPLIED, ARINC(0) } }
 
 > clr.l (a4)
-# Instruction { size: 4, operation: CLR, operands: [ Implied, ARIND(A4) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_CLR, .operands = { IMPLIED, ARIND(4) } }
 
 > neg.b d0
-# Instruction { size: 1, operation: NEG, operands: [ Implied, DR(D0) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_NEG, .operands = { IMPLIED, DR(0) } }
 
 > neg.w (a0)+
-# Instruction { size: 2, operation: NEG, operands: [ Implied, ARINC(A0) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_NEG, .operands = { IMPLIED, ARINC(0) } }
 
 > neg.l (a4)
-# Instruction { size: 4, operation: NEG, operands: [ Implied, ARIND(A4) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_NEG, .operands = { IMPLIED, ARIND(4) } }
 
 > negx.b d0
-# Instruction { size: 1, operation: NEGX, operands: [ Implied, DR(D0) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_NEGX, .operands = { IMPLIED, DR(0) } }
 
 > negx.w (a0)+
-# Instruction { size: 2, operation: NEGX, operands: [ Implied, ARINC(A0) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_NEGX, .operands = { IMPLIED, ARINC(0) } }
 
 > negx.l (a4)
-# Instruction { size: 4, operation: NEGX, operands: [ Implied, ARIND(A4) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_NEGX, .operands = { IMPLIED, ARIND(4) } }
 
 > not.b d0
-# Instruction { size: 1, operation: NOT, operands: [ Implied, DR(D0) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_NOT, .operands = { IMPLIED, DR(0) } }
 
 > not.w (a0)+
-# Instruction { size: 2, operation: NOT, operands: [ Implied, ARINC(A0) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_NOT, .operands = { IMPLIED, ARINC(0) } }
 
 > not.l (a4)
-# Instruction { size: 4, operation: NOT, operands: [ Implied, ARIND(A4) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_NOT, .operands = { IMPLIED, ARIND(4) } }
 
 > tst.b d0
-# Instruction { size: 1, operation: TST, operands: [ Implied, DR(D0) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_TST, .operands = { IMPLIED, DR(0) } }
 
 > tst.w (a0)+
-# Instruction { size: 2, operation: TST, operands: [ Implied, ARINC(A0) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_TST, .operands = { IMPLIED, ARINC(0) } }
 
 > tst.l (a4)
-# Instruction { size: 4, operation: TST, operands: [ Implied, ARIND(A4) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_TST, .operands = { IMPLIED, ARIND(4) } }
 
 > chk.w (a4),d2
-# Instruction { size: 2, operation: CHK, operands: [ ARIND(A4), DR(D2) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_CHK, .operands = { ARIND(4), DR(2) } }
 
 > chk.l (a4),d2
-# Instruction { size: 4, operation: CHK, operands: [ ARIND(A4), DR(D2) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_CHK, .operands = { ARIND(4), DR(2) } }
 
 > bfchg (a4){12:7}
-# Instruction { size: 0, operation: BFCHG, operands: [ NoOperand, ARIND(A4) ], extra: Bitfield(STATIC(12), STATIC(7)) }
+# { .size = 0, .operation = M68K_BFCHG, .operands = { NO_OPERAND, ARIND(4) }, .extra = BF_SS(12, 7) }
 
 > bfchg (a4){d2:7}
-# Instruction { size: 0, operation: BFCHG, operands: [ NoOperand, ARIND(A4) ], extra: Bitfield(DYNAMIC(D2), STATIC(7)) }
+# { .size = 0, .operation = M68K_BFCHG, .operands = { NO_OPERAND, ARIND(4) }, .extra = BF_DS(2, 7) }
 
 > bfchg (a4){d2:d3}
-# Instruction { size: 0, operation: BFCHG, operands: [ NoOperand, ARIND(A4) ], extra: Bitfield(DYNAMIC(D2), DYNAMIC(D3)) }
+# { .size = 0, .operation = M68K_BFCHG, .operands = { NO_OPERAND, ARIND(4) }, .extra = BF_DD(2, 3) }
 
 > bfclr (a4){12:7}
-# Instruction { size: 0, operation: BFCLR, operands: [ NoOperand, ARIND(A4) ], extra: Bitfield(STATIC(12), STATIC(7)) }
+# { .size = 0, .operation = M68K_BFCLR, .operands = { NO_OPERAND, ARIND(4) }, .extra = BF_SS(12, 7) }
 
 > bfexts (a4){12:7},d1
-# Instruction { size: 0, operation: BFEXTS, operands: [ ARIND(A4), DR(D1) ], extra: Bitfield(STATIC(12), STATIC(7)) }
+# { .size = 0, .operation = M68K_BFEXTS, .operands = { ARIND(4), DR(1) }, .extra = BF_SS(12, 7) }
 
 > bfextu (a4){12:7},d1
-# Instruction { size: 0, operation: BFEXTU, operands: [ ARIND(A4), DR(D1) ], extra: Bitfield(STATIC(12), STATIC(7)) }
+# { .size = 0, .operation = M68K_BFEXTU, .operands = { ARIND(4), DR(1) }, .extra = BF_SS(12, 7) }
 
 > bfffo (a4){12:7},d1
-# Instruction { size: 0, operation: BFFFO, operands: [ ARIND(A4), DR(D1) ], extra: Bitfield(STATIC(12), STATIC(7)) }
+# { .size = 0, .operation = M68K_BFFFO, .operands = { ARIND(4), DR(1) }, .extra = BF_SS(12, 7) }
 
 > bfins d1,(a4){12:7}
-# Instruction { size: 0, operation: BFINS, operands: [ DR(D1), ARIND(A4) ], extra: Bitfield(STATIC(12), STATIC(7)) }
+# { .size = 0, .operation = M68K_BFINS, .operands = { DR(1), ARIND(4) }, .extra = BF_SS(12, 7) }
 
 > bfset (a4){12:7}
-# Instruction { size: 0, operation: BFSET, operands: [ NoOperand, ARIND(A4) ], extra: Bitfield(STATIC(12), STATIC(7)) }
+# { .size = 0, .operation = M68K_BFSET, .operands = { NO_OPERAND, ARIND(4) }, .extra = BF_SS(12, 7) }
 
 > bftst (a4){12:7}
-# Instruction { size: 0, operation: BFTST, operands: [ NoOperand, ARIND(A4) ], extra: Bitfield(STATIC(12), STATIC(7)) }
+# { .size = 0, .operation = M68K_BFTST, .operands = { NO_OPERAND, ARIND(4) }, .extra = BF_SS(12, 7) }
 
 > .self: dbf d3,.self
-# Instruction { size: 2, operation: DBCC, operands: [ DR(D3), PCDISP(2, simple_disp(-2)) ], extra: Condition(CC_F) }
+# { .size = 2, .operation = M68K_DBCC, .operands = { DR(3), PCDISP(2, simple_disp(-2)) }, .extra = CC(M68K_CC_F) }
 
 > .self: dbhi d3,.self
-# Instruction { size: 2, operation: DBCC, operands: [ DR(D3), PCDISP(2, simple_disp(-2)) ], extra: Condition(CC_HI) }
+# { .size = 2, .operation = M68K_DBCC, .operands = { DR(3), PCDISP(2, simple_disp(-2)) }, .extra = CC(M68K_CC_HI) }
 
 > .self: dbls d3,.self
-# Instruction { size: 2, operation: DBCC, operands: [ DR(D3), PCDISP(2, simple_disp(-2)) ], extra: Condition(CC_LS) }
+# { .size = 2, .operation = M68K_DBCC, .operands = { DR(3), PCDISP(2, simple_disp(-2)) }, .extra = CC(M68K_CC_LS) }
 
 > .self: dbcc d3,.self
-# Instruction { size: 2, operation: DBCC, operands: [ DR(D3), PCDISP(2, simple_disp(-2)) ], extra: Condition(CC_CC) }
+# { .size = 2, .operation = M68K_DBCC, .operands = { DR(3), PCDISP(2, simple_disp(-2)) }, .extra = CC(M68K_CC_CC) }
 
 > .self: dbhs d3,.self
-# Instruction { size: 2, operation: DBCC, operands: [ DR(D3), PCDISP(2, simple_disp(-2)) ], extra: Condition(CC_CC) }
+# { .size = 2, .operation = M68K_DBCC, .operands = { DR(3), PCDISP(2, simple_disp(-2)) }, .extra = CC(M68K_CC_CC) }
 
 > .self: dbcs d3,.self
-# Instruction { size: 2, operation: DBCC, operands: [ DR(D3), PCDISP(2, simple_disp(-2)) ], extra: Condition(CC_CS) }
+# { .size = 2, .operation = M68K_DBCC, .operands = { DR(3), PCDISP(2, simple_disp(-2)) }, .extra = CC(M68K_CC_CS) }
 
 > .self: dblo d3,.self
-# Instruction { size: 2, operation: DBCC, operands: [ DR(D3), PCDISP(2, simple_disp(-2)) ], extra: Condition(CC_CS) }
+# { .size = 2, .operation = M68K_DBCC, .operands = { DR(3), PCDISP(2, simple_disp(-2)) }, .extra = CC(M68K_CC_CS) }
 
 > .self: dbne d3,.self
-# Instruction { size: 2, operation: DBCC, operands: [ DR(D3), PCDISP(2, simple_disp(-2)) ], extra: Condition(CC_NE) }
+# { .size = 2, .operation = M68K_DBCC, .operands = { DR(3), PCDISP(2, simple_disp(-2)) }, .extra = CC(M68K_CC_NE) }
 
 > .self: dbeq d3,.self
-# Instruction { size: 2, operation: DBCC, operands: [ DR(D3), PCDISP(2, simple_disp(-2)) ], extra: Condition(CC_EQ) }
+# { .size = 2, .operation = M68K_DBCC, .operands = { DR(3), PCDISP(2, simple_disp(-2)) }, .extra = CC(M68K_CC_EQ) }
 
 > .self: dbvc d3,.self
-# Instruction { size: 2, operation: DBCC, operands: [ DR(D3), PCDISP(2, simple_disp(-2)) ], extra: Condition(CC_VC) }
+# { .size = 2, .operation = M68K_DBCC, .operands = { DR(3), PCDISP(2, simple_disp(-2)) }, .extra = CC(M68K_CC_VC) }
 
 > .self: dbvs d3,.self
-# Instruction { size: 2, operation: DBCC, operands: [ DR(D3), PCDISP(2, simple_disp(-2)) ], extra: Condition(CC_VS) }
+# { .size = 2, .operation = M68K_DBCC, .operands = { DR(3), PCDISP(2, simple_disp(-2)) }, .extra = CC(M68K_CC_VS) }
 
 > .self: dbpl d3,.self
-# Instruction { size: 2, operation: DBCC, operands: [ DR(D3), PCDISP(2, simple_disp(-2)) ], extra: Condition(CC_PL) }
+# { .size = 2, .operation = M68K_DBCC, .operands = { DR(3), PCDISP(2, simple_disp(-2)) }, .extra = CC(M68K_CC_PL) }
 
 > .self: dbmi d3,.self
-# Instruction { size: 2, operation: DBCC, operands: [ DR(D3), PCDISP(2, simple_disp(-2)) ], extra: Condition(CC_MI) }
+# { .size = 2, .operation = M68K_DBCC, .operands = { DR(3), PCDISP(2, simple_disp(-2)) }, .extra = CC(M68K_CC_MI) }
 
 > .self: dbge d3,.self
-# Instruction { size: 2, operation: DBCC, operands: [ DR(D3), PCDISP(2, simple_disp(-2)) ], extra: Condition(CC_GE) }
+# { .size = 2, .operation = M68K_DBCC, .operands = { DR(3), PCDISP(2, simple_disp(-2)) }, .extra = CC(M68K_CC_GE) }
 
 > .self: dblt d3,.self
-# Instruction { size: 2, operation: DBCC, operands: [ DR(D3), PCDISP(2, simple_disp(-2)) ], extra: Condition(CC_LT) }
+# { .size = 2, .operation = M68K_DBCC, .operands = { DR(3), PCDISP(2, simple_disp(-2)) }, .extra = CC(M68K_CC_LT) }
 
 > .self: dbgt d3,.self
-# Instruction { size: 2, operation: DBCC, operands: [ DR(D3), PCDISP(2, simple_disp(-2)) ], extra: Condition(CC_GT) }
+# { .size = 2, .operation = M68K_DBCC, .operands = { DR(3), PCDISP(2, simple_disp(-2)) }, .extra = CC(M68K_CC_GT) }
 
 > .self: dble d3,.self
-# Instruction { size: 2, operation: DBCC, operands: [ DR(D3), PCDISP(2, simple_disp(-2)) ], extra: Condition(CC_LE) }
+# { .size = 2, .operation = M68K_DBCC, .operands = { DR(3), PCDISP(2, simple_disp(-2)) }, .extra = CC(M68K_CC_LE) }
 
 > addq.b #1,d0
-# Instruction { size: 1, operation: ADDQ, operands: [ IMM8(1), DR(D0) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_ADDQ, .operands = { IMM8(1), DR(0) } }
 
 > addq.w #7,a0
-# Instruction { size: 2, operation: ADDQ, operands: [ IMM8(7), AR(A0) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_ADDQ, .operands = { IMM8(7), AR(0) } }
 
 > addq.l #8,d0
-# Instruction { size: 4, operation: ADDQ, operands: [ IMM8(8), DR(D0) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_ADDQ, .operands = { IMM8(8), DR(0) } }
 
 > subq.b #1,d0
-# Instruction { size: 1, operation: SUBQ, operands: [ IMM8(1), DR(D0) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_SUBQ, .operands = { IMM8(1), DR(0) } }
 
 > subq.w #7,a0
-# Instruction { size: 2, operation: SUBQ, operands: [ IMM8(7), AR(A0) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_SUBQ, .operands = { IMM8(7), AR(0) } }
 
 > subq.l #8,d0
-# Instruction { size: 4, operation: SUBQ, operands: [ IMM8(8), DR(D0) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_SUBQ, .operands = { IMM8(8), DR(0) } }
 
 > trapne
-# Instruction { size: 0, operation: TRAPCC, operands: [ NoOperand, NoOperand ], extra: Condition(CC_NE) }
+# { .size = 0, .operation = M68K_TRAPCC, .operands = { NO_OPERAND, NO_OPERAND }, .extra = CC(M68K_CC_NE) }
 
 > trapne.w #1234
-# Instruction { size: 2, operation: TRAPCC, operands: [ IMM16(1234), NoOperand ], extra: Condition(CC_NE) }
+# { .size = 2, .operation = M68K_TRAPCC, .operands = { IMM16(1234), NO_OPERAND }, .extra = CC(M68K_CC_NE) }
 
 > trapne.l #$12345678
-# Instruction { size: 4, operation: TRAPCC, operands: [ IMM32(0x12345678), NoOperand ], extra: Condition(CC_NE) }
+# { .size = 4, .operation = M68K_TRAPCC, .operands = { IMM32(0x12345678), NO_OPERAND }, .extra = CC(M68K_CC_NE) }
 
 > sne (a0)
-# Instruction { size: 1, operation: SCC, operands: [ Implied, ARIND(A0) ], extra: Condition(CC_NE) }
+# { .size = 1, .operation = M68K_SCC, .operands = { IMPLIED, ARIND(0) }, .extra = CC(M68K_CC_NE) }
 
 > addx.b d0,d1
-# Instruction { size: 1, operation: ADDX, operands: [ DR(D0), DR(D1) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_ADDX, .operands = { DR(0), DR(1) } }
 
 > addx.w d0,d1
-# Instruction { size: 2, operation: ADDX, operands: [ DR(D0), DR(D1) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_ADDX, .operands = { DR(0), DR(1) } }
 
 > addx.l d0,d1
-# Instruction { size: 4, operation: ADDX, operands: [ DR(D0), DR(D1) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_ADDX, .operands = { DR(0), DR(1) } }
 
 > addx.b -(a2),-(a3)
-# Instruction { size: 1, operation: ADDX, operands: [ ARDEC(A2), ARDEC(A3) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_ADDX, .operands = { ARDEC(2), ARDEC(3) } }
 
 > addx.w -(a2),-(a3)
-# Instruction { size: 2, operation: ADDX, operands: [ ARDEC(A2), ARDEC(A3) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_ADDX, .operands = { ARDEC(2), ARDEC(3) } }
 
 > addx.l -(a2),-(a3)
-# Instruction { size: 4, operation: ADDX, operands: [ ARDEC(A2), ARDEC(A3) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_ADDX, .operands = { ARDEC(2), ARDEC(3) } }
 
 > add.b (a2),d0
-# Instruction { size: 1, operation: ADD, operands: [ ARIND(A2), DR(D0) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_ADD, .operands = { ARIND(2), DR(0) } }
 
 > add.w (a2),d0
-# Instruction { size: 2, operation: ADD, operands: [ ARIND(A2), DR(D0) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_ADD, .operands = { ARIND(2), DR(0) } }
 
 > add.l (a2),d0
-# Instruction { size: 4, operation: ADD, operands: [ ARIND(A2), DR(D0) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_ADD, .operands = { ARIND(2), DR(0) } }
 
 > add.b d3,(a2)
-# Instruction { size: 1, operation: ADD, operands: [ DR(D3), ARIND(A2) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_ADD, .operands = { DR(3), ARIND(2) } }
 
 > add.w d3,(a2)
-# Instruction { size: 2, operation: ADD, operands: [ DR(D3), ARIND(A2) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_ADD, .operands = { DR(3), ARIND(2) } }
 
 > add.l d3,(a2)
-# Instruction { size: 4, operation: ADD, operands: [ DR(D3), ARIND(A2) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_ADD, .operands = { DR(3), ARIND(2) } }
 
 > subx.b d0,d1
-# Instruction { size: 1, operation: SUBX, operands: [ DR(D0), DR(D1) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_SUBX, .operands = { DR(0), DR(1) } }
 
 > subx.w d0,d1
-# Instruction { size: 2, operation: SUBX, operands: [ DR(D0), DR(D1) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_SUBX, .operands = { DR(0), DR(1) } }
 
 > subx.l d0,d1
-# Instruction { size: 4, operation: SUBX, operands: [ DR(D0), DR(D1) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_SUBX, .operands = { DR(0), DR(1) } }
 
 > subx.b -(a2),-(a3)
-# Instruction { size: 1, operation: SUBX, operands: [ ARDEC(A2), ARDEC(A3) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_SUBX, .operands = { ARDEC(2), ARDEC(3) } }
 
 > subx.w -(a2),-(a3)
-# Instruction { size: 2, operation: SUBX, operands: [ ARDEC(A2), ARDEC(A3) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_SUBX, .operands = { ARDEC(2), ARDEC(3) } }
 
 > subx.l -(a2),-(a3)
-# Instruction { size: 4, operation: SUBX, operands: [ ARDEC(A2), ARDEC(A3) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_SUBX, .operands = { ARDEC(2), ARDEC(3) } }
 
 > sub.b (a2),d0
-# Instruction { size: 1, operation: SUB, operands: [ ARIND(A2), DR(D0) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_SUB, .operands = { ARIND(2), DR(0) } }
 
 > sub.w (a2),d0
-# Instruction { size: 2, operation: SUB, operands: [ ARIND(A2), DR(D0) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_SUB, .operands = { ARIND(2), DR(0) } }
 
 > sub.l (a2),d0
-# Instruction { size: 4, operation: SUB, operands: [ ARIND(A2), DR(D0) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_SUB, .operands = { ARIND(2), DR(0) } }
 
 > sub.b d3,(a2)
-# Instruction { size: 1, operation: SUB, operands: [ DR(D3), ARIND(A2) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_SUB, .operands = { DR(3), ARIND(2) } }
 
 > sub.w d3,(a2)
-# Instruction { size: 2, operation: SUB, operands: [ DR(D3), ARIND(A2) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_SUB, .operands = { DR(3), ARIND(2) } }
 
 > sub.l d3,(a2)
-# Instruction { size: 4, operation: SUB, operands: [ DR(D3), ARIND(A2) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_SUB, .operands = { DR(3), ARIND(2) } }
 
 > suba.w d3,a2
-# Instruction { size: 2, operation: SUBA, operands: [ DR(D3), AR(A2) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_SUBA, .operands = { DR(3), AR(2) } }
 
 > suba.l d3,a2
-# Instruction { size: 4, operation: SUBA, operands: [ DR(D3), AR(A2) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_SUBA, .operands = { DR(3), AR(2) } }
 
 > cmpa.w (a1),a2
-# Instruction { size: 2, operation: CMPA, operands: [ ARIND(A1), AR(A2) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_CMPA, .operands = { ARIND(1), AR(2) } }
 
 > cmpa.l (a1),a2
-# Instruction { size: 4, operation: CMPA, operands: [ ARIND(A1), AR(A2) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_CMPA, .operands = { ARIND(1), AR(2) } }
 
 > cmpm.b (a0)+,(a2)+
-# Instruction { size: 1, operation: CMPM, operands: [ ARINC(A0), ARINC(A2) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_CMPM, .operands = { ARINC(0), ARINC(2) } }
 
 > cmpm.w (a0)+,(a2)+
-# Instruction { size: 2, operation: CMPM, operands: [ ARINC(A0), ARINC(A2) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_CMPM, .operands = { ARINC(0), ARINC(2) } }
 
 > cmpm.l (a0)+,(a2)+
-# Instruction { size: 4, operation: CMPM, operands: [ ARINC(A0), ARINC(A2) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_CMPM, .operands = { ARINC(0), ARINC(2) } }
 
 > cmp.b (a0)+,d7
-# Instruction { size: 1, operation: CMP, operands: [ ARINC(A0), DR(D7) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_CMP, .operands = { ARINC(0), DR(7) } }
 
 > cmp.w (a0)+,d7
-# Instruction { size: 2, operation: CMP, operands: [ ARINC(A0), DR(D7) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_CMP, .operands = { ARINC(0), DR(7) } }
 
 > cmp.l (a0)+,d7
-# Instruction { size: 4, operation: CMP, operands: [ ARINC(A0), DR(D7) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_CMP, .operands = { ARINC(0), DR(7) } }
 
 > eor.b d7,(a0)+
-# Instruction { size: 1, operation: EOR, operands: [ DR(D7), ARINC(A0) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_EOR, .operands = { DR(7), ARINC(0) } }
 
 > eor.w d7,(a0)+
-# Instruction { size: 2, operation: EOR, operands: [ DR(D7), ARINC(A0) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_EOR, .operands = { DR(7), ARINC(0) } }
 
 > eor.l d7,-(a0)
-# Instruction { size: 4, operation: EOR, operands: [ DR(D7), ARDEC(A0) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_EOR, .operands = { DR(7), ARDEC(0) } }
 
 > lab:
 >   bra.s lab
-# Instruction { size: 1, operation: BRA, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: NoExtra }
+# { .size = 1, .operation = M68K_BRA, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND } }
 
 > lab:
 >   bra.w lab
-# Instruction { size: 2, operation: BRA, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: NoExtra }
+# { .size = 2, .operation = M68K_BRA, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND } }
 
 > lab:
 >   bra.l lab
-# Instruction { size: 4, operation: BRA, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: NoExtra }
+# { .size = 4, .operation = M68K_BRA, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND } }
 
 > lab:
 >   bsr.s lab
-# Instruction { size: 1, operation: BSR, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: NoExtra }
+# { .size = 1, .operation = M68K_BSR, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND } }
 
 > lab:
 >   bsr.w lab
-# Instruction { size: 2, operation: BSR, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: NoExtra }
+# { .size = 2, .operation = M68K_BSR, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND } }
 
 > lab:
 >   bsr.l lab
-# Instruction { size: 4, operation: BSR, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: NoExtra }
+# { .size = 4, .operation = M68K_BSR, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND } }
 
 > lab:
 >   bne.s lab
-# Instruction { size: 1, operation: BCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: Condition(CC_NE), }
+# { .size = 1, .operation = M68K_BCC, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND }, .extra = CC(M68K_CC_NE), }
 
 > lab:
 >   beq.w lab
-# Instruction { size: 2, operation: BCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: Condition(CC_EQ) }
+# { .size = 2, .operation = M68K_BCC, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND }, .extra = CC(M68K_CC_EQ) }
 
 > lab:
 >   bcs.l lab
-# Instruction { size: 4, operation: BCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: Condition(CC_CS) }
+# { .size = 4, .operation = M68K_BCC, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND }, .extra = CC(M68K_CC_CS) }
 
 > pack d0,d1,#12
-# Instruction { size: 0, operation: PACK, operands: [ DR(D0), DR(D1) ], extra: PackAdjustment(12) }
+# { .size = 0, .operation = M68K_PACK, .operands = { DR(0), DR(1) }, .extra = PACKADJ(12) }
 
 > unpk d0,d1,#12
-# Instruction { size: 0, operation: UNPK, operands: [ DR(D0), DR(D1) ], extra: PackAdjustment(12) }
+# { .size = 0, .operation = M68K_UNPK, .operands = { DR(0), DR(1) }, .extra = PACKADJ(12) }
 
 > pack -(a0),-(a1),#37
-# Instruction { size: 0, operation: PACK, operands: [ ARDEC(A0), ARDEC(A1) ], extra: PackAdjustment(37) }
+# { .size = 0, .operation = M68K_PACK, .operands = { ARDEC(0), ARDEC(1) }, .extra = PACKADJ(37) }
 
 > unpk -(a0),-(a1),#37
-# Instruction { size: 0, operation: UNPK, operands: [ ARDEC(A0), ARDEC(A1) ], extra: PackAdjustment(37) }
+# { .size = 0, .operation = M68K_UNPK, .operands = { ARDEC(0), ARDEC(1) }, .extra = PACKADJ(37) }
 
 > sbcd -(a0),-(a1)
-# Instruction { size: 1, operation: SBCD, operands: [ ARDEC(A0), ARDEC(A1) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_SBCD, .operands = { ARDEC(0), ARDEC(1) } }
 
 > sbcd d3,d4
-# Instruction { size: 1, operation: SBCD, operands: [ DR(D3), DR(D4) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_SBCD, .operands = { DR(3), DR(4) } }
 
 > or.b (a0)+,d0
-# Instruction { size: 1, operation: OR, operands: [ ARINC(A0), DR(D0) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_OR, .operands = { ARINC(0), DR(0) } }
 
 > or.w (a0)+,d0
-# Instruction { size: 2, operation: OR, operands: [ ARINC(A0), DR(D0) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_OR, .operands = { ARINC(0), DR(0) } }
 
 > or.l (a0)+,d0
-# Instruction { size: 4, operation: OR, operands: [ ARINC(A0), DR(D0) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_OR, .operands = { ARINC(0), DR(0) } }
 
 > or.b d0,(a0)+
-# Instruction { size: 1, operation: OR, operands: [ DR(D0), ARINC(A0) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_OR, .operands = { DR(0), ARINC(0) } }
 
 > or.w d0,(a0)+
-# Instruction { size: 2, operation: OR, operands: [ DR(D0), ARINC(A0) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_OR, .operands = { DR(0), ARINC(0) } }
 
 > or.l d0,(a0)+
-# Instruction { size: 4, operation: OR, operands: [ DR(D0), ARINC(A0) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_OR, .operands = { DR(0), ARINC(0) } }
 
 > exg d0,d5
-# Instruction { size: 4, operation: EXG, operands: [ DR(D0), DR(D5) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_EXG, .operands = { DR(0), DR(5) } }
 
 > exg a0,a5
-# Instruction { size: 4, operation: EXG, operands: [ AR(A0), AR(A5) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_EXG, .operands = { AR(0), AR(5) } }
 
 > exg d3,a5
-# Instruction { size: 4, operation: EXG, operands: [ DR(D3), AR(A5) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_EXG, .operands = { DR(3), AR(5) } }
 
 > and.b (a0)+,d0
-# Instruction { size: 1, operation: AND, operands: [ ARINC(A0), DR(D0) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_AND, .operands = { ARINC(0), DR(0) } }
 
 > and.w (a0)+,d0
-# Instruction { size: 2, operation: AND, operands: [ ARINC(A0), DR(D0) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_AND, .operands = { ARINC(0), DR(0) } }
 
 > and.l (a0)+,d0
-# Instruction { size: 4, operation: AND, operands: [ ARINC(A0), DR(D0) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_AND, .operands = { ARINC(0), DR(0) } }
 
 > and.b d0,(a0)+
-# Instruction { size: 1, operation: AND, operands: [ DR(D0), ARINC(A0) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_AND, .operands = { DR(0), ARINC(0) } }
 
 > and.w d0,(a0)+
-# Instruction { size: 2, operation: AND, operands: [ DR(D0), ARINC(A0) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_AND, .operands = { DR(0), ARINC(0) } }
 
 > and.l d0,(a0)+
-# Instruction { size: 4, operation: AND, operands: [ DR(D0), ARINC(A0) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_AND, .operands = { DR(0), ARINC(0) } }
 
 > asl.b #3,d7
-# Instruction { size: 1, operation: ASL, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_ASL, .operands = { IMM8(3), DR(7) } }
 
 > asl.w #3,d7
-# Instruction { size: 2, operation: ASL, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_ASL, .operands = { IMM8(3), DR(7) } }
 
 > asl.l #3,d7
-# Instruction { size: 4, operation: ASL, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_ASL, .operands = { IMM8(3), DR(7) } }
 
 > asr.b #3,d7
-# Instruction { size: 1, operation: ASR, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_ASR, .operands = { IMM8(3), DR(7) } }
 
 > asr.w #3,d7
-# Instruction { size: 2, operation: ASR, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_ASR, .operands = { IMM8(3), DR(7) } }
 
 > asr.l #3,d7
-# Instruction { size: 4, operation: ASR, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_ASR, .operands = { IMM8(3), DR(7) } }
 
 > asl.b d1,d7
-# Instruction { size: 1, operation: ASL, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_ASL, .operands = { DR(1), DR(7) } }
 
 > asl.w d1,d7
-# Instruction { size: 2, operation: ASL, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_ASL, .operands = { DR(1), DR(7) } }
 
 > asl.l d1,d7
-# Instruction { size: 4, operation: ASL, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_ASL, .operands = { DR(1), DR(7) } }
 
 > asr.b d1,d7
-# Instruction { size: 1, operation: ASR, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_ASR, .operands = { DR(1), DR(7) } }
 
 > asr.w d1,d7
-# Instruction { size: 2, operation: ASR, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_ASR, .operands = { DR(1), DR(7) } }
 
 > asr.l d1,d7
-# Instruction { size: 4, operation: ASR, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_ASR, .operands = { DR(1), DR(7) } }
 
 > asl.w (a0)
-# Instruction { size: 2, operation: ASL, operands: [ Implied, ARIND(A0) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_ASL, .operands = { IMPLIED, ARIND(0) } }
 
 > asr.w (a0)
-# Instruction { size: 2, operation: ASR, operands: [ Implied, ARIND(A0) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_ASR, .operands = { IMPLIED, ARIND(0) } }
 
 > lsl.b #3,d7
-# Instruction { size: 1, operation: LSL, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_LSL, .operands = { IMM8(3), DR(7) } }
 
 > lsl.w #3,d7
-# Instruction { size: 2, operation: LSL, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_LSL, .operands = { IMM8(3), DR(7) } }
 
 > lsl.l #3,d7
-# Instruction { size: 4, operation: LSL, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_LSL, .operands = { IMM8(3), DR(7) } }
 
 > lsr.b #3,d7
-# Instruction { size: 1, operation: LSR, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_LSR, .operands = { IMM8(3), DR(7) } }
 
 > lsr.w #3,d7
-# Instruction { size: 2, operation: LSR, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_LSR, .operands = { IMM8(3), DR(7) } }
 
 > lsr.l #3,d7
-# Instruction { size: 4, operation: LSR, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_LSR, .operands = { IMM8(3), DR(7) } }
 
 > lsl.b d1,d7
-# Instruction { size: 1, operation: LSL, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_LSL, .operands = { DR(1), DR(7) } }
 
 > lsl.w d1,d7
-# Instruction { size: 2, operation: LSL, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_LSL, .operands = { DR(1), DR(7) } }
 
 > lsl.l d1,d7
-# Instruction { size: 4, operation: LSL, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_LSL, .operands = { DR(1), DR(7) } }
 
 > lsr.b d1,d7
-# Instruction { size: 1, operation: LSR, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_LSR, .operands = { DR(1), DR(7) } }
 
 > lsr.w d1,d7
-# Instruction { size: 2, operation: LSR, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_LSR, .operands = { DR(1), DR(7) } }
 
 > lsr.l d1,d7
-# Instruction { size: 4, operation: LSR, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_LSR, .operands = { DR(1), DR(7) } }
 
 > lsl.w (a0)
-# Instruction { size: 2, operation: LSL, operands: [ Implied, ARIND(A0) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_LSL, .operands = { IMPLIED, ARIND(0) } }
 
 > lsr.w (a0)
-# Instruction { size: 2, operation: LSR, operands: [ Implied, ARIND(A0) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_LSR, .operands = { IMPLIED, ARIND(0) } }
 
 > roxl.b #3,d7
-# Instruction { size: 1, operation: ROXL, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_ROXL, .operands = { IMM8(3), DR(7) } }
 
 > roxl.w #3,d7
-# Instruction { size: 2, operation: ROXL, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_ROXL, .operands = { IMM8(3), DR(7) } }
 
 > roxl.l #3,d7
-# Instruction { size: 4, operation: ROXL, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_ROXL, .operands = { IMM8(3), DR(7) } }
 
 > roxr.b #3,d7
-# Instruction { size: 1, operation: ROXR, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_ROXR, .operands = { IMM8(3), DR(7) } }
 
 > roxr.w #3,d7
-# Instruction { size: 2, operation: ROXR, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_ROXR, .operands = { IMM8(3), DR(7) } }
 
 > roxr.l #3,d7
-# Instruction { size: 4, operation: ROXR, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_ROXR, .operands = { IMM8(3), DR(7) } }
 
 > roxl.b d1,d7
-# Instruction { size: 1, operation: ROXL, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_ROXL, .operands = { DR(1), DR(7) } }
 
 > roxl.w d1,d7
-# Instruction { size: 2, operation: ROXL, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_ROXL, .operands = { DR(1), DR(7) } }
 
 > roxl.l d1,d7
-# Instruction { size: 4, operation: ROXL, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_ROXL, .operands = { DR(1), DR(7) } }
 
 > roxr.b d1,d7
-# Instruction { size: 1, operation: ROXR, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_ROXR, .operands = { DR(1), DR(7) } }
 
 > roxr.w d1,d7
-# Instruction { size: 2, operation: ROXR, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_ROXR, .operands = { DR(1), DR(7) } }
 
 > roxr.l d1,d7
-# Instruction { size: 4, operation: ROXR, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_ROXR, .operands = { DR(1), DR(7) } }
 
 > roxl.w (a0)
-# Instruction { size: 2, operation: ROXL, operands: [ Implied, ARIND(A0) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_ROXL, .operands = { IMPLIED, ARIND(0) } }
 
 > roxr.w (a0)
-# Instruction { size: 2, operation: ROXR, operands: [ Implied, ARIND(A0) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_ROXR, .operands = { IMPLIED, ARIND(0) } }
 
 > rol.b #3,d7
-# Instruction { size: 1, operation: ROL, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_ROL, .operands = { IMM8(3), DR(7) } }
 
 > rol.w #3,d7
-# Instruction { size: 2, operation: ROL, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_ROL, .operands = { IMM8(3), DR(7) } }
 
 > rol.l #3,d7
-# Instruction { size: 4, operation: ROL, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_ROL, .operands = { IMM8(3), DR(7) } }
 
 > ror.b #3,d7
-# Instruction { size: 1, operation: ROR, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_ROR, .operands = { IMM8(3), DR(7) } }
 
 > ror.w #3,d7
-# Instruction { size: 2, operation: ROR, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_ROR, .operands = { IMM8(3), DR(7) } }
 
 > ror.l #3,d7
-# Instruction { size: 4, operation: ROR, operands: [ IMM8(3), DR(D7) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_ROR, .operands = { IMM8(3), DR(7) } }
 
 > rol.b d1,d7
-# Instruction { size: 1, operation: ROL, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_ROL, .operands = { DR(1), DR(7) } }
 
 > rol.w d1,d7
-# Instruction { size: 2, operation: ROL, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_ROL, .operands = { DR(1), DR(7) } }
 
 > rol.l d1,d7
-# Instruction { size: 4, operation: ROL, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_ROL, .operands = { DR(1), DR(7) } }
 
 > ror.b d1,d7
-# Instruction { size: 1, operation: ROR, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+# { .size = 1, .operation = M68K_ROR, .operands = { DR(1), DR(7) } }
 
 > ror.w d1,d7
-# Instruction { size: 2, operation: ROR, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_ROR, .operands = { DR(1), DR(7) } }
 
 > ror.l d1,d7
-# Instruction { size: 4, operation: ROR, operands: [ DR(D1), DR(D7) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_ROR, .operands = { DR(1), DR(7) } }
 
 > rol.w (a0)
-# Instruction { size: 2, operation: ROL, operands: [ Implied, ARIND(A0) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_ROL, .operands = { IMPLIED, ARIND(0) } }
 
 > ror.w (a0)
-# Instruction { size: 2, operation: ROR, operands: [ Implied, ARIND(A0) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_ROR, .operands = { IMPLIED, ARIND(0) } }
 
 > moveq #-1,d2
-# Instruction { size: 4, operation: MOVEQ, operands: [ IMM8(0xff), DR(D2) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_MOVEQ, .operands = { IMM8(0xff), DR(2) } }
 
 > moveq #127,d5
-# Instruction { size: 4, operation: MOVEQ, operands: [ IMM8(0x7f), DR(D5) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_MOVEQ, .operands = { IMM8(0x7f), DR(5) } }
 
 > fabs fp1
-# Instruction { size: 10, operation: FABS, operands: [ FR(FP1), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FABS, .operands = { FR(1), FR(1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fsabs fp1
-# Instruction { size: 10, operation: FSABS, operands: [ FR(FP1), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FSABS, .operands = { FR(1), FR(1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fdabs fp1
-# Instruction { size: 10, operation: FDABS, operands: [ FR(FP1), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FDABS, .operands = { FR(1), FR(1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fabs.l (a0),fp1
-# Instruction { size: 4, operation: FABS, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_LONG_INT) }
+# { .size = 4, .operation = M68K_FABS, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_LONG_INT) }
 
 > fabs.s (a0),fp1
-# Instruction { size: 4, operation: FABS, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FABS, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > fabs.d (a0),fp1
-# Instruction { size: 8, operation: FABS, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_DOUBLE) }
+# { .size = 8, .operation = M68K_FABS, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_DOUBLE) }
 
 > fabs.w (a0),fp1
-# Instruction { size: 2, operation: FABS, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_WORD_INT) }
+# { .size = 2, .operation = M68K_FABS, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_WORD_INT) }
 
 > fabs.b (a0),fp1
-# Instruction { size: 1, operation: FABS, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_BYTE_INT) }
+# { .size = 1, .operation = M68K_FABS, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_BYTE_INT) }
 
 > fabs.x (a0),fp1
-# Instruction { size: 10, operation: FABS, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FABS, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fabs.p (a0),fp1
-# Instruction { size: 12, operation: FABS, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_PACKED_DECIMAL_REAL_STATIC(0)) }
+# { .size = 12, .operation = M68K_FABS, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT_K(M68K_FPF_PACKED_DECIMAL_REAL_STATIC, 0) }
 
 > fabs fp3,fp1
-# Instruction { size: 10, operation: FABS, operands: [ FR(FP3), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FABS, .operands = { FR(3), FR(1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > facos fp0,fp1
-# Instruction { size: 10, operation: FACOS, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FACOS, .operands = { FR(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > facos.s (a6),fp1
-# Instruction { size: 4, operation: FACOS, operands: [ ARIND(A6), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FACOS, .operands = { ARIND(6), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > fadd fp0,fp1
-# Instruction { size: 10, operation: FADD, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FADD, .operands = { FR(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fsadd.s (a6),fp1
-# Instruction { size: 4, operation: FSADD, operands: [ ARIND(A6), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FSADD, .operands = { ARIND(6), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > fdadd.d (a6),fp1
-# Instruction { size: 8, operation: FDADD, operands: [ ARIND(A6), FR(FP1) ], extra: FloatFormat(FPF_DOUBLE) }
+# { .size = 8, .operation = M68K_FDADD, .operands = { ARIND(6), FR(1) }, .extra = FPFORMAT(M68K_FPF_DOUBLE) }
 
 > fasin fp3
-# Instruction { size: 10, operation: FASIN, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FASIN, .operands = { FR(3), FR(3) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fasin fp0,fp1
-# Instruction { size: 10, operation: FASIN, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FASIN, .operands = { FR(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fasin.s (a0),fp1
-# Instruction { size: 4, operation: FASIN, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FASIN, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > fatan fp3
-# Instruction { size: 10, operation: FATAN, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FATAN, .operands = { FR(3), FR(3) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fatan fp0,fp1
-# Instruction { size: 10, operation: FATAN, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FATAN, .operands = { FR(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fatan.s (a0),fp1
-# Instruction { size: 4, operation: FATAN, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FATAN, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > fatanh fp3
-# Instruction { size: 10, operation: FATANH, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FATANH, .operands = { FR(3), FR(3) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fatanh fp0,fp1
-# Instruction { size: 10, operation: FATANH, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FATANH, .operands = { FR(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fatanh.s (a0),fp1
-# Instruction { size: 4, operation: FATANH, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FATANH, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > lab: fbne.l lab
-# Instruction { size: 4, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_NE) }
+# { .size = 4, .operation = M68K_FBCC, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND }, .extra = FPCC(M68K_FPCC_NE) }
 
 > lab: fbf.w lab
-# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_F) }
+# { .size = 2, .operation = M68K_FBCC, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND }, .extra = FPCC(M68K_FPCC_F) }
 
 > lab: fbeq.w lab
-# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_EQ) }
+# { .size = 2, .operation = M68K_FBCC, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND }, .extra = FPCC(M68K_FPCC_EQ) }
 
 > lab: fbogt.w lab
-# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_OGT) }
+# { .size = 2, .operation = M68K_FBCC, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND }, .extra = FPCC(M68K_FPCC_OGT) }
 
 > lab: fboge.w lab
-# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_OGE) }
+# { .size = 2, .operation = M68K_FBCC, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND }, .extra = FPCC(M68K_FPCC_OGE) }
 
 > lab: fbolt.w lab
-# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_OLT) }
+# { .size = 2, .operation = M68K_FBCC, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND }, .extra = FPCC(M68K_FPCC_OLT) }
 
 > lab: fbole.w lab
-# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_OLE) }
+# { .size = 2, .operation = M68K_FBCC, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND }, .extra = FPCC(M68K_FPCC_OLE) }
 
 > lab: fbogl.w lab
-# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_OGL) }
+# { .size = 2, .operation = M68K_FBCC, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND }, .extra = FPCC(M68K_FPCC_OGL) }
 
 > lab: fbor.w lab
-# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_OR) }
+# { .size = 2, .operation = M68K_FBCC, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND }, .extra = FPCC(M68K_FPCC_OR) }
 
 > lab: fbun.w lab
-# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_UN) }
+# { .size = 2, .operation = M68K_FBCC, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND }, .extra = FPCC(M68K_FPCC_UN) }
 
 > lab: fbueq.w lab
-# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_UEQ) }
+# { .size = 2, .operation = M68K_FBCC, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND }, .extra = FPCC(M68K_FPCC_UEQ) }
 
 > lab: fbugt.w lab
-# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_UGT) }
+# { .size = 2, .operation = M68K_FBCC, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND }, .extra = FPCC(M68K_FPCC_UGT) }
 
 > lab: fbuge.w lab
-# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_UGE) }
+# { .size = 2, .operation = M68K_FBCC, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND }, .extra = FPCC(M68K_FPCC_UGE) }
 
 > lab: fbult.w lab
-# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_ULT) }
+# { .size = 2, .operation = M68K_FBCC, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND }, .extra = FPCC(M68K_FPCC_ULT) }
 
 > lab: fbule.w lab
-# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_ULE) }
+# { .size = 2, .operation = M68K_FBCC, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND }, .extra = FPCC(M68K_FPCC_ULE) }
 
 > lab: fbne.w lab
-# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_NE) }
+# { .size = 2, .operation = M68K_FBCC, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND }, .extra = FPCC(M68K_FPCC_NE) }
 
 > lab: fbt.w lab
-# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_T) }
+# { .size = 2, .operation = M68K_FBCC, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND }, .extra = FPCC(M68K_FPCC_T) }
 
 > lab: fbsf.w lab
-# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_SF) }
+# { .size = 2, .operation = M68K_FBCC, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND }, .extra = FPCC(M68K_FPCC_SF) }
 
 > lab: fbseq.w lab
-# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_SEQ) }
+# { .size = 2, .operation = M68K_FBCC, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND }, .extra = FPCC(M68K_FPCC_SEQ) }
 
 > lab: fbgt.w lab
-# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_GT) }
+# { .size = 2, .operation = M68K_FBCC, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND }, .extra = FPCC(M68K_FPCC_GT) }
 
 > lab: fbge.w lab
-# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_GE) }
+# { .size = 2, .operation = M68K_FBCC, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND }, .extra = FPCC(M68K_FPCC_GE) }
 
 > lab: fblt.w lab
-# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_LT) }
+# { .size = 2, .operation = M68K_FBCC, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND }, .extra = FPCC(M68K_FPCC_LT) }
 
 > lab: fble.w lab
-# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_LE) }
+# { .size = 2, .operation = M68K_FBCC, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND }, .extra = FPCC(M68K_FPCC_LE) }
 
 > lab: fbgl.w lab
-# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_GL) }
+# { .size = 2, .operation = M68K_FBCC, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND }, .extra = FPCC(M68K_FPCC_GL) }
 
 > lab: fbgle.w lab
-# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_GLE) }
+# { .size = 2, .operation = M68K_FBCC, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND }, .extra = FPCC(M68K_FPCC_GLE) }
 
 > lab: fbngle.w lab
-# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_NGLE) }
+# { .size = 2, .operation = M68K_FBCC, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND }, .extra = FPCC(M68K_FPCC_NGLE) }
 
 > lab: fbngl.w lab
-# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_NGL) }
+# { .size = 2, .operation = M68K_FBCC, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND }, .extra = FPCC(M68K_FPCC_NGL) }
 
 > lab: fbnle.w lab
-# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_NLE) }
+# { .size = 2, .operation = M68K_FBCC, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND }, .extra = FPCC(M68K_FPCC_NLE) }
 
 > lab: fbnlt.w lab
-# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_NLT) }
+# { .size = 2, .operation = M68K_FBCC, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND }, .extra = FPCC(M68K_FPCC_NLT) }
 
 > lab: fbnge.w lab
-# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_NGE) }
+# { .size = 2, .operation = M68K_FBCC, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND }, .extra = FPCC(M68K_FPCC_NGE) }
 
 > lab: fbngt.w lab
-# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_NGT) }
+# { .size = 2, .operation = M68K_FBCC, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND }, .extra = FPCC(M68K_FPCC_NGT) }
 
 > lab: fbsne.w lab
-# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_SNE) }
+# { .size = 2, .operation = M68K_FBCC, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND }, .extra = FPCC(M68K_FPCC_SNE) }
 
 > lab: fbst.w lab
-# Instruction { size: 2, operation: FBCC, operands: [ PCDISP(2, simple_disp(-2)), NoOperand ], extra: FPCondition(FPCC_ST) }
+# { .size = 2, .operation = M68K_FBCC, .operands = { PCDISP(2, simple_disp(-2)), NO_OPERAND }, .extra = FPCC(M68K_FPCC_ST) }
 
 > fcmp fp2,fp4
-# Instruction { size: 10, operation: FCMP, operands: [ FR(FP2), FR(FP4) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FCMP, .operands = { FR(2), FR(4) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fcmp.s (a0),fp4
-# Instruction { size: 4, operation: FCMP, operands: [ ARIND(A0), FR(FP4) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FCMP, .operands = { ARIND(0), FR(4) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > fcos fp3
-# Instruction { size: 10, operation: FCOS, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FCOS, .operands = { FR(3), FR(3) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fcos fp0,fp1
-# Instruction { size: 10, operation: FCOS, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FCOS, .operands = { FR(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fcos.s (a0),fp1
-# Instruction { size: 4, operation: FCOS, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FCOS, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > fcosh fp3
-# Instruction { size: 10, operation: FCOSH, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FCOSH, .operands = { FR(3), FR(3) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fcosh fp0,fp1
-# Instruction { size: 10, operation: FCOSH, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FCOSH, .operands = { FR(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fcosh.s (a0),fp1
-# Instruction { size: 4, operation: FCOSH, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FCOSH, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > fdiv fp0,fp1
-# Instruction { size: 10, operation: FDIV, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FDIV, .operands = { FR(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fdiv.s (a0),fp1
-# Instruction { size: 4, operation: FDIV, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FDIV, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > fsdiv.s (a0),fp1
-# Instruction { size: 4, operation: FSDIV, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FSDIV, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > fddiv.s (a0),fp1
-# Instruction { size: 4, operation: FDDIV, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FDDIV, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > fetox fp3
-# Instruction { size: 10, operation: FETOX, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FETOX, .operands = { FR(3), FR(3) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fetox fp0,fp1
-# Instruction { size: 10, operation: FETOX, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FETOX, .operands = { FR(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fetox.s (a0),fp1
-# Instruction { size: 4, operation: FETOX, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FETOX, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > fetoxm1 fp3
-# Instruction { size: 10, operation: FETOXM1, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FETOXM1, .operands = { FR(3), FR(3) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fetoxm1 fp0,fp1
-# Instruction { size: 10, operation: FETOXM1, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FETOXM1, .operands = { FR(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fetoxm1.s (a0),fp1
-# Instruction { size: 4, operation: FETOXM1, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FETOXM1, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > fgetexp fp3
-# Instruction { size: 10, operation: FGETEXP, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FGETEXP, .operands = { FR(3), FR(3) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fgetexp fp0,fp1
-# Instruction { size: 10, operation: FGETEXP, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FGETEXP, .operands = { FR(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fgetexp.s (a0),fp1
-# Instruction { size: 4, operation: FGETEXP, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FGETEXP, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > fgetman fp3
-# Instruction { size: 10, operation: FGETMAN, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FGETMAN, .operands = { FR(3), FR(3) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fgetman fp0,fp1
-# Instruction { size: 10, operation: FGETMAN, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FGETMAN, .operands = { FR(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fgetman.s (a0),fp1
-# Instruction { size: 4, operation: FGETMAN, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FGETMAN, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > fint fp3
-# Instruction { size: 10, operation: FINT, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FINT, .operands = { FR(3), FR(3) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fint fp0,fp1
-# Instruction { size: 10, operation: FINT, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FINT, .operands = { FR(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fint.s (a0),fp1
-# Instruction { size: 4, operation: FINT, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FINT, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > fintrz fp3
-# Instruction { size: 10, operation: FINTRZ, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FINTRZ, .operands = { FR(3), FR(3) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fintrz fp0,fp1
-# Instruction { size: 10, operation: FINTRZ, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FINTRZ, .operands = { FR(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fintrz.s (a0),fp1
-# Instruction { size: 4, operation: FINTRZ, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FINTRZ, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > flog10 fp3
-# Instruction { size: 10, operation: FLOG10, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FLOG10, .operands = { FR(3), FR(3) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > flog10 fp0,fp1
-# Instruction { size: 10, operation: FLOG10, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FLOG10, .operands = { FR(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > flog10.s (a0),fp1
-# Instruction { size: 4, operation: FLOG10, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FLOG10, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > flog2 fp3
-# Instruction { size: 10, operation: FLOG2, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FLOG2, .operands = { FR(3), FR(3) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > flog2 fp0,fp1
-# Instruction { size: 10, operation: FLOG2, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FLOG2, .operands = { FR(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > flog2.s (a0),fp1
-# Instruction { size: 4, operation: FLOG2, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FLOG2, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > flogn fp3
-# Instruction { size: 10, operation: FLOGN, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FLOGN, .operands = { FR(3), FR(3) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > flogn fp0,fp1
-# Instruction { size: 10, operation: FLOGN, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FLOGN, .operands = { FR(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > flogn.s (a0),fp1
-# Instruction { size: 4, operation: FLOGN, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FLOGN, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > flognp1 fp3
-# Instruction { size: 10, operation: FLOGNP1, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FLOGNP1, .operands = { FR(3), FR(3) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > flognp1 fp0,fp1
-# Instruction { size: 10, operation: FLOGNP1, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FLOGNP1, .operands = { FR(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > flognp1.s (a0),fp1
-# Instruction { size: 4, operation: FLOGNP1, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FLOGNP1, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > fmod fp0,fp1
-# Instruction { size: 10, operation: FMOD, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FMOD, .operands = { FR(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fmod.s (a0),fp1
-# Instruction { size: 4, operation: FMOD, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FMOD, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > fmovecr #30,fp1
-# Instruction { size: 10, operation: FMOVECR, operands: [ IMM8(30), FR(FP1) ], extra: NoExtra }
+# { .size = 10, .operation = M68K_FMOVECR, .operands = { IMM8(30), FR(1) } }
 
 > lab: fdbgt d6,lab
-# Instruction { size: 2, operation: FDBCC, operands: [ DR(D6), PCDISP(4, simple_disp(-4)) ], extra: FPCondition(FPCC_GT) }
+# { .size = 2, .operation = M68K_FDBCC, .operands = { DR(6), PCDISP(4, simple_disp(-4)) }, .extra = FPCC(M68K_FPCC_GT) }
 
 > fmove fp3,fp5
-# Instruction { size: 10, operation: FMOVE, operands: [ FR(FP3), FR(FP5) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FMOVE, .operands = { FR(3), FR(5) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fmove.x (a0),fp5
-# Instruction { size: 10, operation: FMOVE, operands: [ ARIND(A0), FR(FP5) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FMOVE, .operands = { ARIND(0), FR(5) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fmove.s (a0),fp5
-# Instruction { size: 4, operation: FMOVE, operands: [ ARIND(A0), FR(FP5) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FMOVE, .operands = { ARIND(0), FR(5) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > fsmove.d (a0),fp5
-# Instruction { size: 8, operation: FSMOVE, operands: [ ARIND(A0), FR(FP5) ], extra: FloatFormat(FPF_DOUBLE) }
+# { .size = 8, .operation = M68K_FSMOVE, .operands = { ARIND(0), FR(5) }, .extra = FPFORMAT(M68K_FPF_DOUBLE) }
 
 > fdmove.p (a0),fp5
-# Instruction { size: 12, operation: FDMOVE, operands: [ ARIND(A0), FR(FP5) ], extra: FloatFormat(FPF_PACKED_DECIMAL_REAL_STATIC(0)) }
+# { .size = 12, .operation = M68K_FDMOVE, .operands = { ARIND(0), FR(5) }, .extra = FPFORMAT_K(M68K_FPF_PACKED_DECIMAL_REAL_STATIC, 0) }
 
 > fmove.s fp4,(a1)
-# Instruction { size: 4, operation: FMOVE, operands: [ FR(FP4), ARIND(A1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FMOVE, .operands = { FR(4), ARIND(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > fmove.p fp4,(a1){#12}
-# Instruction { size: 12, operation: FMOVE, operands: [ FR(FP4), ARIND(A1) ], extra: FloatFormat(FPF_PACKED_DECIMAL_REAL_STATIC(12)) }
+# { .size = 12, .operation = M68K_FMOVE, .operands = { FR(4), ARIND(1) }, .extra = FPFORMAT_K(M68K_FPF_PACKED_DECIMAL_REAL_STATIC, 12) }
 
 > fmove.p fp4,(a1){#-64}
-# Instruction { size: 12, operation: FMOVE, operands: [ FR(FP4), ARIND(A1) ], extra: FloatFormat(FPF_PACKED_DECIMAL_REAL_STATIC(-64)) }
+# { .size = 12, .operation = M68K_FMOVE, .operands = { FR(4), ARIND(1) }, .extra = FPFORMAT_K(M68K_FPF_PACKED_DECIMAL_REAL_STATIC, -64) }
 
 > fmove.p fp4,(a1){#63}
-# Instruction { size: 12, operation: FMOVE, operands: [ FR(FP4), ARIND(A1) ], extra: FloatFormat(FPF_PACKED_DECIMAL_REAL_STATIC(63)) }
+# { .size = 12, .operation = M68K_FMOVE, .operands = { FR(4), ARIND(1) }, .extra = FPFORMAT_K(M68K_FPF_PACKED_DECIMAL_REAL_STATIC, 63) }
 
 > fmove.p fp4,(a1){d3}
-# Instruction { size: 12, operation: FMOVE, operands: [ FR(FP4), ARIND(A1) ], extra: FloatFormat(FPF_PACKED_DECIMAL_REAL_DYNAMIC(D3)) }
+# { .size = 12, .operation = M68K_FMOVE, .operands = { FR(4), ARIND(1) }, .extra = FPFORMAT_K(M68K_FPF_PACKED_DECIMAL_REAL_DYNAMIC, 3) }
 
 > fmovem.x fp0-fp4,-(a3)
-# Instruction { size: 10, operation: FMOVEM, operands: [ REGLIST(0b11111), ARDEC(A3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FMOVEM, .operands = { REGLIST(0x1f), ARDEC(3) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fmovem.x d7,-(a3)
-# Instruction { size: 10, operation: FMOVEM, operands: [ DR(D7), ARDEC(A3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FMOVEM, .operands = { DR(7), ARDEC(3) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fmovem.x d7,(a3)
-# Instruction { size: 10, operation: FMOVEM, operands: [ DR(D7), ARIND(A3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FMOVEM, .operands = { DR(7), ARIND(3) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fmovem.x (a3),d7
-# Instruction { size: 10, operation: FMOVEM, operands: [ ARIND(A3), DR(D7) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FMOVEM, .operands = { ARIND(3), DR(7) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fmovem.x (a3)+,d7
-# Instruction { size: 10, operation: FMOVEM, operands: [ ARINC(A3), DR(D7) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FMOVEM, .operands = { ARINC(3), DR(7) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fmovem.x (a3)+,fp0/fp6
-# Instruction { size: 10, operation: FMOVEM, operands: [ ARINC(A3), REGLIST(0b1000_0010) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FMOVEM, .operands = { ARINC(3), REGLIST(/*0b1000_0010*/ 0x82) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fmul fp0,fp1
-# Instruction { size: 10, operation: FMUL, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FMUL, .operands = { FR(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fmul.s (a0),fp1
-# Instruction { size: 4, operation: FMUL, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FMUL, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > fsmul.s (a0),fp1
-# Instruction { size: 4, operation: FSMUL, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FSMUL, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > fdmul.s (a0),fp1
-# Instruction { size: 4, operation: FDMUL, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FDMUL, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > fneg fp3
-# Instruction { size: 10, operation: FNEG, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FNEG, .operands = { FR(3), FR(3) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fneg fp0,fp1
-# Instruction { size: 10, operation: FNEG, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FNEG, .operands = { FR(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fneg.s (a0),fp1
-# Instruction { size: 4, operation: FNEG, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FNEG, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > fsneg.s (a0),fp1
-# Instruction { size: 4, operation: FSNEG, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FSNEG, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > fdneg.s (a0),fp1
-# Instruction { size: 4, operation: FDNEG, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FDNEG, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > fnop
-# Instruction { size: 0, operation: FNOP, operands: [ NoOperand, NoOperand ], extra: NoExtra }
+# { .size = 0, .operation = M68K_FNOP, .operands = { NO_OPERAND, NO_OPERAND } }
 
 > frem fp0,fp1
-# Instruction { size: 10, operation: FREM, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FREM, .operands = { FR(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > frem.s (a0),fp1
-# Instruction { size: 4, operation: FREM, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FREM, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > fscale fp0,fp1
-# Instruction { size: 10, operation: FSCALE, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FSCALE, .operands = { FR(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fscale.s (a0),fp1
-# Instruction { size: 4, operation: FSCALE, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FSCALE, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > fsgt (a0)
-# Instruction { size: 1, operation: FSCC, operands: [ Implied, ARIND(A0) ], extra: FPCondition(FPCC_GT) }
+# { .size = 1, .operation = M68K_FSCC, .operands = { IMPLIED, ARIND(0) }, .extra = FPCC(M68K_FPCC_GT) }
 
 > fsgldiv fp0,fp1
-# Instruction { size: 10, operation: FSGLDIV, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FSGLDIV, .operands = { FR(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fsgldiv.s (a0),fp1
-# Instruction { size: 4, operation: FSGLDIV, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FSGLDIV, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > fsglmul fp0,fp1
-# Instruction { size: 10, operation: FSGLMUL, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FSGLMUL, .operands = { FR(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fsglmul.s (a0),fp1
-# Instruction { size: 4, operation: FSGLMUL, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FSGLMUL, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > fsin fp3
-# Instruction { size: 10, operation: FSIN, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FSIN, .operands = { FR(3), FR(3) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fsin fp0,fp1
-# Instruction { size: 10, operation: FSIN, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FSIN, .operands = { FR(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fsin.s (a0),fp1
-# Instruction { size: 4, operation: FSIN, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FSIN, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > fsincos fp0,fp1:fp2
-# Instruction { size: 10, operation: FSINCOS, operands: [ FR(FP0), FPAIR(FP2,FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FSINCOS, .operands = { FR(0), FPAIR(2,1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fsincos.s (a0),fp1:fp2
-# Instruction { size: 4, operation: FSINCOS, operands: [ ARIND(A0), FPAIR(FP2,FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FSINCOS, .operands = { ARIND(0), FPAIR(2,1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > fsinh fp3
-# Instruction { size: 10, operation: FSINH, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FSINH, .operands = { FR(3), FR(3) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fsinh fp0,fp1
-# Instruction { size: 10, operation: FSINH, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FSINH, .operands = { FR(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fsinh.s (a0),fp1
-# Instruction { size: 4, operation: FSINH, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FSINH, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > fsqrt fp3
-# Instruction { size: 10, operation: FSQRT, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FSQRT, .operands = { FR(3), FR(3) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fsqrt fp0,fp1
-# Instruction { size: 10, operation: FSQRT, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FSQRT, .operands = { FR(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fsqrt.s (a0),fp1
-# Instruction { size: 4, operation: FSQRT, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FSQRT, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > fssqrt fp3
-# Instruction { size: 10, operation: FSSQRT, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FSSQRT, .operands = { FR(3), FR(3) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fdsqrt fp3
-# Instruction { size: 10, operation: FDSQRT, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FDSQRT, .operands = { FR(3), FR(3) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fsub fp0,fp1
-# Instruction { size: 10, operation: FSUB, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FSUB, .operands = { FR(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fsub.s (a0),fp1
-# Instruction { size: 4, operation: FSUB, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FSUB, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > fssub.x (a0),fp1
-# Instruction { size: 10, operation: FSSUB, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FSSUB, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > fdsub.l (a0),fp1
-# Instruction { size: 4, operation: FDSUB, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_LONG_INT) }
+# { .size = 4, .operation = M68K_FDSUB, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_LONG_INT) }
 
 
 > ftan fp3
-# Instruction { size: 10, operation: FTAN, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FTAN, .operands = { FR(3), FR(3) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > ftan fp0,fp1
-# Instruction { size: 10, operation: FTAN, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FTAN, .operands = { FR(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > ftan.s (a0),fp1
-# Instruction { size: 4, operation: FTAN, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FTAN, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 
 > ftanh fp3
-# Instruction { size: 10, operation: FTANH, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FTANH, .operands = { FR(3), FR(3) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > ftanh fp0,fp1
-# Instruction { size: 10, operation: FTANH, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FTANH, .operands = { FR(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > ftanh.s (a0),fp1
-# Instruction { size: 4, operation: FTANH, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FTANH, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 
 > ftentox fp3
-# Instruction { size: 10, operation: FTENTOX, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FTENTOX, .operands = { FR(3), FR(3) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > ftentox fp0,fp1
-# Instruction { size: 10, operation: FTENTOX, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FTENTOX, .operands = { FR(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > ftentox.s (a0),fp1
-# Instruction { size: 4, operation: FTENTOX, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FTENTOX, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > ftrapgt
-# Instruction { size: 0, operation: FTRAPCC, operands: [ Implied, NoOperand ], extra: FPCondition(FPCC_GT) }
+# { .size = 0, .operation = M68K_FTRAPCC, .operands = { IMPLIED, NO_OPERAND }, .extra = FPCC(M68K_FPCC_GT) }
 
 > ftrapeq.w #123
-# Instruction { size: 2, operation: FTRAPCC, operands: [ Implied, IMM16(123) ], extra: FPCondition(FPCC_EQ) }
+# { .size = 2, .operation = M68K_FTRAPCC, .operands = { IMPLIED, IMM16(123) }, .extra = FPCC(M68K_FPCC_EQ) }
 
 > ftrapne.l #1234567
-# Instruction { size: 4, operation: FTRAPCC, operands: [ Implied, IMM32(1234567) ], extra: FPCondition(FPCC_NE) }
+# { .size = 4, .operation = M68K_FTRAPCC, .operands = { IMPLIED, IMM32(1234567) }, .extra = FPCC(M68K_FPCC_NE) }
 
 > ftst.l (a0)
-# Instruction { size: 4, operation: FTST, operands: [ ARIND(A0), NoOperand ], extra: FloatFormat(FPF_LONG_INT) }
+# { .size = 4, .operation = M68K_FTST, .operands = { ARIND(0), NO_OPERAND }, .extra = FPFORMAT(M68K_FPF_LONG_INT) }
 
 > ftst fp7
-# Instruction { size: 10, operation: FTST, operands: [ FR(FP7), NoOperand ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FTST, .operands = { FR(7), NO_OPERAND }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > ftwotox fp3
-# Instruction { size: 10, operation: FTWOTOX, operands: [ FR(FP3), FR(FP3) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FTWOTOX, .operands = { FR(3), FR(3) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > ftwotox fp0,fp1
-# Instruction { size: 10, operation: FTWOTOX, operands: [ FR(FP0), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
+# { .size = 10, .operation = M68K_FTWOTOX, .operands = { FR(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_EXTENDED_REAL) }
 
 > ftwotox.s (a0),fp1
-# Instruction { size: 4, operation: FTWOTOX, operands: [ ARIND(A0), FR(FP1) ], extra: FloatFormat(FPF_SINGLE) }
+# { .size = 4, .operation = M68K_FTWOTOX, .operands = { ARIND(0), FR(1) }, .extra = FPFORMAT(M68K_FPF_SINGLE) }
 
 > movec.l a3,cacr
-# Instruction { size: 4, operation: MOVEC, operands: [ AR(A3), CONTROLREG(2) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_MOVEC, .operands = { AR(3), CONTROLREG(2) } }
 
 > movec.l d3,cacr
-# Instruction { size: 4, operation: MOVEC, operands: [ DR(D3), CONTROLREG(2) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_MOVEC, .operands = { DR(3), CONTROLREG(2) } }
 
 > movec.l isp,a3
-# Instruction { size: 4, operation: MOVEC, operands: [ CONTROLREG(0x804), AR(A3) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_MOVEC, .operands = { CONTROLREG(0x804), AR(3) } }
 
 > movec.l isp,d3
-# Instruction { size: 4, operation: MOVEC, operands: [ CONTROLREG(0x804), DR(D3) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_MOVEC, .operands = { CONTROLREG(0x804), DR(3) } }
 
 > adda.w (a3),a2
-# Instruction { size: 2, operation: ADDA, operands: [ ARIND(A3), AR(A2) ], extra: NoExtra }
+# { .size = 2, .operation = M68K_ADDA, .operands = { ARIND(3), AR(2) } }
 
 > adda.l (a3),a2
-# Instruction { size: 4, operation: ADDA, operands: [ ARIND(A3), AR(A2) ], extra: NoExtra }
+# { .size = 4, .operation = M68K_ADDA, .operands = { ARIND(3), AR(2) } }
 

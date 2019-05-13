@@ -3,279 +3,279 @@
 # Group 0000: Bit manipulation, MOVEP, Immediate
 #====================================================================================================
 
-ANDITOCCR       0000_0010_0011_1100 sz=1; src=cs.imm8(); dst=Implied;
-ANDITOSR        0000_0010_0111_1100 sz=2; src=cs.imm16(); dst=Implied;
-EORITOCCR       0000_1010_0011_1100 sz=1; src=cs.imm8(); dst=Implied;
-EORITOSR        0000_1010_0111_1100 sz=2; src=cs.imm16(); dst=Implied;
-ORITOCCR        0000_0000_0011_1100 sz=1; src=cs.imm8(); dst=Implied;
-ORITOSR         0000_0000_0111_1100 sz=2; src=cs.imm16(); dst=Implied;
+ANDITOCCR       0000_0010_0011_1100 sz=1; src=op_imm8p(cs); dst=op_implied();
+ANDITOSR        0000_0010_0111_1100 sz=2; src=op_imm16p(cs); dst=op_implied();
+EORITOCCR       0000_1010_0011_1100 sz=1; src=op_imm8p(cs); dst=op_implied();
+EORITOSR        0000_1010_0111_1100 sz=2; src=op_imm16p(cs); dst=op_implied();
+ORITOCCR        0000_0000_0011_1100 sz=1; src=op_imm8p(cs); dst=op_implied();
+ORITOSR         0000_0000_0111_1100 sz=2; src=op_imm16p(cs); dst=op_implied();
 
 # Note: bit eight being 1 here allows these to be check before all else 
 # Note: for movep bits 5-3, specify a mode An, which all the other
 # bit 8 set commands do not, so have check first.
 
-MOVEP           0000_ddd1_0s00_1aaa sz=1<<(s+1); src=ARIND(cs.address_reg(a)); dst=cs.data_reg_op(d);
-MOVEP           0000_ddd1_0s10_1aaa sz=1<<(s+1); src=DR(cs.data_reg(d)); dst=ARIND(cs.address_reg(a));
+MOVEP           0000_ddd1_0s00_1aaa sz=2<<s; src=op_arind(a); dst=op_dr(d);
+MOVEP           0000_ddd1_0s10_1aaa sz=2<<s; src=op_dr(d); dst=op_arind(a);
 
-BTST            0000_ddd1_00mm_mrrr sz=4; src=cs.data_reg_op(d); dst=cs.ea(r, m, 4);
-BCHG            0000_ddd1_01mm_mrrr sz=4; src=cs.data_reg_op(d); dst=cs.ea(r, m, 4);
-BCLR            0000_ddd1_10mm_mrrr sz=4; src=cs.data_reg_op(d); dst=cs.ea(r, m, 4);
-BSET            0000_ddd1_11mm_mrrr sz=4; src=cs.data_reg_op(d); dst=cs.ea(r, m, 4);
+BTST            0000_ddd1_00mm_mrrr sz=4; src=op_dr(d); dst=op_ea(cs, r, m, 4);
+BCHG            0000_ddd1_01mm_mrrr sz=4; src=op_dr(d); dst=op_ea(cs, r, m, 4);
+BCLR            0000_ddd1_10mm_mrrr sz=4; src=op_dr(d); dst=op_ea(cs, r, m, 4);
+BSET            0000_ddd1_11mm_mrrr sz=4; src=op_dr(d); dst=op_ea(cs, r, m, 4);
 
-BTST            0000_1000_00mm_mrrr 0000_000n_nnnn_nnnn sz=1; src=IMM16(n); dst=cs.ea(r, m, 1);
-BCHG            0000_1000_01mm_mrrr 0000_000n_nnnn_nnnn sz=1; src=IMM16(n); dst=cs.ea(r, m, 1);
-BCLR            0000_1000_10mm_mrrr 0000_000n_nnnn_nnnn sz=1; src=IMM16(n); dst=cs.ea(r, m, 1);
-BSET            0000_1000_11mm_mrrr 0000_000n_nnnn_nnnn sz=1; src=IMM16(n); dst=cs.ea(r, m, 1);
+BTST            0000_1000_00mm_mrrr 0000_000n_nnnn_nnnn sz=1; src=op_imm16(n); dst=op_ea(cs, r, m, 1);
+BCHG            0000_1000_01mm_mrrr 0000_000n_nnnn_nnnn sz=1; src=op_imm16(n); dst=op_ea(cs, r, m, 1);
+BCLR            0000_1000_10mm_mrrr 0000_000n_nnnn_nnnn sz=1; src=op_imm16(n); dst=op_ea(cs, r, m, 1);
+BSET            0000_1000_11mm_mrrr 0000_000n_nnnn_nnnn sz=1; src=op_imm16(n); dst=op_ea(cs, r, m, 1);
 
-RTM             0000_0110_1100_drrr sz=0; src=cs.dar(d, r); dst=NoOperand;
+RTM             0000_0110_1100_drrr sz=0; src=op_dar(d, r); dst=op_none();
 
-CALLM           0000_0110_11mm_mrrr sz=0; src=cs.imm8() ; dst=cs.ea(r, m, 0);
+CALLM           0000_0110_11mm_mrrr sz=0; src=op_imm8p(cs) ; dst=op_ea(cs, r, m, 0);
 
-ADDI            0000_0110_00mm_mrrr sz=1; src=cs.imm8() ; dst=cs.ea(r, m, 1);
-ADDI            0000_0110_01mm_mrrr sz=2; src=cs.imm16(); dst=cs.ea(r, m, 2);
-ADDI            0000_0110_10mm_mrrr sz=4; src=cs.imm32(); dst=cs.ea(r, m, 4);
+ADDI            0000_0110_00mm_mrrr sz=1; src=op_imm8p(cs) ; dst=op_ea(cs, r, m, 1);
+ADDI            0000_0110_01mm_mrrr sz=2; src=op_imm16p(cs); dst=op_ea(cs, r, m, 2);
+ADDI            0000_0110_10mm_mrrr sz=4; src=op_imm32p(cs); dst=op_ea(cs, r, m, 4);
                                                                           
-SUBI            0000_0100_00mm_mrrr sz=1; src=cs.imm8() ; dst=cs.ea(r, m, 1);
-SUBI            0000_0100_01mm_mrrr sz=2; src=cs.imm16(); dst=cs.ea(r, m, 2);
-SUBI            0000_0100_10mm_mrrr sz=4; src=cs.imm32(); dst=cs.ea(r, m, 4);
+SUBI            0000_0100_00mm_mrrr sz=1; src=op_imm8p(cs) ; dst=op_ea(cs, r, m, 1);
+SUBI            0000_0100_01mm_mrrr sz=2; src=op_imm16p(cs); dst=op_ea(cs, r, m, 2);
+SUBI            0000_0100_10mm_mrrr sz=4; src=op_imm32p(cs); dst=op_ea(cs, r, m, 4);
                                                                           
-ANDI            0000_0010_00mm_mrrr sz=1; src=cs.imm8() ; dst=cs.ea(r, m, 1);
-ANDI            0000_0010_01mm_mrrr sz=2; src=cs.imm16(); dst=cs.ea(r, m, 2);
-ANDI            0000_0010_10mm_mrrr sz=4; src=cs.imm32(); dst=cs.ea(r, m, 4);
+ANDI            0000_0010_00mm_mrrr sz=1; src=op_imm8p(cs) ; dst=op_ea(cs, r, m, 1);
+ANDI            0000_0010_01mm_mrrr sz=2; src=op_imm16p(cs); dst=op_ea(cs, r, m, 2);
+ANDI            0000_0010_10mm_mrrr sz=4; src=op_imm32p(cs); dst=op_ea(cs, r, m, 4);
                                                                           
-ORI             0000_0000_00mm_mrrr sz=1; src=cs.imm8() ; dst=cs.ea(r, m, 1);
-ORI             0000_0000_01mm_mrrr sz=2; src=cs.imm16(); dst=cs.ea(r, m, 2);
-ORI             0000_0000_10mm_mrrr sz=4; src=cs.imm32(); dst=cs.ea(r, m, 4);
+ORI             0000_0000_00mm_mrrr sz=1; src=op_imm8p(cs) ; dst=op_ea(cs, r, m, 1);
+ORI             0000_0000_01mm_mrrr sz=2; src=op_imm16p(cs); dst=op_ea(cs, r, m, 2);
+ORI             0000_0000_10mm_mrrr sz=4; src=op_imm32p(cs); dst=op_ea(cs, r, m, 4);
 
-CMP2            0000_0ss0_11mm_mrrr addd_0000_0000_0000 sz=1 << s; src=cs.ea(r, m, sz); dst=cs.dar(a, d);
-CHK2            0000_0ss0_11mm_mrrr addd_1000_0000_0000 sz=1 << s; src=cs.ea(r, m, sz); dst=cs.dar(a, d);
+CMP2            0000_0ss0_11mm_mrrr addd_0000_0000_0000 sz=1 << s; src=op_ea(cs, r, m, sz); dst=op_dar(a, d);
+CHK2            0000_0ss0_11mm_mrrr addd_1000_0000_0000 sz=1 << s; src=op_ea(cs, r, m, sz); dst=op_dar(a, d);
 
-EORI            0000_1010_00mm_mrrr sz=1; src=cs.imm8(); dst=cs.ea(r, m, 1);
-EORI            0000_1010_01mm_mrrr sz=2; src=cs.imm16(); dst=cs.ea(r, m, 2);
-EORI            0000_1010_10mm_mrrr sz=4; src=cs.imm32(); dst=cs.ea(r, m, 4);
+EORI            0000_1010_00mm_mrrr sz=1; src=op_imm8p(cs); dst=op_ea(cs, r, m, 1);
+EORI            0000_1010_01mm_mrrr sz=2; src=op_imm16p(cs); dst=op_ea(cs, r, m, 2);
+EORI            0000_1010_10mm_mrrr sz=4; src=op_imm32p(cs); dst=op_ea(cs, r, m, 4);
 
-CMPI            0000_1100_00mm_mrrr sz=1; src=cs.imm8(); dst=cs.ea(r, m, 1);
-CMPI            0000_1100_01mm_mrrr sz=2; src=cs.imm16(); dst=cs.ea(r, m, 2);
-CMPI            0000_1100_10mm_mrrr sz=4; src=cs.imm32(); dst=cs.ea(r, m, 4);
+CMPI            0000_1100_00mm_mrrr sz=1; src=op_imm8p(cs); dst=op_ea(cs, r, m, 1);
+CMPI            0000_1100_01mm_mrrr sz=2; src=op_imm16p(cs); dst=op_ea(cs, r, m, 2);
+CMPI            0000_1100_10mm_mrrr sz=4; src=op_imm32p(cs); dst=op_ea(cs, r, m, 4);
 
-MOVES           0000_1110_00mm_mrrr addd_0000_0000_0000 sz=1; dst=cs.dar(a, d); src=cs.ea(r, m, 1);
-MOVES           0000_1110_01mm_mrrr addd_0000_0000_0000 sz=2; dst=cs.dar(a, d); src=cs.ea(r, m, 2);
-MOVES           0000_1110_10mm_mrrr addd_0000_0000_0000 sz=4; dst=cs.dar(a, d); src=cs.ea(r, m, 4);
+MOVES           0000_1110_00mm_mrrr addd_0000_0000_0000 sz=1; dst=op_dar(a, d); src=op_ea(cs, r, m, 1);
+MOVES           0000_1110_01mm_mrrr addd_0000_0000_0000 sz=2; dst=op_dar(a, d); src=op_ea(cs, r, m, 2);
+MOVES           0000_1110_10mm_mrrr addd_0000_0000_0000 sz=4; dst=op_dar(a, d); src=op_ea(cs, r, m, 4);
 
-MOVES           0000_1110_00mm_mrrr addd_1000_0000_0000 sz=1; src=cs.dar(a, d); dst=cs.ea(r, m, 1);
-MOVES           0000_1110_01mm_mrrr addd_1000_0000_0000 sz=2; src=cs.dar(a, d); dst=cs.ea(r, m, 2);
-MOVES           0000_1110_10mm_mrrr addd_1000_0000_0000 sz=4; src=cs.dar(a, d); dst=cs.ea(r, m, 4);
+MOVES           0000_1110_00mm_mrrr addd_1000_0000_0000 sz=1; src=op_dar(a, d); dst=op_ea(cs, r, m, 1);
+MOVES           0000_1110_01mm_mrrr addd_1000_0000_0000 sz=2; src=op_dar(a, d); dst=op_ea(cs, r, m, 2);
+MOVES           0000_1110_10mm_mrrr addd_1000_0000_0000 sz=4; src=op_dar(a, d); dst=op_ea(cs, r, m, 4);
 
 # Not handling CAS2 right now because it's a little crazy and doesn't work on an Amiga anyway due to the multiple bus transactions
 #CAS2            0000_11s0_1111_1100 Aaaa_000b_bb00_0ccc Dddd_000e_ee00_0fff return special_cas2(s << 1, A, a, b, c, D, d, e, f)
 
-RTM             0000_0110_1100_arrr sz=0; src=cs.dar(a,r); dst=NoOperand;
+RTM             0000_0110_1100_arrr sz=0; src=op_dar(a,r); dst=op_none();
 
 #====================================================================================================
 # Group 0001: Move byte
 #====================================================================================================
-MOVE            0001_RRRM_MMmm_mrrr sz=1; src=cs.ea(r, m, 1); dst=cs.ea(R, M, 1); 
+MOVE            0001_RRRM_MMmm_mrrr sz=1; src=op_ea(cs, r, m, 1); dst=op_ea(cs, R, M, 1); 
 
 #====================================================================================================
-# Group 0010: Move word
+# Group 0010: Move long
 #====================================================================================================
-MOVEA           0010_RRR0_01mm_mrrr sz=4; src=cs.ea(r, m, 4); dst=cs.ea(R, 0b001, 4); 
-MOVE            0010_RRRM_MMmm_mrrr sz=4; src=cs.ea(r, m, 4); dst=cs.ea(R, M, 4); 
+MOVEA           0010_RRR0_01mm_mrrr sz=4; src=op_ea(cs, r, m, 4); dst=op_ea(cs, R, 1 /*001*/, 4); 
+MOVE            0010_RRRM_MMmm_mrrr sz=4; src=op_ea(cs, r, m, 4); dst=op_ea(cs, R, M, 4); 
 
 #====================================================================================================
-# Group 0011: Move Long
+# Group 0011: Move word
 #====================================================================================================
-MOVEA           0011_RRR0_01mm_mrrr sz=2; src=cs.ea(r, m, 2); dst=cs.ea(R, 0b001, 2); 
-MOVE            0011_RRRM_MMmm_mrrr sz=2; src=cs.ea(r, m, 2); dst=cs.ea(R, M, 2); 
+MOVEA           0011_RRR0_01mm_mrrr sz=2; src=op_ea(cs, r, m, 2); dst=op_ea(cs, R, 1 /* 001 */, 2); 
+MOVE            0011_RRRM_MMmm_mrrr sz=2; src=op_ea(cs, r, m, 2); dst=op_ea(cs, R, M, 2); 
 
 #====================================================================================================
 # Group 0100: Miscellaneous
 #====================================================================================================
 
-BGND            0100_1010_1111_1010 sz=0; src=NoOperand; dst=NoOperand;
-ILLEGAL         0100_1010_1111_1100 sz=0; src=NoOperand; dst=NoOperand;
+BGND            0100_1010_1111_1010 sz=0; src=op_none(); dst=op_none();
+ILLEGAL         0100_1010_1111_1100 sz=0; src=op_none(); dst=op_none();
 
-NOP             0100_1110_0111_0001 sz=0; src=NoOperand; dst=NoOperand;
-RESET           0100_1110_0111_0000 sz=0; src=NoOperand; dst=NoOperand;
-RTD             0100_1110_0111_0100 sz=0; src=cs.imm16(); dst=NoOperand;
-RTE             0100_1110_0111_0011 sz=0; src=NoOperand; dst=NoOperand;
-RTR             0100_1110_0111_0111 sz=0; src=NoOperand; dst=NoOperand;
-RTS             0100_1110_0111_0101 sz=0; src=NoOperand; dst=NoOperand;
-STOP            0100_1110_0111_0010 sz=0; src=cs.imm16(); dst=NoOperand;
-TRAPV           0100_1110_0111_0110 sz=0; src=NoOperand; dst=NoOperand;
+NOP             0100_1110_0111_0001 sz=0; src=op_none(); dst=op_none();
+RESET           0100_1110_0111_0000 sz=0; src=op_none(); dst=op_none();
+RTD             0100_1110_0111_0100 sz=0; src=op_imm16p(cs); dst=op_none();
+RTE             0100_1110_0111_0011 sz=0; src=op_none(); dst=op_none();
+RTR             0100_1110_0111_0111 sz=0; src=op_none(); dst=op_none();
+RTS             0100_1110_0111_0101 sz=0; src=op_none(); dst=op_none();
+STOP            0100_1110_0111_0010 sz=0; src=op_imm16p(cs); dst=op_none();
+TRAPV           0100_1110_0111_0110 sz=0; src=op_none(); dst=op_none();
 
-MOVEC           0100_1110_0111_1010 arrr_cccc_cccc_cccc sz=4; src=CONTROLREG(c); dst=cs.dar(a, r);
-MOVEC           0100_1110_0111_1011 arrr_cccc_cccc_cccc sz=4; src=cs.dar(a, r); dst=CONTROLREG(c); 
+MOVEC           0100_1110_0111_1010 arrr_cccc_cccc_cccc sz=4; src=op_controlreg(c); dst=op_dar(a, r);
+MOVEC           0100_1110_0111_1011 arrr_cccc_cccc_cccc sz=4; src=op_dar(a, r); dst=op_controlreg(c); 
 
-SWAP            0100_1000_0100_0rrr sz=0; src=cs.data_reg_op(r); dst=NoOperand;
-BKPT            0100_1000_0100_1nnn sz=0; src=IMM8(n as u8); dst=NoOperand;
+SWAP            0100_1000_0100_0rrr sz=0; src=op_dr(r); dst=op_none();
+BKPT            0100_1000_0100_1nnn sz=0; src=op_imm8(n); dst=op_none();
 
-EXTW            0100_1000_1000_0rrr sz=2; src=cs.data_reg_op(r); dst=NoOperand;
-EXTL            0100_1000_1100_0rrr sz=4; src=cs.data_reg_op(r); dst=NoOperand;
-EXTBL           0100_1001_1100_0rrr sz=4; src=cs.data_reg_op(r); dst=NoOperand;
+EXTW            0100_1000_1000_0rrr sz=2; src=op_dr(r); dst=op_none();
+EXTL            0100_1000_1100_0rrr sz=4; src=op_dr(r); dst=op_none();
+EXTBL           0100_1001_1100_0rrr sz=4; src=op_dr(r); dst=op_none();
 
-LEA             0100_nnn1_11mm_mrrr sz=4; src=cs.ea(r, m, 4); dst=cs.address_reg_op(n);
+LEA             0100_nnn1_11mm_mrrr sz=4; src=op_ea(cs, r, m, 4); dst=op_ar(n);
 
-LINK            0100_1110_0101_0rrr sz=2; src=cs.address_reg_op(r); dst=cs.imm16(); 
-LINK            0100_1000_0000_1rrr sz=4; src=cs.address_reg_op(r); dst=cs.imm32(); 
+LINK            0100_1110_0101_0rrr sz=2; src=op_ar(r); dst=op_imm16p(cs); 
+LINK            0100_1000_0000_1rrr sz=4; src=op_ar(r); dst=op_imm32p(cs); 
 
-UNLK            0100_1110_0101_1rrr sz=0; src=cs.address_reg_op(r); dst=NoOperand;
+UNLK            0100_1110_0101_1rrr sz=0; src=op_ar(r); dst=op_none();
 
-TRAP            0100_1110_0100_vvvv sz=0; src=IMM8(v as u8); dst=NoOperand;
+TRAP            0100_1110_0100_vvvv sz=0; src=op_imm8(v); dst=op_none();
 
-DIVSL           0100_1100_01mm_mrrr 0qqq_1100_0000_0RRR ?(R != q) sz=4; src=cs.ea(r, m, 4); dst=DPAIR(cs.data_reg(q), cs.data_reg(R));
-DIVSL           0100_1100_01mm_mrrr 0qqq_1100_0000_0RRR sz=4; src=cs.ea(r, m, 4); dst=DPAIR(cs.data_reg(q), cs.data_reg(R));
-DIVSLL          0100_1100_01mm_mrrr 0qqq_1000_0000_0RRR ?(R != q) sz=4; src=cs.ea(r, m, 4); dst=DPAIR(cs.data_reg(q), cs.data_reg(R));
-DIVSL           0100_1100_01mm_mrrr 0qqq_1000_0000_0??? sz=4; src=cs.ea(r, m, 4); dst=cs.data_reg_op(q);
+DIVSL           0100_1100_01mm_mrrr 0qqq_1100_0000_0RRR ?(R != q) sz=4; src=op_ea(cs, r, m, 4); dst=op_dpair(q, R);
+DIVSL           0100_1100_01mm_mrrr 0qqq_1100_0000_0RRR sz=4; src=op_ea(cs, r, m, 4); dst=op_dpair(q, R);
+DIVSLL          0100_1100_01mm_mrrr 0qqq_1000_0000_0RRR ?(R != q) sz=4; src=op_ea(cs, r, m, 4); dst=op_dpair(q, R);
+DIVSL           0100_1100_01mm_mrrr 0qqq_1000_0000_0??? sz=4; src=op_ea(cs, r, m, 4); dst=op_dr(q);
 
 
-DIVUL           0100_1100_01mm_mrrr 0qqq_0100_0000_0RRR ?(R != q) sz=4; src=cs.ea(r, m, 4); dst=DPAIR(cs.data_reg(q), cs.data_reg(R));
-DIVUL           0100_1100_01mm_mrrr 0qqq_0100_0000_0RRR sz=4; src=cs.ea(r, m, 4); dst=DPAIR(cs.data_reg(q), cs.data_reg(R));
-DIVULL          0100_1100_01mm_mrrr 0qqq_0000_0000_0RRR ?(R != q) sz=4; src=cs.ea(r, m, 4); dst=DPAIR(cs.data_reg(q), cs.data_reg(R));
-DIVUL           0100_1100_01mm_mrrr 0qqq_0000_0000_0??? sz=4; src=cs.ea(r, m, 4); dst=cs.data_reg_op(q);
+DIVUL           0100_1100_01mm_mrrr 0qqq_0100_0000_0RRR ?(R != q) sz=4; src=op_ea(cs, r, m, 4); dst=op_dpair(q, R);
+DIVUL           0100_1100_01mm_mrrr 0qqq_0100_0000_0RRR sz=4; src=op_ea(cs, r, m, 4); dst=op_dpair(q, R);
+DIVULL          0100_1100_01mm_mrrr 0qqq_0000_0000_0RRR ?(R != q) sz=4; src=op_ea(cs, r, m, 4); dst=op_dpair(q, R);
+DIVUL           0100_1100_01mm_mrrr 0qqq_0000_0000_0??? sz=4; src=op_ea(cs, r, m, 4); dst=op_dr(q);
                                                     
-JMP             0100_1110_11mm_mrrr sz=0; src=cs.ea(r, m, 0); dst=NoOperand;
-JSR             0100_1110_10mm_mrrr sz=0; src=cs.ea(r, m, 0); dst=NoOperand;
+JMP             0100_1110_11mm_mrrr sz=0; src=op_ea(cs, r, m, 0); dst=op_none();
+JSR             0100_1110_10mm_mrrr sz=0; src=op_ea(cs, r, m, 0); dst=op_none();
 
-MULS            0100_1100_00mm_mrrr 0lll_1000_0000_0??? sz=4; src=cs.ea(r, m, 4); dst=cs.data_reg_op(l);
-MULS            0100_1100_00mm_mrrr 0lll_1100_0000_0hhh sz=4; src=cs.ea(r, m, 4); dst=DPAIR(cs.data_reg(l), cs.data_reg(h));
+MULS            0100_1100_00mm_mrrr 0lll_1000_0000_0??? sz=4; src=op_ea(cs, r, m, 4); dst=op_dr(l);
+MULS            0100_1100_00mm_mrrr 0lll_1100_0000_0hhh sz=4; src=op_ea(cs, r, m, 4); dst=op_dpair(l, h);
 
-MULU            0100_1100_00mm_mrrr 0lll_0000_0000_0??? sz=4; src=cs.ea(r, m, 4); dst=cs.data_reg_op(l);
-MULU            0100_1100_00mm_mrrr 0lll_0100_0000_0hhh sz=4; src=cs.ea(r, m, 4); dst=DPAIR(cs.data_reg(l), cs.data_reg(h));
+MULU            0100_1100_00mm_mrrr 0lll_0000_0000_0??? sz=4; src=op_ea(cs, r, m, 4); dst=op_dr(l);
+MULU            0100_1100_00mm_mrrr 0lll_0100_0000_0hhh sz=4; src=op_ea(cs, r, m, 4); dst=op_dpair(l, h);
 
-NBCD            0100_1000_00mm_mrrr sz=1; src=cs.ea(r, m, 1); dst=NoOperand;
+NBCD            0100_1000_00mm_mrrr sz=1; src=op_ea(cs, r, m, 1); dst=op_none();
 
-MOVEFROMSR      0100_0000_11mm_mrrr sz=2; src=Implied; dst=cs.ea(r, m, 2);
-MOVETOSR        0100_0110_11mm_mrrr sz=2; src=cs.ea(r, m, 2); dst=Implied; 
+MOVEFROMSR      0100_0000_11mm_mrrr sz=2; src=op_implied(); dst=op_ea(cs, r, m, 2);
+MOVETOSR        0100_0110_11mm_mrrr sz=2; src=op_ea(cs, r, m, 2); dst=op_implied(); 
 
-MOVETOUSP       0100_1110_0110_0rrr sz=4; src=cs.address_reg_op(r); dst=Implied;
-MOVEFROMUSP     0100_1110_0110_1rrr sz=4; src=Implied; dst=cs.address_reg_op(r); 
+MOVETOUSP       0100_1110_0110_0rrr sz=4; src=op_ar(r); dst=op_implied();
+MOVEFROMUSP     0100_1110_0110_1rrr sz=4; src=op_implied(); dst=op_ar(r); 
 
-MOVEFROMCCR     0100_0010_11mm_mrrr sz=2; src=Implied; dst=cs.ea(r, m, 2);
-MOVETOCCR       0100_0100_11mm_mrrr sz=2; src=cs.ea(r, m, 2); dst=Implied;
+MOVEFROMCCR     0100_0010_11mm_mrrr sz=2; src=op_implied(); dst=op_ea(cs, r, m, 2);
+MOVETOCCR       0100_0100_11mm_mrrr sz=2; src=op_ea(cs, r, m, 2); dst=op_implied();
 
-PEA             0100_1000_01mm_mrrr sz=4; src=cs.ea(r, m, 4); dst=Implied;
+PEA             0100_1000_01mm_mrrr sz=4; src=op_ea(cs, r, m, 4); dst=op_implied();
 
-TAS             0100_1010_11mm_mrrr sz=1; src=cs.ea(r, m, 1); dst=NoOperand;
+TAS             0100_1010_11mm_mrrr sz=1; src=op_ea(cs, r, m, 1); dst=op_none();
 
-MOVEM           0100_1000_1smm_mrrr sz=2 << s; src=REGLIST(cs.pull16()); dst=cs.ea(r, m, sz);
-MOVEM           0100_1100_1smm_mrrr sz=2 << s; dst=REGLIST(cs.pull16()); src=cs.ea(r, m, sz);
+MOVEM           0100_1000_1smm_mrrr sz=2 << s; src=op_reglist(pull16(cs)); dst=op_ea(cs, r, m, sz);
+MOVEM           0100_1100_1smm_mrrr sz=2 << s; dst=op_reglist(pull16(cs)); src=op_ea(cs, r, m, sz);
 
 
-CLR             0100_0010_00mm_mrrr sz=1; src=Implied; dst=cs.ea(r, m, sz);
-CLR             0100_0010_01mm_mrrr sz=2; src=Implied; dst=cs.ea(r, m, sz);
-CLR             0100_0010_10mm_mrrr sz=4; src=Implied; dst=cs.ea(r, m, sz);
+CLR             0100_0010_00mm_mrrr sz=1; src=op_implied(); dst=op_ea(cs, r, m, sz);
+CLR             0100_0010_01mm_mrrr sz=2; src=op_implied(); dst=op_ea(cs, r, m, sz);
+CLR             0100_0010_10mm_mrrr sz=4; src=op_implied(); dst=op_ea(cs, r, m, sz);
 
-NEG             0100_0100_00mm_mrrr sz=1; src=Implied; dst=cs.ea(r, m, sz);
-NEG             0100_0100_01mm_mrrr sz=2; src=Implied; dst=cs.ea(r, m, sz);
-NEG             0100_0100_10mm_mrrr sz=4; src=Implied; dst=cs.ea(r, m, sz);
+NEG             0100_0100_00mm_mrrr sz=1; src=op_implied(); dst=op_ea(cs, r, m, sz);
+NEG             0100_0100_01mm_mrrr sz=2; src=op_implied(); dst=op_ea(cs, r, m, sz);
+NEG             0100_0100_10mm_mrrr sz=4; src=op_implied(); dst=op_ea(cs, r, m, sz);
 
-NEGX            0100_0000_00mm_mrrr sz=1; src=Implied; dst=cs.ea(r, m, sz);
-NEGX            0100_0000_01mm_mrrr sz=2; src=Implied; dst=cs.ea(r, m, sz);
-NEGX            0100_0000_10mm_mrrr sz=4; src=Implied; dst=cs.ea(r, m, sz);
+NEGX            0100_0000_00mm_mrrr sz=1; src=op_implied(); dst=op_ea(cs, r, m, sz);
+NEGX            0100_0000_01mm_mrrr sz=2; src=op_implied(); dst=op_ea(cs, r, m, sz);
+NEGX            0100_0000_10mm_mrrr sz=4; src=op_implied(); dst=op_ea(cs, r, m, sz);
 
-NOT             0100_0110_00mm_mrrr sz=1; src=Implied; dst=cs.ea(r, m, sz);
-NOT             0100_0110_01mm_mrrr sz=2; src=Implied; dst=cs.ea(r, m, sz);
-NOT             0100_0110_10mm_mrrr sz=4; src=Implied; dst=cs.ea(r, m, sz);
+NOT             0100_0110_00mm_mrrr sz=1; src=op_implied(); dst=op_ea(cs, r, m, sz);
+NOT             0100_0110_01mm_mrrr sz=2; src=op_implied(); dst=op_ea(cs, r, m, sz);
+NOT             0100_0110_10mm_mrrr sz=4; src=op_implied(); dst=op_ea(cs, r, m, sz);
 
-TST             0100_1010_00mm_mrrr sz=1; src=Implied; dst=cs.ea(r, m, sz);
-TST             0100_1010_01mm_mrrr sz=2; src=Implied; dst=cs.ea(r, m, sz);
-TST             0100_1010_10mm_mrrr sz=4; src=Implied; dst=cs.ea(r, m, sz);
+TST             0100_1010_00mm_mrrr sz=1; src=op_implied(); dst=op_ea(cs, r, m, sz);
+TST             0100_1010_01mm_mrrr sz=2; src=op_implied(); dst=op_ea(cs, r, m, sz);
+TST             0100_1010_10mm_mrrr sz=4; src=op_implied(); dst=op_ea(cs, r, m, sz);
 
-CHK             0100_ddd1_10mm_mrrr sz=2; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
-CHK             0100_ddd1_00mm_mrrr sz=4; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
+CHK             0100_ddd1_10mm_mrrr sz=2; src=op_ea(cs, r, m, sz); dst=op_dr(d);
+CHK             0100_ddd1_00mm_mrrr sz=4; src=op_ea(cs, r, m, sz); dst=op_dr(d);
 
 #====================================================================================================
 # Group 0101: ADDQ/SUBQ/Scc/DBcc/TRAPcc
 #====================================================================================================
 
-DBCC            0101_cccc_1100_1rrr sz=2; src=cs.data_reg_op(r); dst=PCDISP(2, simple_disp(cs.pull16() as i16 as i32)); extra=cs.cc(c);
+DBCC            0101_cccc_1100_1rrr sz=2; src=op_dr(r); dst=op_pcdisp(2, simple_disp((int16_t)pull16(cs))); extra=extra_cc(c);
 
-ADDQ            0101_ddd0_00mm_mrrr sz=1; src=cs.quick_const(d); dst=cs.ea(r, m, sz);
-ADDQ            0101_ddd0_01mm_mrrr sz=2; src=cs.quick_const(d); dst=cs.ea(r, m, sz);
-ADDQ            0101_ddd0_10mm_mrrr sz=4; src=cs.quick_const(d); dst=cs.ea(r, m, sz);
+ADDQ            0101_ddd0_00mm_mrrr sz=1; src=op_quick_const(d); dst=op_ea(cs, r, m, sz);
+ADDQ            0101_ddd0_01mm_mrrr sz=2; src=op_quick_const(d); dst=op_ea(cs, r, m, sz);
+ADDQ            0101_ddd0_10mm_mrrr sz=4; src=op_quick_const(d); dst=op_ea(cs, r, m, sz);
 
-SUBQ            0101_ddd1_00mm_mrrr sz=1; src=cs.quick_const(d); dst=cs.ea(r, m, sz);
-SUBQ            0101_ddd1_01mm_mrrr sz=2; src=cs.quick_const(d); dst=cs.ea(r, m, sz);
-SUBQ            0101_ddd1_10mm_mrrr sz=4; src=cs.quick_const(d); dst=cs.ea(r, m, sz);
+SUBQ            0101_ddd1_00mm_mrrr sz=1; src=op_quick_const(d); dst=op_ea(cs, r, m, sz);
+SUBQ            0101_ddd1_01mm_mrrr sz=2; src=op_quick_const(d); dst=op_ea(cs, r, m, sz);
+SUBQ            0101_ddd1_10mm_mrrr sz=4; src=op_quick_const(d); dst=op_ea(cs, r, m, sz);
 
-TRAPCC          0101_cccc_1111_1100 sz=0; src=NoOperand; dst=NoOperand; extra=cs.cc(c);
-TRAPCC          0101_cccc_1111_1010 sz=2; src=cs.imm16(); dst=NoOperand; extra=cs.cc(c);
-TRAPCC          0101_cccc_1111_1011 sz=4; src=cs.imm32(); dst=NoOperand; extra=cs.cc(c);
+TRAPCC          0101_cccc_1111_1100 sz=0; src=op_none(); dst=op_none(); extra=extra_cc(c);
+TRAPCC          0101_cccc_1111_1010 sz=2; src=op_imm16p(cs); dst=op_none(); extra=extra_cc(c);
+TRAPCC          0101_cccc_1111_1011 sz=4; src=op_imm32p(cs); dst=op_none(); extra=extra_cc(c);
 
-SCC             0101_cccc_11mm_mrrr sz=1; src=Implied; dst=cs.ea(r, m, 1); extra=cs.cc(c);
+SCC             0101_cccc_11mm_mrrr sz=1; src=op_implied(); dst=op_ea(cs, r, m, 1); extra=extra_cc(c);
 
 #====================================================================================================
 # Group 0110: Bcc/BSR/BRA
 #====================================================================================================
 
-BRA             0110_0000_0000_0000 sz=2; src = PCDISP(2, simple_disp(cs.pull16() as i16 as i32)); dst=NoOperand;
-BRA             0110_0000_1111_1111 sz=4; src = PCDISP(2, simple_disp(cs.pull32() as i32)); dst=NoOperand;
-BRA             0110_0000_dddd_dddd sz=1; src = PCDISP(2, simple_disp(d as i8 as i32)); dst=NoOperand;
+BRA             0110_0000_0000_0000 sz=2; src = op_pcdisp(2, simple_disp((int16_t)pull16(cs))); dst=op_none();
+BRA             0110_0000_1111_1111 sz=4; src = op_pcdisp(2, simple_disp((int32_t)pull32(cs))); dst=op_none();
+BRA             0110_0000_dddd_dddd sz=1; src = op_pcdisp(2, simple_disp((int8_t)d)); dst=op_none();
 
-BSR             0110_0001_0000_0000 sz=2; src = PCDISP(2, simple_disp(cs.pull16() as i16 as i32)); dst=NoOperand;
-BSR             0110_0001_1111_1111 sz=4; src = PCDISP(2, simple_disp(cs.pull32() as i32)); dst=NoOperand;
-BSR             0110_0001_dddd_dddd sz=1; src = PCDISP(2, simple_disp(d as i8 as i32)); dst=NoOperand;
+BSR             0110_0001_0000_0000 sz=2; src = op_pcdisp(2, simple_disp((int16_t)pull16(cs))); dst=op_none();
+BSR             0110_0001_1111_1111 sz=4; src = op_pcdisp(2, simple_disp((int32_t)pull32(cs))); dst=op_none();
+BSR             0110_0001_dddd_dddd sz=1; src = op_pcdisp(2, simple_disp((int8_t)d)); dst=op_none();
 
-BCC             0110_cccc_0000_0000 sz=2; src = PCDISP(2, simple_disp(cs.pull16() as i16 as i32)); dst=NoOperand; extra=cs.cc(c);
-BCC             0110_cccc_1111_1111 sz=4; src = PCDISP(2, simple_disp(cs.pull32() as i32)); dst=NoOperand; extra=cs.cc(c);
-BCC             0110_cccc_dddd_dddd sz=1; src = PCDISP(2, simple_disp(d as i8 as i32)); dst=NoOperand; extra=cs.cc(c);
+BCC             0110_cccc_0000_0000 sz=2; src = op_pcdisp(2, simple_disp((int16_t)pull16(cs))); dst=op_none(); extra=extra_cc(c);
+BCC             0110_cccc_1111_1111 sz=4; src = op_pcdisp(2, simple_disp((int32_t)pull32(cs))); dst=op_none(); extra=extra_cc(c);
+BCC             0110_cccc_dddd_dddd sz=1; src = op_pcdisp(2, simple_disp((int8_t)d)); dst=op_none(); extra=extra_cc(c);
 
 #====================================================================================================
 # Group 0111: MOVEQ
 #====================================================================================================
 
-MOVEQ           0111_rrr0_nnnn_nnnn sz=4; src=IMM8(n as u8); dst=cs.data_reg_op(r);
+MOVEQ           0111_rrr0_nnnn_nnnn sz=4; src=op_imm8(n); dst=op_dr(r);
 
 #====================================================================================================
 # Group 1000: OR/DIV/SBCD
 #====================================================================================================
 
-PACK            1000_yyy1_0100_0xxx sz=0; src = cs.data_reg_op(x); dst = cs.data_reg_op(y); extra=PackAdjustment(cs.pull16());
-PACK            1000_yyy1_0100_1xxx sz=0; src = ARDEC(cs.address_reg(x)); dst = ARDEC(cs.address_reg(y)); extra=PackAdjustment(cs.pull16());
+PACK            1000_yyy1_0100_0xxx sz=0; src = op_dr(x); dst = op_dr(y); extra=extra_packadj(pull16(cs));
+PACK            1000_yyy1_0100_1xxx sz=0; src = op_ardec(x); dst = op_ardec(y); extra=extra_packadj(pull16(cs));
 
-UNPK            1000_yyy1_1000_0xxx sz=0; src = cs.data_reg_op(x); dst = cs.data_reg_op(y); extra=PackAdjustment(cs.pull16());
-UNPK            1000_yyy1_1000_1xxx sz=0; src = ARDEC(cs.address_reg(x)); dst = ARDEC(cs.address_reg(y)); extra=PackAdjustment(cs.pull16());
+UNPK            1000_yyy1_1000_0xxx sz=0; src = op_dr(x); dst = op_dr(y); extra=extra_packadj(pull16(cs));
+UNPK            1000_yyy1_1000_1xxx sz=0; src = op_ardec(x); dst = op_ardec(y); extra=extra_packadj(pull16(cs));
 
-SBCD            1000_yyy1_0000_0xxx sz=1; src = cs.data_reg_op(x); dst = cs.data_reg_op(y);
-SBCD            1000_yyy1_0000_1xxx sz=1; src = ARDEC(cs.address_reg(x)); dst = ARDEC(cs.address_reg(y));
+SBCD            1000_yyy1_0000_0xxx sz=1; src = op_dr(x); dst = op_dr(y);
+SBCD            1000_yyy1_0000_1xxx sz=1; src = op_ardec(x); dst = op_ardec(y);
 
-DIVS            1000_ddd1_11mm_mrrr sz=2; src=cs.ea(r, m, 2); dst=cs.data_reg_op(d);
-DIVU            1000_ddd0_11mm_mrrr sz=2; src=cs.ea(r, m, 2); dst=cs.data_reg_op(d);
+DIVS            1000_ddd1_11mm_mrrr sz=2; src=op_ea(cs, r, m, 2); dst=op_dr(d);
+DIVU            1000_ddd0_11mm_mrrr sz=2; src=op_ea(cs, r, m, 2); dst=op_dr(d);
 
-OR              1000_ddd0_00mm_mrrr sz=1; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
-OR              1000_ddd0_01mm_mrrr sz=2; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
-OR              1000_ddd0_10mm_mrrr sz=4; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
-OR              1000_ddd1_00mm_mrrr sz=1; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz);
-OR              1000_ddd1_01mm_mrrr sz=2; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz);
-OR              1000_ddd1_10mm_mrrr sz=4; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz);
+OR              1000_ddd0_00mm_mrrr sz=1; src=op_ea(cs, r, m, sz); dst=op_dr(d);
+OR              1000_ddd0_01mm_mrrr sz=2; src=op_ea(cs, r, m, sz); dst=op_dr(d);
+OR              1000_ddd0_10mm_mrrr sz=4; src=op_ea(cs, r, m, sz); dst=op_dr(d);
+OR              1000_ddd1_00mm_mrrr sz=1; src=op_dr(d); dst=op_ea(cs, r, m, sz);
+OR              1000_ddd1_01mm_mrrr sz=2; src=op_dr(d); dst=op_ea(cs, r, m, sz);
+OR              1000_ddd1_10mm_mrrr sz=4; src=op_dr(d); dst=op_ea(cs, r, m, sz);
 
 #====================================================================================================
 # Group 1001: SUB/SUBX
 #====================================================================================================
 
 # data register pair
-SUBX            1001_xxx1_0000_0yyy sz=1; src=cs.data_reg_op(y); dst=cs.data_reg_op(x);
-SUBX            1001_xxx1_0100_0yyy sz=2; src=cs.data_reg_op(y); dst=cs.data_reg_op(x);
-SUBX            1001_xxx1_1000_0yyy sz=4; src=cs.data_reg_op(y); dst=cs.data_reg_op(x);
+SUBX            1001_xxx1_0000_0yyy sz=1; src=op_dr(y); dst=op_dr(x);
+SUBX            1001_xxx1_0100_0yyy sz=2; src=op_dr(y); dst=op_dr(x);
+SUBX            1001_xxx1_1000_0yyy sz=4; src=op_dr(y); dst=op_dr(x);
 
 # decrementing address pair
-SUBX            1001_xxx1_0000_1yyy sz=1; src=ARDEC(cs.address_reg(y)); dst=ARDEC(cs.address_reg(x));
-SUBX            1001_xxx1_0100_1yyy sz=2; src=ARDEC(cs.address_reg(y)); dst=ARDEC(cs.address_reg(x));
-SUBX            1001_xxx1_1000_1yyy sz=4; src=ARDEC(cs.address_reg(y)); dst=ARDEC(cs.address_reg(x));
+SUBX            1001_xxx1_0000_1yyy sz=1; src=op_ardec(y); dst=op_ardec(x);
+SUBX            1001_xxx1_0100_1yyy sz=2; src=op_ardec(y); dst=op_ardec(x);
+SUBX            1001_xxx1_1000_1yyy sz=4; src=op_ardec(y); dst=op_ardec(x);
 
 # SUB <ea>,Dn
-SUB             1001_ddd0_00mm_mrrr sz=1; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
-SUB             1001_ddd0_01mm_mrrr sz=2; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
-SUB             1001_ddd0_10mm_mrrr sz=4; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
+SUB             1001_ddd0_00mm_mrrr sz=1; src=op_ea(cs, r, m, sz); dst=op_dr(d);
+SUB             1001_ddd0_01mm_mrrr sz=2; src=op_ea(cs, r, m, sz); dst=op_dr(d);
+SUB             1001_ddd0_10mm_mrrr sz=4; src=op_ea(cs, r, m, sz); dst=op_dr(d);
 # SUB Dn,<ea>
-SUB             1001_ddd1_00mm_mrrr sz=1; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz); 
-SUB             1001_ddd1_01mm_mrrr sz=2; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz); 
-SUB             1001_ddd1_10mm_mrrr sz=4; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz); 
+SUB             1001_ddd1_00mm_mrrr sz=1; src=op_dr(d); dst=op_ea(cs, r, m, sz); 
+SUB             1001_ddd1_01mm_mrrr sz=2; src=op_dr(d); dst=op_ea(cs, r, m, sz); 
+SUB             1001_ddd1_10mm_mrrr sz=4; src=op_dr(d); dst=op_ea(cs, r, m, sz); 
 
 # SUBA <ea>,Dn
-SUBA            1001_ddd0_11mm_mrrr sz=2; src=cs.ea(r, m, sz); dst=cs.address_reg_op(d);
-SUBA            1001_ddd1_11mm_mrrr sz=4; src=cs.ea(r, m, sz); dst=cs.address_reg_op(d);
+SUBA            1001_ddd0_11mm_mrrr sz=2; src=op_ea(cs, r, m, sz); dst=op_ar(d);
+SUBA            1001_ddd1_11mm_mrrr sz=4; src=op_ea(cs, r, m, sz); dst=op_ar(d);
 
 #====================================================================================================
 # Group 1010: Reserved/Unassigned
@@ -285,256 +285,256 @@ SUBA            1001_ddd1_11mm_mrrr sz=4; src=cs.ea(r, m, sz); dst=cs.address_re
 # Group 1011: CMP/EOR
 #====================================================================================================
 
-CMPA            1011_aaa0_11mm_mrrr sz=2; src=cs.ea(r, m, sz); dst=cs.address_reg_op(a);
-CMPA            1011_aaa1_11mm_mrrr sz=4; src=cs.ea(r, m, sz); dst=cs.address_reg_op(a);
+CMPA            1011_aaa0_11mm_mrrr sz=2; src=op_ea(cs, r, m, sz); dst=op_ar(a);
+CMPA            1011_aaa1_11mm_mrrr sz=4; src=op_ea(cs, r, m, sz); dst=op_ar(a);
 
-CMPM            1011_xxx1_0000_1yyy sz=1; src=ARINC(cs.address_reg(y)); dst=ARINC(cs.address_reg(x));
-CMPM            1011_xxx1_0100_1yyy sz=2; src=ARINC(cs.address_reg(y)); dst=ARINC(cs.address_reg(x));
-CMPM            1011_xxx1_1000_1yyy sz=4; src=ARINC(cs.address_reg(y)); dst=ARINC(cs.address_reg(x));
+CMPM            1011_xxx1_0000_1yyy sz=1; src=op_arinc(y); dst=op_arinc(x);
+CMPM            1011_xxx1_0100_1yyy sz=2; src=op_arinc(y); dst=op_arinc(x);
+CMPM            1011_xxx1_1000_1yyy sz=4; src=op_arinc(y); dst=op_arinc(x);
 
-CMP             1011_ddd0_00mm_mrrr sz=1; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
-CMP             1011_ddd0_01mm_mrrr sz=2; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
-CMP             1011_ddd0_10mm_mrrr sz=4; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
+CMP             1011_ddd0_00mm_mrrr sz=1; src=op_ea(cs, r, m, sz); dst=op_dr(d);
+CMP             1011_ddd0_01mm_mrrr sz=2; src=op_ea(cs, r, m, sz); dst=op_dr(d);
+CMP             1011_ddd0_10mm_mrrr sz=4; src=op_ea(cs, r, m, sz); dst=op_dr(d);
 
-EOR             1011_ddd1_00mm_mrrr sz=1; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz);
-EOR             1011_ddd1_01mm_mrrr sz=2; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz);
-EOR             1011_ddd1_10mm_mrrr sz=4; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz);
+EOR             1011_ddd1_00mm_mrrr sz=1; src=op_dr(d); dst=op_ea(cs, r, m, sz);
+EOR             1011_ddd1_01mm_mrrr sz=2; src=op_dr(d); dst=op_ea(cs, r, m, sz);
+EOR             1011_ddd1_10mm_mrrr sz=4; src=op_dr(d); dst=op_ea(cs, r, m, sz);
 
 #====================================================================================================
 # Group 1100: AND/MUL/ABCD/EXG
 #====================================================================================================
 
-ABCD            1100_yyy1_0000_0xxx sz=1; src = cs.data_reg_op(x); dst = cs.data_reg_op(y);
-ABCD            1100_yyy1_0000_1xxx sz=1; src = ARDEC(cs.address_reg(x)); dst = ARDEC(cs.address_reg(y));
+ABCD            1100_yyy1_0000_0xxx sz=1; src = op_dr(x); dst = op_dr(y);
+ABCD            1100_yyy1_0000_1xxx sz=1; src = op_ardec(x); dst = op_ardec(y);
 
-MULU            1100_ppp0_11mm_mrrr sz=2; src=cs.ea(r, m, 2); dst=cs.data_reg_op(p);
-MULS            1100_ppp1_11mm_mrrr sz=2; src=cs.ea(r, m, 2); dst=cs.data_reg_op(p);
+MULU            1100_ppp0_11mm_mrrr sz=2; src=op_ea(cs, r, m, 2); dst=op_dr(p);
+MULS            1100_ppp1_11mm_mrrr sz=2; src=op_ea(cs, r, m, 2); dst=op_dr(p);
 
-EXG             1100_xxx1_0100_0yyy sz=4; src=cs.data_reg_op(x); dst=cs.data_reg_op(y);
-EXG             1100_xxx1_0100_1yyy sz=4; src=cs.address_reg_op(x); dst=cs.address_reg_op(y);
-EXG             1100_xxx1_1000_1yyy sz=4; src=cs.data_reg_op(x); dst=cs.address_reg_op(y);
+EXG             1100_xxx1_0100_0yyy sz=4; src=op_dr(x); dst=op_dr(y);
+EXG             1100_xxx1_0100_1yyy sz=4; src=op_ar(x); dst=op_ar(y);
+EXG             1100_xxx1_1000_1yyy sz=4; src=op_dr(x); dst=op_ar(y);
 
-AND             1100_ddd0_00mm_mrrr sz=1; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
-AND             1100_ddd0_01mm_mrrr sz=2; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
-AND             1100_ddd0_10mm_mrrr sz=4; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
-AND             1100_ddd1_00mm_mrrr sz=1; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz);
-AND             1100_ddd1_01mm_mrrr sz=2; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz);
-AND             1100_ddd1_10mm_mrrr sz=4; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz);
+AND             1100_ddd0_00mm_mrrr sz=1; src=op_ea(cs, r, m, sz); dst=op_dr(d);
+AND             1100_ddd0_01mm_mrrr sz=2; src=op_ea(cs, r, m, sz); dst=op_dr(d);
+AND             1100_ddd0_10mm_mrrr sz=4; src=op_ea(cs, r, m, sz); dst=op_dr(d);
+AND             1100_ddd1_00mm_mrrr sz=1; src=op_dr(d); dst=op_ea(cs, r, m, sz);
+AND             1100_ddd1_01mm_mrrr sz=2; src=op_dr(d); dst=op_ea(cs, r, m, sz);
+AND             1100_ddd1_10mm_mrrr sz=4; src=op_dr(d); dst=op_ea(cs, r, m, sz);
 
 #====================================================================================================
 # Group 1101: ADD/ADDX
 #====================================================================================================
 
 # data register pair
-ADDX            1101_xxx1_0000_0yyy sz=1; src=cs.data_reg_op(y); dst=cs.data_reg_op(x);
-ADDX            1101_xxx1_0100_0yyy sz=2; src=cs.data_reg_op(y); dst=cs.data_reg_op(x);
-ADDX            1101_xxx1_1000_0yyy sz=4; src=cs.data_reg_op(y); dst=cs.data_reg_op(x);
+ADDX            1101_xxx1_0000_0yyy sz=1; src=op_dr(y); dst=op_dr(x);
+ADDX            1101_xxx1_0100_0yyy sz=2; src=op_dr(y); dst=op_dr(x);
+ADDX            1101_xxx1_1000_0yyy sz=4; src=op_dr(y); dst=op_dr(x);
 
 # decrementing address pair
-ADDX            1101_xxx1_0000_1yyy sz=1; src=ARDEC(cs.address_reg(y)); dst=ARDEC(cs.address_reg(x));
-ADDX            1101_xxx1_0100_1yyy sz=2; src=ARDEC(cs.address_reg(y)); dst=ARDEC(cs.address_reg(x));
-ADDX            1101_xxx1_1000_1yyy sz=4; src=ARDEC(cs.address_reg(y)); dst=ARDEC(cs.address_reg(x));
+ADDX            1101_xxx1_0000_1yyy sz=1; src=op_ardec(y); dst=op_ardec(x);
+ADDX            1101_xxx1_0100_1yyy sz=2; src=op_ardec(y); dst=op_ardec(x);
+ADDX            1101_xxx1_1000_1yyy sz=4; src=op_ardec(y); dst=op_ardec(x);
 
 # ADD <ea>,Dn
-ADD             1101_ddd0_00mm_mrrr sz=1; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
-ADD             1101_ddd0_01mm_mrrr sz=2; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
-ADD             1101_ddd0_10mm_mrrr sz=4; src=cs.ea(r, m, sz); dst=cs.data_reg_op(d);
+ADD             1101_ddd0_00mm_mrrr sz=1; src=op_ea(cs, r, m, sz); dst=op_dr(d);
+ADD             1101_ddd0_01mm_mrrr sz=2; src=op_ea(cs, r, m, sz); dst=op_dr(d);
+ADD             1101_ddd0_10mm_mrrr sz=4; src=op_ea(cs, r, m, sz); dst=op_dr(d);
 
 # ADD Dn,<ea>
-ADD             1101_ddd1_00mm_mrrr sz=1; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz); 
-ADD             1101_ddd1_01mm_mrrr sz=2; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz); 
-ADD             1101_ddd1_10mm_mrrr sz=4; src=cs.data_reg_op(d); dst=cs.ea(r, m, sz); 
+ADD             1101_ddd1_00mm_mrrr sz=1; src=op_dr(d); dst=op_ea(cs, r, m, sz); 
+ADD             1101_ddd1_01mm_mrrr sz=2; src=op_dr(d); dst=op_ea(cs, r, m, sz); 
+ADD             1101_ddd1_10mm_mrrr sz=4; src=op_dr(d); dst=op_ea(cs, r, m, sz); 
 
 # ADDA <ea>,Dn
-ADDA            1101_aaa0_11mm_mrrr sz=2; src=cs.ea(r, m, sz); dst=cs.address_reg_op(a);
-ADDA            1101_aaa1_11mm_mrrr sz=4; src=cs.ea(r, m, sz); dst=cs.address_reg_op(a);
+ADDA            1101_aaa0_11mm_mrrr sz=2; src=op_ea(cs, r, m, sz); dst=op_ar(a);
+ADDA            1101_aaa1_11mm_mrrr sz=4; src=op_ea(cs, r, m, sz); dst=op_ar(a);
 
 #====================================================================================================
 # Group 1110: Shift, Rotate, Bitfield
 #====================================================================================================
 
-BFCHG           1110_1010_11mm_mrrr 0000_Oooo_ooWw_wwww extra = cs.bitfield(O, o, W, w); sz=0; src=NoOperand; dst=cs.ea(r, m, 0);
-BFCLR           1110_1100_11mm_mrrr 0000_Oooo_ooWw_wwww extra = cs.bitfield(O, o, W, w); sz=0; src=NoOperand; dst=cs.ea(r, m, 0);
-BFEXTS          1110_1011_11mm_mrrr 0ddd_Oooo_ooWw_wwww extra = cs.bitfield(O, o, W, w); sz=0; src=cs.ea(r, m, 0); dst=cs.data_reg_op(d);
-BFEXTU          1110_1001_11mm_mrrr 0ddd_Oooo_ooWw_wwww extra = cs.bitfield(O, o, W, w); sz=0; src=cs.ea(r, m, 0); dst=cs.data_reg_op(d);
-BFFFO           1110_1101_11mm_mrrr 0ddd_Oooo_ooWw_wwww extra = cs.bitfield(O, o, W, w); sz=0; src=cs.ea(r, m, 0); dst=cs.data_reg_op(d);
-BFINS           1110_1111_11mm_mrrr 0ddd_Oooo_ooWw_wwww extra = cs.bitfield(O, o, W, w); sz=0; src=cs.data_reg_op(d); dst=cs.ea(r, m, 0);
-BFSET           1110_1110_11mm_mrrr 0000_Oooo_ooWw_wwww extra = cs.bitfield(O, o, W, w); sz=0; src=NoOperand; dst=cs.ea(r, m, 0);
-BFTST           1110_1000_11mm_mrrr 0000_Oooo_ooWw_wwww extra = cs.bitfield(O, o, W, w); sz=0; src=NoOperand; dst=cs.ea(r, m, 0);
+BFCHG           1110_1010_11mm_mrrr 0000_Oooo_ooWw_wwww extra = extra_bitfield(O, o, W, w); sz=0; src=op_none(); dst=op_ea(cs, r, m, 0);
+BFCLR           1110_1100_11mm_mrrr 0000_Oooo_ooWw_wwww extra = extra_bitfield(O, o, W, w); sz=0; src=op_none(); dst=op_ea(cs, r, m, 0);
+BFEXTS          1110_1011_11mm_mrrr 0ddd_Oooo_ooWw_wwww extra = extra_bitfield(O, o, W, w); sz=0; src=op_ea(cs, r, m, 0); dst=op_dr(d);
+BFEXTU          1110_1001_11mm_mrrr 0ddd_Oooo_ooWw_wwww extra = extra_bitfield(O, o, W, w); sz=0; src=op_ea(cs, r, m, 0); dst=op_dr(d);
+BFFFO           1110_1101_11mm_mrrr 0ddd_Oooo_ooWw_wwww extra = extra_bitfield(O, o, W, w); sz=0; src=op_ea(cs, r, m, 0); dst=op_dr(d);
+BFINS           1110_1111_11mm_mrrr 0ddd_Oooo_ooWw_wwww extra = extra_bitfield(O, o, W, w); sz=0; src=op_dr(d); dst=op_ea(cs, r, m, 0);
+BFSET           1110_1110_11mm_mrrr 0000_Oooo_ooWw_wwww extra = extra_bitfield(O, o, W, w); sz=0; src=op_none(); dst=op_ea(cs, r, m, 0);
+BFTST           1110_1000_11mm_mrrr 0000_Oooo_ooWw_wwww extra = extra_bitfield(O, o, W, w); sz=0; src=op_none(); dst=op_ea(cs, r, m, 0);
 
-ASL             1110_ccc1_0000_0rrr sz=1; src=IMM8(c as u8); dst=cs.data_reg_op(r);
-ASL             1110_ccc1_0100_0rrr sz=2; src=IMM8(c as u8); dst=cs.data_reg_op(r);
-ASL             1110_ccc1_1000_0rrr sz=4; src=IMM8(c as u8); dst=cs.data_reg_op(r);
-ASR             1110_ccc0_0000_0rrr sz=1; src=IMM8(c as u8); dst=cs.data_reg_op(r);
-ASR             1110_ccc0_0100_0rrr sz=2; src=IMM8(c as u8); dst=cs.data_reg_op(r);
-ASR             1110_ccc0_1000_0rrr sz=4; src=IMM8(c as u8); dst=cs.data_reg_op(r);
-ASL             1110_ccc1_0010_0rrr sz=1; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
-ASL             1110_ccc1_0110_0rrr sz=2; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
-ASL             1110_ccc1_1010_0rrr sz=4; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
-ASR             1110_ccc0_0010_0rrr sz=1; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
-ASR             1110_ccc0_0110_0rrr sz=2; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
-ASR             1110_ccc0_1010_0rrr sz=4; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
+ASL             1110_ccc1_0000_0rrr sz=1; src=op_imm8(c); dst=op_dr(r);
+ASL             1110_ccc1_0100_0rrr sz=2; src=op_imm8(c); dst=op_dr(r);
+ASL             1110_ccc1_1000_0rrr sz=4; src=op_imm8(c); dst=op_dr(r);
+ASR             1110_ccc0_0000_0rrr sz=1; src=op_imm8(c); dst=op_dr(r);
+ASR             1110_ccc0_0100_0rrr sz=2; src=op_imm8(c); dst=op_dr(r);
+ASR             1110_ccc0_1000_0rrr sz=4; src=op_imm8(c); dst=op_dr(r);
+ASL             1110_ccc1_0010_0rrr sz=1; src=op_dr(c); dst=op_dr(r);
+ASL             1110_ccc1_0110_0rrr sz=2; src=op_dr(c); dst=op_dr(r);
+ASL             1110_ccc1_1010_0rrr sz=4; src=op_dr(c); dst=op_dr(r);
+ASR             1110_ccc0_0010_0rrr sz=1; src=op_dr(c); dst=op_dr(r);
+ASR             1110_ccc0_0110_0rrr sz=2; src=op_dr(c); dst=op_dr(r);
+ASR             1110_ccc0_1010_0rrr sz=4; src=op_dr(c); dst=op_dr(r);
 
-LSL             1110_ccc1_0000_1rrr sz=1; src=IMM8(c as u8); dst=cs.data_reg_op(r);
-LSL             1110_ccc1_0100_1rrr sz=2; src=IMM8(c as u8); dst=cs.data_reg_op(r);
-LSL             1110_ccc1_1000_1rrr sz=4; src=IMM8(c as u8); dst=cs.data_reg_op(r);
-LSR             1110_ccc0_0000_1rrr sz=1; src=IMM8(c as u8); dst=cs.data_reg_op(r);
-LSR             1110_ccc0_0100_1rrr sz=2; src=IMM8(c as u8); dst=cs.data_reg_op(r);
-LSR             1110_ccc0_1000_1rrr sz=4; src=IMM8(c as u8); dst=cs.data_reg_op(r);
-LSL             1110_ccc1_0010_1rrr sz=1; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
-LSL             1110_ccc1_0110_1rrr sz=2; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
-LSL             1110_ccc1_1010_1rrr sz=4; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
-LSR             1110_ccc0_0010_1rrr sz=1; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
-LSR             1110_ccc0_0110_1rrr sz=2; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
-LSR             1110_ccc0_1010_1rrr sz=4; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
+LSL             1110_ccc1_0000_1rrr sz=1; src=op_imm8(c); dst=op_dr(r);
+LSL             1110_ccc1_0100_1rrr sz=2; src=op_imm8(c); dst=op_dr(r);
+LSL             1110_ccc1_1000_1rrr sz=4; src=op_imm8(c); dst=op_dr(r);
+LSR             1110_ccc0_0000_1rrr sz=1; src=op_imm8(c); dst=op_dr(r);
+LSR             1110_ccc0_0100_1rrr sz=2; src=op_imm8(c); dst=op_dr(r);
+LSR             1110_ccc0_1000_1rrr sz=4; src=op_imm8(c); dst=op_dr(r);
+LSL             1110_ccc1_0010_1rrr sz=1; src=op_dr(c); dst=op_dr(r);
+LSL             1110_ccc1_0110_1rrr sz=2; src=op_dr(c); dst=op_dr(r);
+LSL             1110_ccc1_1010_1rrr sz=4; src=op_dr(c); dst=op_dr(r);
+LSR             1110_ccc0_0010_1rrr sz=1; src=op_dr(c); dst=op_dr(r);
+LSR             1110_ccc0_0110_1rrr sz=2; src=op_dr(c); dst=op_dr(r);
+LSR             1110_ccc0_1010_1rrr sz=4; src=op_dr(c); dst=op_dr(r);
 
-ROXL            1110_ccc1_0001_0rrr sz=1; src=IMM8(c as u8); dst=cs.data_reg_op(r);
-ROXL            1110_ccc1_0101_0rrr sz=2; src=IMM8(c as u8); dst=cs.data_reg_op(r);
-ROXL            1110_ccc1_1001_0rrr sz=4; src=IMM8(c as u8); dst=cs.data_reg_op(r);
-ROXR            1110_ccc0_0001_0rrr sz=1; src=IMM8(c as u8); dst=cs.data_reg_op(r);
-ROXR            1110_ccc0_0101_0rrr sz=2; src=IMM8(c as u8); dst=cs.data_reg_op(r);
-ROXR            1110_ccc0_1001_0rrr sz=4; src=IMM8(c as u8); dst=cs.data_reg_op(r);
-ROXL            1110_ccc1_0011_0rrr sz=1; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
-ROXL            1110_ccc1_0111_0rrr sz=2; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
-ROXL            1110_ccc1_1011_0rrr sz=4; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
-ROXR            1110_ccc0_0011_0rrr sz=1; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
-ROXR            1110_ccc0_0111_0rrr sz=2; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
-ROXR            1110_ccc0_1011_0rrr sz=4; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
+ROXL            1110_ccc1_0001_0rrr sz=1; src=op_imm8(c); dst=op_dr(r);
+ROXL            1110_ccc1_0101_0rrr sz=2; src=op_imm8(c); dst=op_dr(r);
+ROXL            1110_ccc1_1001_0rrr sz=4; src=op_imm8(c); dst=op_dr(r);
+ROXR            1110_ccc0_0001_0rrr sz=1; src=op_imm8(c); dst=op_dr(r);
+ROXR            1110_ccc0_0101_0rrr sz=2; src=op_imm8(c); dst=op_dr(r);
+ROXR            1110_ccc0_1001_0rrr sz=4; src=op_imm8(c); dst=op_dr(r);
+ROXL            1110_ccc1_0011_0rrr sz=1; src=op_dr(c); dst=op_dr(r);
+ROXL            1110_ccc1_0111_0rrr sz=2; src=op_dr(c); dst=op_dr(r);
+ROXL            1110_ccc1_1011_0rrr sz=4; src=op_dr(c); dst=op_dr(r);
+ROXR            1110_ccc0_0011_0rrr sz=1; src=op_dr(c); dst=op_dr(r);
+ROXR            1110_ccc0_0111_0rrr sz=2; src=op_dr(c); dst=op_dr(r);
+ROXR            1110_ccc0_1011_0rrr sz=4; src=op_dr(c); dst=op_dr(r);
 
-ROL             1110_ccc1_0001_1rrr sz=1; src=IMM8(c as u8); dst=cs.data_reg_op(r);
-ROL             1110_ccc1_0101_1rrr sz=2; src=IMM8(c as u8); dst=cs.data_reg_op(r);
-ROL             1110_ccc1_1001_1rrr sz=4; src=IMM8(c as u8); dst=cs.data_reg_op(r);
-ROR             1110_ccc0_0001_1rrr sz=1; src=IMM8(c as u8); dst=cs.data_reg_op(r);
-ROR             1110_ccc0_0101_1rrr sz=2; src=IMM8(c as u8); dst=cs.data_reg_op(r);
-ROR             1110_ccc0_1001_1rrr sz=4; src=IMM8(c as u8); dst=cs.data_reg_op(r);
-ROL             1110_ccc1_0011_1rrr sz=1; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
-ROL             1110_ccc1_0111_1rrr sz=2; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
-ROL             1110_ccc1_1011_1rrr sz=4; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
-ROR             1110_ccc0_0011_1rrr sz=1; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
-ROR             1110_ccc0_0111_1rrr sz=2; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
-ROR             1110_ccc0_1011_1rrr sz=4; src=cs.data_reg_op(c); dst=cs.data_reg_op(r);
+ROL             1110_ccc1_0001_1rrr sz=1; src=op_imm8(c); dst=op_dr(r);
+ROL             1110_ccc1_0101_1rrr sz=2; src=op_imm8(c); dst=op_dr(r);
+ROL             1110_ccc1_1001_1rrr sz=4; src=op_imm8(c); dst=op_dr(r);
+ROR             1110_ccc0_0001_1rrr sz=1; src=op_imm8(c); dst=op_dr(r);
+ROR             1110_ccc0_0101_1rrr sz=2; src=op_imm8(c); dst=op_dr(r);
+ROR             1110_ccc0_1001_1rrr sz=4; src=op_imm8(c); dst=op_dr(r);
+ROL             1110_ccc1_0011_1rrr sz=1; src=op_dr(c); dst=op_dr(r);
+ROL             1110_ccc1_0111_1rrr sz=2; src=op_dr(c); dst=op_dr(r);
+ROL             1110_ccc1_1011_1rrr sz=4; src=op_dr(c); dst=op_dr(r);
+ROR             1110_ccc0_0011_1rrr sz=1; src=op_dr(c); dst=op_dr(r);
+ROR             1110_ccc0_0111_1rrr sz=2; src=op_dr(c); dst=op_dr(r);
+ROR             1110_ccc0_1011_1rrr sz=4; src=op_dr(c); dst=op_dr(r);
 
-ASL             1110_0001_11mm_mrrr sz=2; src=Implied; dst=cs.ea(r, m, sz);
-ASR             1110_0000_11mm_mrrr sz=2; src=Implied; dst=cs.ea(r, m, sz);
-LSL             1110_0011_11mm_mrrr sz=2; src=Implied; dst=cs.ea(r, m, sz);
-LSR             1110_0010_11mm_mrrr sz=2; src=Implied; dst=cs.ea(r, m, sz);
-ROXL            1110_0101_11mm_mrrr sz=2; src=Implied; dst=cs.ea(r, m, sz);
-ROXR            1110_0100_11mm_mrrr sz=2; src=Implied; dst=cs.ea(r, m, sz);
-ROL             1110_0111_11mm_mrrr sz=2; src=Implied; dst=cs.ea(r, m, sz);
-ROR             1110_0110_11mm_mrrr sz=2; src=Implied; dst=cs.ea(r, m, sz);
+ASL             1110_0001_11mm_mrrr sz=2; src=op_implied(); dst=op_ea(cs, r, m, sz);
+ASR             1110_0000_11mm_mrrr sz=2; src=op_implied(); dst=op_ea(cs, r, m, sz);
+LSL             1110_0011_11mm_mrrr sz=2; src=op_implied(); dst=op_ea(cs, r, m, sz);
+LSR             1110_0010_11mm_mrrr sz=2; src=op_implied(); dst=op_ea(cs, r, m, sz);
+ROXL            1110_0101_11mm_mrrr sz=2; src=op_implied(); dst=op_ea(cs, r, m, sz);
+ROXR            1110_0100_11mm_mrrr sz=2; src=op_implied(); dst=op_ea(cs, r, m, sz);
+ROL             1110_0111_11mm_mrrr sz=2; src=op_implied(); dst=op_ea(cs, r, m, sz);
+ROR             1110_0110_11mm_mrrr sz=2; src=op_implied(); dst=op_ea(cs, r, m, sz);
 
 #====================================================================================================
 # Group 1111: Coprocessor interface, MC68040 and CPU32 extensions
 #====================================================================================================
 
-FMOVECR         1111_0010_0000_0000 0101_11dd_dooo_oooo sz=10; src=IMM8(o as u8); dst=cs.float_reg_op(d);
+FMOVECR         1111_0010_0000_0000 0101_11dd_dooo_oooo sz=10; src=op_imm8(o); dst=op_fr(d);
 
-FABS            1111_0010_00mm_mrrr 0R0s_ssdd_d001_1000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
-FSABS           1111_0010_00mm_mrrr 0R0s_ssdd_d101_1000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
-FDABS           1111_0010_00mm_mrrr 0R0s_ssdd_d101_1100 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FABS            1111_0010_00mm_mrrr 0R0s_ssdd_d001_1000 decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
+FSABS           1111_0010_00mm_mrrr 0R0s_ssdd_d101_1000 decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
+FDABS           1111_0010_00mm_mrrr 0R0s_ssdd_d101_1100 decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
 
-FACOS           1111_0010_00mm_mrrr 0R0s_ssdd_d001_1100 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FACOS           1111_0010_00mm_mrrr 0R0s_ssdd_d001_1100 decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
 
-FADD            1111_0010_00mm_mrrr 0R0s_ssdd_d010_0010 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
-FSADD           1111_0010_00mm_mrrr 0R0s_ssdd_d110_0010 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
-FDADD           1111_0010_00mm_mrrr 0R0s_ssdd_d110_0110 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FADD            1111_0010_00mm_mrrr 0R0s_ssdd_d010_0010 decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
+FSADD           1111_0010_00mm_mrrr 0R0s_ssdd_d110_0010 decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
+FDADD           1111_0010_00mm_mrrr 0R0s_ssdd_d110_0110 decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
 
-FASIN           1111_0010_00mm_mrrr 0R0s_ssdd_d000_1100 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
-FATAN           1111_0010_00mm_mrrr 0R0s_ssdd_d000_1010 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
-FATANH          1111_0010_00mm_mrrr 0R0s_ssdd_d000_1101 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FASIN           1111_0010_00mm_mrrr 0R0s_ssdd_d000_1100 decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
+FATAN           1111_0010_00mm_mrrr 0R0s_ssdd_d000_1010 decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
+FATANH          1111_0010_00mm_mrrr 0R0s_ssdd_d000_1101 decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
 
-FNOP            1111_0010_1000_0000 0000_0000_0000_0000 sz=0; src=NoOperand; dst=NoOperand; extra=NoExtra;
+FNOP            1111_0010_1000_0000 0000_0000_0000_0000 sz=0; src=op_none(); dst=op_none();
 
-FBCC            1111_0010_10cc_cccc sz=2; src = PCDISP(2, simple_disp(cs.pull16() as i16 as i32)); dst=NoOperand; extra=cs.fpcc(c);
-FBCC            1111_0010_11cc_cccc sz=4; src = PCDISP(2, simple_disp(cs.pull32() as i32)); dst=NoOperand; extra=cs.fpcc(c);
+FBCC            1111_0010_10cc_cccc sz=2; src = op_pcdisp(2, simple_disp((int16_t)pull16(cs))); dst=op_none(); extra=extra_fpcc(c);
+FBCC            1111_0010_11cc_cccc sz=4; src = op_pcdisp(2, simple_disp((int32_t)pull32(cs))); dst=op_none(); extra=extra_fpcc(c);
 
-FCMP            1111_0010_00mm_mrrr 0R0s_ssdd_d011_1000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FCMP            1111_0010_00mm_mrrr 0R0s_ssdd_d011_1000 decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
 
-FCOS            1111_0010_00mm_mrrr 0R0s_ssdd_d001_1101 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
-FCOSH           1111_0010_00mm_mrrr 0R0s_ssdd_d001_1001 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FCOS            1111_0010_00mm_mrrr 0R0s_ssdd_d001_1101 decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
+FCOSH           1111_0010_00mm_mrrr 0R0s_ssdd_d001_1001 decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
 
-FDBCC           1111_0010_0100_1rrr 0000_0000_000c_cccc sz=2; src=cs.data_reg_op(r); dst=PCDISP(4, simple_disp(cs.pull16() as i16 as i32)); extra=cs.fpcc(c);
+FDBCC           1111_0010_0100_1rrr 0000_0000_000c_cccc sz=2; src=op_dr(r); dst=op_pcdisp(4, simple_disp((int16_t)pull16(cs))); extra=extra_fpcc(c);
 
-FDIV            1111_0010_00mm_mrrr 0R0s_ssdd_d010_0000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
-FSDIV           1111_0010_00mm_mrrr 0R0s_ssdd_d110_0000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
-FDDIV           1111_0010_00mm_mrrr 0R0s_ssdd_d110_0100 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FDIV            1111_0010_00mm_mrrr 0R0s_ssdd_d010_0000 decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
+FSDIV           1111_0010_00mm_mrrr 0R0s_ssdd_d110_0000 decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
+FDDIV           1111_0010_00mm_mrrr 0R0s_ssdd_d110_0100 decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
 
-FETOX           1111_0010_00mm_mrrr 0R0s_ssdd_d001_0000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
-FETOXM1         1111_0010_00mm_mrrr 0R0s_ssdd_d000_1000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FETOX           1111_0010_00mm_mrrr 0R0s_ssdd_d001_0000 decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
+FETOXM1         1111_0010_00mm_mrrr 0R0s_ssdd_d000_1000 decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
 
-FGETEXP         1111_0010_00mm_mrrr 0R0s_ssdd_d001_1110 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
-FGETMAN         1111_0010_00mm_mrrr 0R0s_ssdd_d001_1111 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
-FGETMAN         1111_0010_00mm_mrrr 0R0s_ssdd_d001_1111 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FGETEXP         1111_0010_00mm_mrrr 0R0s_ssdd_d001_1110 decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
+FGETMAN         1111_0010_00mm_mrrr 0R0s_ssdd_d001_1111 decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
+FGETMAN         1111_0010_00mm_mrrr 0R0s_ssdd_d001_1111 decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
 
-FINT            1111_0010_00mm_mrrr 0R0s_ssdd_d000_0001 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
-FINTRZ          1111_0010_00mm_mrrr 0R0s_ssdd_d000_0011 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FINT            1111_0010_00mm_mrrr 0R0s_ssdd_d000_0001 decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
+FINTRZ          1111_0010_00mm_mrrr 0R0s_ssdd_d000_0011 decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
 
-FLOG10          1111_0010_00mm_mrrr 0R0s_ssdd_d001_0101 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
-FLOG2           1111_0010_00mm_mrrr 0R0s_ssdd_d001_0110 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
-FLOGN           1111_0010_00mm_mrrr 0R0s_ssdd_d001_0100 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
-FLOGNP1         1111_0010_00mm_mrrr 0R0s_ssdd_d000_0110 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FLOG10          1111_0010_00mm_mrrr 0R0s_ssdd_d001_0101 decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
+FLOG2           1111_0010_00mm_mrrr 0R0s_ssdd_d001_0110 decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
+FLOGN           1111_0010_00mm_mrrr 0R0s_ssdd_d001_0100 decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
+FLOGNP1         1111_0010_00mm_mrrr 0R0s_ssdd_d000_0110 decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
 
-FMOD            1111_0010_00mm_mrrr 0R0s_ssdd_d010_0001 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FMOD            1111_0010_00mm_mrrr 0R0s_ssdd_d010_0001 decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
 
 # fmove: register to EA encoding; note swapped src/dst
-FMOVE           1111_0010_00mm_mrrr 011s_ssdd_dkkk_kkkk let (sz, dst, src, extra) = cs.decode_fp(r, m, 1, s, d, k);
+FMOVE           1111_0010_00mm_mrrr 011s_ssdd_dkkk_kkkk decode_fp(&sz, &dst, &src, &extra, cs, r, m, 1, s, d, k);
 
 # fmove: EA to register encoding
-FMOVE           1111_0010_00mm_mrrr 0R0s_ssdd_d000_0000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
-FSMOVE          1111_0010_00mm_mrrr 0R0s_ssdd_d100_0000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
-FDMOVE          1111_0010_00mm_mrrr 0R0s_ssdd_d100_0100 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FMOVE           1111_0010_00mm_mrrr 0R0s_ssdd_d000_0000 decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
+FSMOVE          1111_0010_00mm_mrrr 0R0s_ssdd_d100_0000 decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
+FDMOVE          1111_0010_00mm_mrrr 0R0s_ssdd_d100_0100 decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
 
 # 00 — Static register list, predecrement addressing mode.
 # 01 — Dynamic register list, predecrement addressing mode.
 # 10 — Static register list, postincrement or control addressing mode.
 # 11 — Dynamic register list, postincrement or control addressing mode.
-FMOVEM          1111_0010_00mm_mrrr 11Do_o000_MMMM_MMMM let (sz, src, dst, extra) = cs.decode_fp_movem(r, m, D, M, o);
+FMOVEM          1111_0010_00mm_mrrr 11Do_o000_MMMM_MMMM decode_fp_movem(&sz, &src, &dst, &extra, cs, r, m, D, M, o);
 
-FMUL            1111_0010_00mm_mrrr 0R0s_ssdd_d010_0011 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
-FSMUL           1111_0010_00mm_mrrr 0R0s_ssdd_d110_0011 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
-FDMUL           1111_0010_00mm_mrrr 0R0s_ssdd_d110_0111 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FMUL            1111_0010_00mm_mrrr 0R0s_ssdd_d010_0011 decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
+FSMUL           1111_0010_00mm_mrrr 0R0s_ssdd_d110_0011 decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
+FDMUL           1111_0010_00mm_mrrr 0R0s_ssdd_d110_0111 decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
 
-FNEG            1111_0010_00mm_mrrr 0R0s_ssdd_d001_1010 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
-FSNEG           1111_0010_00mm_mrrr 0R0s_ssdd_d101_1010 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
-FDNEG           1111_0010_00mm_mrrr 0R0s_ssdd_d101_1110 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FNEG            1111_0010_00mm_mrrr 0R0s_ssdd_d001_1010 decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
+FSNEG           1111_0010_00mm_mrrr 0R0s_ssdd_d101_1010 decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
+FDNEG           1111_0010_00mm_mrrr 0R0s_ssdd_d101_1110 decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
 
-FREM            1111_0010_00mm_mrrr 0R0s_ssdd_d010_0101 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FREM            1111_0010_00mm_mrrr 0R0s_ssdd_d010_0101 decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
 
-FSCALE          1111_0010_00mm_mrrr 0R0s_ssdd_d010_0110 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FSCALE          1111_0010_00mm_mrrr 0R0s_ssdd_d010_0110 decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
 
 # 010 — The instruction is followed by a word operand.
-FTRAPCC         1111_0010_0111_1010 0000_0000_00cc_cccc sz=2; src=Implied; dst=cs.imm16(); extra=cs.fpcc(c);
+FTRAPCC         1111_0010_0111_1010 0000_0000_00cc_cccc sz=2; src=op_implied(); dst=op_imm16p(cs); extra=extra_fpcc(c);
 # 011 — The instruction is followed by a long-word operand.
-FTRAPCC         1111_0010_0111_1011 0000_0000_00cc_cccc sz=4; src=Implied; dst=cs.imm32(); extra=cs.fpcc(c);
+FTRAPCC         1111_0010_0111_1011 0000_0000_00cc_cccc sz=4; src=op_implied(); dst=op_imm32p(cs); extra=extra_fpcc(c);
 # 100 — The instruction has no operand.
-FTRAPCC         1111_0010_0111_1100 0000_0000_00cc_cccc sz=0; src=Implied; dst=NoOperand; extra=cs.fpcc(c);
+FTRAPCC         1111_0010_0111_1100 0000_0000_00cc_cccc sz=0; src=op_implied(); dst=op_none(); extra=extra_fpcc(c);
 
-FSCC            1111_0010_01mm_mrrr 0000_0000_00cc_cccc sz=1; src=Implied; dst=cs.ea(r, m, 1); extra=cs.fpcc(c);
+FSCC            1111_0010_01mm_mrrr 0000_0000_00cc_cccc sz=1; src=op_implied(); dst=op_ea(cs, r, m, 1); extra=extra_fpcc(c);
 
-FSGLDIV         1111_0010_00mm_mrrr 0R0s_ssdd_d010_0100 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
-FSGLMUL         1111_0010_00mm_mrrr 0R0s_ssdd_d010_0111 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FSGLDIV         1111_0010_00mm_mrrr 0R0s_ssdd_d010_0100  decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
+FSGLMUL         1111_0010_00mm_mrrr 0R0s_ssdd_d010_0111  decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
 
-FSIN            1111_0010_00mm_mrrr 0R0s_ssdd_d000_1110 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FSIN            1111_0010_00mm_mrrr 0R0s_ssdd_d000_1110  decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
 
-FSINCOS         1111_0010_00mm_mrrr 0R0s_ssSS_S011_0CCC let (sz, src, _dst, extra) = cs.decode_fp(r, m, R, s, S, 0); let dst = FPAIR(cs.float_reg(S), cs.float_reg(C))
+FSINCOS         1111_0010_00mm_mrrr 0R0s_ssSS_S011_0CCC  decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, S, 0); dst = op_fpair(S, C);
 
-FSINH           1111_0010_00mm_mrrr 0R0s_ssdd_d000_0010 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FSINH           1111_0010_00mm_mrrr 0R0s_ssdd_d000_0010  decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
 
-FSQRT           1111_0010_00mm_mrrr 0R0s_ssdd_d000_0100 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
-FSSQRT          1111_0010_00mm_mrrr 0R0s_ssdd_d100_0001 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
-FDSQRT          1111_0010_00mm_mrrr 0R0s_ssdd_d100_0101 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FSQRT           1111_0010_00mm_mrrr 0R0s_ssdd_d000_0100  decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
+FSSQRT          1111_0010_00mm_mrrr 0R0s_ssdd_d100_0001  decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
+FDSQRT          1111_0010_00mm_mrrr 0R0s_ssdd_d100_0101  decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
 
-FSUB            1111_0010_00mm_mrrr 0R0s_ssdd_d010_1000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
-FSSUB           1111_0010_00mm_mrrr 0R0s_ssdd_d110_1000 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
-FDSUB           1111_0010_00mm_mrrr 0R0s_ssdd_d110_1100 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FSUB            1111_0010_00mm_mrrr 0R0s_ssdd_d010_1000  decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
+FSSUB           1111_0010_00mm_mrrr 0R0s_ssdd_d110_1000  decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
+FDSUB           1111_0010_00mm_mrrr 0R0s_ssdd_d110_1100  decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
 
-FTAN            1111_0010_00mm_mrrr 0R0s_ssdd_d000_1111 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FTAN            1111_0010_00mm_mrrr 0R0s_ssdd_d000_1111  decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
 
-FTANH           1111_0010_00mm_mrrr 0R0s_ssdd_d000_1001 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FTANH           1111_0010_00mm_mrrr 0R0s_ssdd_d000_1001  decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
 
-FTENTOX         1111_0010_00mm_mrrr 0R0s_ssdd_d001_0010 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FTENTOX         1111_0010_00mm_mrrr 0R0s_ssdd_d001_0010  decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
 
-FTST            1111_0010_00mm_mrrr 0R0s_ssdd_d011_1010 let (sz, src, _dst, extra) = cs.decode_fp(r, m, R, s, d, 0); dst=NoOperand;
+FTST            1111_0010_00mm_mrrr 0R0s_ssdd_d011_1010  decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0); dst=op_none();
 
-FTWOTOX         1111_0010_00mm_mrrr 0R0s_ssdd_d001_0001 let (sz, src, dst, extra) = cs.decode_fp(r, m, R, s, d, 0);
+FTWOTOX         1111_0010_00mm_mrrr 0R0s_ssdd_d001_0001  decode_fp(&sz, &src, &dst, &extra, cs, r, m, R, s, d, 0);
 

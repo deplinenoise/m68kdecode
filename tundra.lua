@@ -3,7 +3,8 @@ local common = {
   Env = {
     -- Global, shared environment settings can go here
     CPPPATH = { ".", "$(OBJECTDIR)", "src" },
-    VASM = "../vasm/vasmm68k_mot_win32.exe",
+    --VASM = "../vasm/vasmm68k_mot_win32.exe",
+    VASM = "../newage_a500/t2-output/hostbuild/vasm",
   },
   Defines = {
     { "_DEBUG"; Config = '*-*-debug' },
@@ -33,6 +34,8 @@ local macosx = {
   Inherit = common,
   Env = {
     CCOPTS = {
+      "-Wall",
+      "-Wno-unused-function",
       { "-O0", "-g", "-fsanitize=address"; Config = "*-*-debug" },
       { "-O2", "-g"; Config = "*-*-production" },
       { "-O3"; Config = "*-*-release" },
@@ -47,6 +50,8 @@ local linux = {
   Inherit = common,
   Env = {
     CCOPTS = {
+      "-Wall",
+      "-Wno-unused-function",
       { "-O0", "-g"; Config = "*-*-debug" },
       { "-O2", "-g"; Config = "*-*-production" },
       { "-O3"; Config = "*-*-release" },

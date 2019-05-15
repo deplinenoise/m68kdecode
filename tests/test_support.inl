@@ -14,7 +14,7 @@ static int test_decoding_result_ok(const char* test_name, const uint8_t *bytes, 
     return 0;
   }
 
-  if (result.bytes_used != len) {
+  if (result.bytes_used != (int) len) {
     fprintf(stderr, "%s failed; incorrect byte count; expected=%d but got %d\n", test_name, (int) len, (int) result.bytes_used);
     return 0;
   }

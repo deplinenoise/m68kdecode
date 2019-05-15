@@ -3,7 +3,7 @@ local common = {
   Env = {
     -- Global, shared environment settings can go here
     CPPPATH = { ".", "$(OBJECTDIR)", "src" },
-    VASM = "../newage_a500/t2-output/hostbuild/vasm",
+    VASM = "../vasm/vasmm68k_mot_win32.exe",
   },
   Defines = {
     { "_DEBUG"; Config = '*-*-debug' },
@@ -17,8 +17,11 @@ local win64 = {
     GENERATE_PDB = "1",
     CCOPTS = {
       "/FS",
-      "/W4",
+      "/Wall",
       "/wd4204", -- nonstandard extension used: non-constant aggregate initializer
+      "/wd4820", -- 'n' bytes padding added after data member 'foo'
+      "/wd4710", -- 'foo': function not inlined
+      "/wd4711", -- 'foo': selected for automatic inline expansion
       { "/Od"; Config = "*-*-debug" },
       { "/O2"; Config = "*-*-production" },
       { "/Ox"; Config = "*-*-release" },

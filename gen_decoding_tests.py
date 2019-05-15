@@ -78,7 +78,7 @@ with open(outfilename, "w") as of:
         name = re.sub(R_LEADING_UNDERSCORE, '', name)
         func_name = 'test_decode_{:04d}_{}'.format(testnum, name)
         func_names.append(func_name)
-        of.write('int {}()\n{{\n'.format(func_name))
+        of.write('int {}(void)\n{{\n'.format(func_name))
         of.write('const uint8_t code_bytes[] = {\n')
         of.write(', '.join(['0x{0:02x}'.format(byt) for byt in code_bytes]))
         of.write('};\n')
@@ -109,6 +109,8 @@ with open(outfilename, "w") as of:
         testnum = testnum + 1
 
     of.write('int main(int argc, char* argv[])\n{\n')
+    of.write('(void) argc;\n')
+    of.write('(void) argv;\n')
     of.write('const int test_count = {};\n'.format(len(func_names)))
     of.write('int pass_count = 0;\n')
     for fn in func_names:

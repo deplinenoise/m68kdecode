@@ -93,9 +93,9 @@ static void skip_words(m68k_code_stream *cs, int count)
   cs->pos += count * 2;
 }
 
-static m68k_operand op_imm8(uint8_t val)
+static m68k_operand op_imm8(uint16_t val)
 {
-  return (m68k_operand) { .kind = M68K_IMM8, .data = { .u8 = val } };
+  return (m68k_operand) { .kind = M68K_IMM8, .data = { .u8 = (uint8_t) val } };
 }
 
 static m68k_operand op_imm16(uint16_t val)
@@ -110,7 +110,7 @@ static m68k_operand op_imm32(uint32_t val)
 
 static m68k_operand op_imm8p(m68k_code_stream *cs)
 {
-  return op_imm8(pull16(cs));
+  return op_imm8((uint8_t) pull16(cs));
 }
 
 static m68k_operand op_imm16p(m68k_code_stream *cs)
@@ -125,37 +125,37 @@ static m68k_operand op_imm32p(m68k_code_stream *cs)
 
 static m68k_operand op_dr(int reg)
 {
-  return (m68k_operand) { .kind = M68K_DR, .data = { .regno = reg } };
+  return (m68k_operand) { .kind = M68K_DR, .data = { .regno = (uint8_t) reg } };
 }
 
 static m68k_operand op_ar(int reg)
 {
-  return (m68k_operand) { .kind = M68K_AR, .data = { .regno = reg } };
+  return (m68k_operand) { .kind = M68K_AR, .data = { .regno = (uint8_t) reg } };
 }
 
 static m68k_operand op_fr(int reg)
 {
-  return (m68k_operand) { .kind = M68K_FR, .data = { .regno = reg } };
+  return (m68k_operand) { .kind = M68K_FR, .data = { .regno = (uint8_t) reg } };
 }
 
 static m68k_operand op_arind(int reg)
 {
-  return (m68k_operand) { .kind = M68K_ARIND, .data = { .regno = reg } };
+  return (m68k_operand) { .kind = M68K_ARIND, .data = { .regno = (uint8_t) reg } };
 }
 
 static m68k_operand op_arinc(int reg)
 {
-  return (m68k_operand) { .kind = M68K_ARINC, .data = { .regno = reg } };
+  return (m68k_operand) { .kind = M68K_ARINC, .data = { .regno = (uint8_t) reg } };
 }
 
 static m68k_operand op_ardec(int reg)
 {
-  return (m68k_operand) { .kind = M68K_ARDEC, .data = { .regno = reg } };
+  return (m68k_operand) { .kind = M68K_ARDEC, .data = { .regno = (uint8_t) reg } };
 }
 
 static m68k_operand op_ardisp(int reg, m68k_disp disp)
 {
-  return (m68k_operand) { .kind = M68K_ARDISP, .data = { .ar_disp = { .regno = reg, .disp = disp } } };
+  return (m68k_operand) { .kind = M68K_ARDISP, .data = { .ar_disp = { .regno = (uint8_t) reg, .disp = disp } } };
 }
 
 static m68k_operand op_implied(void)
@@ -168,24 +168,24 @@ static m68k_operand op_none(void)
   return (m68k_operand) { .kind = M68K_NO_OPERAND };
 }
 
-static m68k_operand op_controlreg(int r)
+static m68k_operand op_controlreg(uint16_t r)
 {
   return (m68k_operand) { .kind = M68K_CONTROLREG, .data = { .control_reg = r } };
 }
 
-static m68k_operand op_reglist(int r)
+static m68k_operand op_reglist(uint16_t r)
 {
   return (m68k_operand) { .kind = M68K_REGLIST, .data = { .reglist = r } };
 }
 
-static m68k_operand op_dpair(int x, int y)
+static m68k_operand op_dpair(uint16_t x, uint16_t y)
 {
-  return (m68k_operand) { .kind = M68K_DPAIR, .data = { .dr_pair = { x, y } } };
+  return (m68k_operand) { .kind = M68K_DPAIR, .data = { .dr_pair = { (int8_t)x, (int8_t)y } } };
 }
 
-static m68k_operand op_fpair(int x, int y)
+static m68k_operand op_fpair(uint16_t x, uint16_t y)
 {
-  return (m68k_operand) { .kind = M68K_FPAIR, .data = { .fp_pair = { x, y } } };
+  return (m68k_operand) { .kind = M68K_FPAIR, .data = { .fp_pair = { (int8_t)x, (int8_t)y } } };
 }
 
 static m68k_operand op_abs16(uint16_t val)
@@ -198,19 +198,19 @@ static m68k_operand op_abs32(uint32_t val)
   return (m68k_operand) { .kind = M68K_ABS32, .data = { .abs32 = val } };
 }
 
-static m68k_disp simple_disp(uint16_t disp)
+static m68k_disp simple_disp(int32_t disp)
 {
-  return (m68k_disp) { .base_displacement = (int16_t) disp, .indexer_scale = 1 };
+  return (m68k_disp) { .base_displacement = disp, .indexer_scale = 1 };
 }
 
 static m68k_operand op_pcdisp(int pc_off, m68k_disp disp)
 {
-  return (m68k_operand) { .kind = M68K_PCDISP, .data = { .pc_disp = { .pc_offset = pc_off, .disp = disp } } };
+  return (m68k_operand) { .kind = M68K_PCDISP, .data = { .pc_disp = { .pc_offset = (uint8_t) pc_off, .disp = disp } } };
 }
 
 static m68k_operand op_quick_const(int val)
 {
-  return (m68k_operand) { .kind = M68K_IMM8, .data = { .u8 = val ? val : 8 } };
+  return (m68k_operand) { .kind = M68K_IMM8, .data = { .u8 = val ? (uint8_t) val : 8 } };
 }
 
 static m68k_extra extra_cc(int code)
@@ -223,7 +223,7 @@ static m68k_extra extra_fpcc(int code)
   return (m68k_extra) { .kind = M68K_EXTRA_FPCC, .data = { .fp_cc = code } };
 }
 
-static m68k_extra extra_packadj(int adjust)
+static m68k_extra extra_packadj(uint16_t adjust)
 {
   return (m68k_extra) { .kind = M68K_EXTRA_PACKADJ, .data = { .pack_adjustment = adjust } };
 }
@@ -231,8 +231,8 @@ static m68k_extra extra_packadj(int adjust)
 static m68k_extra extra_bitfield(uint16_t dyn_off, uint16_t off, uint16_t dyn_width, uint16_t width)
 {
   uint8_t flags = 0;
-  uint8_t r_off = off;
-  uint8_t r_width = width;
+  uint8_t r_off = (uint8_t) off;
+  uint8_t r_width = (uint8_t) width;
 
   if (dyn_off) {
     flags |= M68K_BITFIELD_DYNAMIC_OFFSET;
@@ -262,7 +262,7 @@ static m68k_extra extra_floatformat(m68k_fpformat format, int k_factor)
 
 static m68k_operand decode_extended_ea(m68k_code_stream *cs, int src_reg)
 {
-  uint8_t pc_off = cs->pos;
+  uint8_t pc_off = (uint8_t) cs->pos;
   uint16_t ext = pull16(cs);
   uint16_t scale = get_bits(ext, 9, 2);
   uint16_t idx = get_bits(ext, 12, 3);
@@ -323,7 +323,7 @@ static m68k_operand decode_extended_ea(m68k_code_stream *cs, int src_reg)
     int8_t indexer_reg = 0;
 
     if (!suppress_indexer) {
-      indexer_reg = idx;
+      indexer_reg = (int8_t) idx;
       if (idx_is_a) {
         indexer_type = M68K_INDEXER_AR;
       } else {
@@ -353,7 +353,7 @@ static m68k_operand decode_extended_ea(m68k_code_stream *cs, int src_reg)
     } else {
       return (m68k_operand) {
         .kind = M68K_ARDISP,
-        .data = { .ar_disp = { .disp = displacement, .regno = src_reg } }
+        .data = { .ar_disp = { .disp = displacement, .regno = (int8_t) src_reg } }
       };
     }
   }
@@ -365,7 +365,7 @@ static m68k_operand decode_extended_ea(m68k_code_stream *cs, int src_reg)
       .base_displacement = disp,
       .outer_displacement = 0,
       .indexer_type = idx_is_a ? M68K_INDEXER_AR : M68K_INDEXER_DR,
-      .indexer_reg = idx,
+      .indexer_reg = (int8_t) idx,
       .indirection_type = M68K_NO_INDIRECTION,
       .indexer_scale = 1 << scale,
     };
@@ -378,7 +378,7 @@ static m68k_operand decode_extended_ea(m68k_code_stream *cs, int src_reg)
     } else {
       return (m68k_operand) {
         .kind = M68K_ARDISP,
-        .data = { .ar_disp = { .disp = displacement, .regno = src_reg } }
+        .data = { .ar_disp = { .disp = displacement, .regno = (int8_t) src_reg } }
       };
     }
   }
@@ -387,9 +387,9 @@ static m68k_operand decode_extended_ea(m68k_code_stream *cs, int src_reg)
 static m68k_operand op_dar(int d_or_a, int regno)
 {
   if (d_or_a == 0) {
-    return (m68k_operand) { .kind = M68K_DR, .data = { .regno = regno } };
+    return (m68k_operand) { .kind = M68K_DR, .data = { .regno = (int8_t) regno } };
   } else {
-    return (m68k_operand) { .kind = M68K_AR, .data = { .regno = regno } };
+    return (m68k_operand) { .kind = M68K_AR, .data = { .regno = (int8_t) regno } };
   }
 }
 
@@ -401,20 +401,20 @@ static m68k_operand op_ea(m68k_code_stream *cs, uint16_t src_reg, uint16_t src_m
     case 2: /* 010 */ return op_arind(src_reg);
     case 3: /* 011 */ return op_arinc(src_reg);
     case 4: /* 100 */ return op_ardec(src_reg);
-    case 5: /* 101 */ return op_ardisp(src_reg, simple_disp(pull16(cs)));
+    case 5: /* 101 */ return op_ardisp(src_reg, simple_disp((int16_t)pull16(cs)));
     case 6: /* 110 */ return decode_extended_ea(cs, src_reg);
     case 7: /* 111 */ {
       switch (src_reg) {
         case 0: /* 000 */ return op_abs16(pull16(cs));
         case 1: /* 001 */ return op_abs32(pull32(cs));
         case 2: /* 010 */ {
-          uint8_t pc_offset = cs->pos;
+          uint8_t pc_offset = (uint8_t) cs->pos;
           return (m68k_operand) {
             .kind = M68K_PCDISP,
             .data = {
               .pc_disp = {
                 .pc_offset = pc_offset,
-                .disp = simple_disp(pull16(cs)),
+                .disp = simple_disp((int16_t)pull16(cs)),
               },
             }
           };

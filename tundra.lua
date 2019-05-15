@@ -18,6 +18,7 @@ local win64 = {
     CCOPTS = {
       "/FS",
       "/W4",
+      "/wd4204", -- nonstandard extension used: non-constant aggregate initializer
       { "/Od"; Config = "*-*-debug" },
       { "/O2"; Config = "*-*-production" },
       { "/Ox"; Config = "*-*-release" },
@@ -60,7 +61,7 @@ Build {
       Name = "win64-mscv",
       SupportedHosts = { "windows" },
       DefaultOnHost = "windows",
-      Tools = { "msvc" },
+      Tools = { "msvc-vs2017" },
       Inherit = win64,
     },
     Config {

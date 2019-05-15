@@ -40,6 +40,7 @@ static int test_decoding_result_err(const char* test_name, const uint8_t *bytes,
   m68k_decoding_error err = m68k_decode(bytes, (uint32_t) len, &result);
   if (err != expected_error) {
     fprintf(stderr, "%s: failed\n", test_name);
+    fprintf(stderr, "asm:\n%s\n", text);
     return 0;
   }
   return 1;

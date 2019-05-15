@@ -46,7 +46,7 @@ class Instruction(object):
             self.captures.append(c)
 
     def match_expr(self, n):
-        return '(w{} & 0x{:02x}) == 0x{:02x}'.format(n, self.masks[n], self.instruction_patterns[n])
+        return '(w{} & 0x{:04x}) == 0x{:04x}'.format(n, self.masks[n], self.instruction_patterns[n])
 
     def __repr__(self):
         return "{}:\n".format(self.name) +  \
@@ -113,6 +113,16 @@ with open(infile, "r") as inf:
         instructions.append(i)
         #print(i)
 
+def split_by_length(insns):
+    groups = [ ]
+    prev_length = -1
+    for i in insns:
+        if len(i.masks) != prev_length:
+            groups.append([])
+            prev_length = len(i.masks)
+        groups[-1].append(i)
+    return groups
+
 def gen_decoders(of, insns):
     group = insns[0].instruction_patterns[0] >> 12
 
@@ -123,55 +133,64 @@ def gen_decoders(of, insns):
     of.write('m68k_operand dst = { .kind = M68K_NO_OPERAND };\n')
     of.write('m68k_extra extra = { .kind = M68K_NO_EXTRA };\n')
 
-    for i in insns:
-        of.write('if (((w0 & 0x{:04x}) == 0x{:04x}) '.format(i.masks[0], i.instruction_patterns[0]))
-        if len(i.masks) > 1:
-            of.write('&& has_words(cs, {})'.format(len(i.masks) - 1))
-        of.write(')\n{\n')
-        #of.write('println!("w0 match {}");\n'.format(i.name))
-        for n in range(1, len(i.masks)):
-            of.write('uint16_t w{} = peek_word(cs, {});\n'.format(n, n-1))
+    groups = split_by_length(insns)
 
-        if len(i.masks) > 1:
-            of.write('if ({}) {{\n'.format(' && '.join([i.match_expr(n) for n in range(1, len(i.masks))])))
+    for lgroup in groups:
+        
+        mlen = len(lgroup[0].masks) - 1
 
-        for c in i.captures:
-            if c.name != '?':
-                of.write('uint16_t {} = get_bits(w{}, {}, {});\n'.format(c.name, c.wordindex, c.bit, c.length))
-                #of.write('println!("{} = {{}}", {});\n'.format(c.name, c.name))
+        if mlen > 0:
+            of.write('if (has_words(cs, {})) {{\n'.format(mlen))
 
-        predicate_nesting = 0
+            for n in range(1, mlen+1):
+                of.write('uint16_t w{} = peek_word(cs, {});\n'.format(n, n-1))
 
-        for predicate in re.findall(R_PREDICATE, i.result):
-            predicate_nesting = predicate_nesting + 1
-            of.write('if ({}) {{\n'.format(predicate[2:-1]))
+        for i in lgroup:
+            of.write('if ((w0 & 0x{:04x}) == 0x{:04x}) {{'.format(i.masks[0], i.instruction_patterns[0]))
 
-        if len(i.masks) > 1:
-            of.write('skip_words(cs, {});\n'.format(len(i.masks)-1))
+            if mlen > 0:
+                of.write('if ({}) {{\n'.format(' && '.join([i.match_expr(n) for n in range(1, len(i.masks))])))
 
-        expr = re.sub(R_PREDICATE, "", i.result)
+            for c in i.captures:
+                if c.name != '?':
+                    of.write('uint16_t {} = get_bits(w{}, {}, {});\n'.format(c.name, c.wordindex, c.bit, c.length))
+                    #of.write('println!("{} = {{}}", {});\n'.format(c.name, c.name))
 
-        have_extra = False
+            predicate_nesting = 0
 
-        for sub_expr in expr.split(';'):
-            sub_expr = sub_expr.strip();
-            if len(sub_expr) == 0:
-                continue
-            if sub_expr.find('extra') != -1:
-                have_extra = True
-            of.write(sub_expr)
-            of.write(';\n')
+            for predicate in re.findall(R_PREDICATE, i.result):
+                predicate_nesting = predicate_nesting + 1
+                of.write('if ({}) {{\n'.format(predicate[2:-1]))
 
-        if expr.find('return') == -1:
-            of.write('return check_overflow(cs, (m68k_instruction) {{ .size = sz, .operation = M68K_{}, .operands = {{ src, dst }}, .extra = extra }}, result);\n'.format(i.name))
+            if len(i.masks) > 1:
+                of.write('skip_words(cs, {});\n'.format(len(i.masks)-1))
 
-        for x in range(0, predicate_nesting):
+            expr = re.sub(R_PREDICATE, "", i.result)
+
+            have_extra = False
+
+            for sub_expr in expr.split(';'):
+                sub_expr = sub_expr.strip();
+                if len(sub_expr) == 0:
+                    continue
+                if sub_expr.find('extra') != -1:
+                    have_extra = True
+                of.write(sub_expr)
+                of.write(';\n')
+
+            if expr.find('return') == -1:
+                of.write('return check_overflow(cs, (m68k_instruction) {{ .size = sz, .operation = M68K_{}, .operands = {{ src, dst }}, .extra = extra }}, result);\n'.format(i.name))
+
+            for x in range(0, predicate_nesting):
+                of.write('}\n')
+
+            if len(i.masks) > 1:
+                of.write('}\n')
+
             of.write('}\n')
 
-        if len(i.masks) > 1:
+        if mlen > 0:
             of.write('}\n')
-
-        of.write('}\n')
 
     of.write('  return M68K_NOT_IMPLEMENTED;\n')
     of.write('}\n')
@@ -208,6 +227,7 @@ with open(outfile_c, "w") as of:
         if len(insns) == 0:
             continue
         has_group[group] = True
+        insns.sort(key = lambda x: len(x.masks), reverse = True)
         gen_decoders(of, insns)
 
     of.write('m68k_decoding_error m68k_decode(const uint8_t *code, uint32_t len, m68k_decoded_instruction *result)\n{\n')

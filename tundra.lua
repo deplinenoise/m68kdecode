@@ -1,10 +1,11 @@
+local native = require "tundra.native"
 
 local common = {
   Env = {
     -- Global, shared environment settings can go here
     CPPPATH = { ".", "$(OBJECTDIR)", "src" },
     --VASM = "../vasm/vasmm68k_mot_win32.exe",
-    VASM = "../newage_a500/t2-output/hostbuild/vasm",
+    VASM = native.getenv('VASM'),
   },
   Defines = {
     { "_DEBUG"; Config = '*-*-debug' },

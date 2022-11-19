@@ -188,7 +188,7 @@ with open(outfile, "w") as of:
     of.write('/// Instruction names.\n');
     of.write('#[derive(Debug, PartialEq, Clone)]\npub enum Operation {\n');
     for i in instructions:
-        if not seen_insn_names.has_key(i.name):
+        if i.name not in seen_insn_names:
             seen_insn_names[i.name] = True
             of.write('  {},'.format(i.name))
     of.write('}\n');
@@ -207,7 +207,7 @@ with open(outfile, "w") as of:
     of.write('  let w0 = cs.pull16();\n')
     of.write('  match w0 >> 12 {\n')
     for group in range(0, 16):
-        if not has_group.has_key(group):
+        if group not in has_group:
             continue
         of.write('    0b{0:04b} => decode_group_{0:04b}(w0, &mut cs),\n'.format(group))
     of.write('    _ => Err(DecodingError::NotImplemented)\n')

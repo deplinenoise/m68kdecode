@@ -291,7 +291,7 @@ fn decode_group_0000(w0: u16, cs: &mut CodeStream) -> Result<DecodedInstruction,
         let r = get_bits(w0, 0, 3);
         let sz = 4;
         let src = cs.data_reg_op(d);
-        let dst = cs.ea(r, m, 4);
+        let dst = cs.ea(r, m, 2);
         let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,

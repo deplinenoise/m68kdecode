@@ -17,7 +17,7 @@ ORITOSR         0000_0000_0111_1100 sz=2; src=cs.imm16(); dst=Implied;
 MOVEP           0000_ddd1_0s00_1aaa sz=1<<(s+1); src=ARIND(cs.address_reg(a)); dst=cs.data_reg_op(d);
 MOVEP           0000_ddd1_0s10_1aaa sz=1<<(s+1); src=DR(cs.data_reg(d)); dst=ARIND(cs.address_reg(a));
 
-BTST            0000_ddd1_00mm_mrrr sz=4; src=cs.data_reg_op(d); dst=cs.ea(r, m, 4);
+BTST            0000_ddd1_00mm_mrrr sz=4; src=cs.data_reg_op(d); dst=cs.ea(r, m, 2);
 BCHG            0000_ddd1_01mm_mrrr sz=4; src=cs.data_reg_op(d); dst=cs.ea(r, m, 4);
 BCLR            0000_ddd1_10mm_mrrr sz=4; src=cs.data_reg_op(d); dst=cs.ea(r, m, 4);
 BSET            0000_ddd1_11mm_mrrr sz=4; src=cs.data_reg_op(d); dst=cs.ea(r, m, 4);

@@ -236,6 +236,9 @@
 > btst #18,(a0)+
 # Instruction { size: 1, operation: BTST, operands: [ IMM16(18), ARINC(A0) ], extra: NoExtra }
 
+> btst d0,#18
+# Instruction { size: 4, operation: BTST, operands: [ DR(D0), IMM16(18) ], extra: NoExtra }
+
 > bclr #18,(a0)+
 # Instruction { size: 1, operation: BCLR, operands: [ IMM16(18), ARINC(A0) ], extra: NoExtra }
 

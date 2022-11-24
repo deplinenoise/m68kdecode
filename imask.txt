@@ -14,18 +14,18 @@ ORITOSR         0000_0000_0111_1100 sz=2; src=cs.imm16(); dst=Implied;
 # Note: for movep bits 5-3, specify a mode An, which all the other
 # bit 8 set commands do not, so have check first.
 
-MOVEP           0000_ddd1_0s00_1aaa sz=1<<(s+1); src=ARIND(cs.address_reg(a)); dst=cs.data_reg_op(d);
-MOVEP           0000_ddd1_0s10_1aaa sz=1<<(s+1); src=DR(cs.data_reg(d)); dst=ARIND(cs.address_reg(a));
+MOVEP           0000_ddd1_0s00_1aaa sz=1<<(s+1); src=ARDISP(cs.address_reg(a), simple_disp(cs.pull16() as i16 as i32)); dst=cs.data_reg_op(d);
+MOVEP           0000_ddd1_1s00_1aaa sz=1<<(s+1); src=DR(cs.data_reg(d)); dst=ARDISP(cs.address_reg(a), simple_disp(cs.pull16() as i16 as i32));
 
-BTST            0000_ddd1_00mm_mrrr sz=4; src=cs.data_reg_op(d); dst=cs.ea(r, m, 2);
-BCHG            0000_ddd1_01mm_mrrr sz=4; src=cs.data_reg_op(d); dst=cs.ea(r, m, 4);
-BCLR            0000_ddd1_10mm_mrrr sz=4; src=cs.data_reg_op(d); dst=cs.ea(r, m, 4);
-BSET            0000_ddd1_11mm_mrrr sz=4; src=cs.data_reg_op(d); dst=cs.ea(r, m, 4);
+BTST            0000_ddd1_00mm_mrrr sz=if m>0 {1} else {4}; src=cs.data_reg_op(d); dst=cs.ea(r, m, 2);
+BCHG            0000_ddd1_01mm_mrrr sz=if m>0 {1} else {4}; src=cs.data_reg_op(d); dst=cs.ea(r, m, 4);
+BCLR            0000_ddd1_10mm_mrrr sz=if m>0 {1} else {4}; src=cs.data_reg_op(d); dst=cs.ea(r, m, 4);
+BSET            0000_ddd1_11mm_mrrr sz=if m>0 {1} else {4}; src=cs.data_reg_op(d); dst=cs.ea(r, m, 4);
 
-BTST            0000_1000_00mm_mrrr 0000_000n_nnnn_nnnn sz=1; src=IMM16(n); dst=cs.ea(r, m, 1);
-BCHG            0000_1000_01mm_mrrr 0000_000n_nnnn_nnnn sz=1; src=IMM16(n); dst=cs.ea(r, m, 1);
-BCLR            0000_1000_10mm_mrrr 0000_000n_nnnn_nnnn sz=1; src=IMM16(n); dst=cs.ea(r, m, 1);
-BSET            0000_1000_11mm_mrrr 0000_000n_nnnn_nnnn sz=1; src=IMM16(n); dst=cs.ea(r, m, 1);
+BTST            0000_1000_00mm_mrrr 0000_000n_nnnn_nnnn sz=if m>0 {1} else {4}; src=IMM16(n); dst=cs.ea(r, m, 1);
+BCHG            0000_1000_01mm_mrrr 0000_000n_nnnn_nnnn sz=if m>0 {1} else {4}; src=IMM16(n); dst=cs.ea(r, m, 1);
+BCLR            0000_1000_10mm_mrrr 0000_000n_nnnn_nnnn sz=if m>0 {1} else {4}; src=IMM16(n); dst=cs.ea(r, m, 1);
+BSET            0000_1000_11mm_mrrr 0000_000n_nnnn_nnnn sz=if m>0 {1} else {4}; src=IMM16(n); dst=cs.ea(r, m, 1);
 
 RTM             0000_0110_1100_drrr sz=0; src=cs.dar(d, r); dst=NoOperand;
 

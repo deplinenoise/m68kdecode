@@ -231,22 +231,31 @@
 # Instruction { size: 4, operation: CMPI, operands: [ IMM32(0x12345678), ARDISP(A0, dr_disp_scale(D2, 90, 2)) ], extra: NoExtra }
 
 > btst #18,d0
-# Instruction { size: 1, operation: BTST, operands: [ IMM16(18), DR(D0) ], extra: NoExtra }
+# Instruction { size: 4, operation: BTST, operands: [ IMM16(18), DR(D0) ], extra: NoExtra }
 
 > btst #18,(a0)+
 # Instruction { size: 1, operation: BTST, operands: [ IMM16(18), ARINC(A0) ], extra: NoExtra }
 
 > btst d0,#18
-# Instruction { size: 4, operation: BTST, operands: [ DR(D0), IMM16(18) ], extra: NoExtra }
+# Instruction { size: 1, operation: BTST, operands: [ DR(D0), IMM16(18) ], extra: NoExtra }
 
 > bclr #18,(a0)+
 # Instruction { size: 1, operation: BCLR, operands: [ IMM16(18), ARINC(A0) ], extra: NoExtra }
 
+> bclr #18,d0
+# Instruction { size: 4, operation: BCLR, operands: [ IMM16(18), DR(D0) ], extra: NoExtra }
+
 > bchg #18,(a0)+
 # Instruction { size: 1, operation: BCHG, operands: [ IMM16(18), ARINC(A0) ], extra: NoExtra }
 
+> bchg #18,d0
+# Instruction { size: 4, operation: BCHG, operands: [ IMM16(18), DR(D0) ], extra: NoExtra }
+
 > bset #18,(a0)+
 # Instruction { size: 1, operation: BSET, operands: [ IMM16(18), ARINC(A0) ], extra: NoExtra }
+
+> bset #18,d0
+# Instruction { size: 4, operation: BSET, operands: [ IMM16(18), DR(D0) ], extra: NoExtra }
 
 > moves.l a0,(a1)
 # Instruction { size: 4, operation: MOVES, operands: [ AR(A0), ARIND(A1) ], extra: NoExtra }
@@ -976,6 +985,18 @@
 > moveq #127,d5
 # Instruction { size: 4, operation: MOVEQ, operands: [ IMM8(0x7f), DR(D5) ], extra: NoExtra }
 
+> movep.w 123(a0),d0
+# Instruction { size: 2, operation: MOVEP, operands: [ ARDISP(A0, simple_disp(123)), DR(D0) ], extra: NoExtra }
+
+> movep.l 123(a0),d0
+# Instruction { size: 4, operation: MOVEP, operands: [ ARDISP(A0, simple_disp(123)), DR(D0) ], extra: NoExtra }
+
+> movep.w d0,123(a0)
+# Instruction { size: 2, operation: MOVEP, operands: [ DR(D0), ARDISP(A0, simple_disp(123)) ], extra: NoExtra }
+
+> movep.l d0,123(a0)
+# Instruction { size: 4, operation: MOVEP, operands: [ DR(D0), ARDISP(A0, simple_disp(123)) ], extra: NoExtra }
+
 > fabs fp1
 # Instruction { size: 10, operation: FABS, operands: [ FR(FP1), FR(FP1) ], extra: FloatFormat(FPF_EXTENDED_REAL) }
 
@@ -1515,4 +1536,3 @@
 
 > adda.l (a3),a2
 # Instruction { size: 4, operation: ADDA, operands: [ ARIND(A3), AR(A2) ], extra: NoExtra }
-

@@ -260,7 +260,7 @@ fn decode_group_0000(w0: u16, cs: &mut CodeStream) -> Result<DecodedInstruction,
         let s = get_bits(w0, 6, 1);
         let a = get_bits(w0, 0, 3);
         let sz = 1 << (s + 1);
-        let src = ARIND(cs.address_reg(a));
+        let src = ARDISP(cs.address_reg(a), simple_disp(cs.pull16() as i16 as i32));
         let dst = cs.data_reg_op(d);
         let extra = NoExtra;
         return cs.check_overflow(Instruction {
@@ -270,13 +270,13 @@ fn decode_group_0000(w0: u16, cs: &mut CodeStream) -> Result<DecodedInstruction,
             extra: extra,
         });
     }
-    if (w0 & 0b1111000110111000) == 0b0000000100101000 {
+    if (w0 & 0b1111000110111000) == 0b0000000110001000 {
         let d = get_bits(w0, 9, 3);
         let s = get_bits(w0, 6, 1);
         let a = get_bits(w0, 0, 3);
         let sz = 1 << (s + 1);
         let src = DR(cs.data_reg(d));
-        let dst = ARIND(cs.address_reg(a));
+        let dst = ARDISP(cs.address_reg(a), simple_disp(cs.pull16() as i16 as i32));
         let extra = NoExtra;
         return cs.check_overflow(Instruction {
             size: sz,
@@ -289,7 +289,7 @@ fn decode_group_0000(w0: u16, cs: &mut CodeStream) -> Result<DecodedInstruction,
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        let sz = 4;
+        let sz = if m > 0 { 1 } else { 4 };
         let src = cs.data_reg_op(d);
         let dst = cs.ea(r, m, 2);
         let extra = NoExtra;
@@ -304,7 +304,7 @@ fn decode_group_0000(w0: u16, cs: &mut CodeStream) -> Result<DecodedInstruction,
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        let sz = 4;
+        let sz = if m > 0 { 1 } else { 4 };
         let src = cs.data_reg_op(d);
         let dst = cs.ea(r, m, 4);
         let extra = NoExtra;
@@ -319,7 +319,7 @@ fn decode_group_0000(w0: u16, cs: &mut CodeStream) -> Result<DecodedInstruction,
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        let sz = 4;
+        let sz = if m > 0 { 1 } else { 4 };
         let src = cs.data_reg_op(d);
         let dst = cs.ea(r, m, 4);
         let extra = NoExtra;
@@ -334,7 +334,7 @@ fn decode_group_0000(w0: u16, cs: &mut CodeStream) -> Result<DecodedInstruction,
         let d = get_bits(w0, 9, 3);
         let m = get_bits(w0, 3, 3);
         let r = get_bits(w0, 0, 3);
-        let sz = 4;
+        let sz = if m > 0 { 1 } else { 4 };
         let src = cs.data_reg_op(d);
         let dst = cs.ea(r, m, 4);
         let extra = NoExtra;
@@ -352,7 +352,7 @@ fn decode_group_0000(w0: u16, cs: &mut CodeStream) -> Result<DecodedInstruction,
             let r = get_bits(w0, 0, 3);
             let n = get_bits(w1, 0, 9);
             cs.skip_words(1);
-            let sz = 1;
+            let sz = if m > 0 { 1 } else { 4 };
             let src = IMM16(n);
             let dst = cs.ea(r, m, 1);
             let extra = NoExtra;
@@ -371,7 +371,7 @@ fn decode_group_0000(w0: u16, cs: &mut CodeStream) -> Result<DecodedInstruction,
             let r = get_bits(w0, 0, 3);
             let n = get_bits(w1, 0, 9);
             cs.skip_words(1);
-            let sz = 1;
+            let sz = if m > 0 { 1 } else { 4 };
             let src = IMM16(n);
             let dst = cs.ea(r, m, 1);
             let extra = NoExtra;
@@ -390,7 +390,7 @@ fn decode_group_0000(w0: u16, cs: &mut CodeStream) -> Result<DecodedInstruction,
             let r = get_bits(w0, 0, 3);
             let n = get_bits(w1, 0, 9);
             cs.skip_words(1);
-            let sz = 1;
+            let sz = if m > 0 { 1 } else { 4 };
             let src = IMM16(n);
             let dst = cs.ea(r, m, 1);
             let extra = NoExtra;
@@ -409,7 +409,7 @@ fn decode_group_0000(w0: u16, cs: &mut CodeStream) -> Result<DecodedInstruction,
             let r = get_bits(w0, 0, 3);
             let n = get_bits(w1, 0, 9);
             cs.skip_words(1);
-            let sz = 1;
+            let sz = if m > 0 { 1 } else { 4 };
             let src = IMM16(n);
             let dst = cs.ea(r, m, 1);
             let extra = NoExtra;

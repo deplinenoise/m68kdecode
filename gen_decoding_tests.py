@@ -124,5 +124,5 @@ with open(outfilename, "w") as of:
 os.remove('test.asm')
 os.remove('test.out')
 
-if subprocess.call(['astyle', '-q', '-n', '--style=kr', outfilename]) != 0:
+if subprocess.call(['clang-format', '-i', outfilename]) != 0:
     sys.exit(1)

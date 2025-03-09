@@ -238,19 +238,31 @@
 # { .size = 4, .operation = M68K_CMPI, .operands = { IMM32(0x12345678), ARDISP(0, DR_DISP_SCALE(2, 90, 4)) } }
 
 > btst #18,d0
-# { .size = 1, .operation = M68K_BTST, .operands = { IMM16(18), DR(0) } }
+# { .size = 4, .operation = M68K_BTST, .operands = { IMM16(18), DR(0) } }
 
 > btst #18,(a0)+
 # { .size = 1, .operation = M68K_BTST, .operands = { IMM16(18), ARINC(0) } }
 
+> btst d0,#18
+# { .size = 1, .operation = M68K_BTST, .operands = { DR(0), IMM16(18) } }
+
 > bclr #18,(a0)+
 # { .size = 1, .operation = M68K_BCLR, .operands = { IMM16(18), ARINC(0) } }
+
+> bclr #18,d0
+# { .size = 4, .operation = M68K_BCLR, .operands = { IMM16(18), DR(0) } }
 
 > bchg #18,(a0)+
 # { .size = 1, .operation = M68K_BCHG, .operands = { IMM16(18), ARINC(0) } }
 
+> bchg #18,d0
+# { .size = 4, .operation = M68K_BCHG, .operands = { IMM16(18), DR(0) } }
+
 > bset #18,(a0)+
 # { .size = 1, .operation = M68K_BSET, .operands = { IMM16(18), ARINC(0) } }
+
+> bset #18,d0
+# { .size = 4, .operation = M68K_BSET, .operands = { IMM16(18), DR(0) } }
 
 > moves.l a0,(a1)
 # { .size = 4, .operation = M68K_MOVES, .operands = { AR(0), ARIND(1) } }

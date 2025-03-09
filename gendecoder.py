@@ -4,9 +4,9 @@ import re
 import sys
 import subprocess
 
-R_BLANK = re.compile('^\s*$')
+R_BLANK = re.compile('^\\s*$')
 R_COMMENT = re.compile('^#.*')
-R_LINEFMT = re.compile('^([A-Z][A-Z0-9?]+)\s+((?:(?:(?:[01A-Za-z?]{4}_){3}[01A-Za-z?]{4})\s+)+)(.*?)$')
+R_LINEFMT = re.compile('^([A-Z][A-Z0-9?]+)\\s+((?:(?:(?:[01A-Za-z?]{4}_){3}[01A-Za-z?]{4})\\s+)+)(.*?)$')
 R_PREDICATE = re.compile('\\?\\(.*?\\)')
 
 lineno = 0
@@ -201,7 +201,7 @@ with open(outfile_h, "w") as of:
     of.write('/// Instruction names.\n');
     of.write('typedef enum m68k_operation {\n');
     for i in instructions:
-        if not seen_insn_names.has_key(i.name):
+        if not i.name in seen_insn_names:
             seen_insn_names[i.name] = True
             of.write('  M68K_{},\n'.format(i.name))
     of.write('} m68k_operation;\n');
@@ -217,7 +217,7 @@ with open(outfile_c, "w") as of:
     of.write('const char *m68k_operation_names[] = {\n');
     seen_insn_names = {}
     for i in instructions:
-        if not seen_insn_names.has_key(i.name):
+        if not i.name in seen_insn_names:
             seen_insn_names[i.name] = True
             of.write('  "{}",\n'.format(i.name))
     of.write('};\n');
@@ -236,7 +236,7 @@ with open(outfile_c, "w") as of:
     of.write('  uint16_t w0 = pull16(&cs);\n')
     of.write('  switch(w0 >> 12) {\n')
     for group in range(0, 16):
-        if not has_group.has_key(group):
+        if not group in has_group:
             continue
         of.write('    case 0x{0:02x}: return decode_group_{0:04b}(w0, &cs, result);\n'.format(group))
     of.write('    default: return M68K_NOT_IMPLEMENTED;\n')
@@ -245,5 +245,5 @@ with open(outfile_c, "w") as of:
     of.write('}\n')
 
 for fn in (outfile_c, outfile_h):
-    if subprocess.call(['astyle', '-q', '-n', '--style=kr', fn]) != 0:
+    if subprocess.call(['clang-format', '-i', fn]) != 0:
         sys.exit(1)

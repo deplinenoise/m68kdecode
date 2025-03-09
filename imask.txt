@@ -17,15 +17,15 @@ ORITOSR         0000_0000_0111_1100 sz=2; src=op_imm16p(cs); dst=op_implied();
 MOVEP           0000_ddd1_0s00_1aaa sz=2<<s; src=op_arind(a); dst=op_dr(d);
 MOVEP           0000_ddd1_0s10_1aaa sz=2<<s; src=op_dr(d); dst=op_arind(a);
 
-BTST            0000_ddd1_00mm_mrrr sz=4; src=op_dr(d); dst=op_ea(cs, r, m, 4);
-BCHG            0000_ddd1_01mm_mrrr sz=4; src=op_dr(d); dst=op_ea(cs, r, m, 4);
-BCLR            0000_ddd1_10mm_mrrr sz=4; src=op_dr(d); dst=op_ea(cs, r, m, 4);
-BSET            0000_ddd1_11mm_mrrr sz=4; src=op_dr(d); dst=op_ea(cs, r, m, 4);
+BTST            0000_ddd1_00mm_mrrr sz=(m ? 1 : 4); src=op_dr(d); dst=op_ea(cs, r, m, 2);
+BCHG            0000_ddd1_01mm_mrrr sz=(m ? 1 : 4); src=op_dr(d); dst=op_ea(cs, r, m, 4);
+BCLR            0000_ddd1_10mm_mrrr sz=(m ? 1 : 4); src=op_dr(d); dst=op_ea(cs, r, m, 4);
+BSET            0000_ddd1_11mm_mrrr sz=(m ? 1 : 4); src=op_dr(d); dst=op_ea(cs, r, m, 4);
 
-BTST            0000_1000_00mm_mrrr 0000_000n_nnnn_nnnn sz=1; src=op_imm16(n); dst=op_ea(cs, r, m, 1);
-BCHG            0000_1000_01mm_mrrr 0000_000n_nnnn_nnnn sz=1; src=op_imm16(n); dst=op_ea(cs, r, m, 1);
-BCLR            0000_1000_10mm_mrrr 0000_000n_nnnn_nnnn sz=1; src=op_imm16(n); dst=op_ea(cs, r, m, 1);
-BSET            0000_1000_11mm_mrrr 0000_000n_nnnn_nnnn sz=1; src=op_imm16(n); dst=op_ea(cs, r, m, 1);
+BTST            0000_1000_00mm_mrrr 0000_000n_nnnn_nnnn sz=(m ? 1 : 4); src=op_imm16(n); dst=op_ea(cs, r, m, 1);
+BCHG            0000_1000_01mm_mrrr 0000_000n_nnnn_nnnn sz=(m ? 1 : 4); src=op_imm16(n); dst=op_ea(cs, r, m, 1);
+BCLR            0000_1000_10mm_mrrr 0000_000n_nnnn_nnnn sz=(m ? 1 : 4); src=op_imm16(n); dst=op_ea(cs, r, m, 1);
+BSET            0000_1000_11mm_mrrr 0000_000n_nnnn_nnnn sz=(m ? 1 : 4); src=op_imm16(n); dst=op_ea(cs, r, m, 1);
 
 RTM             0000_0110_1100_drrr sz=0; src=op_dar(d, r); dst=op_none();
 

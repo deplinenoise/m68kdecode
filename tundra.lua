@@ -24,6 +24,7 @@ local win64 = {
       "/wd4820", -- 'n' bytes padding added after data member 'foo'
       "/wd4710", -- 'foo': function not inlined
       "/wd4711", -- 'foo': selected for automatic inline expansion
+      "/wd5045", -- Compiler will insert Spectre mitigation for memory load if /Qspectre switch specified
       { "/Od"; Config = "*-*-debug" },
       { "/O2"; Config = "*-*-production" },
       { "/Ox"; Config = "*-*-release" },
@@ -67,10 +68,10 @@ Build {
   },
   Configs = {
     Config {
-      Name = "win64-mscv",
+      Name = "win64-msvc",
       SupportedHosts = { "windows" },
       DefaultOnHost = "windows",
-      Tools = { "msvc-vs2017" },
+      Tools = { "msvc-vs2022" },
       Inherit = win64,
     },
     Config {
